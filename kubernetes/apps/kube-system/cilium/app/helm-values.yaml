@@ -8,7 +8,7 @@ cgroup:
   hostRoot: /sys/fs/cgroup
 cluster:
   id: 1
-  name: k8s
+  name: tusler
 cni:
   exclusive: false
 containerRuntime:
