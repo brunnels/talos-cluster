@@ -1,0 +1,7 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+kind: Kustomization
+resources:
+  - ./ingress.yaml
+  - ./receiver.yaml
+  - ./externalsecret.yaml

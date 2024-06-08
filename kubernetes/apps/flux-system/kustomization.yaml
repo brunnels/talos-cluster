@@ -1,6 +1,10 @@
 ---
-apiVersion: kustomize.config.k8s.io/v1beta1
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 kind: Kustomization
 resources:
+  # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ./webhooks/ks.yaml
+  # Flux-Kustomizations
+  - ./addons/ks.yaml
+  - ./capacitor/ks.yaml
+  - ./weave-gitops/ks.yaml
