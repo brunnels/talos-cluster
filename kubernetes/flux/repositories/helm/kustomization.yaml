@@ -13,5 +13,7 @@ resources:
   - ./spegel.yaml
   - ./stakater.yaml
   - ./external-dns.yaml
+  - ./external-secrets.yaml
+  - ./gpu-operator.yaml
   - ./ingress-nginx.yaml
   - ./k8s-gateway.yaml
