@@ -38,7 +38,7 @@ spec:
         gethomepage.dev/description: Flux Dashboard
         external-dns.alpha.kubernetes.io/target: "internal.${SECRET_DOMAIN}"
       hosts:
-        - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        - host: "gitops.${SECRET_DOMAIN}"
           paths:
             - path: /
               pathType: Prefix
