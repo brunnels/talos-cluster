@@ -5,6 +5,7 @@ resources:
   - ./bjw-s.yaml
   - ./cilium.yaml
   - ./coredns.yaml
+  - ./descheduler.yaml
   - ./jetstack.yaml
   - ./metrics-server.yaml
   - ./openebs.yaml
@@ -17,4 +18,5 @@ resources:
   - ./gpu-operator.yaml
   - ./ingress-nginx.yaml
   - ./k8s-gateway.yaml
+  - ./node-feature-discovery.yaml
   - ./weave-gitops.yaml
