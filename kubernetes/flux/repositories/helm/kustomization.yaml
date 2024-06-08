@@ -17,3 +17,4 @@ resources:
   - ./gpu-operator.yaml
   - ./ingress-nginx.yaml
   - ./k8s-gateway.yaml
+  - ./weave-gitops.yaml
