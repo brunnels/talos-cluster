@@ -4,23 +4,22 @@ kind: Kustomization
 resources:
   - ./backube.yaml
   - ./bjw-s.yaml
+  - ./external-dns.yaml
+  - ./external-secrets.yaml
   - ./cilium.yaml
   - ./coredns.yaml
   - ./csi-driver-smb.yaml
   - ./descheduler.yaml
+  - ./gpu-operator.yaml
+  - ./ingress-nginx.yaml
   - ./jetstack.yaml
+  - ./k8s-gateway.yaml
   - ./metrics-server.yaml
+  - ./node-feature-discovery.yaml
   - ./openebs.yaml
+  - ./piraeus.yaml
   - ./postfinance.yaml
   - ./prometheus-community.yaml
   - ./spegel.yaml
   - ./stakater.yaml
-  - ./external-dns.yaml
-  - ./external-secrets.yaml
-  - ./gpu-operator.yaml
-  - ./ingress-nginx.yaml
-  - ./k8s-gateway.yaml
-  - ./node-feature-discovery.yaml
-  - ./piraeus.yaml
-  - ./prometheus-community.yaml
   - ./weave-gitops.yaml
