@@ -3,16 +3,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./storage-classes/cifs-appdata.yaml
-  - ./storage-classes/cifs-applications.yaml
-  - ./storage-classes/cifs-backup.yaml
-  - ./storage-classes/cifs-books.yaml
-  - ./storage-classes/cifs-downloads.yaml
-  - ./storage-classes/cifs-dynamic.yaml
-  - ./storage-classes/cifs-games.yaml
-  - ./storage-classes/cifs-misc.yaml
-  - ./storage-classes/cifs-movies.yaml
-  - ./storage-classes/cifs-music.yaml
-  - ./storage-classes/cifs-pictures.yaml
-  - ./storage-classes/cifs-tv.yaml
-  - ./storage-classes/cifs-videos.yaml
+  - ./cifs-appdata.yaml
+  - ./cifs-applications.yaml
+  - ./cifs-backup.yaml
+  - ./cifs-books.yaml
+  - ./cifs-downloads.yaml
+  - ./cifs-dynamic.yaml
+  - ./cifs-games.yaml
+  - ./cifs-misc.yaml
+  - ./cifs-movies.yaml
+  - ./cifs-music.yaml
+  - ./cifs-pictures.yaml
+  - ./cifs-tv.yaml
+  - ./cifs-videos.yaml
