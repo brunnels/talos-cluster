@@ -5,7 +5,7 @@ talosVersion: v1.7.4
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: v1.30.1
 
-clusterName: "tusler"
+clusterName: "homerun"
 endpoint: https://10.50.0.20:6443
 clusterPodNets:
   - "10.169.0.0/16"
@@ -15,8 +15,8 @@ additionalApiServerCertSans: &sans
   - "10.50.0.20"
   - 127.0.0.1 # KubePrism
   - "10.50.0.19"
-  - "tusler.lan.kraven.dev"
-  - "tc1.lan.kraven.dev"
+  - "homerun.lan.kraven.org"
+  - "cn1.lan.kraven.org"
 additionalMachineCertSans: *sans
 
 # Disable built-in Flannel to use Cilium
@@ -24,15 +24,14 @@ cniConfig:
   name: none
 
 nodes:
-  - hostname: "tc1"
+  - hostname: "cn1"
     ipAddress: "10.50.0.19"
-    installDiskSelector:
-      busPath: "/pci0000:00/0000:00:08.2/0000:0e:00.0/ata10/host9/target9:0:0/9:0:0:0/"
-    talosImageURL: factory.talos.dev/installer/18880a12f8fd03d494cdf3507ce6f895ac7f5a576706b80340b106d79636ea91
+    installDisk: "/dev/sdb"
+    talosImageURL: factory.talos.dev/installer/2dcd442954d67662d41c61bdb92165aaf7189aff9997bd011b6968c12ce8d9c0
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "1c:86:0b:27:14:2b"
+          hardwareAddr: "e8:03:9a:e4:9b:69"
         dhcp: false
         addresses:
           - "10.50.0.19/24"
@@ -42,9 +41,24 @@ nodes:
         mtu: 1500
         vip:
           ip: "10.50.0.20"
+  - hostname: "wn1"
+    ipAddress: "10.50.0.16"
+    installDisk: "/dev/sdb"
+    talosImageURL: factory.talos.dev/installer/18880a12f8fd03d494cdf3507ce6f895ac7f5a576706b80340b106d79636ea91
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "1c:86:0b:27:14:2b"
+        dhcp: false
+        addresses:
+          - "10.50.0.16/24"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.50.0.1"
+        mtu: 1500
     patches:
-      - "@./patches/tc1/gpu-worker-patch.yaml"
-      # - "@./patches/tc1/nvidia-default-runtimeclass.yaml"
+      - "@./patches/cn1/gpu-worker-patch.yaml"
+      # - "@./patches/cn1/nvidia-default-runtimeclass.yaml"
 
 # Global patches
 patches:
