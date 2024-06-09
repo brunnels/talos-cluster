@@ -4,7 +4,7 @@ kind: StorageClass
 metadata:
   name: cifs-dynamic
 labels:
-  kustomize.toolkit.fluxcd.io/force: enabled
+  kustomize.toolkit.fluxcd.io/force: "enabled"
 provisioner: smb.csi.k8s.io
 parameters:
   source: //nasf586af.myqnapcloud.com/appdata/cifs-dynamic
