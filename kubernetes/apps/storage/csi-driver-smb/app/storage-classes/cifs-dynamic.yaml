@@ -9,11 +9,11 @@ provisioner: smb.csi.k8s.io
 parameters:
   source: //nasf586af.myqnapcloud.com/appdata/cifs-dynamic
   subDir: "$${pvc.metadata.namespace}-$${pvc.metadata.name}"
-  onDelete: "retain"
+  onDelete: archive
   csi.storage.k8s.io/provisioner-secret-name: "nasf586af-cifs-secret"
   csi.storage.k8s.io/provisioner-secret-namespace: "storage"
   csi.storage.k8s.io/node-stage-secret-name: "nasf586af-cifs-secret"
   csi.storage.k8s.io/node-stage-secret-namespace: "storage"
-reclaimPolicy: Delete
+reclaimPolicy: Retain
 volumeBindingMode: Immediate
 allowVolumeExpansion: true
