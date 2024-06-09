@@ -6,7 +6,7 @@ metadata:
 provisioner: smb.csi.k8s.io
 parameters:
   source: //nasf586af.myqnapcloud.com
-  subDir: "${pvc.metadata.namespace}-${pvc.metadata.name}"
+  subDir: "$${pvc.metadata.namespace}-$${pvc.metadata.name}"
   onDelete: "delete"
   csi.storage.k8s.io/provisioner-secret-name: "nasf586af-cifs-secret"
   csi.storage.k8s.io/provisioner-secret-namespace: "storage"
