@@ -3,6 +3,8 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: "cifs-appdata"
+labels:
+  kustomize.toolkit.fluxcd.io/force: enabled
 provisioner: smb.csi.k8s.io
 parameters:
   source: "//nasf586af.myqnapcloud.com/appdata"
