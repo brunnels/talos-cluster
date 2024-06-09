@@ -22,4 +22,5 @@ resources:
   - ./k8s-gateway.yaml
   - ./node-feature-discovery.yaml
   - ./piraeus.yaml
+  - ./prometheus-community.yaml
   - ./weave-gitops.yaml
