@@ -37,7 +37,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: "internal.${SECRET_DOMAIN}"
         hosts:
-          - host: "alertmanager.${SECRET_DOMAIN}"
+          - "alertmanager.${SECRET_DOMAIN}"
       alertmanagerSpec:
         replicas: 2
         configSecret: alertmanager-secret
