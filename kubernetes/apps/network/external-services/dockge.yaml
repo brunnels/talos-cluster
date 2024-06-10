@@ -23,7 +23,7 @@ metadata:
   namespace: network
 subsets:
   - addresses:
-      - hostname: dockge.lan.kraven.org
+      - ip: 10.50.0.11
     ports:
       - name: https-dockge
         port: 5001
