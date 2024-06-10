@@ -23,7 +23,7 @@ metadata:
   namespace: network
 subsets:
   - addresses:
-      - ip: 10.50.0.10
+      - hostname: pve.lan.kraven.org
     ports:
       - name: https-pve
         port: 8006
