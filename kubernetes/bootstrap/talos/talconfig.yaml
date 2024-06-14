@@ -26,7 +26,7 @@ cniConfig:
 nodes:
   - hostname: "cn1"
     ipAddress: "10.50.0.19"
-    installDisk: "/dev/sdb"
+    installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/2dcd442954d67662d41c61bdb92165aaf7189aff9997bd011b6968c12ce8d9c0
     controlPlane: true
     networkInterfaces:
@@ -43,7 +43,7 @@ nodes:
           ip: "10.50.0.20"
   - hostname: "wn1"
     ipAddress: "10.50.0.16"
-    installDisk: "/dev/sdb"
+    installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/18880a12f8fd03d494cdf3507ce6f895ac7f5a576706b80340b106d79636ea91
     controlPlane: false
     networkInterfaces:
@@ -59,6 +59,21 @@ nodes:
     patches:
       - "@./patches/cn1/gpu-worker-patch.yaml"
       # - "@./patches/cn1/nvidia-default-runtimeclass.yaml"
+  - hostname: "wnvm1"
+    ipAddress: "10.50.0.12"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/bb0ba48a52352c699781aeeb4aa1983b80ccc778c2eac94590fe6b4ab3c0fd00
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "bc:24:11:92:18:a9"
+        dhcp: false
+        addresses:
+          - "10.50.0.12/24"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.50.0.1"
+        mtu: 1500
 
 # Global patches
 patches:
