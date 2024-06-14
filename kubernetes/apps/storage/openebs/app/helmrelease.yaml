@@ -3,13 +3,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: openebs-jiva
+  name: openebs
 spec:
   interval: 30m
   chart:
     spec:
-      chart: jiva
-      version: 3.6.0
+      chart: openebs
+      version: 3.10.0
       sourceRef:
         kind: HelmRepository
         name: openebs-archive
@@ -22,13 +22,16 @@ spec:
     remediation:
       retries: 3
   values:
-    localpv-provisioner:
-      localpv:
-        image:
-          registry: quay.io/
-    # TODO: This is only temporarily set to 2
-    defaultPolicy:
-      replicas: 2
+    jiva:
+      replicas: 3
+      enabled: true
+      local-provisioner:
+        localpv:
+          image:
+            registry: quay.io/
+      # TODO: This is only temporarily set to 2
+      defaultPolicy:
+        replicas: 2
   # Required: Must enable hostPID for JIVA to work on Talos
   # https://www.talos.dev/v1.2/kubernetes-guides/configuration/replicated-local-storage-with-openebs-jiva/
   postRenderers:
