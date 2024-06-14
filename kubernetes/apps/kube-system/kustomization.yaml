@@ -6,9 +6,9 @@ resources:
   - ./cilium/ks.yaml
   - ./coredns/ks.yaml
   - ./descheduler/ks.yaml
-  - ./metrics-server/ks.yaml
-  - ./node-feature-discovery/ks.yaml
+  # - ./metrics-server/ks.yaml
+  # - ./node-feature-discovery/ks.yaml
   - ./reloader/ks.yaml
-  - ./secret-backup/ks.yaml
+  # - ./secret-backup/ks.yaml
   - ./kubelet-csr-approver/ks.yaml
   - ./spegel/ks.yaml
