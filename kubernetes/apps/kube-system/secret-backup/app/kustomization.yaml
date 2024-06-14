@@ -10,5 +10,8 @@ configMapGenerator:
   - name: secret-backup-configmap
     files:
       - secret-backup.sh=./resources/secret-backup.sh
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
 generatorOptions:
   disableNameSuffixHash: true
