@@ -12,7 +12,7 @@ spec:
       version: 3.6.0
       sourceRef:
         kind: HelmRepository
-        name: openebs-jiva
+        name: openebs-archive
         namespace: flux-system
   install:
     remediation:
