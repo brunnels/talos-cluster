@@ -5,4 +5,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   # - ./csi-driver-smb/ks.yaml
-  - ./openebs-jiva/ks.yaml
+  # - ./openebs-jiva/ks.yaml
