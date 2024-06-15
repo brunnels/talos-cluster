@@ -32,8 +32,6 @@ spec:
         mayastor:
           enabled: true
     mayastor:
-      image:
-        registry: quay.io/
       ha:
         enabled: false
       loki-stack:
