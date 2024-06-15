@@ -33,7 +33,6 @@ spec:
           enabled: true
     mayastor:
       etcd:
-        replicaCount: 2
         localpvScConfig:
           enabled: true
           basePath: "/var/openebs/local/openebs-hostpath/etcd"
