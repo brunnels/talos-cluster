@@ -31,16 +31,21 @@ spec:
       replicated:
         mayastor:
           enabled: true
-    openebs-crds:
-      csi:
-        volumeSnapshots:
-          enabled: false
-    localpv-provisioner:
-      localpv:
-        image:
-          registry: quay.io/
-      hostpathClass:
-        enabled: true
-        name: openebs-hostpath
-        isDefaultClass: false
-        basePath: /var/openebs/local
+    mayastor:
+      image:
+        registry: quay.io/
+      ha:
+        enabled: false
+      loki-stack:
+        enabled: false
+      promtail:
+        enabled: False
+      localpv-provisioner:
+        localpv:
+          image:
+            registry: quay.io/
+        hostpathClass:
+          enabled: true
+          name: openebs-hostpath
+          isDefaultClass: false
+          basePath: /var/openebs/local
