@@ -32,10 +32,20 @@ spec:
         mayastor:
           enabled: true
     mayastor:
+      etcd:
+        persistence:
+          storageClass: "mayastor-etcd-localpv"
+        localpvScConfig:
+          basePath: "/var/openebs/local/{{ .Release.Name }}/etcd"
       ha:
         enabled: false
       loki-stack:
         enabled: false
+        loki:
+          persistence:
+            storageClass: "mayastor-loki-localpv"
+        localpvScConfig:
+          basePath: "/var/openebs/local/{{ .Release.Name }}/loki"
       promtail:
         enabled: False
       localpv-provisioner:
