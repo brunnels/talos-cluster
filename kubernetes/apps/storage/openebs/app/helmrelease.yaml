@@ -36,15 +36,13 @@ spec:
         replicaCount: 2
         localpvScConfig:
           enabled: true
-          name: openebs-hostpath
-          basePath: "/var/openebs/local/{{ .Release.Name }}/etcd"
+          basePath: "/var/openebs/local/openebs-hostpath/etcd"
       ha:
         enabled: false
       loki-stack:
         enabled: false
         localpvScConfig:
-          name: openebs-hostpath
-          basePath: "/var/openebs/local/{{ .Release.Name }}/loki"
+          basePath: "/var/openebs/local/openebs-hostpath/loki"
       promtail:
         enabled: False
       localpv-provisioner:
