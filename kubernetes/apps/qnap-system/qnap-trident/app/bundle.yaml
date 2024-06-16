@@ -557,4 +557,4 @@ spec:
                     operator: In
                     values:
                       - linux
-      serviceAccountName: trident-operator
+      serviceAccountName: qnap-trident-operator
