@@ -2,10 +2,10 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: "qnap-nasf586Af"
+  name: "qnap-nasf586af"
 provisioner: csi.trident.qnap.io
 parameters:
-  selector: "storage=qnap-nasf586Af"
+  selector: "storage=qnap-nasf586af"
 allowVolumeExpansion: true
 ---
 apiVersion: storage.k8s.io/v1

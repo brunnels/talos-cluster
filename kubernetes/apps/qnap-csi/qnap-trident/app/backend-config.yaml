@@ -6,14 +6,14 @@ metadata:
 spec:
   version: 1
   storageDriverName: qnap-iscsi
-  backendName: qnap-nasf586Af
+  backendName: qnap-nasf586af
   credentials:
     name: qnap-trident-backend-secret
   debugTraceFlags:
     method: false
   storage:
     - labels:
-        storage: qnap-nasf586Af
+        storage: qnap-nasf586af
         serviceLevel: Any
       features:
         ssdCache: "true"
