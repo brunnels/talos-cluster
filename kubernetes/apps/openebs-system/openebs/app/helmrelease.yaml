@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -29,7 +30,7 @@ spec:
           enabled: false
       replicated:
         mayastor:
-          enabled: false
+          enabled: true
     openebs-crds:
       csi:
         volumeSnapshots:
@@ -43,3 +44,19 @@ spec:
         name: openebs-hostpath
         isDefaultClass: false
         basePath: /var/openebs/local
+    mayastor:
+      etcd:
+        localpvScConfig:
+          basePath: "/var/openebs/local/openebs-hostpath/etcd"
+      loki-stack:
+        localpvScConfig:
+          basePath: "/var/openebs/local/openebs-hostpath/loki"
+      localpv-provisioner:
+        localpv:
+          image:
+            registry: quay.io/
+        hostpathClass:
+          enabled: true
+          name: openebs-hostpath
+          isDefaultClass: false
+          basePath: /var/openebs/local
