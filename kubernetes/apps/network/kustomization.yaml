@@ -6,6 +6,5 @@ resources:
   - ./cloudflared/ks.yaml
   - ./echo-server/ks.yaml
   - ./external-dns/ks.yaml
-  - ./external-services
   - ./ingress-nginx/ks.yaml
   - ./k8s-gateway/ks.yaml

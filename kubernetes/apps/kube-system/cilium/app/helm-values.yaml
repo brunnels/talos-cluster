@@ -1,18 +1,16 @@
 ---
 autoDirectNodeRoutes: true
 bpf:
-  masquerade: false
+  masquerade: false # Required for Talos `.machine.features.hostDNS.forwardKubeDNSToHost`
 cgroup:
   automount:
     enabled: false
   hostRoot: /sys/fs/cgroup
 cluster:
   id: 1
-  name: tusler
+  name: "homerun"
 cni:
   exclusive: false
-containerRuntime:
-  integration: containerd
 # NOTE: devices might need to be set if you have more than one active NIC on your hosts
 # devices: eno+ eth+
 endpointRoutes:
@@ -21,7 +19,7 @@ hubble:
   enabled: false
 ipam:
   mode: kubernetes
-ipv4NativeRoutingCIDR: 10.169.0.0/16
+ipv4NativeRoutingCIDR: "10.169.0.0/16"
 k8sServiceHost: 127.0.0.1
 k8sServicePort: 7445
 kubeProxyReplacement: true
