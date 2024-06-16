@@ -27,7 +27,7 @@ metadata:
   name: &app qnap-trident-resources
   namespace: flux-system
 spec:
-  targetNamespace: qnap-trident
+  targetNamespace: qnap-system
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
