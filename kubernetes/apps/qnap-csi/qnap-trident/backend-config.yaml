@@ -1,0 +1,26 @@
+---
+apiVersion: trident.qnap.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: qnap-trident
+  namespace: qnap-csi
+spec:
+  version: 1
+  storageDriverName: qnap-iscsi
+  backendName: qnap-nasf586Af
+  credentials:
+    name: qnap-trident-backend-secret
+  debugTraceFlags:
+    method: false
+  storage:
+    - labels:
+        storage: qnap-nasf586Af
+        serviceLevel: Any
+      features:
+        ssdCache: "true"
+    - labels:
+        performance: qnap-standard
+      features:
+        tiering: Disable
+        ssdCache: "true"
+      serviceLevel: Non-Tiering
