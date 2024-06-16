@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
-  path: ./kubernetes/apps/qnap-csi/qnap-trident/app
+  path: ./kubernetes/apps/qnap-system/qnap-trident/app
   prune: true
   sourceRef:
     kind: GitRepository
