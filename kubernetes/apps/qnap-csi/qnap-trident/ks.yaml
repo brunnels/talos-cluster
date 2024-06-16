@@ -4,9 +4,9 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app qnap-trident
-  namespace: qnap-csi
+  namespace: flux-system
 spec:
-  targetNamespace: flux-system
+  targetNamespace: qnap-csi
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
