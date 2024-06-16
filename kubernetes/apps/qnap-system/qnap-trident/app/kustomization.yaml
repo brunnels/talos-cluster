@@ -5,4 +5,3 @@ kind: Kustomization
 resources:
 - bundle.yaml
 - tridentorchestrator.yaml
-- resources/kustomization.yaml
