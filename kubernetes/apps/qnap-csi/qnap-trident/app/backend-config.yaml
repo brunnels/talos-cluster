@@ -3,7 +3,6 @@ apiVersion: trident.qnap.io/v1
 kind: TridentBackendConfig
 metadata:
   name: qnap-trident
-  namespace: qnap-csi
 spec:
   version: 1
   storageDriverName: qnap-iscsi
