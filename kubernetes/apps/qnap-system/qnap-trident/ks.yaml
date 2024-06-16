@@ -6,7 +6,7 @@ metadata:
   name: &app qnap-trident
   namespace: flux-system
 spec:
-  targetNamespace: qnap-csi
+  targetNamespace: qnap-system
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app

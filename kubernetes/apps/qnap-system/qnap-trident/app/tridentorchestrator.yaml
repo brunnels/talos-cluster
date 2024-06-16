@@ -1,0 +1,8 @@
+apiVersion: trident.qnap.io/v1
+kind: TridentOrchestrator
+metadata:
+  name: qnap-trident
+spec:
+  debug: true
+  namespace: qnap-system
+  tridentImage: qnapsystem/qnap-csi:v1.2.1
