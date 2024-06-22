@@ -11,14 +11,14 @@ data:
   services.yaml: |
     - Infrastructure:
         - AdGuard Home:
-            href: https://adguard.${SECRET_INTERNAL_DOMAIN}
+            href: https://adguard.${SECRET_DOMAIN}
             icon: adguard-home.png
         - OPNsense:
             icon: opnsense.png
             description: OPNsense Router
             widget:
               type: opnsense
-              url: https://opnsense.${SECRET_INTERNAL_DOMAIN}
+              url: https://opnsense.${SECRET_DOMAIN}
               username: {{OPNSENSE_USER}}
               password: {{OPNSENSE_PASS}}
         - Proxmox VE:
@@ -96,8 +96,8 @@ data:
         provider: [duckduckgo, google]
         target: _blank
     - openmeteo:
-        latitude: ${SECRET_LATITUDE}
-        longitude: ${SECRET_LONGITUDE}
+        latitude: "${SECRET_LATITUDE}""
+        longitude: "${SECRET_LONGITUDE}""
         timezone: "${TIMEZONE}"
         units: imperial
         cache: 15
