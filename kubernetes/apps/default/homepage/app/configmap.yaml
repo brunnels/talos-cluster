@@ -1,0 +1,109 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage
+data:
+  bookmarks.yaml: ""
+  docker.yaml: ""
+  kubernetes.yaml: |
+    mode: cluster
+  services.yaml: |
+    - Infrastructure:
+        - AdGuard Home:
+            href: https://adguard.${SECRET_INTERNAL_DOMAIN}
+            icon: adguard-home.png
+        - OPNsense:
+            icon: opnsense.png
+            description: OPNsense Router
+            widget:
+              type: opnsense
+              url: https://opnsense.${SECRET_INTERNAL_DOMAIN}
+              username: {{OPNSENSE_USER}}
+              password: {{OPNSENSE_PASS}}
+        - Proxmox VE:
+            icon: proxmox.png
+            description: Proxmox Virtual Environment
+              type: proxmox
+              url: https://pve.${SECRET_DOMAIN}
+              username: {{PROXMOX_API_TOKEN_ID}}
+              password: {{PROXMOX_API_TOKEN_SECRET}}
+        - Cloudflared:
+            href: https://dash.cloudflare.com/
+            icon: cloudflare-zero-trust.png
+            description: Cloudflared Tunnel
+            widget:
+              type: cloudflared
+              accountid: {{CF_ACCOUNT_ID}}
+              tunnelid: {{CF_TUNNEL_ID}}
+              key: {{CF_API_TOKEN}}
+    - Observability:
+        - Prometheus (storage):
+            href: https://prometheus.${SECRET_DOMAIN}
+            icon: prometheus.png
+  settings.yaml: |
+    headerStyle: clean
+    providers:
+      longhorn:
+        url: http://longhorn-frontend.longhorn-system
+    layout:
+      Automation:
+        style: column
+      Infrastructure:
+        icon: mdi-server
+        style: column
+      Storage:
+        icon: mdi-desktop-tower
+        style: column
+      Tools:
+        style: column
+      Observability:
+        icon: mdi-chart-line
+        style: row
+        columns: 4
+      Media:
+        icon: mdi-play-circle
+        style: row
+        columns: 4
+      Downloads:
+        icon: mdi-download-circle
+        style: row
+        columns: 4
+  widgets.yaml: |
+    - resources:
+        backend: kubernetes
+        cpu: true
+        expanded: true
+        memory: true
+    - kubernetes:
+        cluster:
+          cpu: true
+          label: cluster
+          memory: true
+          show: true
+          showLabel: true
+        nodes:
+          cpu: true
+          memory: true
+          show: false
+          showLabel: true
+    - longhorn:
+        expanded: false
+        total: true
+        labels: true
+        nodes: false
+    - search:
+        provider: [duckduckgo, google]
+        target: _blank
+    - openmeteo:
+        latitude: ${SECRET_LATITUDE}
+        longitude: ${SECRET_LONGITUDE}
+        timezone: "${TIMEZONE}"
+        units: imperial
+        cache: 15
+    - datetime:
+        text_size: l
+        format:
+          dateStyle: long
+          timeStyle: short
+          hourCycle: h23

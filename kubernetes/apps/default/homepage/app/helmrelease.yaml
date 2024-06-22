@@ -1,0 +1,111 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app homepage
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: uninstall
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      homepage:
+        annotations:
+          configmap.reloader.stakater.com/reload: *app
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              repository: ghcr.io/gethomepage/homepage
+              tag: v0.9.2
+            env:
+              TZ: "${TIMEZONE}"
+            envFrom:
+              - secretRef:
+                  name: homepage-secret
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 256Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 3000
+    serviceAccount:
+      create: true
+      name: *app
+    ingress:
+      app:
+        enabled: true
+        className: nginx
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_EXTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      configs:
+        enabled: true
+        type: configMap
+        name: *app
+        globalMounts:
+          - subPath: bookmarks.yaml
+            path: /app/config/bookmarks.yaml
+            readOnly: true
+          - subPath: docker.yaml
+            path: /app/config/docker.yaml
+            readOnly: true
+          - subPath: kubernetes.yaml
+            path: /app/config/kubernetes.yaml
+            readOnly: true
+          - subPath: services.yaml
+            path: /app/config/services.yaml
+            readOnly: true
+          - subPath: settings.yaml
+            path: /app/config/settings.yaml
+            readOnly: true
+          - subPath: widgets.yaml
+            path: /app/config/widgets.yaml
+            readOnly: true
+

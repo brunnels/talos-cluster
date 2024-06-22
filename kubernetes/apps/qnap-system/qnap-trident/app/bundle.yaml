@@ -8,7 +8,6 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  creationTimestamp: null
   labels:
     app: operator.trident.qnap.io
   name: qnap-trident-operator
@@ -543,6 +542,13 @@ spec:
           image: qnapsystem/qnap-csi-operator:v1.2.0
           imagePullPolicy: IfNotPresent
           name: qnap-trident-operator
+          resources:
+            requests:
+              cpu: 25m
+              memory: 100M
+            limits:
+              cpu: 150m
+              memory: 350M
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
