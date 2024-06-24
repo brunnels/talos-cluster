@@ -9,6 +9,7 @@ spec:
     kind: ClusterSecretStore
     name: bitwarden-secrets-manager
   target:
+    name: "${APP}-volsync-secret"
     template:
       engineVersion: v2
       data:
@@ -26,7 +27,7 @@ spec:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: "${APP}-bootstrap"
+  name: "${APP}-dst"
 spec:
   trigger:
     manual: restore-once
@@ -39,10 +40,10 @@ spec:
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
     storageClassName: "${VOLSYNC_STORAGECLASS:-longhorn-snapshot}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
-    moverSecurityContext:
-      runAsUser: "${VOLSYNC_UID:-568}"
-      runAsGroup: "${VOLSYNC_GID:-568}"
-      fsGroup: "${VOLSYNC_GID:-568}"
+    # moverSecurityContext:
+    #   runAsUser: "${VOLSYNC_UID:-568}"
+    #   runAsGroup: "${VOLSYNC_GID:-568}"
+    #   fsGroup: "${VOLSYNC_GID:-568}"
     capacity: "${VOLSYNC_CAPACITY}"
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
@@ -70,5 +71,5 @@ spec:
       fsGroup: "${VOLSYNC_GID:-568}"
     retain:
       hourly: 24
-      daily: 10
+      daily: 7
       weekly: 5
