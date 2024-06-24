@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudbeaver
+data:
+  cloudbeaver.conf: |
+    {
+      server: {
+        serverPort: 8978,
+        serverHost: "localhost",
+        serverName: "CloudBeaver Sample Server",
+
+        // Paths are absolute or relative to the server root folder
+        workspaceLocation: "workspace",
+        contentRoot: "web",
+        driversLocation: "drivers",
+
+        rootURI: "/",
+        serviceURI: "/api/",
+
+        // Webapp configuration file
+        productConfiguration: "conf/product.conf",
+
+        expireSessionAfterPeriod: 600000,
+
+        develMode: false,
+
+        database: {
+          url: "jdbc:h2:$${workspace}/.data/cb.h2.dat",
+          initialDataConfiguration: "conf/initial-data.conf",
+          pool: {
+            maxConnections: 100
+          }
+        }
+      },
+      app: {
+        anonymousAccessAllowed: true,
+        anonymousUserRole: "user",
+        supportsCustomConnections: false,
+
+        resourceQuotas: {
+          dataExportFileSizeLimit: 10000000,
+          sqlMaxRunningQueries: 3,
+          sqlResultSetRowsLimit: 100000,
+          sqlResultSetMemoryLimit: 2000000
+        },
+        plugins: {
+
+        }
+      }
+    }

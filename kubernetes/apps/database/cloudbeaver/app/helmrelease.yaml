@@ -1,0 +1,87 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cloudbeaver
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      echo-server:
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              repository: dbeaver/cloudbeaver
+              tag: 24.1.1
+            args:
+              - "-web-config=/etc/cloudbeaver/cloudbeaver.conf"
+            env:
+              CB_SERVER_NAME: *app
+              CB_SERVER_URL: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            envFrom:
+              - secretRef:
+                  name: cloudbeaver-secret
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 200m
+                memory: 256Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 8978
+    ingress:
+      app:
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+        hosts:
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: *app
+        globalMounts:
+          - subPath: cloudbeaver.conf
+            path: /etc/cloudbeaver/cloudbeaver.conf
+            readOnly: true
+      data:
+        enabled: true
+        existingClaim: *app
