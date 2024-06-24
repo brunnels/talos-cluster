@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./backube.yaml
   - ./cilium.yaml
+  - ./cloudnative-pg.yaml
   - ./coredns.yaml
   - ./csi-driver-smb.yaml
   - ./descheduler.yaml
