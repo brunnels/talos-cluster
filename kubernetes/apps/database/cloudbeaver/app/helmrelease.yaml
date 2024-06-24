@@ -20,14 +20,16 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   values:
     controllers:
       cloudbeaver:
+        strategy: RollingUpdate
         annotations:
-          configmap.reloader.stakater.com/reload: *app
+          reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: dbeaver/cloudbeaver
               tag: 24.1.1
@@ -38,7 +40,12 @@ spec:
               CB_SERVER_URL: "{{ .Release.Name }}.${SECRET_DOMAIN}"
             envFrom:
               - secretRef:
-                  name: cloudbeaver-secret
+                  name: "{{ .Release.Name }}-secret"
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -56,7 +63,6 @@ spec:
         runAsUser: 65534
         runAsGroup: 65534
         seccompProfile: { type: RuntimeDefault }
-
     serviceAccount:
       create: true
       name: *app
