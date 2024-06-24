@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: cloudbeaver
+  name: &app cloudbeaver
 spec:
   interval: 30m
   chart:
@@ -26,7 +26,7 @@ spec:
       echo-server:
         strategy: RollingUpdate
         containers:
-          app:
+          main:
             image:
               repository: dbeaver/cloudbeaver
               tag: 24.1.1
@@ -55,6 +55,10 @@ spec:
         runAsUser: 65534
         runAsGroup: 65534
         seccompProfile: { type: RuntimeDefault }
+
+    serviceAccount:
+      create: true
+      name: *app
     service:
       app:
         controller: *app
@@ -74,7 +78,7 @@ spec:
                   identifier: app
                   port: http
     persistence:
-      config:
+      app:
         enabled: true
         type: configMap
         name: *app
@@ -85,3 +89,4 @@ spec:
       data:
         enabled: true
         existingClaim: *app
+
