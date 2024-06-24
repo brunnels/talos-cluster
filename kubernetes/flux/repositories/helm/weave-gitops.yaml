@@ -3,8 +3,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: postfinance
+  name: weave-gitops
   namespace: flux-system
 spec:
-  interval: 1h
-  url: https://postfinance.github.io/kubelet-csr-approver
+  interval: 5m
+  type: oci
+  url: oci://ghcr.io/weaveworks/charts
