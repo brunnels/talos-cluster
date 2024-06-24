@@ -23,8 +23,9 @@ spec:
       retries: 3
   values:
     controllers:
-      echo-server:
-        strategy: RollingUpdate
+      cloudbeaver:
+        annotations:
+          configmap.reloader.stakater.com/reload: *app
         containers:
           main:
             image:
