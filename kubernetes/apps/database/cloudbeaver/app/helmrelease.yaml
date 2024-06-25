@@ -25,7 +25,7 @@ spec:
   values:
     controllers:
       cloudbeaver:
-        strategy: RollingUpdate
+        strategy: Recreate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -33,13 +33,8 @@ spec:
             image:
               repository: dbeaver/cloudbeaver
               tag: 24.1.1
-            command:
-              - "/bin/sh"
             args:
-              - "-c"
-              - "while true; do echo hi; sleep 10; done"
-            # args:
-            #   - "-web-config=/etc/cloudbeaver/cloudbeaver.conf"
+              - "-web-config=/etc/cloudbeaver/cloudbeaver.conf"
             env:
               CB_SERVER_NAME: *app
               CB_SERVER_URL: "{{ .Release.Name }}.${SECRET_DOMAIN}"
@@ -96,7 +91,7 @@ spec:
         name: *app
         globalMounts:
           - subPath: cloudbeaver.conf
-            path: /opt/cloudbeaver/conf/cloudbeaver.conf
+            path: /etc/cloudbeaver.conf
             readOnly: true
       workspace:
         enabled: true
