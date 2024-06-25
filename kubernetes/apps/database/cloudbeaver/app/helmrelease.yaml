@@ -91,9 +91,12 @@ spec:
         name: *app
         globalMounts:
           - subPath: cloudbeaver.conf
-            path: /etc/cloudbeaver/cloudbeaver.conf
+            path: /opt/cloudbeaver/conf/cloudbeaver.conf
             readOnly: true
-      data:
+      workspace:
         enabled: true
         existingClaim: *app
+        globalMounts:
+          - path: /opt/cloudbeaver/workspace
+
 
