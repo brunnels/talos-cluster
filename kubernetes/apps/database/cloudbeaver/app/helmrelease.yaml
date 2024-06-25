@@ -33,8 +33,13 @@ spec:
             image:
               repository: dbeaver/cloudbeaver
               tag: 24.1.1
+            command:
+              - "/bin/sh"
             args:
-              - "-web-config=/etc/cloudbeaver/cloudbeaver.conf"
+              - "-c"
+              - "while true; do echo hi; sleep 10; done"
+            # args:
+            #   - "-web-config=/etc/cloudbeaver/cloudbeaver.conf"
             env:
               CB_SERVER_NAME: *app
               CB_SERVER_URL: "{{ .Release.Name }}.${SECRET_DOMAIN}"
