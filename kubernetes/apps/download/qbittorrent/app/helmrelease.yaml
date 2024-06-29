@@ -27,6 +27,10 @@ spec:
       qbittorrent:
         annotations:
           reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
         containers:
           app:
             image:
@@ -65,9 +69,11 @@ spec:
               limits:
                 memory: 2Gi
             securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              # allowPrivilegeEscalation: false
+              # readOnlyRootFilesystem: true
+              # capabilities: { drop: ["ALL"] }
+              runAsUser: 568
+              runAsGroup: 568
 
           vuetorrent:
             dependsOn: app
@@ -110,8 +116,8 @@ spec:
               limits:
                 memory: 128M
             securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
+              # allowPrivilegeEscalation: false
+              # readOnlyRootFilesystem: true
               capabilities: { add: ["NET_ADMIN"] }
             # securityContext:
             #   capabilities: { add: ["NET_ADMIN"] }
@@ -136,18 +142,18 @@ spec:
                 memory: 64M
               limits:
                 memory: 128M
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+            # securityContext:
+            #   allowPrivilegeEscalation: false
+            #   readOnlyRootFilesystem: true
+            #   capabilities: { drop: ["ALL"] }
     defaultPodOptions:
       automountServiceAccountToken: false
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        seccompProfile: { type: RuntimeDefault }
+      # securityContext:
+        # runAsNonRoot: true
+        # runAsUser: 568
+        # runAsGroup: 568
+        # fsGroup: 568
+        # seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: *app
