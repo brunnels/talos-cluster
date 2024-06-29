@@ -4,14 +4,8 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: "cifs-downloads"
-  # labels:
-  #   nasf586af/cifs: "cifs-share"
+  labels:
+    nasf586af/cifs: "cifs-share"
 provisioner: smb.csi.k8s.io
 parameters:
   source: "//nasf586af.myqnapcloud.com/downloads"
-  onDelete: retain
-  csi.storage.k8s.io/node-stage-secret-name: "nasf586af-cifs-secret"
-  csi.storage.k8s.io/node-stage-secret-namespace: "storage"
-reclaimPolicy: Delete
-volumeBindingMode: Immediate
-allowVolumeExpansion: true
