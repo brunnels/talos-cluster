@@ -51,6 +51,18 @@ spec:
         labelSelector: "nasf586af/cifs=cifs-share"
       patch: |
         - op: add
+          path: /provisioner
+          value: smb.csi.k8s.io
+        - op: add
+          path: /volumeBindingMode
+          value: Immediate
+        - op: add
+          path: /allowVolumeExpansion
+          value: true
+        - op: add
+          path: /reclaimPolicy
+          value: Delete
+        - op: add
           path: /parameters/onDelete
           value: retain
         - op: add

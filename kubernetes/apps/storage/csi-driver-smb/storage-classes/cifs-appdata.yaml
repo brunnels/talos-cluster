@@ -6,9 +6,6 @@ metadata:
   name: "cifs-appdata"
   labels:
     nasf586af/cifs: "cifs-share"
-provisioner: smb.csi.k8s.io
 parameters:
   source: "//nasf586af.myqnapcloud.com/appdata"
-reclaimPolicy: Delete
-volumeBindingMode: Immediate
-allowVolumeExpansion: true
+
