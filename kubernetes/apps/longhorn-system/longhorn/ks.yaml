@@ -38,6 +38,7 @@ spec:
     - name: longhorn
   path: ./kubernetes/apps/longhorn-system/longhorn/storageclass
   prune: true
+  force: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
