@@ -99,7 +99,7 @@ spec:
               VPN_SERVICE_PROVIDER: privado
               VPN_TYPE: openvpn
               # VPN_INTERFACE: tun0
-              # FIREWALL: "off"
+              FIREWALL: "off"
               # DOT: "off"
               # FIREWALL_INPUT_PORTS: *port
               # FIREWALL_DEBUG: "on"
