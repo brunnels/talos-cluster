@@ -114,6 +114,7 @@ spec:
             securityContext:
               capabilities: { add: ["NET_ADMIN"] }
               allowPrivilegeEscalation: true
+              privileged: true
           port-forward:
             dependsOn: gluetun
             image:
