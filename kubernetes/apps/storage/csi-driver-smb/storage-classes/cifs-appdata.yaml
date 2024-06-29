@@ -9,9 +9,6 @@ metadata:
 provisioner: smb.csi.k8s.io
 parameters:
   source: "//nasf586af.myqnapcloud.com/appdata"
-  onDelete: retain
-  csi.storage.k8s.io/node-stage-secret-name: "nasf586af-cifs-secret"
-  csi.storage.k8s.io/node-stage-secret-namespace: "storage"
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
 allowVolumeExpansion: true

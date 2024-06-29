@@ -49,18 +49,21 @@ spec:
     - target:
         kind: StorageClass
         labelSelector: "nasf586af/cifs=cifs-share"
-      patch: |-
-        apiVersion: storage.k8s.io/v1
-        kind: StorageClass
-        metadata:
-          labels:
-            nasf586af/cifs: "cifs-share"
-        mountOptions:
-          - "dir_mode=0777"
-          - "file_mode=0666"
-          - "uid=1000"
-          - "gid=100"
-          - noperm
-          - mfsymlinks
-          - cache=strict
-          - noserverino
+      patch: |
+        - op: add
+          path: /parameters
+          value:
+            onDelete: retain
+            csi.storage.k8s.io/node-stage-secret-name: "nasf586af-cifs-secret"
+            csi.storage.k8s.io/node-stage-secret-namespace: "storage"
+        - op: add
+          path: /mountOptions
+          value:
+            - "dir_mode=0777"
+            - "file_mode=0666"
+            - "uid=1000"
+            - "gid=100"
+            - noperm
+            - mfsymlinks
+            - cache=strict
+            - noserverino
