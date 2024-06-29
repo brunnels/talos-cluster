@@ -99,11 +99,11 @@ spec:
               VPN_SERVICE_PROVIDER: privado
               VPN_TYPE: openvpn
               VPN_INTERFACE: tun0
-              # FIREWALL: "off"
+              FIREWALL: "off"
               DOT: "off"
-              FIREWALL_INPUT_PORTS: *port
-              FIREWALL_DEBUG: "on"
-              FIREWALL_OUTBOUND_SUBNETS: "10.0.0.0/8" # Allow access to k8s subnets
+              # FIREWALL_INPUT_PORTS: *port
+              # FIREWALL_DEBUG: "on"
+              # FIREWALL_OUTBOUND_SUBNETS: "10.0.0.0/8" # Allow access to k8s subnets
               # DOT: "on"
               LOG_LEVEL: "debug"
             envFrom:
