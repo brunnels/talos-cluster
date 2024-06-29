@@ -45,3 +45,19 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  patches:
+    - patch: |-
+        apiVersion: storage.k8s.io/v1
+        kind: StorageClass
+        metadata:
+          labels:
+            nasf586af/cifs: "cifs-share"
+        mountOptions:
+          - "dir_mode=0777"
+          - "file_mode=0666"
+          - "uid=1000"
+          - "gid=100"
+          - noperm
+          - mfsymlinks
+          - cache=strict
+          - noserverino
