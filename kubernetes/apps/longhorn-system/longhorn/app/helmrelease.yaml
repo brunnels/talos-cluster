@@ -23,13 +23,13 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    csi:
-      attacherReplicaCount: &replicas 1
-      provisionerReplicaCount: *replicas
-      resizerReplicaCount: *replicas
-      snapshotterReplicaCount: *replicas
-    persistence:
-      defaultClassReplicaCount: 1
+    # csi:
+    #   attacherReplicaCount: &replicas 1
+    #   provisionerReplicaCount: *replicas
+    #   resizerReplicaCount: *replicas
+    #   snapshotterReplicaCount: *replicas
+    # persistence:
+    #   defaultClassReplicaCount: 1
     defaultSettings:
       createDefaultDiskLabeledNodes: true
       defaultDataLocality: true
