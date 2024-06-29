@@ -49,15 +49,13 @@ spec:
     - target:
         kind: StorageClass
         labelSelector: "nasf586af/cifs=cifs-share"
-      patch: |
-        - op: add
-          path: /mountOptions
-          value:
-            - "dir_mode=0777"
-            - "file_mode=0666"
-            - "uid=1000"
-            - "gid=100"
-            - noperm
-            - mfsymlinks
-            - cache=strict
-            - noserverino
+      patch: |-
+        mountOptions:
+          - "dir_mode=0777"
+          - "file_mode=0666"
+          - "uid=1000"
+          - "gid=100"
+          - noperm
+          - mfsymlinks
+          - cache=strict
+          - noserverino
