@@ -95,7 +95,7 @@ spec:
           gethomepage.dev/icon: sabnzbd.png
           gethomepage.dev/widget.type: sabnzbd
           gethomepage.dev/widget.url: http://sabnzbd.download
-          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_SABNZBD_TOKEN}}"
+          gethomepage.dev/widget.key: "{{`{{HOMEPAGE_VAR_SABNZBD_TOKEN}}`}}"
           # nginx.ingress.kubernetes.io/auth-method: GET
           # nginx.ingress.kubernetes.io/auth-url: http://authelia.security.svc.cluster.local/api/verify
           # nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}?rm=$request_method
