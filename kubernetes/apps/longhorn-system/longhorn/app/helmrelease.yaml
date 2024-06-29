@@ -40,8 +40,8 @@ spec:
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
       concurrentAutomaticEngineUpgradePerNodeLimit: 3
       orphanAutoDeletion: true
-    longhornUI:
-      replicas: *replicas
+    # longhornUI:
+    #   replicas: *replicas
     ingress:
       enabled: true
       ingressClassName: internal
