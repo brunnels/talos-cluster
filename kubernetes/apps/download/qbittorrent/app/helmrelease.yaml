@@ -93,10 +93,12 @@ spec:
               VPN_SERVICE_PROVIDER: privado
               VPN_TYPE: openvpn
               VPN_INTERFACE: tun0
-              FIREWALL_INPUT_PORTS: *port
-              FIREWALL_DEBUG: "on"
-              FIREWALL_OUTBOUND_SUBNETS: "10.0.0.0/8" # Allow access to k8s subnets
-              DOT: "on"
+              FIREWALL: "off"
+              DOT: "off"
+              # FIREWALL_INPUT_PORTS: *port
+              # FIREWALL_DEBUG: "on"
+              # FIREWALL_OUTBOUND_SUBNETS: "10.0.0.0/8" # Allow access to k8s subnets
+              # DOT: "on"
               LOG_LEVEL: "debug"
             envFrom:
               - secretRef:
@@ -107,14 +109,14 @@ spec:
                 memory: 64M
               limits:
                 memory: 128M
-            # securityContext:
-            #   allowPrivilegeEscalation: false
-            #   readOnlyRootFilesystem: true
-            #   capabilities: { add: ["NET_ADMIN"] }
             securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
               capabilities: { add: ["NET_ADMIN"] }
-              allowPrivilegeEscalation: true
-              privileged: true
+            # securityContext:
+            #   capabilities: { add: ["NET_ADMIN"] }
+            #   allowPrivilegeEscalation: true
+            #   privileged: true
           port-forward:
             dependsOn: gluetun
             image:
