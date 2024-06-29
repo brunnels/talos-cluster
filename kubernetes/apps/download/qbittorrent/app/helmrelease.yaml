@@ -182,15 +182,14 @@ spec:
         size: 50Ti
         globalMounts:
           - path: /downloads
-            subPath: sabnzbd
+            subPath: qbittorrent
       add-ons:
         type: emptyDir
       empty-config:
         type: emptyDir
-
       gluetun-data:
         type: emptyDir
         advancedMounts:
-          main:
+          qbittorrent:
             gluetun:
               - path: /tmp/gluetun
