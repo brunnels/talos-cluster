@@ -90,12 +90,14 @@ spec:
               repository: ghcr.io/qdm12/gluetun
               tag: v3.38.0
             env:
-              VPN_SERVICE_PROVIDER: "privado"
+              VPN_SERVICE_PROVIDER: privado
+              VPN_TYPE: openvpn
+              VPN_INTERFACE: tun0
               FIREWALL_INPUT_PORTS: *port
               FIREWALL_DEBUG: "on"
               FIREWALL_OUTBOUND_SUBNETS: "10.0.0.0/8" # Allow access to k8s subnets
-              LOG_LEVEL: "debug"
               DOT: "on"
+              LOG_LEVEL: "debug"
             envFrom:
               - secretRef:
                   name: qbittorrent-secret
@@ -105,10 +107,13 @@ spec:
                 memory: 64M
               limits:
                 memory: 128M
+            # securityContext:
+            #   allowPrivilegeEscalation: false
+            #   readOnlyRootFilesystem: true
+            #   capabilities: { add: ["NET_ADMIN"] }
             securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
               capabilities: { add: ["NET_ADMIN"] }
+              allowPrivilegeEscalation: false
           port-forward:
             image:
               repository: ghcr.io/bjw-s/gluetun-qb-port-sync
