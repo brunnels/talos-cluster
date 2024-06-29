@@ -50,6 +50,11 @@ spec:
         kind: StorageClass
         labelSelector: "nasf586af/cifs=cifs-share"
       patch: |-
+        apiVersion: storage.k8s.io/v1
+        kind: StorageClass
+        metadata:
+          labels:
+            nasf586af/cifs: "cifs-share"
         mountOptions:
           - "dir_mode=0777"
           - "file_mode=0666"
