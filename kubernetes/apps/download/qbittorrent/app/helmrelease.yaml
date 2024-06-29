@@ -94,13 +94,13 @@ spec:
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
-              tag: v3.38.0
+              tag: latest
             env:
               VPN_SERVICE_PROVIDER: privado
               VPN_TYPE: openvpn
-              VPN_INTERFACE: tun0
-              FIREWALL: "off"
-              DOT: "off"
+              # VPN_INTERFACE: tun0
+              # FIREWALL: "off"
+              # DOT: "off"
               # FIREWALL_INPUT_PORTS: *port
               # FIREWALL_DEBUG: "on"
               # FIREWALL_OUTBOUND_SUBNETS: "10.0.0.0/8" # Allow access to k8s subnets
