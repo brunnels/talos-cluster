@@ -1,0 +1,18 @@
+---
+# yaml-language-server: $schema=https://kubernetesjsonschema.dev/v1.18.1-standalone-strict/pod-v1.json
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vpn-test-pod
+  labels:
+    vpn-routed-gateway: "true"
+spec:
+  containers:
+  - name: fedora-shell
+    image: fedora:latest
+    resources:
+      limits:
+        memory: "1G"
+        cpu: "1"
+    command: [ "sleep" ]
+    args: [ "infinity" ]
