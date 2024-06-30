@@ -43,8 +43,8 @@ spec:
             value: openvpn
           - name: OPENVPN_PROTOCOL
             value: udp
-          # - name: FIREWALL
-          #   value: "off"
+          - name: FIREWALL
+            value: "off"
           - name: DOT
             value: "off"
           - name: HEALTH_VPN_DURATION_INITIAL
@@ -55,7 +55,7 @@ spec:
           #   value: debug
         envFrom:
           - secretRef:
-              name: vpn-gateway-secret
+              name: *app
         resources:
           requests:
             cpu: 5m
