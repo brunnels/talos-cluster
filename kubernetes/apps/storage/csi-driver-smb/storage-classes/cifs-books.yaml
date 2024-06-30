@@ -8,4 +8,4 @@ metadata:
     nasf586af/cifs: "cifs-share"
 provisioner: smb.csi.k8s.io
 parameters:
-  source: "//nasf586af.myqnapcloud.com/books"
+  source: "//${SECRET_CIFS_SERVER}/books"

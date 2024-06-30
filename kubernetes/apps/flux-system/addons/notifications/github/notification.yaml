@@ -8,7 +8,7 @@ spec:
   type: github
   address: https://github.com/brunnels/talos-cluster
   secretRef:
-    name: github-notification-secret
+    name: github-notification
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/notification.toolkit.fluxcd.io/alert_v1beta3.json
 apiVersion: notification.toolkit.fluxcd.io/v1beta3

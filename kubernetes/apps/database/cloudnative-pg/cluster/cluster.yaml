@@ -12,7 +12,7 @@ spec:
     size: 20Gi
     storageClass: openebs-hostpath
   superuserSecret:
-    name: cloudnative-pg-secret
+    name: cloudnative-pg
   enableSuperuserAccess: true
   postgresql:
     parameters:
@@ -46,10 +46,10 @@ spec:
       serverName: &currentCluster postgres-v1
       s3Credentials:
         accessKeyId:
-          name: cloudnative-pg-secret
+          name: cloudnative-pg
           key: s3-key-id
         secretAccessKey:
-          name: cloudnative-pg-secret
+          name: cloudnative-pg
           key: s3-secret-key
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   # externalClusters:
@@ -71,7 +71,7 @@ spec:
     #     dbname: postgres
     #     sslmode: require
     #   password:
-    #     name: cloudnative-pg-secret
+    #     name: cloudnative-pg
     #     key: password
 
   # Note: previousCluster needs to be set to the name of the previous

@@ -44,7 +44,7 @@ spec:
                 sabnzbd.${SECRET_DOMAIN}
             envFrom:
               - secretRef:
-                  name: sabnzbd-secret
+                  name: *app
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true

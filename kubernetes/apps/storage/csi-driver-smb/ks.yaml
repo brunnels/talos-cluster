@@ -64,7 +64,7 @@ spec:
           value: retain
         - op: add
           path: /parameters/csi.storage.k8s.io~1node-stage-secret-name
-          value: nasf586af-cifs-secret
+          value: csi-driver-smb
         - op: add
           path: /parameters/csi.storage.k8s.io~1node-stage-secret-namespace
           value: storage
