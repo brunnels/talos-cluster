@@ -64,17 +64,17 @@ spec:
         securityContext:
           capabilities: { add: ["NET_ADMIN"] }
         networkPolicy:
-          enabled: true
-          egress:
-            - to:
-                - ipBlock:
-                    cidr: 0.0.0.0/0
-              ports:
-                # VPN traffic
-                - port: 51820
-                  protocol: UDP
-            - to:
-                - namespaceSelector: {}
+          enabled: false
+          # egress:
+          #   - to:
+          #       - ipBlock:
+          #           cidr: 0.0.0.0/0
+          #     ports:
+          #       # VPN traffic
+          #       - port: 51820
+          #         protocol: UDP
+          #   - to:
+          #       - namespaceSelector: {}
       netshoot:
         enabled: true
     podAnnotations:

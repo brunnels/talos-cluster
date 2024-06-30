@@ -2,27 +2,39 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: vpn-gateway-openvpn
+  name: vpn-gateway-pod-gateway
+  labels:
+    app.kubernetes.io/instance: &instance vpn-gateway
+    app.kubernetes.io/name: &name pod-gateway
 spec:
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/name: vpn-gateway
+      app.kubernetes.io/instance: *instance
+      app.kubernetes.io/name: *name
   egress:
-    - toEntities:
-        - world
-    - toPorts:
+    - toCIDR:
+        - 0.0.0.0/0
+      toPorts:
         - ports:
+            - port: "51820"
+              protocol: UDP
             - port: "1194"
               protocol: UDP
+    - toEntities:
+        - cluster
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: vpn-gateway-cluster-dns
+  name: vpn-gateway-pod-gateway-cluster-dns
+  labels:
+    app.kubernetes.io/instance: *instance
+    app.kubernetes.io/name: *name
 spec:
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/name: vpn-gateway
+      app.kubernetes.io/instance: *instance
+      app.kubernetes.io/name: *name
   egress:
     - toEndpoints:
         - matchLabels:
@@ -36,11 +48,15 @@ spec:
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: vpn-gateway-vxlan
+  name: vpn-gateway-pod-gateway-vxlan
+  labels:
+    app.kubernetes.io/instance: *instance
+    app.kubernetes.io/name: *name
 spec:
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/name: vpn-gateway
+      app.kubernetes.io/instance: *instance
+      app.kubernetes.io/name: *name
   egress:
     - toPorts:
         - ports:
