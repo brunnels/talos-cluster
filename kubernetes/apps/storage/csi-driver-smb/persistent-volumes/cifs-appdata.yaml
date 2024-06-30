@@ -10,6 +10,8 @@ metadata:
     csi-driver-smb: "cifs-share"
 spec:
   storageClassName: *name
+  capacity:
+    storage: 50Ti
   csi:
     driver: smb.csi.k8s.io
     volumeHandle: ${SECRET_CIFS_SERVER}/appdata#cifs-appdata##retain

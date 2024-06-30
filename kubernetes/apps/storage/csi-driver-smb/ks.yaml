@@ -51,9 +51,6 @@ spec:
         labelSelector: "csi-driver-smb=cifs-share"
       patch: |
         - op: add
-          path: /spec/capacity/storage
-          value: 50Ti
-        - op: add
           path: /spec/accessModes
           value:
             - ReadWriteMany
