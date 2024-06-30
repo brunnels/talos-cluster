@@ -16,10 +16,10 @@ spec:
   - env:
     - name: DOT
       value: "off"
-    - name: FIREWALL
-      value: "off"
-    - name: LOG_LEVEL
-      value: debug
+    # - name: FIREWALL
+    #   value: "off"
+    # - name: LOG_LEVEL
+    #   value: debug
     - name: VPN_SERVICE_PROVIDER
       value: privado
     - name: VPN_TYPE
@@ -30,8 +30,8 @@ spec:
       value: "United States"
     - name: HEALTH_VPN_DURATION_INITIAL
       value: 30s
-    - name: OPENVPN_VERBOSITY
-      value: "6"
+    # - name: OPENVPN_VERBOSITY
+    #   value: "6"
     envFrom:
     - secretRef:
         name: vpn-gateway-secret
