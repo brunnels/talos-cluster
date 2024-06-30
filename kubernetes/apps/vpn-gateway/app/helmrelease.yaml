@@ -26,6 +26,7 @@ spec:
     image:
       repository: ghcr.io/angelnu/pod-gateway
       tag: v1.10.0@sha256:d728eac85f750b37c96a0dafd038561ea4b8035857802be1128ea9b19c61e181
+    automountServiceAccountToken: false
     DNS: 172.16.1.1
     addons:
       vpn:
@@ -42,16 +43,16 @@ spec:
             value: openvpn
           - name: OPENVPN_PROTOCOL
             value: udp
-          - name: FIREWALL
-            value: "off"
+          # - name: FIREWALL
+          #   value: "off"
           - name: DOT
             value: "off"
           - name: HEALTH_VPN_DURATION_INITIAL
             value: 30s
           - name: FIREWALL_VPN_INPUT_PORTS
             value: 1194,28163
-          - name: LOG_LEVEL
-            value: debug
+          # - name: LOG_LEVEL
+          #   value: debug
         envFrom:
           - secretRef:
               name: vpn-gateway-secret
@@ -65,16 +66,6 @@ spec:
           capabilities: { add: ["NET_ADMIN"] }
         networkPolicy:
           enabled: false
-          # egress:
-          #   - to:
-          #       - ipBlock:
-          #           cidr: 0.0.0.0/0
-          #     ports:
-          #       # VPN traffic
-          #       - port: 51820
-          #         protocol: UDP
-          #   - to:
-          #       - namespaceSelector: {}
       netshoot:
         enabled: true
     podAnnotations:
