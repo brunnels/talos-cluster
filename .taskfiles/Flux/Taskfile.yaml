@@ -23,6 +23,29 @@ tasks:
       - msg: Missing Sops Age key file
         sh: test -f {{.AGE_FILE}}
 
+  test-build:
+    desc: Test build a Flux Kustomization resource for a cluster
+    summary: |
+      Args:
+        path: Path under apps containing the Flux Kustomization resource (ks.yaml) (required)
+        ns: Namespace the Flux Kustomization exists in (default: flux-system)
+    cmd: |
+      flux --kubeconfig {{.KUBECONFIG_FILE}} build ks $(basename {{.path}}) \
+          --dry-run --verbose --namespace {{.ns}} \
+          --kustomization-file {{.KUBERNETES_DIR}}/apps/{{.path}}/ks.yaml \
+          --path {{.KUBERNETES_DIR}}/apps/{{.path}}
+    requires:
+      vars: ["path"]
+    vars:
+      ns: '{{.ns | default "flux-system"}}'
+      ks:
+        sh: flux --kubeconfig {{.KUBECONFIG_FILE}} --namespace {{.ns}} get kustomizations $(basename {{.path}}) 2>&1
+    preconditions:
+      - msg: Missing kubeconfig
+        sh: test -f {{.KUBECONFIG_FILE}}
+      - msg: Missing Flux Kustomization for app {{.path}}
+        sh: test -f {{.KUBERNETES_DIR}}/apps/{{.path}}/ks.yaml
+
   apply:
     desc: Apply a Flux Kustomization resource for a cluster
     summary: |
