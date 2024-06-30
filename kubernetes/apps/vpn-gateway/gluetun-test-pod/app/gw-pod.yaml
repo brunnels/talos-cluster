@@ -1,0 +1,48 @@
+---
+# yaml-language-server: $schema=https://kubernetesjsonschema.dev/v1.18.1-standalone-strict/pod-v1.json
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    configmap.reloader.stakater.com/reload: vpn-gateway-pod-gateway,vpn-gateway-pod-gateway-addon-vpn
+    secret.reloader.stakater.com/reload: vpn-gateway-secret
+  labels:
+    app.kubernetes.io/instance: vpn-gateway
+    app.kubernetes.io/name: pod-gateway
+  name: gluetun-test-pod
+spec:
+  automountServiceAccountToken: true
+  containers:
+  - env:
+    - name: DOT
+      value: "off"
+    - name: FIREWALL
+      value: "off"
+    - name: LOG_LEVEL
+      value: debug
+    - name: VPN_SERVICE_PROVIDER
+      value: privado
+    - name: VPN_TYPE
+      value: openvpn
+    - name: OPENVPN_PROTOCOL
+      value: udp
+    - name: HEALTH_VPN_DURATION_INITIAL
+      value: 30s
+    envFrom:
+    - secretRef:
+        name: vpn-gateway-secret
+    image: docker.io/qmcgaw/gluetun:v3.38.0@sha256:5522794f5cce6d84bc7f06b1e3a3b836ede9100c64aec94543cb503bb2ecb72f
+    imagePullPolicy: IfNotPresent
+    name: gluetun
+    resources:
+      limits:
+        cpu: 5m
+        memory: 128M
+      requests:
+        cpu: 5m
+        memory: 64M
+    securityContext:
+      capabilities:
+        add:
+        - NET_ADMIN
+      privileged: true
