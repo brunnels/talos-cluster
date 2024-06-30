@@ -26,8 +26,12 @@ spec:
       value: openvpn
     - name: OPENVPN_PROTOCOL
       value: udp
+    - name: SERVER_COUNTRIES
+      value: Netherlands
     - name: HEALTH_VPN_DURATION_INITIAL
       value: 30s
+    - name: OPENVPN_VERBOSITY
+      value: "6"
     envFrom:
     - secretRef:
         name: vpn-gateway-secret
