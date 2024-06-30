@@ -15,4 +15,4 @@ spec:
         memory: "1G"
         cpu: "1"
     command: [ "/bin/bash" ]
-    args: [ "-c", "trap : TERM INT; sleep i infinity & wait" ]
+    args: [ "-c", "trap : TERM INT; sleep 9999999999d & wait" ]
