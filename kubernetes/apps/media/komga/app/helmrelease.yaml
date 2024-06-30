@@ -1,0 +1,101 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app komga
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: volsync-system
+  values:
+    controllers:
+      komga:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: gotson/komga
+              tag: "1.11.1@sha256:a21459c33136d2d65336e15683e8dba8330dece8747036edaae02d6ebc0fabbe"
+            env:
+              TZ: Europe/Paris
+              SERVER_PORT: &port 80
+              KOMGA_CONFIGDIR: /config
+              LOGGING_FILE_NAME: /dev/stdout
+            resources:
+              requests:
+                cpu: 15m
+                memory: 256Mi
+              limits:
+                memory: 2Gi
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+    ingress:
+      app:
+        className: external
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Books
+          gethomepage.dev/name: Komga
+          gethomepage.dev/icon: komga.png
+          gethomepage.dev/description: Comic/Ebook Web Reader
+          gethomepage.dev/widget.type: komga
+          gethomepage.dev/widget.url: http://komga.media:80
+          gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_KOMGA_USERNAME}}` }}"
+          gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_KOMGA_PASSWORD}}` }}"
+          external-dns.alpha.kubernetes.io/target: external.oxygn.dev
+        hosts:
+          - host: "komga.oxygn.dev"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        existingClaim: *app
+      app:
+        type: secret
+        name: komga-secret
+        defaultMode: 0400
+        globalMounts:
+          - subPath: application.yml
+            path: /config/application.yml
+      media:
+        type: nfs
+        server: "10.10.10.20"
+        path: "/volume2/Media/Comics"
+        globalMounts:
+          - path: /media/comics
+            readOnly: true
+      books:
+        type: nfs
+        server: "10.10.10.20"
+        path: "/volume2/Media/Books/readarr"
+        globalMounts:
+          - path: /media/books
+            readOnly: true

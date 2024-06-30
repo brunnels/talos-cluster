@@ -1,0 +1,87 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: vpn-gateway-openvpn
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: &name vpn-gateway
+  egress:
+    - toEntities:
+        - world
+    - toPorts:
+        - ports:
+            - port: "1197"
+              protocol: UDP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: vpn-gateway-cluster-dns
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: pod-gateway
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            "k8s:io.kubernetes.pod.namespace": kube-system
+            "k8s:k8s-app": kube-dns
+    - toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: vpn-gateway-pod-gateway
+  namespace: network
+  labels:
+    app.kubernetes.io/name: &name vpn-gateway
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: *name
+  egress:
+    - toCIDR:
+        - 0.0.0.0/0
+      toPorts:
+        - ports:
+            - port: "51820"
+              protocol: UDP
+            - port: "1194"
+              protocol: UDP
+    - toEntities:
+        - cluster
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: pod-gateway-vxlan
+  namespace: network
+  labels:
+    app.kubernetes.io/instance: *instance
+    app.kubernetes.io/name: *name
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: *instance
+      app.kubernetes.io/name: *name
+  egress:
+    - toPorts:
+        - ports:
+            - port: "1194"
+              protocol: UDP
+  ingress:
+    - toPorts:
+        - ports:
+            - port: "1194"
+              protocol: UDP
+    - icmps:
+        - fields:
+            - type: 8
+              family: IPv4

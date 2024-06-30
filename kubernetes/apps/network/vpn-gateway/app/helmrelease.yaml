@@ -26,6 +26,7 @@ spec:
     image:
       repository: ghcr.io/angelnu/pod-gateway
       tag: v1.10.0@sha256:d728eac85f750b37c96a0dafd038561ea4b8035857802be1128ea9b19c61e181
+    DNS: 172.16.1.1
     addons:
       vpn:
         enabled: true
@@ -45,10 +46,12 @@ spec:
             value: "off"
           - name: DOT
             value: "off"
-          - name: LOG_LEVEL
-            value: "debug"
           - name: HEALTH_VPN_DURATION_INITIAL
             value: 30s
+          - name: FIREWALL_VPN_INPUT_PORTS
+            value: 1194,28163
+          - name: LOG_LEVEL
+            value: "debug"
         envFrom:
           - secretRef:
               name: vpn-gateway-secret

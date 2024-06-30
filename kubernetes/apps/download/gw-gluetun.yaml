@@ -1,0 +1,249 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    configmap.reloader.stakater.com/reload: vpn-gateway-pod-gateway,vpn-gateway-pod-gateway-addon-vpn
+    secret.reloader.stakater.com/reload: vpn-gateway-secret
+  creationTimestamp: "2024-06-30T17:12:12Z"
+  generateName: vpn-gateway-pod-gateway-7d556d466-
+  labels:
+    app.kubernetes.io/instance: vpn-gateway
+    app.kubernetes.io/name: pod-gateway
+    pod-template-hash: 7d556d466
+  name: vpn-gateway-pod-gateway-7d556d466-4gh2b
+  namespace: vpn-gateway
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: vpn-gateway-pod-gateway-7d556d466
+    uid: e39f9298-7854-4d9b-bfb2-ff692b4ca449
+  resourceVersion: "10346575"
+  uid: 67775443-8e4c-459f-bb4f-c9933f5754c5
+spec:
+  automountServiceAccountToken: true
+  containers:
+  - command:
+    - /bin/gateway_sidecar.sh
+    image: ghcr.io/angelnu/pod-gateway:v1.10.0@sha256:d728eac85f750b37c96a0dafd038561ea4b8035857802be1128ea9b19c61e181
+    imagePullPolicy: IfNotPresent
+    name: vpn-gateway-pod-gateway
+    ports:
+    - containerPort: 4789
+      name: http
+      protocol: UDP
+    resources: {}
+    securityContext:
+      capabilities:
+        add:
+        - NET_RAW
+        - NET_ADMIN
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /config
+      name: config
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-xhpfk
+      readOnly: true
+  - env:
+    - name: VPN_SERVICE_PROVIDER
+      value: privado
+    - name: VPN_TYPE
+      value: openvpn
+    - name: OPENVPN_PROTOCOL
+      value: udp
+    - name: FIREWALL
+      value: "off"
+    - name: DOT
+      value: "off"
+    - name: HEALTH_VPN_DURATION_INITIAL
+      value: 30s
+    - name: LOG_LEVEL
+      value: debug
+    envFrom:
+    - secretRef:
+        name: vpn-gateway-secret
+    image: docker.io/qmcgaw/gluetun:v3.38.0@sha256:5522794f5cce6d84bc7f06b1e3a3b836ede9100c64aec94543cb503bb2ecb72f
+    imagePullPolicy: IfNotPresent
+    name: gluetun
+    resources:
+      limits:
+        memory: 128M
+      requests:
+        cpu: 5m
+        memory: 64M
+    securityContext:
+      capabilities:
+        add:
+        - NET_RAW
+        - NET_ADMIN
+      privileged: true
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-xhpfk
+      readOnly: true
+  - command:
+    - /bin/sh
+    - -c
+    - sleep infinity
+    image: ghcr.io/nicolaka/netshoot:v0.11
+    imagePullPolicy: IfNotPresent
+    name: netshoot
+    resources: {}
+    securityContext:
+      capabilities:
+        add:
+        - NET_ADMIN
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-xhpfk
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  initContainers:
+  - command:
+    - /bin/gateway_init.sh
+    image: ghcr.io/angelnu/pod-gateway:v1.10.0@sha256:d728eac85f750b37c96a0dafd038561ea4b8035857802be1128ea9b19c61e181
+    imagePullPolicy: IfNotPresent
+    name: routes
+    resources: {}
+    securityContext:
+      privileged: true
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /config
+      name: config
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-xhpfk
+      readOnly: true
+  nodeName: wnvm2
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - configMap:
+      defaultMode: 365
+      name: vpn-gateway-pod-gateway
+    name: config
+  - name: kube-api-access-xhpfk
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2024-06-30T17:12:14Z"
+    status: "True"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2024-06-30T17:12:14Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2024-06-30T17:12:15Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2024-06-30T17:12:15Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2024-06-30T17:12:13Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://7c460bb157c604e052afdebb47a3089d6d1b266b2b0611f09cca8647062c5084
+    image: sha256:f72b6f64c077b221708453058de94e57d3faedad771682edbacdc751ae8e80a7
+    imageID: docker.io/qmcgaw/gluetun@sha256:5522794f5cce6d84bc7f06b1e3a3b836ede9100c64aec94543cb503bb2ecb72f
+    lastState: {}
+    name: gluetun
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2024-06-30T17:12:14Z"
+  - containerID: containerd://31db5e24f5c0b60941e2641da56c55e7758631c22ab0bf0a4daf5b6a80d65bb6
+    image: ghcr.io/nicolaka/netshoot:v0.11
+    imageID: ghcr.io/nicolaka/netshoot@sha256:a7c92e1a2fb9287576a16e107166fee7f9925e15d2c1a683dbb1f4370ba9bfe8
+    lastState: {}
+    name: netshoot
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2024-06-30T17:12:14Z"
+  - containerID: containerd://8857a54f222740038ab04c5357315eef0bdc852f86d0d81838bf9b52786a0984
+    image: sha256:9c1cd5e506f32da26ca75fbe7a69dc4278c62d478f71249d0ca76ca9087ee798
+    imageID: ghcr.io/angelnu/pod-gateway@sha256:d728eac85f750b37c96a0dafd038561ea4b8035857802be1128ea9b19c61e181
+    lastState: {}
+    name: vpn-gateway-pod-gateway
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2024-06-30T17:12:14Z"
+  hostIP: 10.50.0.13
+  hostIPs:
+  - ip: 10.50.0.13
+  initContainerStatuses:
+  - containerID: containerd://8fd1320580a9b577b751fb5050165d0af13310ceadc5255016225d748324ead0
+    image: sha256:9c1cd5e506f32da26ca75fbe7a69dc4278c62d478f71249d0ca76ca9087ee798
+    imageID: ghcr.io/angelnu/pod-gateway@sha256:d728eac85f750b37c96a0dafd038561ea4b8035857802be1128ea9b19c61e181
+    lastState: {}
+    name: routes
+    ready: true
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: containerd://8fd1320580a9b577b751fb5050165d0af13310ceadc5255016225d748324ead0
+        exitCode: 0
+        finishedAt: "2024-06-30T17:12:13Z"
+        reason: Completed
+        startedAt: "2024-06-30T17:12:13Z"
+  phase: Running
+  podIP: 10.169.3.182
+  podIPs:
+  - ip: 10.169.3.182
+  qosClass: Burstable
+  startTime: "2024-06-30T17:12:13Z"
