@@ -5,4 +5,3 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./ks.yaml
-  - ./gluetun-test-pod/ks.yaml
