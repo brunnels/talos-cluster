@@ -158,8 +158,8 @@ spec:
         advancedMounts:
           qbittorrent:
             app:
-            - path: /downloads
-              subPath: qbittorrent
+              - path: /downloads
+                subPath: qbittorrent
       games:
         storageClass: cifs-games
         accessMode: ReadWriteMany
