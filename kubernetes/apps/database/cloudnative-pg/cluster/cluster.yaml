@@ -39,7 +39,7 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: "${SECRET_S3_CLOUDNATIVE_PG_BUCKET}-v2"
+      destinationPath: "${SECRET_S3_CLOUDNATIVE_PG_BUCKET}-v1"
       endpointURL: "${SECRET_S3_SERVER}"
       # Note: serverName version needs to be incremented or changed
       # when recovering from an existing cnpg cluster
@@ -53,12 +53,35 @@ spec:
           key: s3-secret-key
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
-    - name: &previousCluster postgres
-      barmanObjectStore:
-        <<: *barmanObjectStore
-        serverName: *previousCluster
+    # - name: &previousCluster postgres
+    #   barmanObjectStore:
+    #     <<: *barmanObjectStore
+    #     serverName: *previousCluster
+    # - name: &previousCluster postgres
+    #   barmanObjectStore:
+    #     <<: *barmanObjectStore
+    #     serverName: *previousCluster
+    - name: postgres
+      connectionParameters:
+        host: 10.1.0.23
+        user: postgres
+        dbname: postgres
+        sslmode: require
+      password:
+        name: cloudnative-pg-secret
+        key: password
   # Note: previousCluster needs to be set to the name of the previous
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
-    recovery:
-      source: *previousCluster
+    # recovery:
+    #   source: *previousCluster
+    # upgrade or recover from another running instance
+    initdb:
+      import:
+        type: monolith
+        databases:
+          - "*"
+        roles:
+          - "*"
+        source:
+          externalCluster: postgres
