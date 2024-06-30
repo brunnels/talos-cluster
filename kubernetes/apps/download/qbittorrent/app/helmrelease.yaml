@@ -98,9 +98,9 @@ spec:
             env:
               VPN_SERVICE_PROVIDER: privado
               VPN_TYPE: openvpn
-              # VPN_INTERFACE: tun0
+              VPN_INTERFACE: tun0
               FIREWALL: "off"
-              # DOT: "off"
+              DOT: "off"
               # FIREWALL_INPUT_PORTS: *port
               # FIREWALL_DEBUG: "on"
               # FIREWALL_OUTBOUND_SUBNETS: "10.0.0.0/8" # Allow access to k8s subnets
@@ -108,7 +108,7 @@ spec:
               LOG_LEVEL: "debug"
             envFrom:
               - secretRef:
-                  name: qbittorrent-secret
+                  name: vpn-gateway-secret
             resources:
               requests:
                 cpu: 5m
