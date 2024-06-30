@@ -12,6 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   path: ./kubernetes/apps/download/vpn-test-pod/app
   prune: true
+  force: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
