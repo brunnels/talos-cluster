@@ -40,8 +40,6 @@ spec:
             value: privado
           - name: VPN_TYPE
             value: openvpn
-          - name: VPN_INTERFACE
-            value: tun0
           - name: OPENVPN_PROTOCOL
             value: udp
           - name: FIREWALL
@@ -66,7 +64,17 @@ spec:
         securityContext:
           capabilities: { add: ["NET_ADMIN"] }
         networkPolicy:
-          enabled: false
+          enabled: true
+          egress:
+            - to:
+                - ipBlock:
+                    cidr: 0.0.0.0/0
+              ports:
+                # VPN traffic
+                - port: 51820
+                  protocol: UDP
+            - to:
+                - namespaceSelector: {}
       netshoot:
         enabled: true
     podAnnotations:
@@ -85,7 +93,6 @@ spec:
     settings:
       NOT_ROUTED_TO_GATEWAY_CIDRS: 10.0.0.0/8 192.168.0.0/16
       VPN_BLOCK_OTHER_TRAFFIC: true
-      VPN_INTERFACE: tun0
       VPN_LOCAL_CIDRS: 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16
       VPN_TRAFFIC_PORT: "1194"
       VXLAN_ID: 43
