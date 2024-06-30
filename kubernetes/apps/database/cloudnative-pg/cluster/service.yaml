@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetesjsonschema.dev/v1.18.1-standalone-strict/service-v1.json
 apiVersion: v1
 kind: Service
 metadata:
@@ -17,6 +18,7 @@ spec:
     cnpg.io/cluster: postgres
     role: primary
 ---
+# yaml-language-server: $schema=https://kubernetesjsonschema.dev/v1.18.1-standalone-strict/service-v1.json
 apiVersion: v1
 kind: Service
 metadata:
@@ -32,6 +34,7 @@ spec:
     cnpg.io/cluster: postgres
     cnpg.io/podRole: instance
 ---
+# yaml-language-server: $schema=https://kubernetesjsonschema.dev/v1.18.1-standalone-strict/service-v1.json
 apiVersion: v1
 kind: Service
 metadata:
@@ -47,6 +50,7 @@ spec:
     cnpg.io/cluster: postgres
     role: replica
 ---
+# yaml-language-server: $schema=https://kubernetesjsonschema.dev/v1.18.1-standalone-strict/service-v1.json
 apiVersion: v1
 kind: Service
 metadata:

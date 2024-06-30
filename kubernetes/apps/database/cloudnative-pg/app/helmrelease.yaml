@@ -8,12 +8,15 @@ spec:
   interval: 30m
   chart:
     spec:
+      # renovate: registryUrl=https://cloudnative-pg.github.io/charts
       chart: cloudnative-pg
-      version: 0.21.4
+      version: 0.21.5
       sourceRef:
         kind: HelmRepository
         name: cloudnative-pg
         namespace: flux-system
+  dependsOn:
+    - name: openebs-hostpath
   install:
     remediation:
       retries: 3
