@@ -131,7 +131,10 @@ spec:
             app:
               - path: /config
       add-ons:
+        enabled: true
         type: emptyDir
+        globalMounts:
+          - path: /add-ons
       incomplete:
         type: emptyDir
         advancedMounts:
