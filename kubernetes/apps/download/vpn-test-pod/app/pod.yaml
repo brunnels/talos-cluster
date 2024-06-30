@@ -14,5 +14,5 @@ spec:
       limits:
         memory: "1G"
         cpu: "1"
-    command: [ "sleep" ]
-    args: [ "infinity" ]
+    command: [ "/bin/bash" ]
+    args: [ "-c", "trap : TERM INT; sleep i infinity & wait" ]
