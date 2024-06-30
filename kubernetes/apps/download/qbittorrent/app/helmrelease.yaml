@@ -130,11 +130,10 @@ spec:
           qbittorrent:
             app:
               - path: /config
-      add-ons:
-        enabled: true
+      tmp:
         type: emptyDir
-        globalMounts:
-          - path: /add-ons
+      add-ons:
+        type: emptyDir
       incomplete:
         type: emptyDir
         advancedMounts:
