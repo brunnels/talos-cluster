@@ -49,9 +49,9 @@ spec:
     - target:
         kind: PersistentVolume
         labelSelector: "pv.kubernetes.io/provisioned-by=smb.csi.k8s.io"
-      patch: |
+      patch: |-
         - op: add
-          path: /spec
+          path: /
           value: |
             spec:
               capacity:
