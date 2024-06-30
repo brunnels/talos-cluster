@@ -149,8 +149,7 @@ spec:
         advancedMounts:
           qbittorrent:
             app:
-              - path: /media
-                subPath: applications
+              - path: /media/applications
       downloads:
         storageClass: cifs-downloads
         accessMode: ReadWriteMany
@@ -167,8 +166,7 @@ spec:
         advancedMounts:
           qbittorrent:
             app:
-              - path: /media
-                subPath: games
+              - path: /media/games
       misc:
         storageClass: cifs-misc
         accessMode: ReadWriteMany
@@ -176,5 +174,4 @@ spec:
         advancedMounts:
           qbittorrent:
             app:
-              - path: /media
-                subPath: misc
+              - path: /media/misc
