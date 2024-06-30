@@ -15,8 +15,6 @@ spec:
         kind: HelmRepository
         name: cloudnative-pg
         namespace: flux-system
-  dependsOn:
-    - name: openebs-hostpath
   install:
     remediation:
       retries: 3
