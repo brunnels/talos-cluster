@@ -109,6 +109,17 @@ spec:
     persistence:
       config:
         existingClaim: sabnzbd-config
+      tmp:
+        type: emptyDir
+      incomplete:
+        type: emptyDir
+      applications:
+        storageClass: cifs-applications
+        accessMode: ReadWriteMany
+        size: 50Ti
+        globalMounts:
+          - path: /media
+            subPath: applications
       downloads:
         storageClass: cifs-downloads
         accessMode: ReadWriteMany
@@ -116,7 +127,19 @@ spec:
         globalMounts:
           - path: /downloads
             subPath: sabnzbd
-      tmp:
-        type: emptyDir
-      incomplete:
-        type: emptyDir
+      games:
+        storageClass: cifs-games
+        accessMode: ReadWriteMany
+        size: 50Ti
+        globalMounts:
+          - path: /media
+            subPath: games
+      misc:
+        storageClass: cifs-misc
+        accessMode: ReadWriteMany
+        size: 50Ti
+        globalMounts:
+          - path: /media
+            subPath: misc
+
+
