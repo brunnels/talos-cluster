@@ -132,10 +132,6 @@ spec:
               - path: /config
       add-ons:
         type: emptyDir
-        advancedMounts:
-          qbittorrent:
-            app:
-              - path: /add-ons
       incomplete:
         type: emptyDir
         advancedMounts:
