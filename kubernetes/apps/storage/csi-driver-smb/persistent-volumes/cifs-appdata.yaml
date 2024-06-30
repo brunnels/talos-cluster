@@ -6,6 +6,8 @@ metadata:
   name: &name "cifs-appdata"
   annotations:
     pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
+  labels:
+    csi-driver-smb: "cifs-share"
 spec:
   storageClassName: *name
   csi:
