@@ -48,9 +48,91 @@ spec:
   patches:
     - target:
         kind: PersistentVolume
-        name: cifs-appdata
-      patch: |-
-        apiVersion: v1
-        kind: PersistentVolume
-        spec:
-          persistentVolumeReclaimPolicy: Delete
+        labelSelector: "pv.kubernetes.io/provisioned-by=smb.csi.k8s.io"
+      patch: |
+        - op: add
+          path: /spec
+          value: |-
+            capacity:
+              storage: 50Ti
+            accessModes:
+              - ReadWriteMany
+            persistentVolumeReclaimPolicy: Delete
+            mountOptions:
+              - "dir_mode=0777"
+              - "file_mode=0666"
+              - "uid=1000"
+              - "gid=100"
+              - noperm
+              - mfsymlinks
+              - cache=strict
+              - noserverino
+            csi:
+              driver: smb.csi.k8s.io
+              volumeAttributes:
+                onDelete: retain
+              nodeStageSecretRef:
+                name: csi-driver-smb
+                namespace: storage
+
+    # - patch: |-
+    #     apiVersion: v1
+    #     kind: PersistentVolume
+    #     metadata:
+    #       annotations:
+    #         pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
+    #     spec:
+    #       capacity:
+    #         storage: 50Ti
+    #       accessModes:
+    #         - ReadWriteMany
+    #       persistentVolumeReclaimPolicy: Delete
+    #       mountOptions:
+    #         - "dir_mode=0777"
+    #         - "file_mode=0666"
+    #         - "uid=1000"
+    #         - "gid=100"
+    #         - noperm
+    #         - mfsymlinks
+    #         - cache=strict
+    #         - noserverino
+    #       csi:
+    #         driver: smb.csi.k8s.io
+    #         volumeAttributes:
+    #           onDelete: retain
+    #         nodeStageSecretRef:
+    #           name: csi-driver-smb
+    #           namespace: storage
+    # - target:
+    #     kind: StorageClass
+    #     labelSelector: "nasf586af/cifs=cifs-share"
+    #   patch: |
+    #     - op: add
+    #       path: /spec/capacity/storage
+    #       value: 50Ti
+    #     - op: add
+    #       path: /a
+    #       value: true
+    #     - op: add
+    #       path: /reclaimPolicy
+    #       value: Delete
+    #     - op: add
+    #       path: /parameters/onDelete
+    #       value: retain
+    #     - op: add
+    #       path: /parameters/csi.storage.k8s.io~1node-stage-secret-name
+    #       value: csi-driver-smb
+    #     - op: add
+    #       path: /parameters/csi.storage.k8s.io~1node-stage-secret-namespace
+    #       value: storage
+    #     - op: add
+    #       path: /mountOptions
+    #       value:
+    #         - "dir_mode=0777"
+    #         - "file_mode=0666"
+    #         - "uid=1000"
+    #         - "gid=100"
+    #         - noperm
+    #         - mfsymlinks
+    #         - cache=strict
+    #         - noserverino
