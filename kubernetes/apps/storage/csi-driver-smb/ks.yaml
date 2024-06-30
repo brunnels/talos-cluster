@@ -53,7 +53,7 @@ spec:
           persistentVolumeReclaimPolicy: Delete
       target:
         kind: PersistentVolume
-        labelSelector: "pv.kubernetes.io/provisioned-by=smb.csi.k8s.io"
+        # labelSelector: "pv.kubernetes.io/provisioned-by=smb.csi.k8s.io"
     # - target:
     #     kind: StorageClass
     #     labelSelector: "nasf586af/cifs=cifs-share"
