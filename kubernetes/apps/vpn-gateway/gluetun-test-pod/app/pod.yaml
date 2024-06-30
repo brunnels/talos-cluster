@@ -27,7 +27,7 @@ spec:
     - name: OPENVPN_PROTOCOL
       value: udp
     - name: SERVER_COUNTRIES
-      value: Netherlands
+      value: "United States"
     - name: HEALTH_VPN_DURATION_INITIAL
       value: 30s
     - name: OPENVPN_VERBOSITY
