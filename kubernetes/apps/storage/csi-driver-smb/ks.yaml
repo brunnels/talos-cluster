@@ -17,7 +17,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  wait: false # no flux ks dependents
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
@@ -26,7 +26,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app csi-driver-smb-storage-classes
+  name: &app csi-driver-smb-persistent-volumes
   namespace: flux-system
 spec:
   targetNamespace: storage
@@ -35,42 +35,30 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: csi-driver-smb
-  path: ./kubernetes/apps/storage/csi-driver-smb/storage-classes
+  path: ./kubernetes/apps/storage/csi-driver-smb/persistent-volumes
   prune: true
   force: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  wait: false # no flux ks dependents
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
   patches:
-    - target:
-        kind: StorageClass
-        labelSelector: "nasf586af/cifs=cifs-share"
-      patch: |
-        - op: add
-          path: /volumeBindingMode
-          value: Immediate
-        - op: add
-          path: /allowVolumeExpansion
-          value: true
-        - op: add
-          path: /reclaimPolicy
-          value: Delete
-        - op: add
-          path: /parameters/onDelete
-          value: retain
-        - op: add
-          path: /parameters/csi.storage.k8s.io~1node-stage-secret-name
-          value: csi-driver-smb
-        - op: add
-          path: /parameters/csi.storage.k8s.io~1node-stage-secret-namespace
-          value: storage
-        - op: add
-          path: /mountOptions
-          value:
+    - patch: |
+        apiVersion: v1
+        kind: PersistentVolume
+        metadata:
+          annotations:
+            pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
+        spec:
+          capacity:
+            storage: 50Ti
+          accessModes:
+            - ReadWriteMany
+          persistentVolumeReclaimPolicy: Delete
+          mountOptions:
             - "dir_mode=0777"
             - "file_mode=0666"
             - "uid=1000"
@@ -79,3 +67,43 @@ spec:
             - mfsymlinks
             - cache=strict
             - noserverino
+          csi:
+            driver: smb.csi.k8s.io
+            volumeAttributes:
+              onDelete: retain
+            nodeStageSecretRef:
+              name: csi-driver-smb
+              namespace: storage
+    # - target:
+    #     kind: StorageClass
+    #     labelSelector: "nasf586af/cifs=cifs-share"
+    #   patch: |
+    #     - op: add
+    #       path: /spec/capacity/storage
+    #       value: 50Ti
+    #     - op: add
+    #       path: /a
+    #       value: true
+    #     - op: add
+    #       path: /reclaimPolicy
+    #       value: Delete
+    #     - op: add
+    #       path: /parameters/onDelete
+    #       value: retain
+    #     - op: add
+    #       path: /parameters/csi.storage.k8s.io~1node-stage-secret-name
+    #       value: csi-driver-smb
+    #     - op: add
+    #       path: /parameters/csi.storage.k8s.io~1node-stage-secret-namespace
+    #       value: storage
+    #     - op: add
+    #       path: /mountOptions
+    #       value:
+    #         - "dir_mode=0777"
+    #         - "file_mode=0666"
+    #         - "uid=1000"
+    #         - "gid=100"
+    #         - noperm
+    #         - mfsymlinks
+    #         - cache=strict
+    #         - noserverino
