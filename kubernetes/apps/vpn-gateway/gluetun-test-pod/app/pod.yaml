@@ -27,7 +27,7 @@ spec:
     - name: OPENVPN_PROTOCOL
       value: udp
     - name: SERVER_HOSTNAMES
-      value: "lhr-062.vpn.privado.io,hel-002.vpn.privado.io,cph-003.vpn.privado.io,bru-003.vpn.privado.io"
+      value: "lhr-062.vpn.privado.io"
     - name: HEALTH_VPN_DURATION_INITIAL
       value: 30s
     # - name: OPENVPN_VERBOSITY
