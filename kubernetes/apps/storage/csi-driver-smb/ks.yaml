@@ -46,7 +46,7 @@ spec:
   retryInterval: 1m
   timeout: 5m
   patches:
-    - patch: |
+    - patch: |-
         apiVersion: v1
         kind: PersistentVolume
         metadata:
@@ -74,6 +74,8 @@ spec:
             nodeStageSecretRef:
               name: csi-driver-smb
               namespace: storage
+      target:
+        kind: PersistentVolume
     # - target:
     #     kind: StorageClass
     #     labelSelector: "nasf586af/cifs=cifs-share"
