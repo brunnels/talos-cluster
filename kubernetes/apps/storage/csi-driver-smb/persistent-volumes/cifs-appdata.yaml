@@ -17,5 +17,5 @@ spec:
     volumeHandle: ${SECRET_CIFS_SERVER}/appdata#cifs-appdata##retain
     volumeAttributes:
       source: "//${SECRET_CIFS_SERVER}/appdata"
-
+    nodeStageSecretRef: {}
 
