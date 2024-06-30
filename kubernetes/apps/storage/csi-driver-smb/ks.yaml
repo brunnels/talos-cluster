@@ -53,30 +53,31 @@ spec:
         - op: add
           path: /spec
           value: |
-            capacity:
-              storage: 50Ti
-            accessModes:
-              - ReadWriteMany
-            storageClassName: csi-driver-smb
-            persistentVolumeReclaimPolicy: Delete
-            mountOptions:
-              - "dir_mode=0777"
-              - "file_mode=0666"
-              - "uid=1000"
-              - "gid=100"
-              - noperm
-              - mfsymlinks
-              - cache=strict
-              - noserverino
-            csi:
-              driver: smb.csi.k8s.io
-              volumeHandle: ${SECRET_CIFS_SERVER}/appdata#cifs-appdata##retain
-              volumeAttributes:
-                onDelete: retain
-                source: //${SECRET_CIFS_SERVER}/appdata
-              nodeStageSecretRef:
-                name: csi-driver-smb
-                namespace: storage
+            spec:
+              capacity:
+                storage: 50Ti
+              accessModes:
+                - ReadWriteMany
+              storageClassName: csi-driver-smb
+              persistentVolumeReclaimPolicy: Delete
+              mountOptions:
+                - "dir_mode=0777"
+                - "file_mode=0666"
+                - "uid=1000"
+                - "gid=100"
+                - noperm
+                - mfsymlinks
+                - cache=strict
+                - noserverino
+              csi:
+                driver: smb.csi.k8s.io
+                volumeHandle: ${SECRET_CIFS_SERVER}/appdata#cifs-appdata##retain
+                volumeAttributes:
+                  onDelete: retain
+                  source: //${SECRET_CIFS_SERVER}/appdata
+                nodeStageSecretRef:
+                  name: csi-driver-smb
+                  namespace: storage
 
     # - patch: |-
     #     apiVersion: v1
