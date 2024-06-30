@@ -52,11 +52,12 @@ spec:
       patch: |
         - op: add
           path: /spec
-          value: |-
+          value: |
             capacity:
               storage: 50Ti
             accessModes:
               - ReadWriteMany
+            storageClassName: csi-driver-smb
             persistentVolumeReclaimPolicy: Delete
             mountOptions:
               - "dir_mode=0777"
@@ -69,8 +70,10 @@ spec:
               - noserverino
             csi:
               driver: smb.csi.k8s.io
+              volumeHandle: ${SECRET_CIFS_SERVER}/appdata#cifs-appdata##retain
               volumeAttributes:
                 onDelete: retain
+                source: //${SECRET_CIFS_SERVER}/appdata
               nodeStageSecretRef:
                 name: csi-driver-smb
                 namespace: storage
