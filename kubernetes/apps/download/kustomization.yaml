@@ -6,4 +6,3 @@ resources:
   - ./namespace.yaml
   - ./qbittorrent/ks.yaml
   - ./sabnzbd/ks.yaml
-  - ./vpn-test-pod/ks.yaml
