@@ -50,10 +50,10 @@ spec:
         kind: StorageClass
       patch: |
         - op: add
-          path: /spec/capacity/storage
-          value: 50Ti
+          path: /volumeBindingMode
+          value: Immediate
         - op: add
-          path: /a
+          path: /allowVolumeExpansion
           value: true
         - op: add
           path: /reclaimPolicy
