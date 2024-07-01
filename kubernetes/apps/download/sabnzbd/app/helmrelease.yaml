@@ -118,8 +118,7 @@ spec:
         accessMode: ReadWriteMany
         size: 50Ti
         globalMounts:
-          - path: /media
-            subPath: applications
+          - path: /media/applications
       downloads:
         storageClass: cifs-downloads
         accessMode: ReadWriteMany
@@ -132,14 +131,11 @@ spec:
         accessMode: ReadWriteMany
         size: 50Ti
         globalMounts:
-          - path: /media
-            subPath: games
+          - path: /media/games
       misc:
         storageClass: cifs-misc
         accessMode: ReadWriteMany
         size: 50Ti
         globalMounts:
-          - path: /media
-            subPath: misc
-
+          - path: /media/misc
 
