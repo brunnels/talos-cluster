@@ -45,43 +45,30 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &app csi-driver-smb-persistent-volumes
-  namespace: flux-system
-spec:
-  targetNamespace: storage
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  dependsOn:
-    - name: csi-driver-smb
-  path: ./kubernetes/apps/storage/csi-driver-smb/persistent-volumes
-  prune: true
-  force: true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-  wait: false
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
   patches:
     - target:
-        kind: PersistentVolume
+        kind: StorageClass
       patch: |
         - op: add
-          path: /spec/accessModes
-          value:
-            - ReadWriteMany
+          path: /spec/capacity/storage
+          value: 50Ti
         - op: add
-          path: /spec/persistentVolumeReclaimPolicy
+          path: /a
+          value: true
+        - op: add
+          path: /reclaimPolicy
           value: Delete
         - op: add
-          path: /spec/mountOptions
+          path: /parameters/onDelete
+          value: retain
+        - op: add
+          path: /parameters/csi.storage.k8s.io~1node-stage-secret-name
+          value: csi-driver-smb
+        - op: add
+          path: /parameters/csi.storage.k8s.io~1node-stage-secret-namespace
+          value: storage
+        - op: add
+          path: /mountOptions
           value:
             - "dir_mode=0777"
             - "file_mode=0666"
@@ -91,15 +78,3 @@ spec:
             - mfsymlinks
             - cache=strict
             - noserverino
-        - op: add
-          path: /spec/csi/volumeAttributes/onDelete
-          value: retain
-        - op: add
-          path: /spec/csi/nodeStageSecretRef
-          value: {}
-        - op: add
-          path: /spec/csi/nodeStageSecretRef/name
-          value: csi-driver-smb
-        - op: add
-          path: /spec/csi/nodeStageSecretRef/namespace
-          value: storage
