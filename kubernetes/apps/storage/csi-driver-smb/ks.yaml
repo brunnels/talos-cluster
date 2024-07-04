@@ -70,11 +70,12 @@ spec:
         - op: add
           path: /mountOptions
           value:
-            - "dir_mode=0777"
-            - "file_mode=0666"
-            - "uid=1000"
-            - "gid=100"
+            - "dir_mode=0775"
+            - "file_mode=0664"
+            - "uid=0"
+            - "gid=0"
             - noperm
             - mfsymlinks
-            - cache=strict
             - noserverino
+            - multichannel
+            - max_channels=4
