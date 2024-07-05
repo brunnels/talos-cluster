@@ -63,7 +63,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: *port
+            port: 8777
     ingress:
       app:
         className: internal
