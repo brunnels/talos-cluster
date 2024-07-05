@@ -47,7 +47,7 @@
     }
   },
   "log": {
-    "level": "info"
+    "level": "debug"
   },
   "extensions": {
     "ui": {
