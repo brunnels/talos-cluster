@@ -9,7 +9,6 @@
         "bucket": "zot-storage",
         "secure": true,
         "skipverify": false,
-        "insecure": true,
         "accesskey": "{{ .S3_KEY_ID }}",
         "secretkey": "{{ .S3_SECRET_KEY }}"
     },
@@ -27,6 +26,7 @@
         "address": "${SECRET_LDAP_SERVER}",
         "port": 389,
         "startTLS": false,
+        "insecure": true,
         "baseDN": "${SECRET_LDAP_BASE_DN}",
         "userAttribute": "uid",
         "userGroupAttribute": "memberOf",
