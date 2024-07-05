@@ -1,0 +1,93 @@
+{
+  "distSpecVersion": "1.0.1",
+  "storage": {
+    "rootDirectory": "/tmp/zot",
+    "storageDriver": {
+        "name": "s3",
+        "region": "us-east-1",
+        "regionendpoint": "${SECRET_S3_SERVER}",
+        "bucket": "zot-storage",
+        "secure": true,
+        "skipverify": false,
+        "accesskey": "{{ .S3_KEY_ID }}",
+        "secretkey": "{{ .S3_SECRET_KEY }}"
+    },
+    "dedupe": true,
+    "gc": true,
+    "gcDelay": "1h",
+    "gcInterval": "24h",
+    "retention": {
+      "dryRun": false,
+      "delay": "24h",
+      "policies": [
+        {
+          "repositories": ["**"],
+          "deleteReferrers": true,
+          "deleteUntagged": true,
+          "keepTags": [
+            {
+              "mostRecentlyPushedCount": 5,
+              "mostRecentlyPulledCount": 5,
+              "pulledWithin": "720h",
+              "pushedWithin": "720h"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "http": {
+    "address": "0.0.0.0",
+    "port": "5000",
+    "auth": {
+      "ldap": {
+        "bindDN":"{{ .LDAP_SEARCH_BIND_DN }}",
+        "bindPassword":"{{ .LDAP_SEARCH_PASSWORD }}",
+        "address": "${SECRET_LDAP_SERVER}",
+        "port": 389,
+        "startTLS": false,
+        "baseDN": "${SECRET_LDAP_BASE_DN}",
+        "userAttribute": "uid",
+        "userGroupAttribute": "memberOf",
+        "skipVerify": false,
+        "subtreeSearch": true
+      }
+    },
+    "accessControl": {
+      "repositories": {
+        "**": {
+          "anonymousPolicy": ["read"],
+          "defaultPolicy": ["read", "create", "update"]
+        }
+      },
+      "adminPolicy": {
+        "users": ["registry-admin"],
+        "actions": ["read", "create", "update", "delete"]
+      }
+    }
+  },
+  "log": {
+    "level": "info"
+  },
+  "extensions": {
+    "ui": {
+      "enable": true
+    },
+    "search": {
+      "enable": true
+    },
+    "scrub": {
+      "enable": true,
+      "interval": "24h"
+    },
+    "sync": {
+      "enable": false
+    }
+  },
+  "metrics": {
+    "enable": true,
+    "prometheus": {
+      "path": "/metrics"
+    }
+  }
+}

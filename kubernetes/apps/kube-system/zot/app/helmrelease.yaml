@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app prowlarr
+  name: &app zot
 spec:
   interval: 30m
   chart:
@@ -24,42 +24,23 @@ spec:
       retries: 3
   values:
     controllers:
-      prowlarr:
+      zot:
         annotations:
           reloader.stakater.com/auto: *app
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 16
-              pullPolicy: IfNotPresent
-            envFrom: &envFrom
-              - secretRef:
-                  name: *app
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/prowlarr-develop
-              tag: 1.19.0.4568@sha256:59a1b3f3f5df0f0d112a338d8b155737736ae506aaf2f227fa8bdf54b1bd634d
-            env:
-              PROWLARR__APP__INSTANCENAME: Prowlarr
-              PROWLARR__APP__THEME: dark
-              PROWLARR__AUTH__METHOD: External
-              PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
-              PROWLARR__LOG__LEVEL: info
-              PROWLARR__SERVER__PORT: &port 80
-              PROWLARR__UPDATE__BRANCH: develop
-              TZ: "${TIMEZONE}"
-            envFrom: *envFrom
+              repository: ghcr.io/project-zot/zot-linux-amd64
+              tag: v2.0.4
             probes:
               liveness: &probes
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
-                    path: /ping
-                    port: *port
-                  initialDelaySeconds: 0
+                    path: /v2/
+                    port: &port 5000
+                  initialDelaySeconds: 5
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
@@ -90,21 +71,31 @@ spec:
         ports:
           http:
             port: *port
+    serviceMonitor:
+      app:
+        enabled: true
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
+        serviceName: zot
     ingress:
       app:
         className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Downloads
-          gethomepage.dev/name: Prowlarr
-          gethomepage.dev/icon: prowlarr.png
-          gethomepage.dev/description: Torrent/NZB Indexer Management
-          gethomepage.dev/widget.type: prowlarr
-          gethomepage.dev/widget.url: http://prowlarr.download
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PROWLARR_TOKEN}}` }}"
+          gethomepage.dev/group: Networking
+          gethomepage.dev/name: Zot
+          gethomepage.dev/icon: https://zotregistry.dev/v2.0.2/assets/images/logo.svg
+          gethomepage.dev/description: OCI Container Registry
         hosts:
-          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: "registry.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
@@ -112,6 +103,9 @@ spec:
                   port: http
     persistence:
       config:
-        type: emptyDir
-      tmp:
-        type: emptyDir
+        type: configMap
+        name: *app
+        globalMounts:
+          - path: /etc/zot/config.json
+            subPath: config.json
+            readOnly: true
