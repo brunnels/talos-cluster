@@ -60,9 +60,6 @@
       "enable": true,
       "interval": "24h"
     },
-    "sync": {
-      "enable": false
-    },
     "metrics": {
       "enable": true,
       "prometheus": {
