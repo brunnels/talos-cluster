@@ -26,7 +26,7 @@ spec:
     controllers:
       sonarr:
         annotations:
-          reloader.stakater.com/auto: "true"
+          reloader.stakater.com/reload: *app
         initContainers:
           init-db:
             image:

@@ -41,8 +41,7 @@
     "port": "5000",
     "auth": {
       "ldap": {
-        "bindDN":"{{ .LDAP_SEARCH_BIND_DN }}",
-        "bindPassword":"{{ .LDAP_SEARCH_PASSWORD }}",
+        "credentialsFile": "/secrets/ldap-credentials.json",
         "address": "${SECRET_LDAP_SERVER}",
         "port": 389,
         "startTLS": false,
@@ -82,12 +81,12 @@
     },
     "sync": {
       "enable": false
-    }
-  },
-  "metrics": {
-    "enable": true,
-    "prometheus": {
-      "path": "/metrics"
+    },
+    "metrics": {
+      "enable": true,
+      "prometheus": {
+        "path": "/metrics"
+      }
     }
   }
 }

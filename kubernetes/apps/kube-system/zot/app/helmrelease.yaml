@@ -26,7 +26,7 @@ spec:
     controllers:
       zot:
         annotations:
-          reloader.stakater.com/auto: *app
+          reloader.stakater.com/reload: *app
         containers:
           app:
             image:
@@ -108,4 +108,7 @@ spec:
         globalMounts:
           - path: /etc/zot/config.json
             subPath: config.json
+            readOnly: true
+          - path: /secrets/ldap-credentials.json
+            subPath: ldap-credentials.json
             readOnly: true
