@@ -103,7 +103,7 @@ spec:
                   port: http
     persistence:
       config:
-        type: configMap
+        type: secret
         name: *app
         globalMounts:
           - path: /etc/zot/config.json

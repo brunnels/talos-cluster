@@ -23,4 +23,5 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      APP: registry
+      APP: *app
+      GATUS_SUBDOMAIN: registry
