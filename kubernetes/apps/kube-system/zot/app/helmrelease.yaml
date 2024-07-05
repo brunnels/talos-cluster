@@ -102,6 +102,8 @@ spec:
                   identifier: app
                   port: http
     persistence:
+      tmp:
+        type: emptyDir
       config:
         type: secret
         name: *app
