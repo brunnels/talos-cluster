@@ -9,6 +9,7 @@
         "bucket": "zot-storage",
         "secure": true,
         "skipverify": false,
+        "insecure": true,
         "accesskey": "{{ .S3_KEY_ID }}",
         "secretkey": "{{ .S3_SECRET_KEY }}"
     },
