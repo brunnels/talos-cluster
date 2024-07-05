@@ -7,4 +7,3 @@ resources:
   - ./9portswitch.yaml
   - ./dockge.yaml
   - ./pve.yaml
-  - ./registry.yaml
