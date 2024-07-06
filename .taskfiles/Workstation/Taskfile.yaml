@@ -47,6 +47,7 @@ tasks:
 
   generic-linux:
     desc: Install CLI tools into the projects .bin directory using curl
+#    dir: "/home/dev/.local/bin"
     dir: "{{.GENERIC_BIN_DIR}}"
     platforms: ["linux/amd64", "linux/arm64"]
     cmds:
@@ -62,6 +63,8 @@ tasks:
           - siderolabs/talos?as=talosctl&type=script
           - yannh/kubeconform?as=kubeconform&type=script
           - mikefarah/yq?as=yq&type=script
+          - kubecolor/kubecolor?as=kubecolor&type=script
+          - direnv/direnv?as=direnv&type=script
         cmd: curl -fsSL "https://i.jpillora.com/{{.ITEM}}" | bash
       - cmd: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
         platforms: ["linux/amd64"]

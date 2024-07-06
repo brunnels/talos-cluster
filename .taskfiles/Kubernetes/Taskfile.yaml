@@ -11,7 +11,7 @@ tasks:
     desc: Gather common resources in your cluster, useful when asking for support
     cmds:
       - for: { var: resource }
-        cmd: kubectl get {{.ITEM}} {{.CLI_ARGS | default "-A"}}
+        cmd: kubecolor get {{.ITEM}} {{.CLI_ARGS | default "-A"}}
     vars:
       resource: >-
         nodes

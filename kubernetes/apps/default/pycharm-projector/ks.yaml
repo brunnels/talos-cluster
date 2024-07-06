@@ -13,6 +13,7 @@ spec:
   dependsOn:
     - name: csi-driver-smb
     - name: volsync
+    - name: ingress-nginx-internal
   path: ./kubernetes/apps/default/pycharm-projector/app
   prune: true
   sourceRef:
@@ -27,3 +28,4 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 32Gi
       VOLSYNC_CLAIM: devhome
+      GATUS_SUBDOMAIN: projector
