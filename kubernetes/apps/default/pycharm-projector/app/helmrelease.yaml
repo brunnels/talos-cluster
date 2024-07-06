@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: registry.kraven.dev/brunnels/projector-pycharm-c
-              tag: 2024.1.4
+              tag: 2024.1.4-1
             probes:
               liveness:
                 enabled: true
@@ -85,9 +85,4 @@ spec:
       tmp:
         type: emptyDir
       home:
-        storageClass: cifs-downloads
-        accessMode: ReadWriteMany
-        size: 50Ti
-        globalMounts:
-          - path: /home/devenv
-            subPath: devhome
+        existingClaim: devhome
