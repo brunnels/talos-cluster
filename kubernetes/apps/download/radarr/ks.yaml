@@ -25,5 +25,5 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 2Gi
+      VOLSYNC_CAPACITY: 6Gi
       VOLSYNC_CLAIM: radarr-config
