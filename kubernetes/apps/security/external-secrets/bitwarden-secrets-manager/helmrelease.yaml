@@ -36,7 +36,7 @@ spec:
               tag: v1.1.0@sha256:bcee868971c14cf9180249059c386706b8ab2ad3f3749762006aa261f6490744
             env:
               SECRET_TTL: 3600
-              DEBUG: "false"
+              REFRESH_KEYMAP_ON_MISS: "true"
               ORG_ID:
                 valueFrom:
                   secretKeyRef:
