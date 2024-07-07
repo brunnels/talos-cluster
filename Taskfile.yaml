@@ -56,12 +56,12 @@ tasks:
     deps: ["workstation:direnv", "workstation:venv", "sops:age-keygen", "init"]
     cmds:
       - task: .template
-      - task: sops:encrypt
+#      - task: sops:encrypt
       - task: .validate
 
   .template:
     internal: true
-    cmd: "{{.VIRTUAL_ENV}}/bin/makejinja"
+    cmd: "{{.PYTHON_BIN}} {{.VIRTUAL_ENV}}/bin/makejinja"
     preconditions:
       - msg: Missing virtual environment
         sh: test -d {{.VIRTUAL_ENV}}

@@ -17,6 +17,8 @@ additionalApiServerCertSans: &sans
   - "10.50.0.19"
   - "homerun.lan.kraven.org"
   - "cn1.lan.kraven.org"
+  - "cn2.lan.kraven.org"
+  - "cn3.lan.kraven.org"
 additionalMachineCertSans: *sans
 
 # Disable built-in Flannel to use Cilium
@@ -44,7 +46,7 @@ nodes:
   - hostname: "wn1"
     ipAddress: "10.50.0.16"
     installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/18880a12f8fd03d494cdf3507ce6f895ac7f5a576706b80340b106d79636ea91
+    talosImageURL: factory.talos.dev/installer/776b35ec24dae4198662912fbd5210413701d018026fa7e3c3c18035a4ccbaf8
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
@@ -58,6 +60,23 @@ nodes:
         mtu: 1500
     patches:
       - "@./patches/wn1/gpu-worker-patch.yaml"
+  - hostname: "wn2"
+    ipAddress: "10.50.0.109"
+    installDisk: "/dev/sdb"
+    talosImageURL: factory.talos.dev/installer/2b1fa58ebb24d7c5aab6fdb7b6f9c35b1965ec6f56d2f60ac428c7cc455aaf3e
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "00:e0:4c:68:99:ab"
+        dhcp: false
+        addresses:
+          - "10.50.0.15/24"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.50.0.1"
+        mtu: 1500
+    patches:
+      - "@./patches/wn2/gpu-worker-patch.yaml"
   - hostname: "wnvm1"
     ipAddress: "10.50.0.12"
     installDisk: "/dev/sda"
@@ -112,8 +131,3 @@ controlPlane:
     - "@./patches/controller/cluster.yaml"
     - "@./patches/controller/disable-admission-controller.yaml"
     - "@./patches/controller/etcd.yaml"
-
-# Worker patches
-worker:
-  patches:
-    - "@./patches/worker/mayastor-worker-patch.yaml"
