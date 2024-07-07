@@ -31,8 +31,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: 16
-              pullPolicy: IfNotPresent
+              tag:  16.3@sha256:8ba3204f6b293dd168766009aae2ce4fa986a29b931c2d30ac1b30238ac750b8
             envFrom: &envFrom
               - secretRef:
                   name: *app
@@ -40,16 +39,17 @@ spec:
           app:
             image:
               repository: ghcr.io/onedr0p/sonarr-develop
-              tag: 4.0.5.1791@sha256:896c6dfd6752a37dbf4d75b91c51e4d369a62979a0d48fc749af6012676255af
+              tag: 4.0.6.1820@sha256:3418fb8cd12b30fd70c026531e14f5a1222c7b4499d9560aad9f31ddf064f4fb
             env:
+              TZ: "${TIMEZONE}"
               SONARR__APP__INSTANCENAME: Sonarr
               SONARR__APP__THEME: dark
               SONARR__AUTH__METHOD: External
               SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              SONARR__LOG__DBENABLED: "False"
               SONARR__LOG__LEVEL: info
               SONARR__SERVER__PORT: &port 80
               SONARR__UPDATE__BRANCH: develop
-              TZ: "${TIMEZONE}"
             envFrom: *envFrom
             probes:
               liveness: &probes
@@ -61,8 +61,8 @@ spec:
                     port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
+                  timeoutSeconds: 3
+                  failureThreshold: 5
               readiness: *probes
               startup:
                 enabled: false
