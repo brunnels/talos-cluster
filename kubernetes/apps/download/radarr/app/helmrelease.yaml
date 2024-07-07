@@ -127,7 +127,7 @@ spec:
         accessMode: ReadWriteMany
         size: 50Ti
         advancedMounts:
-          sonarr:
+          radarr:
             app:
               - path: /downloads/downloaded_movies
                 readOnly: false
