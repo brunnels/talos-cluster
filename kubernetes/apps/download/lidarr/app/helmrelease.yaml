@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app readarr
+  name: &app lidarr
 spec:
   interval: 30m
   chart:
@@ -24,7 +24,7 @@ spec:
       retries: 3
   values:
     controllers:
-      readarr:
+      lidarr:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -38,18 +38,18 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/readarr-develop
-              tag: 0.3.28.2554@sha256:4beda7d63d2cb014a860bf4f8fa367f9621e378675396b684d300f1e3a0380dc
+              repository: ghcr.io/onedr0p/lidarr-develop
+              tag: 2.3.3.4204@sha256:8061ccda9651601d112dfb1476cc32aa23826e4685c202da56ecb81b218ef491
             env:
               TZ: "${TIMEZONE}"
-              READARR__APP__INSTANCENAME: Readarr
-              READARR__APP__THEME: dark
-              READARR__AUTH__METHOD: External
-              READARR__AUTH__REQUIRED: DisabledForLocalAddresses
-              READARR__LOG__DBENABLED: "False"
-              READARR__LOG__LEVEL: info
-              READARR__SERVER__PORT: &port 80
-              READARR__UPDATE__BRANCH: develop
+              LIDARR__APP__INSTANCENAME: Lidarr
+              LIDARR__APP__THEME: dark
+              LIDARR__AUTH__METHOD: External
+              LIDARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              LIDARR__LOG__DBENABLED: "False"
+              LIDARR__LOG__LEVEL: info
+              LIDARR__SERVER__PORT: &port 80
+              LIDARR__UPDATE__BRANCH: develop
             envFrom: *envFrom
             probes:
               liveness: &probes
@@ -97,12 +97,12 @@ spec:
           external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Downloads
-          gethomepage.dev/name: Readarr
-          gethomepage.dev/icon: readarr.png
-          gethomepage.dev/description: eBook Downloads
-          gethomepage.dev/widget.type: readarr
-          gethomepage.dev/widget.url: http://readarr.nzb
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_READARR_TOKEN}}` }}"
+          gethomepage.dev/name: Lidarr
+          gethomepage.dev/icon: lidarr.png
+          gethomepage.dev/description: Music Downloads
+          gethomepage.dev/widget.type: lidarr
+          gethomepage.dev/widget.url: http://lidarr.nzb
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_LIDARR_TOKEN}}` }}"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
@@ -112,7 +112,7 @@ spec:
                   port: http
     persistence:
       config:
-        existingClaim: readarr-config
+        existingClaim: lidarr-config
       tmp:
         type: emptyDir
       media:
@@ -127,11 +127,11 @@ spec:
         accessMode: ReadWriteMany
         size: 50Ti
         advancedMounts:
-          readarr:
+          lidarr:
             app:
-              - path: /downloads/downloaded_books
+              - path: /downloads/downloaded_music
                 readOnly: false
-                subPath: sabnzbd/downloaded_books
-              - path: /downloads/books-readarr
+                subPath: sabnzbd/downloaded_music
+              - path: /downloads/music-lidarr
                 readOnly: false
-                subPath: qbittorrent/books-readarr
+                subPath: qbittorrent/music-lidarr
