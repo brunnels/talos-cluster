@@ -127,7 +127,7 @@ spec:
         accessMode: ReadWriteMany
         size: 50Ti
         advancedMounts:
-          sonarr:
+          readarr:
             app:
               - path: /downloads/downloaded_books
                 readOnly: false
