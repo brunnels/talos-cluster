@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app pycharm-projector
+  name: &app sshwifty
 spec:
   interval: 30m
   chart:
@@ -24,15 +24,15 @@ spec:
       retries: 3
   values:
     controllers:
-      pycharm-projector:
+      sshwifty:
         containers:
           app:
             image:
-              repository: registry.kraven.dev/brunnels/projector-pycharm-c
-              tag: 2024.1.4-1
+              repository: niruix/sshwifty
+              tag: latest
             env:
               TZ: "${TIMEZONE}"
-              AUTHORIZED_KEY: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFtsfTKydEzzYz2d+wF1voVSEdiKbOKrkY6PrHg1SmWd"
+              SSHWIFTY_HOSTNAME: "{{ .Release.Name }}.${SECRET_DOMAIN}"
             probes:
               liveness:
                 enabled: true
@@ -50,10 +50,10 @@ spec:
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 4
-                memory: 2048M
+                cpu: 100m
+                memory: 52M
               limits:
-                memory: 8096M
+                memory: 256M
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -67,10 +67,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8887
-          sshd:
-            # tcp must also be set in ingress-nginx-internal helm chart to point to this service and port
-            port: 2222
+            port: 8182
     ingress:
       app:
         className: internal
@@ -78,11 +75,11 @@ spec:
           external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Development
-          gethomepage.dev/name: PyCharm Projector
-          gethomepage.dev/icon: https://jetbrains.github.io/projector-client/mkdocs/latest/favicon.svg
-          gethomepage.dev/description: PyCharm in the browser
+          gethomepage.dev/name: Sshwifty
+          gethomepage.dev/icon: https://icon2.cleanpng.com/20180501/cre/kisspng-rick-sanchez-morty-smith-squanchy-rick-and-morty-colander-5ae87326c5c9a8.0082267415251832708102.jpg
+          gethomepage.dev/description: Sshwifty Web SSH & Telnet Client
         hosts:
-          - host: "projector.${SECRET_DOMAIN}"
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
@@ -91,7 +88,3 @@ spec:
     persistence:
       tmp:
         type: emptyDir
-      home:
-        existingClaim: devhome
-        globalMounts:
-          - path: /home/dev
