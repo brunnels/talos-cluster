@@ -59,7 +59,7 @@ spec:
         - name: DRAIN_DELETE_EMPTYDIR_DATA
           value: "false"
     nfd:
-      enabled: false
+      enabled: true
     psp:
       enabled: false
     toolkit:
@@ -87,8 +87,3 @@ spec:
                 resources:
                   - name: nvidia.com/gpu
                     replicas: 4
-    validator:
-      plugin:
-        env:
-          - name: WITH_WORKLOAD
-            value: "false"
