@@ -90,7 +90,11 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /app/config/logs
-      configs:
+      config:
+        type: emptyDir
+        globalMounts:
+          - path: /app/config
+      configmap:
         enabled: true
         type: configMap
         name: *app
