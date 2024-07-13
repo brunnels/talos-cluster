@@ -25,45 +25,44 @@ data:
         - kubesearch:
             - icon: kubernetes-dashboard.png
               href: 'https://kubesearch.dev/'
-        - k3s-home-cluster:
+        - talos-cluster:
             - icon: github.png
-              href: 'https://github.com/brunnels/k0s-cluster'
-        - flux-cluster-template:
+              href: 'https://github.com/brunnels/talos-cluster'
+        - cluster-template:
             - icon: github.png
-              href: https://github.com/onedr0p/flux-cluster-template
+              href: https://github.com/onedr0p/cluster-template
   docker.yaml: ""
   kubernetes.yaml: |
     mode: cluster
   services.yaml: |
     - Infrastructure:
-        - AdGuard Home:
-            href: https://adguard.${SECRET_DOMAIN}
-            icon: adguard-home.png
         - OPNsense:
             icon: opnsense.png
+            href: https://opnsense.${SECRET_DOMAIN}
             description: OPNsense Router
-            widget:
-              type: opnsense
-              url: https://opnsense.${SECRET_DOMAIN}
-              username: {{OPNSENSE_USER}}
-              password: {{OPNSENSE_PASS}}
+          #  widget:
+          #    type: opnsense
+          #    url: https://opnsense.${SECRET_DOMAIN}
+          #    username: {{OPNSENSE_USER}}
+          #    password: {{OPNSENSE_PASS}}
         - Proxmox VE:
             icon: proxmox.png
+            href: https://pve.${SECRET_DOMAIN}
             description: Proxmox Virtual Environment
-            widget:
-              type: proxmox
-              url: https://pve.${SECRET_DOMAIN}
-              username: {{PROXMOX_API_TOKEN_ID}}
-              password: {{PROXMOX_API_TOKEN_SECRET}}
+          #  widget:
+          #    type: proxmox
+          #    url: https://pve.${SECRET_DOMAIN}
+          #    username: {{PROXMOX_API_TOKEN_ID}}
+          #    password: {{PROXMOX_API_TOKEN_SECRET}}
         - Cloudflared:
-            href: https://dash.cloudflare.com/
             icon: cloudflare-zero-trust.png
+            href: https://dash.cloudflare.com/
             description: Cloudflared Tunnel
-            widget:
-              type: cloudflared
-              accountid: {{CF_ACCOUNT_ID}}
-              tunnelid: {{CF_TUNNEL_ID}}
-              key: {{CF_API_TOKEN}}
+          #  widget:
+          #    type: cloudflared
+          #    accountid: {{CF_ACCOUNT_ID}}
+          #    tunnelid: {{CF_TUNNEL_ID}}
+          #    key: {{CF_API_TOKEN}}
     - Observability:
         - Prometheus (storage):
             href: https://prometheus.${SECRET_DOMAIN}
