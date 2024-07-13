@@ -71,9 +71,12 @@ data:
     title: Dashboard
     favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
     theme: dark
-    #background:
-    #  image: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/moon.jpg
-    #  opacity: 50
+    background:
+      image: https://images.unsplash.com/photo-1502790671504-542ad42d5189?auto=format&fit=crop&w=2560&q=80
+      blur: sm
+      saturate: 50
+      brightness: 50
+      opacity: 50
     color: slate
     headerStyle: clean
     providers:
