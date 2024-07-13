@@ -38,20 +38,34 @@ spec:
             envFrom:
               - secretRef:
                   name: homepage
-            resources:
-              requests:
-                cpu: 10m
-              limits:
-                memory: 256Mi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+                  initialDelaySeconds: 30
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 100mi
+                memory: 52Mi
+              limits:
+                memory: 256Mi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 65534
-        runAsGroup: 65534
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
@@ -73,6 +87,10 @@ spec:
                   identifier: app
                   port: http
     persistence:
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /app/config/logs
       configs:
         enabled: true
         type: configMap
@@ -99,4 +117,3 @@ spec:
     serviceAccount:
       create: true
       name: *app
-
