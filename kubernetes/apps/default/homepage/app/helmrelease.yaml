@@ -27,7 +27,6 @@ spec:
       homepage:
         annotations:
           configmap.reloader.stakater.com/reload: *app
-        strategy: RollingUpdate
         containers:
           app:
             image:
