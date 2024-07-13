@@ -101,7 +101,7 @@ spec:
           gethomepage.dev/icon: readarr.png
           gethomepage.dev/description: eBook Downloads
           gethomepage.dev/widget.type: readarr
-          gethomepage.dev/widget.url: http://readarr.nzb
+          gethomepage.dev/widget.url: http://readarr.download
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_READARR_TOKEN}}` }}"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"

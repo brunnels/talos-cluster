@@ -101,7 +101,7 @@ spec:
           gethomepage.dev/icon: radarr.png
           gethomepage.dev/description: Movie Downloads
           gethomepage.dev/widget.type: radarr
-          gethomepage.dev/widget.url: http://radarr.nzb
+          gethomepage.dev/widget.url: http://radarr.download
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_RADARR_TOKEN}}` }}"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
