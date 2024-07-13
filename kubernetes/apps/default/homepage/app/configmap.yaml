@@ -3,9 +3,34 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: homepage
+  name: homepage-config
+  labels:
+    app.kubernetes.io/name: homepage
 data:
-  bookmarks.yaml: ""
+  bookmarks.yaml: |
+    - Communicate:
+        - Discord:
+            - icon: discord.png
+              href: 'https://discord.com/app'
+        - Gmail:
+            - icon: gmail.png
+              href: 'http://mail.kraven.org'
+        - Google Calendar:
+            - icon: google-calendar.png
+              href: 'https://calendar.google.com'
+        - Google Voice:
+            - icon: google-voice.png
+              href: 'https://voice.google.com'
+    - Git:
+        - kubesearch:
+            - icon: kubernetes-dashboard.png
+              href: 'https://kubesearch.dev/'
+        - k3s-home-cluster:
+            - icon: github.png
+              href: 'https://github.com/brunnels/k0s-cluster'
+        - flux-cluster-template:
+            - icon: github.png
+              href: https://github.com/onedr0p/flux-cluster-template
   docker.yaml: ""
   kubernetes.yaml: |
     mode: cluster
@@ -35,28 +60,39 @@ data:
             description: Cloudflared Tunnel
             widget:
               type: cloudflared
-              accountid: {{CF_ACCOUNT_ID}}
-              tunnelid: {{CF_TUNNEL_ID}}
-              key: {{CF_API_TOKEN}}
-    - Observability:
-        - Prometheus (storage):
-            href: https://prometheus.${SECRET_DOMAIN}
-            icon: prometheus.png
+              accountid: {{HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID}}
+              tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
+              key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
   settings.yaml: |
+    title: Dashboard
+    favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
+    theme: dark
+    #background:
+    #  image: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/moon.jpg
+    #  opacity: 50
+    color: slate
     headerStyle: clean
     providers:
       longhorn:
         url: http://longhorn-frontend.longhorn-system
     layout:
       Automation:
+        icon: mdi-home-analytics
         style: column
       Infrastructure:
         icon: mdi-server
         style: column
-      Storage:
+      Git:
         icon: mdi-desktop-tower
         style: column
+      Storage:
+        icon: mdi-desktop-tower
+        style: row
+        columns: 2
       Tools:
+        style: column
+      Calendar:
+        icon: mdi-calendar
         style: column
       Observability:
         icon: mdi-chart-line
@@ -64,12 +100,20 @@ data:
         columns: 4
       Media:
         icon: mdi-play-circle
-        style: row
-        columns: 4
+        style: column
+      Network:
+        icon: mdi-server
+        style: column
+      DNS:
+        icon: mdi-server
+        style: column
+      Observability:
+        icon: mdi-chart-line
+        style: column
       Downloads:
         icon: mdi-download-circle
         style: row
-        columns: 4
+        columns: 3
   widgets.yaml: |
     - resources:
         backend: kubernetes
