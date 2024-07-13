@@ -38,22 +38,22 @@ data:
     - Infrastructure:
         - OPNsense:
             icon: opnsense.png
-            href: https://opnsense.${SECRET_DOMAIN}
+            href: https://opnsense.lan.kraven.org
             description: OPNsense Router
-          #  widget:
-          #    type: opnsense
-          #    url: https://opnsense.${SECRET_DOMAIN}
-          #    username: {{OPNSENSE_USER}}
-          #    password: {{OPNSENSE_PASS}}
+            widget:
+              type: opnsense
+              url: https://opnsense.lan.kraven.org
+              username: {{OPNSENSE_USER}}
+              password: {{OPNSENSE_PASS}}
         - Proxmox VE:
             icon: proxmox.png
             href: https://pve.${SECRET_DOMAIN}
             description: Proxmox Virtual Environment
-          #  widget:
-          #    type: proxmox
-          #    url: https://pve.${SECRET_DOMAIN}
-          #    username: {{PROXMOX_API_TOKEN_ID}}
-          #    password: {{PROXMOX_API_TOKEN_SECRET}}
+            widget:
+              type: proxmox
+              url: https://pve.lan.kraven.org:8006
+              username: {{PROXMOX_API_TOKEN_ID}}
+              password: {{PROXMOX_API_TOKEN_SECRET}}
         - Cloudflared:
             icon: cloudflare-zero-trust.png
             href: https://dash.cloudflare.com/
