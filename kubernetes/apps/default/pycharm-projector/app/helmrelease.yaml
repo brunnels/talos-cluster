@@ -33,6 +33,7 @@ spec:
             env:
               TZ: "${TIMEZONE}"
               AUTHORIZED_KEY: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFtsfTKydEzzYz2d+wF1voVSEdiKbOKrkY6PrHg1SmWd"
+              PROJECTOR_DIR: "/usr/share/projector"
             probes:
               liveness:
                 enabled: true
@@ -69,7 +70,6 @@ spec:
           http:
             port: 8887
           sshd:
-            # tcp must also be set in ingress-nginx-internal helm chart to point to this service and port
             port: 2222
     ingress:
       app:

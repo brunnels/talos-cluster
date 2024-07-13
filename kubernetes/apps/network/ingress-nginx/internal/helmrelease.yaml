@@ -25,9 +25,6 @@ spec:
   values:
     fullnameOverride: ingress-nginx-internal
     controller:
-      tcp:
-        # add TCP port passthrough for pycharm-projector
-        "2222": "default/pycharm-projector:2222"
       service:
         annotations:
           io.cilium/lb-ipam-ips: "10.50.0.21"
