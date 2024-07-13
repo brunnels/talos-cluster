@@ -75,7 +75,7 @@ spec:
             port: 5656
     serviceMonitor:
       app:
-        serviceName: unpackerr
+        serviceName: *app
         endpoints:
           - port: http
             scheme: http
@@ -93,7 +93,7 @@ spec:
         accessMode: ReadWriteMany
         size: 50Ti
         advancedMounts:
-          sonarr:
+          unpackerr:
             app:
               - path: /downloads/music-lidarr
                 readOnly: false
