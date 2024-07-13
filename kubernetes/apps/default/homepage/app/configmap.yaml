@@ -60,9 +60,13 @@ data:
             description: Cloudflared Tunnel
             widget:
               type: cloudflared
-              accountid: {{HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID}}
-              tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
-              key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
+              accountid: {{CF_ACCOUNT_ID}}
+              tunnelid: {{CF_TUNNEL_ID}}
+              key: {{CF_API_TOKEN}}
+    - Observability:
+        - Prometheus (storage):
+            href: https://prometheus.${SECRET_DOMAIN}
+            icon: prometheus.png
   settings.yaml: |
     title: Dashboard
     favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
@@ -77,7 +81,6 @@ data:
         url: http://longhorn-frontend.longhorn-system
     layout:
       Automation:
-        icon: mdi-home-analytics
         style: column
       Infrastructure:
         icon: mdi-server
@@ -87,12 +90,8 @@ data:
         style: column
       Storage:
         icon: mdi-desktop-tower
-        style: row
-        columns: 2
-      Tools:
         style: column
-      Calendar:
-        icon: mdi-calendar
+      Tools:
         style: column
       Observability:
         icon: mdi-chart-line
@@ -100,20 +99,12 @@ data:
         columns: 4
       Media:
         icon: mdi-play-circle
-        style: column
-      Network:
-        icon: mdi-server
-        style: column
-      DNS:
-        icon: mdi-server
-        style: column
-      Observability:
-        icon: mdi-chart-line
-        style: column
+        style: row
+        columns: 4
       Downloads:
         icon: mdi-download-circle
         style: row
-        columns: 3
+        columns: 4
   widgets.yaml: |
     - resources:
         backend: kubernetes
