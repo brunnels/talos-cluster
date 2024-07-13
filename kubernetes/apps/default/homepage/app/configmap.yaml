@@ -50,6 +50,7 @@ data:
         - Proxmox VE:
             icon: proxmox.png
             description: Proxmox Virtual Environment
+            widget:
               type: proxmox
               url: https://pve.${SECRET_DOMAIN}
               username: {{PROXMOX_API_TOKEN_ID}}
