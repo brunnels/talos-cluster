@@ -11,3 +11,4 @@ resources:
   - ./readarr/ks.yaml
   - ./sabnzbd/ks.yaml
   - ./sonarr/ks.yaml
+  - ./unpackerr/ks.yaml
