@@ -38,13 +38,9 @@ spec:
               UN_WEBSERVER_LOG_FILE: /logs/webserver.log
               UN_ACTIVITY: true
               UN_LIDARR_0_URL: http://lidarr.download.svc.cluster.local
-              UN_LIDARR_0_PROTOCOLS: torrent,usenet
               UN_RADARR_0_URL: http://radarr.download.svc.cluster.local
-              UN_RADARR_0_PROTOCOLS: torrent,usenet
               UN_READARR_0_URL: http://readarr.download.svc.cluster.local
-              UN_READARR_0_PROTOCOLS: torrent,usenet
               UN_SONARR_0_URL: http://sonarr.download.svc.cluster.local
-              UN_SONARR_0_PROTOCOLS: torrent,usenet
             envFrom:
               - secretRef:
                   name: *app
@@ -99,30 +95,15 @@ spec:
         advancedMounts:
           sonarr:
             app:
-              - path: /downloads/downloaded_music
-                readOnly: false
-                subPath: sabnzbd/downloaded_music
               - path: /downloads/music-lidarr
                 readOnly: false
                 subPath: qbittorrent/music-lidarr
-
-              - path: /downloads/downloaded_movies
-                readOnly: false
-                subPath: sabnzbd/downloaded_movies
               - path: /downloads/movies-radaarr
                 readOnly: false
                 subPath: qbittorrent/movies-radaarr
-
-              - path: /downloads/downloaded_books
-                readOnly: false
-                subPath: sabnzbd/downloaded_books
               - path: /downloads/books-readarr
                 readOnly: false
                 subPath: qbittorrent/books-readarr
-
-              - path: /downloads/downloaded_tv
-                readOnly: false
-                subPath: sabnzbd/downloaded_tv
               - path: /downloads/tv-sonarr
                 readOnly: false
                 subPath: qbittorrent/tv-sonarr
