@@ -11,6 +11,7 @@ resources:
   - ./coredns.yaml
   - ./csi-driver-smb.yaml
   - ./descheduler.yaml
+  - ./eclipse-che.yaml
   - ./external-dns.yaml
   - ./external-secrets.yaml
   - ./gpu-operator.yaml
