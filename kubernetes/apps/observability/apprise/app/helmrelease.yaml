@@ -85,3 +85,9 @@ spec:
         existingClaim: apprise-config
         globalMounts:
           - path: /config
+      tmp:
+        type: emptyDir
+      attach:
+        type: emptyDir
+      plugin:
+        type: emptyDir
