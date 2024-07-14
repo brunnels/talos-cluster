@@ -71,7 +71,7 @@ metadata:
   name: &app external-secrets-stores
   namespace: flux-system
 spec:
-  targetNamespace: security
+  targetNamespace: external-secrets
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
