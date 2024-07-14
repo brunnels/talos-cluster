@@ -15,11 +15,9 @@ spec:
         name: external-secrets
         namespace: flux-system
   install:
-    disableOpenAPIValidation: true
     remediation:
       retries: 3
   upgrade:
-    disableOpenAPIValidation: true
     cleanupOnFail: true
     remediation:
       strategy: rollback
