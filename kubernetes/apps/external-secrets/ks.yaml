@@ -77,7 +77,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets
-  path: ./kubernetes/apps/external-secrets/stores
+  path: ./kubernetes/apps/external-secrets/bws-cache
   prune: true
   sourceRef:
     kind: GitRepository
