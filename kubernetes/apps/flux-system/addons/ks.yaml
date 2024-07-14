@@ -10,6 +10,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
   path: ./kubernetes/apps/flux-system/addons/webhooks
   prune: true
   sourceRef:
@@ -33,6 +35,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
   path: ./kubernetes/apps/flux-system/addons/notifications
   prune: true
   sourceRef:
@@ -65,4 +69,3 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
-
