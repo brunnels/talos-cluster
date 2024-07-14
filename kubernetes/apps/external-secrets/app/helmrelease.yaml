@@ -24,6 +24,10 @@ spec:
       retries: 3
   values:
     installCRDs: true
+    bitwarden-sdk-server:
+      enabled: true
+    grafana:
+      enabled: true
     serviceMonitor:
       enabled: true
       interval: 1m
@@ -35,5 +39,7 @@ spec:
       serviceMonitor:
         enabled: true
         interval: 1m
-    bitwarden-sdk-server:
-      enabled: false
+    reportsController:
+      serviceMonitor:
+        enabled: true
+        interval: 1m
