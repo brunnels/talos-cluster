@@ -35,7 +35,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-certs
-  path: ./kubernetes/apps/external-secrets/operator
+  path: ./kubernetes/apps/external-secrets/operator/app
   prune: true
   sourceRef:
     kind: GitRepository
