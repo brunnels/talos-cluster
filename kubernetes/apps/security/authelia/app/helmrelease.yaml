@@ -141,7 +141,7 @@ spec:
           - subPath: private_key.pem
             path: /oidc_issuer/private_key.pem
             readOnly: true
-      trusted_certs:
+      trusted-certs:
         type: secret
         name: authelia-trusted-certs
         globalMounts:
