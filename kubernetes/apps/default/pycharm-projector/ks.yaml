@@ -11,9 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: csi-driver-smb
     - name: volsync
-    - name: ingress-nginx-internal
   path: ./kubernetes/apps/default/pycharm-projector/app
   prune: true
   sourceRef:
