@@ -83,7 +83,7 @@ spec:
       configmap.reloader.stakater.com/reload: gateway-pod-gateway-configmap
       secret.reloader.stakater.com/reload: gateway-vpnconfig-secret,vpn-gateway-secret
     routed_namespaces:
-      - download
+      - downloads
     publicPorts:
       - IP: 10
         hostname: qbittorrent
