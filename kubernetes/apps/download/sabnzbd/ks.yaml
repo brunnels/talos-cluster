@@ -12,8 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: volsync
-    - name: cifs-pvcs
-      namespace: download
+    - name: download-cifs-pvcs
   path: ./kubernetes/apps/download/sabnzbd/app
   prune: true
   sourceRef:
