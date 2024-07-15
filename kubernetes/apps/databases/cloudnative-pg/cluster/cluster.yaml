@@ -19,18 +19,17 @@ spec:
       max_connections: "600"
       max_slot_wal_keep_size: 10GB
       shared_buffers: 512MB
+  nodeMaintenanceWindow:
+    inProgress: false
+    reusePVC: true
   resources:
     requests:
-      memory: "2Gi"
-      cpu: "500m"
+      cpu: 500m
+      memory: 2Gi
     limits:
-      memory: "4Gi"
+      memory: 4Gi
   monitoring:
     enablePodMonitor: true
-    # https://github.com/cloudnative-pg/cloudnative-pg/issues/2501
-    podMonitorMetricRelabelings:
-      - { sourceLabels: ["cluster"], targetLabel: cnpg_cluster, action: replace }
-      - { regex: cluster, action: labeldrop }
   backup:
     retentionPolicy: 30d
     barmanObjectStore: &barmanObjectStore
@@ -53,6 +52,7 @@ spec:
           key: s3-secret-key
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
+    # s3 instance recovery
     - name: &previousCluster postgres-v1
       barmanObjectStore:
         <<: *barmanObjectStore
@@ -74,7 +74,6 @@ spec:
     # s3 instance recovery
     recovery:
       source: *previousCluster
-
     # recover from another running instance
     #initdb:
     #  import:
