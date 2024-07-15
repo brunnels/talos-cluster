@@ -28,7 +28,7 @@ spec:
         replicas: 2
         strategy: RollingUpdate
         annotations:
-          secret.reloader.stakater.com/reload: authelia,authelia-oidc-issuer
+          secret.reloader.stakater.com/reload: authelia,authelia-oidc-issuer,authelia-trusted-certs
         initContainers:
           init-db:
             image:
@@ -49,9 +49,10 @@ spec:
               AUTHELIA_TELEMETRY_METRICS_ADDRESS: tcp://0.0.0.0:8080
               AUTHELIA_TELEMETRY_METRICS_ENABLED: "true"
               AUTHELIA_THEME: dark
+              AUTHELIA_CERTIFICATES_DIRECTORY: /trusted_certs
               X_AUTHELIA_CONFIG: /config/configuration.yaml
               X_AUTHELIA_CONFIG_FILTERS: expand-env
-              AUTHELIA_IDENTITY_PROVIDERS_OIDC_ISSUER_PRIVATE_KEY_FILE: /oidc_issuer/private_key
+              AUTHELIA_IDENTITY_PROVIDERS_OIDC_ISSUER_PRIVATE_KEY_FILE: /oidc_issuer/private_key.pem
             probes:
               liveness: &probes
                 enabled: true
@@ -134,8 +135,16 @@ spec:
             subPath: configuration.yaml
             readOnly: true
       oidc-issuer:
-        enabled: true
         type: secret
         name: authelia-oidc-issuer
         globalMounts:
-          - path: /oidc_issuer
+          - subPath: private_key.pem
+            path: /oidc_issuer/private_key.pem
+            readOnly: true
+      trusted_certs:
+        type: secret
+        name: authelia-trusted-certs
+        globalMounts:
+          - subPath: ldap_tls.pem
+            path: /trusted_certs/ldap_tls.pem
+            readOnly: true
