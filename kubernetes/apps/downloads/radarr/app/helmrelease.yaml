@@ -116,16 +116,11 @@ spec:
       tmp:
         type: emptyDir
       media:
-        storageClass: cifs-movies
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-movies
         globalMounts:
           - path: /media/movies
       downloads:
-        enabled: true
-        storageClass: cifs-downloads
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-downloads
         advancedMounts:
           radarr:
             app:

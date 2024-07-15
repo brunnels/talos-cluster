@@ -88,10 +88,7 @@ spec:
       logs:
         type: emptyDir
       downloads:
-        enabled: true
-        storageClass: cifs-downloads
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-downloads
         advancedMounts:
           unpackerr:
             app:

@@ -4,6 +4,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../../templates/csi-driver-smb/claims/cifs-applications.yaml
+  - ../../../templates/csi-driver-smb/claims/cifs-books.yaml
   - ../../../templates/csi-driver-smb/claims/cifs-downloads.yaml
   - ../../../templates/csi-driver-smb/claims/cifs-games.yaml
   - ../../../templates/csi-driver-smb/claims/cifs-misc.yaml
+  - ../../../templates/csi-driver-smb/claims/cifs-movies.yaml
+  - ../../../templates/csi-driver-smb/claims/cifs-music.yaml
+  - ../../../templates/csi-driver-smb/claims/cifs-tv.yaml

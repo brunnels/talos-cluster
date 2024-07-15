@@ -12,6 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: cloudnative-pg-cluster
+    - name: downloads-cifs-pvcs
     - name: volsync
   path: ./kubernetes/apps/downloads/readarr/app
   prune: true

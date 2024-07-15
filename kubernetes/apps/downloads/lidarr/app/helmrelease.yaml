@@ -117,16 +117,11 @@ spec:
       tmp:
         type: emptyDir
       media:
-        storageClass: cifs-music
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-music
         globalMounts:
           - path: /media/music
       downloads:
-        enabled: true
-        storageClass: cifs-downloads
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-downloads
         advancedMounts:
           lidarr:
             app:
