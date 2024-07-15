@@ -114,27 +114,19 @@ spec:
       incomplete:
         type: emptyDir
       applications:
-        storageClass: cifs-applications
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-applications
         globalMounts:
           - path: /media/applications
       downloads:
-        storageClass: cifs-downloads
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-downloads
         globalMounts:
           - path: /downloads
             subPath: sabnzbd
       games:
-        storageClass: cifs-games
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-games
         globalMounts:
           - path: /media/games
       misc:
-        storageClass: cifs-misc
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-misc
         globalMounts:
           - path: /media/misc
