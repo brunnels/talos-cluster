@@ -123,7 +123,7 @@ identity_providers:
 
       - client_id: "{{ .KOMGA_OIDC_CLIENT_ID }}"
         client_name: "Komga"
-        client_secret: "{{ .KOMGA_OIDC_CLIENT_SECRET_DIGEST }}"
+        client_secret: "{{ .KOMGA_OIDC_CLIENT_SECRET }}"
         public: false
         authorization_policy: "one_factor"
         redirect_uris: ["https://komga.${SECRET_DOMAIN}/login/oauth2/code/authelia"]
