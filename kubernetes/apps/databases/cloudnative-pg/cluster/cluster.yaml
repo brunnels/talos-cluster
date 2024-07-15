@@ -42,7 +42,7 @@ spec:
       endpointURL: "${SECRET_S3_SERVER}"
       # Note: serverName version needs to be incremented or changed
       # when recovering from an existing cnpg cluster
-      serverName: &currentCluster postgres-v2
+      serverName: &currentCluster postgres-v1
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg
@@ -53,34 +53,34 @@ spec:
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
     # s3 instance recovery
-    - name: &previousCluster postgres-v1
-      barmanObjectStore:
-        <<: *barmanObjectStore
-        serverName: *previousCluster
+    #- name: &previousCluster postgres-v1
+    #  barmanObjectStore:
+    #    <<: *barmanObjectStore
+    #    serverName: *previousCluster
     # running instance
-    #- name: postgres
-    #  connectionParameters:
-    #    host: 10.1.0.23
-    #    user: postgres
-    #    dbname: postgres
-    #    sslmode: require
-    #  password:
-    #    name: cloudnative-pg
-    #    key: password
+    - name: postgres
+      connectionParameters:
+        host: 10.1.0.23
+        user: postgres
+        dbname: postgres
+        sslmode: require
+      password:
+        name: cloudnative-pg
+        key: password
 
   # Note: previousCluster needs to be set to the name of the previous
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
     # s3 instance recovery
-    recovery:
-      source: *previousCluster
+    #recovery:
+    #  source: *previousCluster
     # recover from another running instance
-    #initdb:
-    #  import:
-    #    type: monolith
-    #    databases:
-    #      - "*"
-    #    roles:
-    #      - "*"
-    #    source:
-    #      externalCluster: postgres
+    initdb:
+      import:
+        type: monolith
+        databases:
+          - "*"
+        roles:
+          - "*"
+        source:
+          externalCluster: postgres
