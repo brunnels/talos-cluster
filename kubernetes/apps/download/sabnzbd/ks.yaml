@@ -12,7 +12,8 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: volsync
-    - name: csi-driver-smb
+    - name: cifs-pvcs
+      namespace: download
   path: ./kubernetes/apps/download/sabnzbd/app
   prune: true
   sourceRef:
