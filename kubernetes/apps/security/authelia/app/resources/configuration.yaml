@@ -79,7 +79,7 @@ totp:
 
 webauthn:
   disable: false
-  display_name: "Authelia {SECRET_DOMAIN}"
+  display_name: "Authelia (${SECRET_DOMAIN})"
   attestation_conveyance_preference: indirect
   user_verification: preferred
   timeout: 60s
