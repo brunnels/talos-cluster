@@ -4,23 +4,22 @@ authentication_backend:
     disable: true
   refresh_interval: 1m
   ldap:
-    address: "ldap://${SECRET_LDAP_SERVER}:389"
+    address: "${SECRET_LDAP_SERVER}"
     implementation: custom
     timeout: 5s
-    start_tls: false
     base_dn: "${SECRET_LDAP_BASE_DN}"
     additional_users_dn: ou=people
     users_filter: (&({username_attribute}={input})(objectClass=person))
-    additional_groups_dn: ou=groups
-    groups_filter: (member={dn})
+    additional_groups_dn: ou=group
+    groups_filter: (&(memberUid={dn})(objectClass=posixGroup))
     group_search_mode: filter
     user: "{{ .LDAP_SEARCH_BIND_DN }}"
     password: "{{ .LDAP_SEARCH_PASSWORD }}"
     attributes:
       username: uid
-      display_name: displayName
+      display_name: gecos
+      distinguished_name: uid
       mail: mail
-      member_of: memberOf
       group_name: cn
 
 log:
