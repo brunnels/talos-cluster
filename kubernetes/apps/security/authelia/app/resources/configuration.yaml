@@ -1,0 +1,132 @@
+---
+authentication_backend:
+  password_reset:
+    disable: true
+  refresh_interval: 1m
+  ldap:
+    address: "ldap://${SECRET_LDAP_SERVER}:389"
+    implementation: custom
+    timeout: 5s
+    start_tls: false
+    base_dn: "${SECRET_LDAP_BASE_DN}"
+    additional_users_dn: ou=people
+    users_filter: (&({username_attribute}={input})(objectClass=person))
+    additional_groups_dn: ou=groups
+    groups_filter: (member={dn})
+    group_search_mode: filter
+    user: "{{ .LDAP_SEARCH_BIND_DN }}"
+    password: "{{ .LDAP_SEARCH_PASSWORD }}"
+    attributes:
+      username: uid
+      display_name: displayName
+      mail: mail
+      member_of: memberOf
+      group_name: cn
+
+log:
+  level: "debug"
+  format: "text"
+  file_path: ""
+  keep_stdout: false
+
+session:
+  secret: "{{ .SESSION_SECRET }}"
+  same_site: lax
+  expiration: 1h
+  inactivity: 5m
+  remember_me: 1M
+  cookies:
+    - name: "${SECRET_DOMAIN}.session"
+      domain: "${SECRET_DOMAIN}"
+      authelia_url: "https://auth.${SECRET_DOMAIN}"
+      default_redirection_url: "https://${SECRET_DOMAIN}"
+  redis:
+    host: redis.database.svc.cluster.local
+    database_index: 14
+    high_availability:
+      sentinel_name: redis-master
+      nodes:
+        - host: redis-node-0.redis-headless.database.svc.cluster.local
+          port: 26379
+        - host: redis-node-1.redis-headless.database.svc.cluster.local
+          port: 26379
+        - host: redis-node-2.redis-headless.database.svc.cluster.local
+          port: 26379
+
+storage:
+  encryption_key: "{{ .STORAGE_ENCRYPTION_KEY }}"
+  postgres:
+    address: postgres-rw.database.svc.cluster.local
+    database: authelia
+    username: "{{ .AUTHELIA_POSTGRES_USERNAME }}"
+    password: "{{ .AUTHELIA_POSTGRES_PASSWORD }}"
+
+notifier:
+  smtp:
+    address: mail.smtp2go.com:2525
+    sender: "Authelia <authelia@${SECRET_DOMAIN}>"
+
+access_control:
+  default_policy: two_factor
+  networks:
+    - name: internal
+      networks: ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
+  rules: []
+
+totp:
+  disable: false
+  issuer: authelia.com
+
+webauthn:
+  disable: true
+
+duo_api:
+  hostname: api-31d53ca6.duosecurity.com
+  integration_key: "{{ .DUO_INTEGRATION_KEY }}"
+
+identity_providers:
+  oidc:
+    hmac_secret: "{{ .OIDC_HMAC_SECRET }}"
+    cors:
+      endpoints: ["authorization", "token", "revocation", "introspection"]
+      allowed_origins_from_client_redirect_uris: true
+    clients:
+      - client_id: "{{ .WEAVE_OIDC_CLIENT_ID }}"
+        client_name: Weave GitOps
+        client_secret: "{{ .WEAVE_OIDC_CLIENT_SECRET }}"
+        public: false
+        authorization_policy: two_factor
+        pre_configured_consent_duration: 1y
+        scopes: ["openid", "profile", "groups", "email"]
+        redirect_uris: ["https://gitops.${SECRET_DOMAIN}/oauth2/callback"]
+        userinfo_signing_algorithm: none
+
+      - client_id: "{{ .GRAFANA_OIDC_CLIENT_ID }}"
+        client_name: Grafana
+        client_secret: "{{ .GRAFANA_OIDC_CLIENT_SECRET }}"
+        public: false
+        authorization_policy: two_factor
+        pre_configured_consent_duration: 1y
+        scopes: ["openid", "profile", "groups", "email"]
+        redirect_uris: ["https://grafana.${SECRET_DOMAIN}/login/generic_oauth"]
+        userinfo_signed_response_alg: none
+
+      - client_id: "{{ .GATUS_OIDC_CLIENT_ID }}"
+        client_name: Gatus
+        client_secret: "{{ .GATUS_OIDC_CLIENT_SECRET }}"
+        public: false
+        authorization_policy: two_factor
+        pre_configured_consent_duration: 1y
+        redirect_uris: ["https://status.${SECRET_DOMAIN}/authorization-code/callback"]
+        scopes: ["openid"]
+        token_endpoint_auth_method: client_secret_post
+
+      - client_id: "{{ .KOMGA_OIDC_CLIENT_ID }}"
+        client_name: "Komga"
+        client_secret: "{{ .KOMGA_OIDC_CLIENT_SECRET_DIGEST }}"
+        public: false
+        authorization_policy: "one_factor"
+        redirect_uris: ["https://komga.${SECRET_DOMAIN}/login/oauth2/code/authelia"]
+        scopes: ["openid", "profile", "email"]
+        grant_types: ["authorization_code"]
+        userinfo_signed_response_alg: none
