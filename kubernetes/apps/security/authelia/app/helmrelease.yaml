@@ -28,7 +28,7 @@ spec:
         replicas: 2
         strategy: RollingUpdate
         annotations:
-          reloader.stakater.com/auto: "true"
+          secret.reloader.stakater.com/reload: authelia,authelia-oidc-issuer
         initContainers:
           init-db:
             image:
