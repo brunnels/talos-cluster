@@ -31,6 +31,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: cifs-driver-smb
   path: ./kubernetes/apps/download/cifs-pvcs
   prune: true
   sourceRef:
