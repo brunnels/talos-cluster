@@ -33,6 +33,7 @@ spec:
               repository: ghcr.io/onedr0p/qbittorrent
               tag: 4.6.5@sha256:c019af23966ebafcaf1713d4553bc043246858b711a7d57d8bee358a89990a3e
             env:
+              TZ: ${TIMEZONE}
               UMASK: "022"
               QBITTORRENT__PORT: &port 80
               QBITTORRENT__BT_PORT: &bittorrentPort 50163
@@ -61,7 +62,7 @@ spec:
             resources:
               requests:
                 cpu: 50m
-                memory: 512M
+                memory: 512Mi
               limits:
                 memory: 2Gi
             securityContext:
@@ -108,7 +109,7 @@ spec:
       app:
         className: internal
         annotations:
-          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "internal.${SECRET_DOMAIN}"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Download
           gethomepage.dev/name: qBittorrent
@@ -141,34 +142,26 @@ spec:
             app:
               - path: /incomplete
       applications:
-        storageClass: cifs-applications
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-applications
         advancedMounts:
           qbittorrent:
             app:
               - path: /media/applications
       downloads:
-        storageClass: cifs-downloads
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-downloads
         advancedMounts:
           qbittorrent:
             app:
               - path: /downloads
                 subPath: qbittorrent
       games:
-        storageClass: cifs-games
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-games
         advancedMounts:
           qbittorrent:
             app:
               - path: /media/games
       misc:
-        storageClass: cifs-misc
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-misc
         advancedMounts:
           qbittorrent:
             app:

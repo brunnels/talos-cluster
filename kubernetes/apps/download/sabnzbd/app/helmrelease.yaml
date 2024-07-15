@@ -45,10 +45,6 @@ spec:
             envFrom:
               - secretRef:
                   name: *app
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
             probes:
               liveness: &probes
                 enabled: true
@@ -70,6 +66,10 @@ spec:
                 memory: 1Gi
               limits:
                 memory: 2Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -87,7 +87,7 @@ spec:
       app:
         className: internal
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: "internal.${SECRET_DOMAIN}"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Download
           gethomepage.dev/name: SABnzbd
