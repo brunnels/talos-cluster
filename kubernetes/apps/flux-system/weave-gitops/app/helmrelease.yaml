@@ -31,12 +31,14 @@ spec:
       enabled: true
       className: internal
       annotations:
+        external-dns.alpha.kubernetes.io/target: "internal.${SECRET_DOMAIN}"
         gethomepage.dev/enabled: "true"
         gethomepage.dev/group: Infrastructure
         gethomepage.dev/name: Weave-gitops
-        gethomepage.dev/icon: https://raw.githubusercontent.com/joryirving/home-ops/main/docs/src/assets/icons/weave.png
+        gethomepage.dev/icon: flux-cd.png
         gethomepage.dev/description: Flux Dashboard
-        external-dns.alpha.kubernetes.io/target: "internal.${SECRET_DOMAIN}"
+        nginx.ingress.kubernetes.io/auth-url: http://authelia.security.svc.cluster.local/api/verify
+        nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
       hosts:
         - host: "gitops.${SECRET_DOMAIN}"
           paths:
