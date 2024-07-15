@@ -85,6 +85,7 @@ webauthn:
   timeout: 60s
 
 duo_api:
+  disable: false
   hostname: api-31d53ca6.duosecurity.com
   integration_key: "{{ .DUO_INTEGRATION_KEY }}"
   secret_key: "{{ .DUO_SECRET_KEY }}"
