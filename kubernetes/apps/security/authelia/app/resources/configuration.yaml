@@ -78,7 +78,11 @@ totp:
   issuer: authelia.com
 
 webauthn:
-  disable: true
+  disable: false
+  display_name: "Authelia {SECRET_DOMAIN}"
+  attestation_conveyance_preference: indirect
+  user_verification: preferred
+  timeout: 60s
 
 duo_api:
   hostname: api-31d53ca6.duosecurity.com
