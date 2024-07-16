@@ -135,3 +135,13 @@ identity_providers:
         scopes: ["openid", "profile", "email"]
         grant_types: ["authorization_code"]
         userinfo_signed_response_alg: none
+
+      - client_id: "{{ .CHE_OIDC_CLIENT_ID }}"
+        client_name: Eclipse Che
+        client_secret: "{{ .CHE_OIDC_CLIENT_SECRET }}"
+        public: false
+        authorization_policy: two_factor
+        pre_configured_consent_duration: 1y
+        scopes: ["openid", "profile", "groups", "email"]
+        redirect_uris: ["https://che.${SECRET_DOMAIN}/api/oauth/callback"]
+        userinfo_signing_algorithm: none
