@@ -37,8 +37,6 @@ spec:
         gethomepage.dev/name: Weave-gitops
         gethomepage.dev/icon: flux-cd.png
         gethomepage.dev/description: Flux Dashboard
-        nginx.ingress.kubernetes.io/auth-url: http://authelia.security.svc.cluster.local/api/verify
-        nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
       hosts:
         - host: "gitops.${SECRET_DOMAIN}"
           paths:
@@ -55,4 +53,4 @@ spec:
           resources: [ "terraforms" ]
           verbs: [ "get", "list", "patch" ]
     podAnnotations:
-      secret.reloader.stakater.com/reload: cluster-user-auth,gitops-oidc-auth
+      secret.reloader.stakater.com/reload: cluster-user-auth,oidc-auth
