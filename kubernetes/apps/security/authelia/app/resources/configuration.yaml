@@ -11,14 +11,13 @@ authentication_backend:
     additional_users_dn: ou=people
     users_filter: (&({username_attribute}={input})(objectClass=person))
     additional_groups_dn: ou=group
-    groups_filter: (&(memberUid={dn})(objectClass=posixGroup))
+    groups_filter: (&(memberUid={username})(objectClass=posixGroup))
     group_search_mode: filter
     user: "{{ .LDAP_SEARCH_BIND_DN }}"
     password: "{{ .LDAP_SEARCH_PASSWORD }}"
     attributes:
       username: uid
       display_name: gecos
-      distinguished_name: uid
       mail: mail
       group_name: cn
 
@@ -128,11 +127,21 @@ identity_providers:
         token_endpoint_auth_method: client_secret_post
 
       - client_id: "{{ .KOMGA_OIDC_CLIENT_ID }}"
-        client_name: "Komga"
+        client_name: Komga
         client_secret: "{{ .KOMGA_OIDC_CLIENT_SECRET }}"
         public: false
-        authorization_policy: "one_factor"
+        authorization_policy: one_factor
         redirect_uris: ["https://komga.${SECRET_DOMAIN}/login/oauth2/code/authelia"]
         scopes: ["openid", "profile", "email"]
         grant_types: ["authorization_code"]
         userinfo_signed_response_alg: none
+
+      #- client_id: "{{ .CHE_OIDC_CLIENT_ID }}"
+      #  client_name: Eclipse Che
+      #  client_secret: "{{ .CHE_OIDC_CLIENT_SECRET }}"
+      #  public: false
+      #  authorization_policy: one_factor
+      #  redirect_uris: ["https://che.${SECRET_DOMAIN}/api/oauth/callback"]
+      #  scopes: ["openid", "profile", "email", "offline_access"]
+      #  grant_types: ["authorization_code"]
+      #  userinfo_signed_response_alg: none
