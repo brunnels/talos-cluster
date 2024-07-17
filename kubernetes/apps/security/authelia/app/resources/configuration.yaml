@@ -1,4 +1,10 @@
 ---
+administration:
+  enable: true
+  enable_ui: true
+  url: "https://auth-admin.${SECRET_DOMAIN}"
+  groups:
+    - 'Administrators'
 authentication_backend:
   password_reset:
     disable: true
@@ -143,5 +149,5 @@ identity_providers:
         authorization_policy: two_factor
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email"]
-        redirect_uris: ["https://che.${SECRET_DOMAIN}/api/oauth/callback", "https://che.${SECRET_DOMAIN}/oauth/callback"]
+        redirect_uris: ["https://che.${SECRET_DOMAIN}/oauth/callback"]
         userinfo_signing_algorithm: none
