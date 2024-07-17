@@ -11,3 +11,5 @@ configMapGenerator:
   - name: cloudbeaver
     files:
       - ./configs/cloudbeaver.conf
+generatorOptions:
+  disableNameSuffixHash: true
