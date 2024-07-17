@@ -1,10 +1,4 @@
 ---
-administration:
-  enable: true
-  enable_ui: true
-  url: "https://auth-admin.${SECRET_DOMAIN}"
-  groups:
-    - 'Administrators'
 authentication_backend:
   password_reset:
     disable: true

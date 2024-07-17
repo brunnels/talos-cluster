@@ -100,8 +100,6 @@ spec:
             port: *port
           metrics:
             port: 8080
-          admin:
-            port: 9092
     serviceMonitor:
       app:
         serviceName: authelia
@@ -128,12 +126,6 @@ spec:
                 service:
                   identifier: app
                   port: http
-          - host: "auth-admin.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: admin
     persistence:
       config:
         type: secret
