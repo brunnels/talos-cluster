@@ -101,15 +101,13 @@ spec:
       workspace:
         enabled: true
         existingClaim: *app
-        advancedMounts:
-          cloudbeaver:
-            app:
-              - path: /opt/cloudbeaver/workspace
-                readOnly: false
-                subPath: workspace
-              - path: /opt/cb/drivers
-                readOnly: false
-                subPath: drivers
-              - path: /opt/cb/web
-                readOnly: false
-                subPath: web
+        globalMounts:
+          - path: /opt/cloudbeaver/workspace
+            readOnly: false
+            subPath: workspace
+          - path: /opt/cb/drivers
+            readOnly: false
+            subPath: drivers
+          - path: /opt/cb/web
+            readOnly: false
+            subPath: web
