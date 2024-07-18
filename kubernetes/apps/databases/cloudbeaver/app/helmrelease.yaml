@@ -27,16 +27,23 @@ spec:
       cloudbeaver:
         annotations:
           reloader.stakater.com/auto: "true"
-#        initContainers:
-#          init-db:
-#            image:
-#              repository: busybox
-#              tag:  latest
-#            command:
-#              - "/bin/bash"
-#            args:
-#              - "-c"
-#              - "ls -lah /opt/cloudbeaver && rm -rf /opt/cloudbeaver/*.*"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag:  16.3@sha256:8ba3204f6b293dd168766009aae2ce4fa986a29b931c2d30ac1b30238ac750b8
+            command:
+              - "/bin/sh"
+            args:
+              - "-c"
+              - "chown 1000: -R /cb/drivers && chown 1000: -R /cb/web && ls -lah /cb/web && ls -lah /cb/drivers"
+            volumeMounts:
+              - path: /cb/drivers
+                readOnly: false
+                subPath: drivers
+              - path: /cb/web
+                readOnly: false
+                subPath: web
         containers:
           app:
             image:
@@ -53,24 +60,24 @@ spec:
             envFrom:
               - secretRef:
                   name: *app
-#            securityContext:
-#              allowPrivilegeEscalation: false
-#              readOnlyRootFilesystem: true
-#              capabilities: { drop: ["ALL"] }
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
                 memory: 128Mi
               limits:
                 memory: 512Mi
-#    defaultPodOptions:
-#      securityContext:
-#        runAsNonRoot: true
-#        runAsUser: 568
-#        runAsGroup: 568
-#        fsGroup: 568
-#        fsGroupChangePolicy: OnRootMismatch
-#        seccompProfile: { type: RuntimeDefault }
+            pod:
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1000
+                runAsGroup: 1000
+                fsGroup: 1000
+                fsGroupChangePolicy: OnRootMismatch
+                seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: *app
@@ -106,13 +113,15 @@ spec:
       workspace:
         enabled: true
         existingClaim: *app
-        globalMounts:
-          - path: /opt/cloudbeaver/workspace
-            readOnly: false
-            subPath: workspace
-          - path: /opt/cloudbeaver/drivers
-            readOnly: false
-            subPath: drivers
-          - path: /opt/cloudbeaver/web
-            readOnly: false
-            subPath: web
+        advancedMounts:
+          cloudbeaver:
+            app:
+              - path: /opt/cloudbeaver/workspace
+                readOnly: false
+                subPath: workspace
+              - path: /opt/cloudbeaver/drivers
+                readOnly: false
+                subPath: drivers
+              - path: /opt/cloudbeaver/web
+                readOnly: false
+                subPath: web
