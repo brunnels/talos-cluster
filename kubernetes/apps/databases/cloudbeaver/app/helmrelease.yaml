@@ -36,7 +36,7 @@ spec:
               - "/bin/sh"
             args:
               - "-c"
-              - "cp -R /cloudbeaver/web/* /cb/web/ && cp -R /cloudbeaver/drivers/* /cb/drivers/ && chown 1000: -R /cb/drivers /cb/web"
+              - "cp -R /cloudbeaver/* /cb/ && chown 1000: -R /cb/*"
         containers:
           app:
             image:
@@ -107,19 +107,6 @@ spec:
         advancedMounts:
           cloudbeaver:
             init-db:
-              - path: /cb/drivers
-                readOnly: false
-                subPath: drivers
-              - path: /cb/web
-                readOnly: false
-                subPath: web
+              - path: /cb
             app:
-              - path: /opt/cloudbeaver/workspace
-                readOnly: false
-                subPath: workspace
-              - path: /opt/cloudbeaver/drivers
-                readOnly: false
-                subPath: drivers
-              - path: /opt/cloudbeaver/web
-                readOnly: false
-                subPath: web
+              - path: /opt/cloudbeaver
