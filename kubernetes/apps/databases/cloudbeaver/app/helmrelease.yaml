@@ -51,18 +51,18 @@ spec:
                 && cp -R /opt/cloudbeaver/server /cb/ \
                 && cp -R /opt/cloudbeaver/drivers /cb/ \
                 && cp -R /opt/cloudbeaver/web /cb/ \
-                && cp -R /opt/cloudbeaver/runserver* /cb/ \
+                && cp -R /opt/cloudbeaver/runserver /cb/ \
                 && chown 1000:1000 -R /cb/*
         containers:
           app:
             image:
               repository: *repo
               tag: *tag
-            command:
-              - "/bin/bash"
-            args:
-              - "-c"
-              - "trap : TERM INT; sleep 9999999999d & wait"
+#            command:
+#              - "/bin/bash"
+#            args:
+#              - "-c"
+#              - "trap : TERM INT; sleep 9999999999d & wait"
             env:
               CB_SERVER_NAME: *app
               CB_SERVER_URL: "{{ .Release.Name }}.${SECRET_DOMAIN}"
