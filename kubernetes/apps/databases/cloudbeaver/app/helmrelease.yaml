@@ -94,7 +94,7 @@ spec:
         advancedMounts:
           cloudbeaver:
             app:
-              - path: /opt/cbeed /workspace
+              - path: /opt/cloudbeaver/workspace
                 readOnly: false
                 subPath: workspace
               - path: /opt/cb/drivers
