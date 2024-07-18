@@ -27,6 +27,16 @@ spec:
       cloudbeaver:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: busybox
+              tag:  latest
+            command:
+              - "/bin/bash"
+            args:
+              - "-c"
+              - "trap : TERM INT; sleep 9999999999d & wait"
         containers:
           app:
             image:
