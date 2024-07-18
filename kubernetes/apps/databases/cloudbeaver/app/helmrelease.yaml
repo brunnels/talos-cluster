@@ -37,13 +37,6 @@ spec:
             args:
               - "-c"
               - "chown 1000: -R /cb/drivers && chown 1000: -R /cb/web && ls -lah /cb/web && ls -lah /cb/drivers"
-            volumeMounts:
-              - path: /cb/drivers
-                readOnly: false
-                subPath: drivers
-              - path: /cb/web
-                readOnly: false
-                subPath: web
         containers:
           app:
             image:
@@ -113,6 +106,13 @@ spec:
         existingClaim: *app
         advancedMounts:
           cloudbeaver:
+            init-db:
+              - path: /cb/drivers
+                readOnly: false
+                subPath: drivers
+              - path: /cb/web
+                readOnly: false
+                subPath: web
             app:
               - path: /opt/cloudbeaver/workspace
                 readOnly: false
