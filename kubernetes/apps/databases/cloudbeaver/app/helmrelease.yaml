@@ -36,17 +36,17 @@ spec:
               - "/bin/sh"
             args:
               - "-c"
-              - "chown 1000: -R /cb/drivers && chown 1000: -R /cb/web && ls -lah /cb/web && ls -lah /cb/drivers"
+              - "cp -R /cloudbeaver/web/* /cb/web/ && cp -R /cloudbeaver/drivers/* /cb/drivers/ && chown 1000: -R /cb/drivers /cb/web"
         containers:
           app:
             image:
               repository: dbeaver/cloudbeaver
               tag: 24.1.2
-#            command:
-#              - "/bin/bash"
-#            args:
-#              - "-c"
-#              - "trap : TERM INT; sleep 9999999999d & wait"
+            command:
+              - "/bin/bash"
+            args:
+              - "-c"
+              - "trap : TERM INT; sleep 9999999999d & wait"
             env:
               CB_SERVER_NAME: *app
               CB_SERVER_URL: "{{ .Release.Name }}.${SECRET_DOMAIN}"
