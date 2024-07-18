@@ -106,10 +106,12 @@ spec:
         enabled: true
         type: configMap
         name: *app
-        globalMounts:
-          - subPath: cloudbeaver.conf
-            path: /opt/cloudbeaver/conf/cloudbeaver.conf
-            readOnly: true
+        advancedMounts:
+          cloudbeaver:
+            app:
+              - subPath: cloudbeaver.conf
+                path: /opt/cloudbeaver/conf/cloudbeaver.conf
+                readOnly: true
       workspace:
         enabled: true
         existingClaim: *app
