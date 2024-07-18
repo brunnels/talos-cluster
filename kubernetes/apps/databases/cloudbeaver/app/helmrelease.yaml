@@ -28,10 +28,19 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
-          init-db:
+#          init-db:
+#            image:
+#              repository: ghcr.io/onedr0p/postgres-init
+#              tag:  16.3@sha256:8ba3204f6b293dd168766009aae2ce4fa986a29b931c2d30ac1b30238ac750b8
+#            command:
+#              - "/bin/sh"
+#            args:
+#              - "-c"
+#              - "cp -R /cloudbeaver/* /cb/ && chown 1000: -R /cb/*"
+          copy-files:
             image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag:  16.3@sha256:8ba3204f6b293dd168766009aae2ce4fa986a29b931c2d30ac1b30238ac750b8
+              repository: &repo dbeaver/cloudbeaver
+              tag: & tag 24.1.2
             command:
               - "/bin/sh"
             args:
@@ -40,8 +49,8 @@ spec:
         containers:
           app:
             image:
-              repository: dbeaver/cloudbeaver
-              tag: 24.1.2
+              repository: *repo
+              tag: *tag
             command:
               - "/bin/bash"
             args:
@@ -106,7 +115,7 @@ spec:
         existingClaim: *app
         advancedMounts:
           cloudbeaver:
-            init-db:
+            copy-files:
               - path: /cb
             app:
               - path: /opt/cloudbeaver
