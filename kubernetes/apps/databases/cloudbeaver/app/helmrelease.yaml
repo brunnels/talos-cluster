@@ -92,7 +92,7 @@ spec:
         enabled: true
         existingClaim: *app
         advancedMounts:
-          lidarr:
+          cloudbeaver:
             app:
               - path: /opt/cloudbeaver/workspace
                 readOnly: false
