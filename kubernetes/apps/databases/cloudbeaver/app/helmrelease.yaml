@@ -42,11 +42,11 @@ spec:
             image:
               repository: dbeaver/cloudbeaver
               tag: 24.1.2
-            command:
-              - "/bin/bash"
-            args:
-              - "-c"
-              - "trap : TERM INT; sleep 9999999999d & wait"
+#            command:
+#              - "/bin/bash"
+#            args:
+#              - "-c"
+#              - "trap : TERM INT; sleep 9999999999d & wait"
             env:
               CB_SERVER_NAME: *app
               CB_SERVER_URL: "{{ .Release.Name }}.${SECRET_DOMAIN}"
@@ -110,9 +110,9 @@ spec:
           - path: /opt/cloudbeaver/workspace
             readOnly: false
             subPath: workspace
-          - path: /opt/cb/drivers
+          - path: /opt/cloudbeaver/drivers
             readOnly: false
             subPath: drivers
-          - path: /opt/cb/web
+          - path: /opt/cloudbeaver/web
             readOnly: false
             subPath: web
