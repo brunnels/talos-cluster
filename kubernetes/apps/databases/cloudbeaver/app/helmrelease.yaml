@@ -45,7 +45,14 @@ spec:
               - "/bin/sh"
             args:
               - "-c"
-              - "cp -R /opt/cloudbeaver/* /cb/ && chown 1000:1000 -R /cb/*"
+              - |
+                cp -R /opt/cloudbeaver/conf /cb/ \
+                && cp -R /opt/cloudbeaver/samples /cb/ \
+                && cp -R /opt/cloudbeaver/server /cb/ \
+                && cp -R /opt/cloudbeaver/drivers /cb/ \
+                && cp -R /opt/cloudbeaver/web /cb/ \
+                && cp -R /opt/cloudbeaver/runserver* /cb/ \
+                && chown 1000:1000 -R /cb/*
         containers:
           app:
             image:
@@ -112,12 +119,33 @@ spec:
               - subPath: cloudbeaver.conf
                 path: /opt/cloudbeaver/conf/cloudbeaver.conf
                 readOnly: true
-      workspace:
-        enabled: true
-        existingClaim: *app
+      cloudbeaver:
+        type: emptyDir
         advancedMounts:
           cloudbeaver:
             copy-files:
               - path: /cb
             app:
               - path: /opt/cloudbeaver
+      workspace:
+        enabled: true
+        existingClaim: *app
+        advancedMounts:
+          cloudbeaver:
+            copy-files:
+              - path: /cb/drivers
+                readOnly: false
+                subPath: drivers
+              - path: /cb/web
+                readOnly: false
+                subPath: web
+            app:
+              - path: /opt/cloudbeaver/workspace
+                readOnly: false
+                subPath: workspace
+              - path: /opt/cloudbeaver/drivers
+                readOnly: false
+                subPath: drivers
+              - path: /opt/cloudbeaver/web
+                readOnly: false
+                subPath: web
