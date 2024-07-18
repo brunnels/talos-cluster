@@ -27,21 +27,26 @@ spec:
       cloudbeaver:
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          init-db:
-            image:
-              repository: busybox
-              tag:  latest
-            command:
-              - "/bin/bash"
-            args:
-              - "-c"
-              - "ls -lah /opt/cloudbeaver && rm -rf /opt/cloudbeaver/*.*"
+#        initContainers:
+#          init-db:
+#            image:
+#              repository: busybox
+#              tag:  latest
+#            command:
+#              - "/bin/bash"
+#            args:
+#              - "-c"
+#              - "ls -lah /opt/cloudbeaver && rm -rf /opt/cloudbeaver/*.*"
         containers:
           app:
             image:
               repository: dbeaver/cloudbeaver
               tag: 24.1.2
+            command:
+              - "/bin/bash"
+            args:
+              - "-c"
+              - "trap : TERM INT; sleep 9999999999d & wait"
             env:
               CB_SERVER_NAME: *app
               CB_SERVER_URL: "{{ .Release.Name }}.${SECRET_DOMAIN}"
