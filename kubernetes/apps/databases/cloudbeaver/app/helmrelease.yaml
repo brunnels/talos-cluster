@@ -36,7 +36,7 @@ spec:
               - "/bin/bash"
             args:
               - "-c"
-              - "trap : TERM INT; sleep 9999999999d & wait"
+              - "ls -lah /opt/cloudbeaver && rm -rf /opt/cloudbeaver/*.*"
         containers:
           app:
             image:
