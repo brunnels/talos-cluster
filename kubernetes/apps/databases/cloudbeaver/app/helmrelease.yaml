@@ -40,7 +40,7 @@ spec:
           copy-files:
             image:
               repository: &repo dbeaver/cloudbeaver
-              tag: & tag 24.1.2
+              tag: &tag 24.1.2
             command:
               - "/bin/sh"
             args:
