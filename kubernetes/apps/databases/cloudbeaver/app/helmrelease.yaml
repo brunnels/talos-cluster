@@ -99,16 +99,16 @@ spec:
                   identifier: app
                   port: http
     persistence:
-      config:
-        enabled: true
-        type: configMap
-        name: *app
-        advancedMounts:
-          cloudbeaver:
-            app:
-              - subPath: cloudbeaver.conf
-                path: /opt/cloudbeaver/conf/cloudbeaver.conf
-                readOnly: true
+#      config:
+#        enabled: true
+#        type: configMap
+#        name: *app
+#        advancedMounts:
+#          cloudbeaver:
+#            app:
+#              - subPath: cloudbeaver.conf
+#                path: /opt/cloudbeaver/conf/cloudbeaver.conf
+#                readOnly: true
       cloudbeaver:
         type: emptyDir
         advancedMounts:
