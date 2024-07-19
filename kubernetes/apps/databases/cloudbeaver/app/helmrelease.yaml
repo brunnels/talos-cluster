@@ -56,7 +56,7 @@ spec:
             image: *image
             env:
               CB_SERVER_NAME: *app
-              CB_SERVER_URL: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+              CB_SERVER_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
               CLOUDBEAVER_DB_DRIVER: "postgres-jdbc"
               CLOUDBEAVER_DB_URL: "jdbc:postgresql://postgres-rw.databases.svc.cluster.local:5432/{{ .Release.Name }}"
               CLOUDBEAVER_DB_BACKUP_ENABLED: "false"
