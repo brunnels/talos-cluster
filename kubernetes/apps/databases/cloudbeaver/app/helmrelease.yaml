@@ -47,8 +47,7 @@ spec:
               - "-c"
               - |
                 cd /opt/cloudbeaver \
-                && ls -lah \
-                && cp -R conf samples server driver web runserver.sh /cb/ \
+                && cp -R conf drivers run-server.sh samples server web /cb/ \
                 && ls -lad /cb/
                 && chown 1000:1000 -R /cb/*
         containers:
