@@ -46,12 +46,8 @@ spec:
             args:
               - "-c"
               - |
-                cp -R /opt/cloudbeaver/conf /cb/ \
-                && cp -R /opt/cloudbeaver/samples /cb/ \
-                && cp -R /opt/cloudbeaver/server /cb/ \
-                && cp -R /opt/cloudbeaver/drivers /cb/ \
-                && cp -R /opt/cloudbeaver/web /cb/ \
-                && cp -R /opt/cloudbeaver/runserver /cb/ \
+                cd /opt/cloudbeaver \
+                cp -R conf samples server driver web runserver.sh /cb/ \
                 && chown 1000:1000 -R /cb/*
         containers:
           app:
