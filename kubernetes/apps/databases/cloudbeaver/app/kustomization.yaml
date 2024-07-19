@@ -7,9 +7,3 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ../../../../templates/gatus/guarded
-#configMapGenerator:
-#  - name: cloudbeaver
-#    files:
-#      - ./configs/cloudbeaver.conf
-#generatorOptions:
-#  disableNameSuffixHash: true
