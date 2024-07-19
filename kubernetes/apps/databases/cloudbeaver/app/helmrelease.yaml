@@ -49,9 +49,6 @@ spec:
               - |
                 cd /opt/cloudbeaver \
                 && cp -R conf drivers run-server.sh samples server web /cb/ \
-                && rm /cb/conf/initial-data-sources.conf \
-                && mkdir -p /cb/workspace/GlobalConfiguration/.dbeaver \
-                && [ ! -f /cb/workspace/GlobalConfiguration/.dbeaver/data-sources.json ] && cp /cb/conf/initial-data-sources.json /cb/workspace/GlobalConfiguration/.dbeaver/data-sources.json \
                 && chown 1000:1000 -R /cb/* \
                 && ls -lah /cb/
         containers:
@@ -122,8 +119,8 @@ spec:
         advancedMounts:
           cloudbeaver:
             copy-files:
-              - subPath: initial-data-sources.json
-                path: /opt/cloudbeaver/conf/initial-data-sources.json
+              - subPath: initial-data-sources.conf
+                path: /opt/cloudbeaver/conf/initial-data-sources.conf
                 readOnly: true
             app:
               - subPath: cloudbeaver.conf
@@ -146,9 +143,6 @@ spec:
         advancedMounts:
           cloudbeaver:
             copy-files:
-              - path: /cb/workspace
-                readOnly: false
-                subPath: workspace
               - path: /cb/drivers
                 readOnly: false
                 subPath: drivers
