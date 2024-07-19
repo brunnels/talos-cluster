@@ -143,6 +143,9 @@ spec:
         advancedMounts:
           cloudbeaver:
             copy-files:
+              - path: /cb/workspace
+                readOnly: false
+                subPath: workspace
               - path: /cb/drivers
                 readOnly: false
                 subPath: drivers
