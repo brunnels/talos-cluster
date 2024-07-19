@@ -52,8 +52,7 @@ spec:
                 && chown 1000:1000 -R /cb/* \
                 && rm /cb/conf/initial-data-sources.conf \
                 && mkdir -p /cb/workspace/GlobalConfiguration/.dbeaver \
-                && [ ! -f /cb/workspace/GlobalConfiguration/.dbeaver/data-sources.json ] \
-                && cp /cb/conf/initial-data-sources.json /cb/workspace/GlobalConfiguration/.dbeaver/data-sources.json \
+                && [ ! -f /cb/workspace/GlobalConfiguration/.dbeaver/data-sources.json ] && cp /cb/conf/initial-data-sources.json /cb/workspace/GlobalConfiguration/.dbeaver/data-sources.json \
                 && ls -lah /cb/
         containers:
           app:
