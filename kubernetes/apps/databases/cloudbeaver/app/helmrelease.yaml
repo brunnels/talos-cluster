@@ -130,6 +130,12 @@ spec:
               - subPath: cloudbeaver.conf
                 path: /opt/cloudbeaver/conf/cloudbeaver.conf
                 readOnly: true
+              - subPath: initial-data.conf
+                path: /opt/cloudbeaver/conf/initial-data.conf
+                readOnly: true
+              - subPath: inital-data-sources.json
+                path: /opt/cloudbeaver/conf/initial-data-sources.json
+                readOnly: true
       cloudbeaver:
         type: emptyDir
         advancedMounts:
