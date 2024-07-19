@@ -133,7 +133,7 @@ spec:
               - subPath: initial-data.conf
                 path: /opt/cloudbeaver/conf/initial-data.conf
                 readOnly: true
-              - subPath: inital-data-sources.json
+              - subPath: initial-data-sources.json
                 path: /opt/cloudbeaver/conf/initial-data-sources.json
                 readOnly: true
       cloudbeaver:
