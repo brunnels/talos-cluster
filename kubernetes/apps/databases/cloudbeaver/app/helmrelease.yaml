@@ -51,7 +51,7 @@ spec:
                 && cp -R conf drivers run-server.sh samples server web /cb/ \
                 && chown 1000:1000 -R /cb/* \
                 && rm /cb/conf/initial-data-sources.conf \
-                && mkdir -o /cb/workspace/GlobalConfiguration/.dbeaver \
+                && mkdir -p /cb/workspace/GlobalConfiguration/.dbeaver \
                 && [ ! -f /cb/GlobalConfiguration/.dbeaver/data-sources.json ] \
                 && cp initial-data-sources.json /cb/GlobalConfiguration/.dbeaver/data-sources.json \
                 && ls -lah /cb/
