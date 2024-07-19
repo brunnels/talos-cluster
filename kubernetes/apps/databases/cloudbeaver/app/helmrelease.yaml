@@ -49,10 +49,10 @@ spec:
               - |
                 cd /opt/cloudbeaver \
                 && cp -R conf drivers run-server.sh samples server web /cb/ \
-                && chown 1000:1000 -R /cb/* \
                 && rm /cb/conf/initial-data-sources.conf \
                 && mkdir -p /cb/workspace/GlobalConfiguration/.dbeaver \
                 && [ ! -f /cb/workspace/GlobalConfiguration/.dbeaver/data-sources.json ] && cp /cb/conf/initial-data-sources.json /cb/workspace/GlobalConfiguration/.dbeaver/data-sources.json \
+                && chown 1000:1000 -R /cb/* \
                 && ls -lah /cb/
         containers:
           app:
