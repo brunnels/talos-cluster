@@ -53,7 +53,7 @@ spec:
                 && rm /cb/conf/initial-data-sources.conf \
                 && mkdir -o /cb/workspace/GlobalConfiguration/.dbeaver \
                 && [ ! -f /cb/GlobalConfiguration/.dbeaver/data-sources.json ] \
-                && cp /cb/initial-data-sources.json /cb/GlobalConfiguration/.dbeaver/data-sources.json \
+                && cp initial-data-sources.json /cb/GlobalConfiguration/.dbeaver/data-sources.json \
                 && ls -lah /cb/
         containers:
           app:
@@ -124,7 +124,7 @@ spec:
           cloudbeaver:
             copy-files:
               - subPath: initial-data-sources.json
-                path: /cb/initial-data-sources.json
+                path: /opt/cloudbeaver/initial-data-sources.json
                 readOnly: true
             app:
               - subPath: cloudbeaver.conf
