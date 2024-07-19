@@ -32,11 +32,9 @@ spec:
 #            image:
 #              repository: ghcr.io/onedr0p/postgres-init
 #              tag:  16.3@sha256:8ba3204f6b293dd168766009aae2ce4fa986a29b931c2d30ac1b30238ac750b8
-#            command:
-#              - "/bin/sh"
-#            args:
-#              - "-c"
-#              - "cp -R /cloudbeaver/* /cb/ && chown 1000: -R /cb/*"
+#            envFrom:
+#              - secretRef:
+#                  name: *app
           copy-files:
             image:
               repository: &repo dbeaver/cloudbeaver
@@ -48,18 +46,13 @@ spec:
               - |
                 cd /opt/cloudbeaver \
                 && cp -R conf drivers run-server.sh samples server web /cb/ \
-                && ls -lah /cb/ \
-                && chown 1000:1000 -R /cb/*
+                && chown 1000:1000 -R /cb/* \
+                && ls -lah /cb/
         containers:
           app:
             image:
               repository: *repo
               tag: *tag
-#            command:
-#              - "/bin/bash"
-#            args:
-#              - "-c"
-#              - "trap : TERM INT; sleep 9999999999d & wait"
             env:
               CB_SERVER_NAME: *app
               CB_SERVER_URL: "{{ .Release.Name }}.${SECRET_DOMAIN}"
