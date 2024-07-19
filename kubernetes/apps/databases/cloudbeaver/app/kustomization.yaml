@@ -11,7 +11,7 @@ configMapGenerator:
   - name: cloudbeaver
     files:
       - ./configs/cloudbeaver.conf
-      - ./configs/inital-data-sources.json
+      - ./configs/inital-data-sources.conf
       - ./configs/initial-data.conf
 generatorOptions:
   disableNameSuffixHash: true

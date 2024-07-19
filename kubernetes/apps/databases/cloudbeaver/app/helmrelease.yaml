@@ -126,8 +126,8 @@ spec:
               - subPath: initial-data.conf
                 path: /opt/cloudbeaver/conf/initial-data.conf
                 readOnly: true
-              - subPath: inital-data-sources.json
-                path: /opt/cloudbeaver/conf/inital-data-sources.json
+              - subPath: inital-data-sources.conf
+                path: /opt/cloudbeaver/conf/inital-data-sources.conf
                 readOnly: true
       cloudbeaver:
         type: emptyDir
