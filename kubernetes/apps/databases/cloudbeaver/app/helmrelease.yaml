@@ -28,17 +28,17 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
-#          init-db:
-#            image:
-#              repository: ghcr.io/onedr0p/postgres-init
-#              tag:  16.3@sha256:8ba3204f6b293dd168766009aae2ce4fa986a29b931c2d30ac1b30238ac750b8
-#            envFrom:
-#              - secretRef:
-#                  name: *app
-          copy-files:
+          init-db:
             image:
-              repository: &repo dbeaver/cloudbeaver
-              tag: &tag 24.1.2
+              repository: ghcr.io/onedr0p/postgres-init
+              tag:  16.3@sha256:8ba3204f6b293dd168766009aae2ce4fa986a29b931c2d30ac1b30238ac750b8
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
+          copy-files:
+            image: &image
+              repository: dbeaver/cloudbeaver
+              tag: 24.1.2@sha256:766835162080af5b5e69cf3d44138b56047f71f7b8aa5d262c58c7055c3ace38
             command:
               - "/bin/sh"
             args:
@@ -47,18 +47,18 @@ spec:
                 cd /opt/cloudbeaver \
                 && cp -R conf drivers run-server.sh samples server web /cb/ \
                 && chown 1000:1000 -R /cb/* \
+                && rm /cb/conf/initial-data-sources.conf \
                 && ls -lah /cb/
         containers:
           app:
-            image:
-              repository: *repo
-              tag: *tag
+            image: *image
             env:
               CB_SERVER_NAME: *app
               CB_SERVER_URL: "{{ .Release.Name }}.${SECRET_DOMAIN}"
-            envFrom:
-              - secretRef:
-                  name: *app
+              CLOUDBEAVER_DB_DRIVER: "postgres-jdbc"
+              CLOUDBEAVER_DB_URL: "jdbc:postgresql://postgres-rw.databases.svc.cluster.local:5432/{{ .Release.Name }}"
+              CLOUDBEAVER_DB_BACKUP_ENABLED: "false"
+            envFrom: *envFrom
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
