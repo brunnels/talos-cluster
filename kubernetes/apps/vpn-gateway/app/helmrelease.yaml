@@ -79,6 +79,37 @@ spec:
             - to:
                 - ipBlock:
                     cidr: ${CLUSTER_CIDR}
+            - toPorts:
+                - ports:
+                    - port: "8472"
+                      protocol: TCP
+                - ports:
+                    - port: "8472"
+                      protocol: UDP
+                - ports:
+                    - port: "51820"
+                      protocol: TCP
+                - ports:
+                    - port: "51820"
+                      protocol: UDP
+          ingress:
+            - toPorts:
+                - ports:
+                    - port: "8472"
+                      protocol: TCP
+                - ports:
+                    - port: "8472"
+                      protocol: UDP
+                - ports:
+                    - port: "51820"
+                      protocol: TCP
+                - ports:
+                    - port: "51820"
+                      protocol: UDP
+            - icmps:
+                - fields:
+                    - type: 8
+                      family: IPv4
     webhook:
       image:
         repository: ghcr.io/angelnu/gateway-admision-controller
