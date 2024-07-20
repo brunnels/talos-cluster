@@ -138,7 +138,7 @@ spec:
       workspace:
         existingClaim: *app
         globalMounts:
-          -path: /opt/cloudbeaver/workspace
+          - path: /opt/cloudbeaver/workspace
 #        advancedMounts:
 #          cloudbeaver:
 #            copy-files:
