@@ -4,6 +4,7 @@ apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: vpn-gateway-pod-gateway
+  namespace: vpn-gateway
   labels:
     app.kubernetes.io/instance: &instance vpn-gateway
     app.kubernetes.io/name: &name pod-gateway
@@ -17,7 +18,9 @@ spec:
         - 0.0.0.0/0
       toPorts:
         - ports:
-            - port: "51820"
+            - port: "1194"
+              protocol: UDP
+            - port: "18289"
               protocol: UDP
     - toEntities:
         - cluster
@@ -27,6 +30,7 @@ apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: vpn-gateway-pod-gateway-vxlan
+  namespace: vpn-gateway
   labels:
     app.kubernetes.io/instance: &instance vpn-gateway
     app.kubernetes.io/name: &name pod-gateway
@@ -40,10 +44,14 @@ spec:
         - ports:
             - port: "8472"
               protocol: UDP
+            - port: "18289"
+              protocol: UDP
   ingress:
     - toPorts:
         - ports:
             - port: "8472"
+              protocol: UDP
+            - port: "18289"
               protocol: UDP
     - icmps:
         - fields:
