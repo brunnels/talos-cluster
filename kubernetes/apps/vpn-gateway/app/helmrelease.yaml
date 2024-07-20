@@ -58,7 +58,7 @@ spec:
           VPN_TYPE: openvpn
           FIREWALL: off
           DOT: off
-          VPN_ENDPOINT_PORT: 51820
+#          VPN_ENDPOINT_PORT: 51820
         envFrom:
           - secretRef:
               name: *app
