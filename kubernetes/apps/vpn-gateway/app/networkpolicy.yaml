@@ -20,8 +20,6 @@ spec:
         - ports:
             - port: "1194"
               protocol: UDP
-            - port: "18289"
-              protocol: UDP
     - toEntities:
         - cluster
 ---
@@ -44,14 +42,10 @@ spec:
         - ports:
             - port: "8472"
               protocol: UDP
-            - port: "18289"
-              protocol: UDP
   ingress:
     - toPorts:
         - ports:
             - port: "8472"
-              protocol: UDP
-            - port: "18289"
               protocol: UDP
     - icmps:
         - fields:
