@@ -113,16 +113,14 @@ spec:
                   port: http
     persistence:
       config:
-        enabled: true
         type: configMap
         name: *app
         advancedMounts:
           cloudbeaver:
-            copy-files:
+            app:
               - subPath: initial-data-sources.conf
                 path: /opt/cloudbeaver/conf/initial-data-sources.conf
                 readOnly: true
-            app:
               - subPath: cloudbeaver.conf
                 path: /opt/cloudbeaver/conf/cloudbeaver.conf
                 readOnly: true
@@ -138,27 +136,28 @@ spec:
             app:
               - path: /opt/cloudbeaver
       workspace:
-        enabled: true
         existingClaim: *app
-        advancedMounts:
-          cloudbeaver:
-            copy-files:
-              - path: /cb/workspace
-                readOnly: false
-                subPath: workspace
-              - path: /cb/drivers
-                readOnly: false
-                subPath: drivers
-              - path: /cb/web
-                readOnly: false
-                subPath: web
-            app:
-              - path: /opt/cloudbeaver/workspace
-                readOnly: false
-                subPath: workspace
-              - path: /opt/cloudbeaver/drivers
-                readOnly: false
-                subPath: drivers
-              - path: /opt/cloudbeaver/web
-                readOnly: false
-                subPath: web
+        globalMounts:
+          -path: /opt/cloudbeaver/workspace
+#        advancedMounts:
+#          cloudbeaver:
+#            copy-files:
+#              - path: /cb/workspace
+#                readOnly: false
+#                subPath: workspace
+#              - path: /cb/drivers
+#                readOnly: false
+#                subPath: drivers
+#              - path: /cb/web
+#                readOnly: false
+#                subPath: web
+#            app:
+#              - path: /opt/cloudbeaver/workspace
+#                readOnly: false
+#                subPath: workspace
+#              - path: /opt/cloudbeaver/drivers
+#                readOnly: false
+#                subPath: drivers
+#              - path: /opt/cloudbeaver/web
+#                readOnly: false
+#                subPath: web
