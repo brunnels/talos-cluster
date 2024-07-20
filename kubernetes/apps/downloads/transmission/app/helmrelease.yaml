@@ -27,7 +27,6 @@ spec:
       transmission:
         annotations:
           reloader.stakater.com/auto: "true"
-        hostname: *app
         containers:
           app:
             image:
@@ -52,6 +51,7 @@ spec:
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
     defaultPodOptions:
+      hostname: *app
       labels:
         use-vpn-gateway: "true"
       securityContext:
