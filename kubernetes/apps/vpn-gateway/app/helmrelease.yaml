@@ -32,6 +32,10 @@ spec:
       NOT_ROUTED_TO_GATEWAY_CIDRS: "${CLUSTER_CIDR} ${SERVICE_CIDR}"
       VPN_BLOCK_OTHER_TRAFFIC: true
       VPN_LOCAL_CIDRS: "172.16.0.0/24 ${CLUSTER_CIDR} ${SERVICE_CIDR}"
+      VPN_TRAFFIC_PORT: 51820
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: vpn-gateway-pod-gateway
+      secret.reloader.stakater.com/reload: *app
     publicPorts:
      - hostname: transmission
        IP: 10
@@ -54,6 +58,7 @@ spec:
           VPN_TYPE: openvpn
           FIREWALL: off
           DOT: off
+          VPN_ENDPOINT_PORT: 51820
         envFrom:
           - secretRef:
               name: *app
@@ -66,50 +71,8 @@ spec:
         securityContext:
           capabilities: { add: ["NET_ADMIN"] }
         networkPolicy:
-          egress:
-            # Allow only VPN traffic to Internet
-            - to:
-              - ipBlock:
-                  cidr: 0.0.0.0/0
-              ports:
-                # VPN traffic (default OpenVPN)
-                - port: 1194
-                  protocol: UDP
-            # Allow any traffic within k8s
-            - to:
-                - ipBlock:
-                    cidr: ${CLUSTER_CIDR}
-            - toPorts:
-                - ports:
-                    - port: "8472"
-                      protocol: TCP
-                - ports:
-                    - port: "8472"
-                      protocol: UDP
-                - ports:
-                    - port: "51820"
-                      protocol: TCP
-                - ports:
-                    - port: "51820"
-                      protocol: UDP
-          ingress:
-            - toPorts:
-                - ports:
-                    - port: "8472"
-                      protocol: TCP
-                - ports:
-                    - port: "8472"
-                      protocol: UDP
-                - ports:
-                    - port: "51820"
-                      protocol: TCP
-                - ports:
-                    - port: "51820"
-                      protocol: UDP
-            - icmps:
-                - fields:
-                    - type: 8
-                      family: IPv4
+          enabled: false
+
     webhook:
       image:
         repository: ghcr.io/angelnu/gateway-admision-controller

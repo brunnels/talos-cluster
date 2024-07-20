@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
@@ -18,33 +19,10 @@ spec:
         - ports:
             - port: "51820"
               protocol: UDP
-            - port: "1194"
-              protocol: UDP
     - toEntities:
         - cluster
 ---
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: vpn-gateway-pod-gateway-cluster-dns
-  labels:
-    app.kubernetes.io/instance: &instance vpn-gateway
-    app.kubernetes.io/name: &name pod-gateway
-spec:
-  endpointSelector:
-    matchLabels:
-      app.kubernetes.io/instance: *instance
-      app.kubernetes.io/name: *name
-  egress:
-    - toEndpoints:
-        - matchLabels:
-            "k8s:io.kubernetes.pod.namespace": kube-system
-            "k8s:k8s-app": kube-dns
-    - toPorts:
-        - ports:
-            - port: "53"
-              protocol: UDP
----
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
