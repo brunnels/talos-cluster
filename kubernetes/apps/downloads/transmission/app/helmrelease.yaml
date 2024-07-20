@@ -1,0 +1,91 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app transmission
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      transmission:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        hostname: *app
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/transmission
+              tag: 4.0.5@sha256:166358481989ee720397bcc8b9d683fbb16b9f42088caed2dc4e9f7da116087a
+            env:
+              TZ: ${TIMEZONE}
+              TRANSMISSION__INCOMPLETE_DIR: /incomplete
+              TRANSMISSION__IDLE_SEEDING_LIMIT: 10080
+              TRANSMISSION__IDLE_SEEDING_LIMIT_ENABLED: true
+              TRANSMISSION__RATIO_LIMIT: 1
+              TRANSMISSION__RATIO_LIMIT_ENABLED: true
+              TRANSMISSION__PEER_PORT: 18289
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                memory: 512Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+    defaultPodOptions:
+      labels:
+        use-vpn-gateway: "true"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 9091
+    persistence:
+      config:
+        existingClaim: transmission-config
+        advancedMounts:
+          transmission:
+            app:
+              - path: config
+      incomplete:
+        storageClass: openebs-hostpath
+        accessMode: ReadWriteOnce
+        size: 20Gi
+        advancedMounts:
+          transmission:
+            app:
+              - path: incomplete
+      downloads:
+        existingClaim: cifs-downloads
+        advancedMounts:
+          transmission:
+            app:
+              - path: /downloads
+                subPath: qbittorrent

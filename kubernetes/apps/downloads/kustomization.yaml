@@ -7,9 +7,10 @@ resources:
   - ./ks.yaml
   - ./lidarr/ks.yaml
   - ./prowlarr/ks.yaml
-  - ./qbittorrent/ks.yaml
+#  - ./qbittorrent/ks.yaml
   - ./radarr/ks.yaml
   - ./readarr/ks.yaml
   - ./sabnzbd/ks.yaml
   - ./sonarr/ks.yaml
+  - ./transmission/ks.yaml
 #  - ./unpackerr/ks.yaml
