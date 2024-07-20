@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+
+  default:
+    desc: 'Downloads a file or folder from github.  Usage: task fetch -- URL DESTINATION (default to current directory if not specified)'
+    cmd: "{{.PYTHON_BIN}} {{.ROOT_DIR}}/scripts/fetcher.py {{.url}} --output_dir {{.dest}}"
+    vars:
+      url: '{{(split " " .CLI_ARGS)._0}}'
+      dest: '{{(split " " .CLI_ARGS)._1 | default .PWD}}'
+    preconditions:
+      - msg: Invalid destination
+        sh: test -d {{.dest}}
+      - msg: Invalid source url
+        sh: curl -s -o /dev/null -I -w "%{http_code}" {{.url}} | grep -l "200"
