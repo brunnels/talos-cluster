@@ -35,7 +35,7 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: *app
-          # we have to do this with the current container build to not run as root because
+          # we have to do this so the current container build can not run as root because
           # it has the ubuntu user 1000:1000 but the files are not owned by that user
           # so we just copy them into the cloudbeaver emptyDir and set the owner during init
           copy-files:
@@ -65,6 +65,7 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
+              runAsNonRoot: true
               runAsUser: 1000
               runAsGroup: 1000
             resources:
@@ -140,25 +141,3 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /opt/cloudbeaver/workspace
-#        advancedMounts:
-#          cloudbeaver:
-#            copy-files:
-#              - path: /cb/workspace
-#                readOnly: false
-#                subPath: workspace
-#              - path: /cb/drivers
-#                readOnly: false
-#                subPath: drivers
-#              - path: /cb/web
-#                readOnly: false
-#                subPath: web
-#            app:
-#              - path: /opt/cloudbeaver/workspace
-#                readOnly: false
-#                subPath: workspace
-#              - path: /opt/cloudbeaver/drivers
-#                readOnly: false
-#                subPath: drivers
-#              - path: /opt/cloudbeaver/web
-#                readOnly: false
-#                subPath: web
