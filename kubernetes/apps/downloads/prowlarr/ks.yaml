@@ -25,12 +25,3 @@ spec:
   postBuild:
     substitute:
       APP: *app
-  patches:
-    - target:
-        kind: HelmRelease
-        name: prowlarr
-        namespace: downloads
-      patch: |-
-        apiVersion: helm.toolkit.fluxcd.io/v2
-        kind: HelmRelease
-        metadata:
