@@ -15,8 +15,8 @@ resources:
 #  - ./unpackerr/ks.yaml
 configMapGenerator:
   - name: authelia-ingress-hv
-    namespace: flux-system
+    namespace: downloads
     files:
-      - configuration.yaml=./resources/authelia-ingress-hv.yaml
+      - configuration.yaml=../security/authelia/app/resources/authelia-ingress-hv.yaml
 generatorOptions:
   disableNameSuffixHash: true
