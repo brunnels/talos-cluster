@@ -40,7 +40,7 @@ spec:
           # so we just copy them into the cloudbeaver emptyDir and set the owner during init
           copy-files:
             image: &image
-              repository: dbeaver/cloudbeaver
+              repository: docker.io/dbeaver/cloudbeaver
               tag: 24.1.2@sha256:766835162080af5b5e69cf3d44138b56047f71f7b8aa5d262c58c7055c3ace38
             command:
               - "/bin/sh"

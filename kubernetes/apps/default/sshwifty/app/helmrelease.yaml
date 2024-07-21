@@ -28,7 +28,7 @@ spec:
         containers:
           app:
             image:
-              repository: niruix/sshwifty
+              repository: docker.io/niruix/sshwifty
               tag: latest
             env:
               TZ: "${TIMEZONE}"

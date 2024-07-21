@@ -33,7 +33,7 @@ spec:
         containers:
           app:
             image:
-              repository: jesec/flood
+              repository: docker.io/jesec/flood
               tag: master@sha256:640c4d80a1d31822b957326eee37646afee907ba1e445df657441c4a9efd1d0e
             env:
               TZ: "${TIMEZONE}"

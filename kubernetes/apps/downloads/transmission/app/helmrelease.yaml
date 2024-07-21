@@ -54,7 +54,7 @@ spec:
           exporter:
             dependsOn: app
             image:
-              repository: evanofslack/transmission-exporter
+              repository: docker.io/evanofslack/transmission-exporter
               tag: latest@sha256:b68569f58c7beeac5eab2ba6747310116990ea9534262eff64c269bef3e794ee
             env:
               WEB_ADDR: ':9100'
