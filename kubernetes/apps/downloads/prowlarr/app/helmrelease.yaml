@@ -73,9 +73,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 128M
+                memory: 128Mi
               limits:
-                memory: 512M
+                memory: 512Mi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -103,10 +103,7 @@ spec:
           gethomepage.dev/widget.type: prowlarr
           gethomepage.dev/widget.url: http://prowlarr.downloads
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PROWLARR_TOKEN}}` }}"
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            proxy_set_header Accept-Encoding "";
-            sub_filter '</body>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/prowlarr/nord.css"></body>;
-            sub_filter_once on;
+          nginx.ingress.kubernetes.io/configuration-snippet: ${THEME_PARK_SNIPPET}
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
