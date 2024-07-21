@@ -40,7 +40,7 @@ spec:
               FLOOD_OPTION_rundir: /data
               FLOOD_OPTION_auth: none
               FLOOD_OPTION_port: &port 80
-              FLOOD_OPTION_trurl: http://transmission.downloads
+              FLOOD_OPTION_trurl: http://transmission.downloads:9091/transmission/rpc
             resources:
               requests:
                 cpu: 10m

@@ -39,8 +39,6 @@ spec:
               TRANSMISSION__IDLE_SEEDING_LIMIT_ENABLED: true
               TRANSMISSION__RATIO_LIMIT: 1
               TRANSMISSION__RATIO_LIMIT_ENABLED: true
-              TRANSMISSION__RPC_PORT: &port 80
-              TRANSMISSION__RPC_URL: /
             resources:
               requests:
                 cpu: 50m
@@ -57,8 +55,7 @@ spec:
               repository: docker.io/evanofslack/transmission-exporter
               tag: latest@sha256:b68569f58c7beeac5eab2ba6747310116990ea9534262eff64c269bef3e794ee
             env:
-              WEB_ADDR: ':9100'
-              TRANSMISSION_ADDR: http://transmission.downloads
+              TRANSMISSION_ADDR: http://transmission.downloads:9091
             resources:
               requests:
                 cpu: 10m
@@ -70,6 +67,7 @@ spec:
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
     defaultPodOptions:
+      hostname: *app
       labels:
         use-vpn-gateway: "true"
       securityContext:
@@ -84,9 +82,9 @@ spec:
         controller: *app
         ports:
           http:
-            port: *port
+            port: 9091
           metrics:
-            port: 9100
+            port: 19091
     serviceMonitor:
       app:
         serviceName: *app

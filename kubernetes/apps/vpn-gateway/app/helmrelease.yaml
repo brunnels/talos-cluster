@@ -36,6 +36,17 @@ spec:
     podAnnotations:
       configmap.reloader.stakater.com/reload: vpn-gateway-pod-gateway
       secret.reloader.stakater.com/reload: *app
+    publicPorts:
+      # this is an arbitrary port and is required for the each client using the vpn
+      # the matching hostname must be set in the pod config
+      # this is not the bittorrent port
+      - hostname: transmission
+        IP: 10
+        ports:
+        - type: udp
+          port: 18289
+        - type: tcp
+          port: 18289
     addons:
       vpn:
         enabled: true
