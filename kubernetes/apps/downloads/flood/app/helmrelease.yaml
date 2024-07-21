@@ -40,9 +40,6 @@ spec:
               FLOOD_OPTION_RUNDIR: /data
               FLOOD_OPTION_AUTH: none
               FLOOD_OPTION_TRURL: http://transmission.downloads
-            envFrom:
-              - secretRef:
-                  name: *app
             resources:
               requests:
                 cpu: 10m
