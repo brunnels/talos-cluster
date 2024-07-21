@@ -7,8 +7,9 @@ resources:
   - ./addons/ks.yaml
   - ./weave-gitops/ks.yaml
 configMapGenerator:
-  - name: authelia-ingress-annotations
+  - name: authelia-ingress-hv
+    namespace: flux-system
     files:
-      - configuration.yaml=./resources/authelia-ingress-annotations.yaml
+      - configuration.yaml=./resources/authelia-ingress-hv.yaml
 generatorOptions:
   disableNameSuffixHash: true
