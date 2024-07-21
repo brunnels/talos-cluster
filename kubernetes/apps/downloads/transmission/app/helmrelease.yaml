@@ -39,6 +39,8 @@ spec:
               TRANSMISSION__IDLE_SEEDING_LIMIT_ENABLED: true
               TRANSMISSION__RATIO_LIMIT: 1
               TRANSMISSION__RATIO_LIMIT_ENABLED: true
+              TRANSMISSION__RPC_PORT: 80
+              TRANSMISSION__RPC_URL: /
             resources:
               requests:
                 cpu: 50m
