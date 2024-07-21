@@ -55,7 +55,7 @@ spec:
             dependsOn: app
             image:
               repository: evanofslack/transmission-exporter
-              tags: latest@sha256:b68569f58c7beeac5eab2ba6747310116990ea9534262eff64c269bef3e794ee
+              tag: latest@sha256:b68569f58c7beeac5eab2ba6747310116990ea9534262eff64c269bef3e794ee
             env:
               WEB_ADDR: ':9100'
               TRANSMISSION_ADDR: http://transmission.downloads
