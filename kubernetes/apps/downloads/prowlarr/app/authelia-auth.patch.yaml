@@ -1,15 +1,24 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1beta2.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
 metadata:
-  name: not-important-but-must-be-set
+  name: anuthelia-annotations-patch
+  namespace: flux-system
 spec:
-  values:
-    ingress:
-      app:
-        annotations:
-          nginx.ingress.kubernetes.io/auth-method: GET
-          nginx.ingress.kubernetes.io/auth-url: http://authelia.security.svc.cluster.local/api/verify
-          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
-          nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
-          nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
+  patches:
+    - patch: |-
+        apiVersion: helm.toolkit.fluxcd.io/v2
+        kind: HelmRelease
+        metadata:
+          name: not-important-but-must-be-set
+        spec:
+          values:
+            ingress:
+              app:
+                annotations:
+                  nginx.ingress.kubernetes.io/auth-method: GET
+                  nginx.ingress.kubernetes.io/auth-url: http://authelia.security.svc.cluster.local/api/verify
+                  nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
+                  nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
+                  nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
