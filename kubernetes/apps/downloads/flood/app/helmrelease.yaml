@@ -37,9 +37,10 @@ spec:
               tag: master@sha256:640c4d80a1d31822b957326eee37646afee907ba1e445df657441c4a9efd1d0e
             env:
               TZ: "${TIMEZONE}"
-              FLOOD_OPTION_RUNDIR: /data
-              FLOOD_OPTION_AUTH: none
-              FLOOD_OPTION_TRURL: http://transmission.downloads
+              FLOOD_OPTION_rundir: /data
+              FLOOD_OPTION_auth: none
+              FLOOD_OPTION_port: &port 80
+              FLOOD_OPTION_trurl: http://transmission.downloads
             resources:
               requests:
                 cpu: 10m
@@ -59,11 +60,10 @@ spec:
         controller: *app
         ports:
           http:
-            port: 3000
+            port: *port
     ingress:
       app:
-        enabled: true
-        className: nginx
+        className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
           gethomepage.dev/enabled: "true"
