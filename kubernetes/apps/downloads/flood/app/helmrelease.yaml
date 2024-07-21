@@ -37,7 +37,7 @@ spec:
               FLOOD_OPTION_rundir: /data
               FLOOD_OPTION_auth: none
               FLOOD_OPTION_port: &port 80
-              FLOOD_OPTION_trurl: http://flood.downloads:9091/transmission/rpc
+              FLOOD_OPTION_trurl: http://flood:9091/transmission/rpc
             resources:
               requests:
                 cpu: 10m
@@ -72,7 +72,7 @@ spec:
               repository: docker.io/evanofslack/transmission-exporter
               tag: latest@sha256:b68569f58c7beeac5eab2ba6747310116990ea9534262eff64c269bef3e794ee
             env:
-              TRANSMISSION_ADDR: http://flood.downloads:9091
+              TRANSMISSION_ADDR: http://flood:9091
             resources:
               requests:
                 cpu: 10m
