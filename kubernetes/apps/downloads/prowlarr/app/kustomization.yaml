@@ -6,3 +6,7 @@ resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
   - ../../../../templates/gatus/guarded
+patches:
+  - patch: ./authelia-auth.patch.yaml
+    target:
+      kind: HelmRelease
