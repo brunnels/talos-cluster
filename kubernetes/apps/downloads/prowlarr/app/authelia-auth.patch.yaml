@@ -6,6 +6,7 @@ metadata:
   name: anuthelia-annotations-patch
   namespace: flux-system
 spec:
+  targetNamespace: downloads
   patches:
     - target:
         kind: HelmRelease
