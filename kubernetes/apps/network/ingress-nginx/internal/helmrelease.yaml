@@ -25,6 +25,7 @@ spec:
   values:
     fullnameOverride: ingress-nginx-internal
     controller:
+      allowSnippetAnnotations: true
       service:
         annotations:
           io.cilium/lb-ipam-ips: "10.50.0.21"
