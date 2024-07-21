@@ -28,14 +28,6 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          exporter:
-            name: exporter
-            image:
-              repository: evanofslack/transmission-exporter
-              tags: latest@sha256:b68569f58c7beeac5eab2ba6747310116990ea9534262eff64c269bef3e794ee
-            env:
-              WEB_ADDR: ':9100'
-              TRANSMISSION_ADDR: http://transmission.downloads
           app:
             image:
               repository: ghcr.io/onedr0p/transmission
@@ -55,6 +47,24 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 512Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+          exporter:
+            dependsOn: app
+            image:
+              repository: evanofslack/transmission-exporter
+              tags: latest@sha256:b68569f58c7beeac5eab2ba6747310116990ea9534262eff64c269bef3e794ee
+            env:
+              WEB_ADDR: ':9100'
+              TRANSMISSION_ADDR: http://transmission.downloads
+            resources:
+              requests:
+                cpu: 10m
+                memory: 25Mi
+              limits:
+                memory: 50Mi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
