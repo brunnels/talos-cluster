@@ -28,6 +28,14 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
+          exporter:
+            name: exporter
+            image:
+              repository: evanofslack/transmission-exporter
+              tags: latest@sha256:b68569f58c7beeac5eab2ba6747310116990ea9534262eff64c269bef3e794ee
+            env:
+              WEB_ADDR: ':9100'
+              TRANSMISSION_ADDR: http://transmission.downloads
           app:
             image:
               repository: ghcr.io/onedr0p/transmission
@@ -39,7 +47,7 @@ spec:
               TRANSMISSION__IDLE_SEEDING_LIMIT_ENABLED: true
               TRANSMISSION__RATIO_LIMIT: 1
               TRANSMISSION__RATIO_LIMIT_ENABLED: true
-              TRANSMISSION__RPC_PORT: 80
+              TRANSMISSION__RPC_PORT: &port 80
               TRANSMISSION__RPC_URL: /
             resources:
               requests:
@@ -67,7 +75,18 @@ spec:
         controller: *app
         ports:
           http:
-            port: 9091
+            port: *port
+          metrics:
+            port: 9100
+    serviceMonitor:
+      app:
+        serviceName: *app
+        endpoints:
+          - port: metrics
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
     persistence:
       config:
         existingClaim: transmission-config
