@@ -1,6 +1,8 @@
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
+metadata:
+  name: not-important-but-must-be-set
 spec:
   values:
     ingress:
