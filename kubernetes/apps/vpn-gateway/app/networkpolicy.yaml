@@ -3,6 +3,7 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
+  # the name needs the chart name prefix so matches the policy the chart would have created
   name: vpn-gateway-pod-gateway
   namespace: vpn-gateway
   labels:
@@ -14,12 +15,15 @@ spec:
       app.kubernetes.io/instance: *instance
       app.kubernetes.io/name: *name
   egress:
+    # only allow vpn traffic to internet
     - toCIDR:
         - 0.0.0.0/0
       toPorts:
         - ports:
+            # 1194 is for openvpn
             - port: "1194"
               protocol: UDP
+    # allow all cluster traffic
     - toEntities:
         - cluster
 ---
@@ -27,6 +31,7 @@ spec:
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
+  # the name needs the chart name prefix so matches the policy the chart would have created
   name: vpn-gateway-pod-gateway-vxlan
   namespace: vpn-gateway
   labels:
@@ -37,6 +42,7 @@ spec:
     matchLabels:
       app.kubernetes.io/instance: *instance
       app.kubernetes.io/name: *name
+  # 8472 is the default vxlan port and is the same for all vpn types
   egress:
     - toPorts:
         - ports:
