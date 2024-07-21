@@ -4,9 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app prowlarr
-  namespace: flux-system # must be in flux system to use authelia-ingress-annotations valuesFrom
 spec:
-  targetNamespace: downloads
   interval: 30m
   chart:
     spec:
