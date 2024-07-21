@@ -131,32 +131,32 @@ spec:
                   port: http
     persistence:
       config:
-        existingClaim: flood
+        existingClaim: *app
         advancedMounts:
-          transmission:
+          flood:
             app:
-              - path: /config
-                subPath: transmission-config
-            flood:
               - path: /data
                 subPath: flood-data
+            transmission:
+              - path: /config
+                subPath: transmission-config
       incomplete:
         storageClass: openebs-hostpath
         accessMode: ReadWriteOnce
         size: 20Gi
         advancedMounts:
-          transmission:
+          flood:
             app:
               - path: incomplete
-            flood:
+            transmission:
               - path: incomplete
       downloads:
         existingClaim: cifs-downloads
         advancedMounts:
-          transmission:
+          flood:
             app:
               - path: /downloads
                 subPath: qbittorrent
-            flood:
+            transmission:
               - path: /downloads
                 subPath: qbittorrent
