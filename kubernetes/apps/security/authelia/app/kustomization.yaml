@@ -11,5 +11,9 @@ configMapGenerator:
   - name: authelia
     files:
       - configuration.yaml=./resources/configuration.yaml
+  - name: authelia-ingress-annotations
+    namespace: flux-system
+    files:
+      - configuration.yaml=./resources/ingress-annotations.yaml
 generatorOptions:
   disableNameSuffixHash: true
