@@ -29,6 +29,8 @@ spec:
           reloader.stakater.com/auto: "true"
         containers:
           app:
+            labels:
+              use-vpn-gateway: "true"
             image:
               repository: ghcr.io/onedr0p/transmission
               tag: 4.0.5@sha256:166358481989ee720397bcc8b9d683fbb16b9f42088caed2dc4e9f7da116087a
@@ -71,8 +73,6 @@ spec:
               capabilities: { drop: ["ALL"] }
     defaultPodOptions:
       hostname: *app
-      labels:
-        use-vpn-gateway: "true"
       securityContext:
         runAsNonRoot: true
         runAsUser: 568
