@@ -6,5 +6,5 @@ resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
   - ../../../../templates/gatus/guarded
-patchesStrategicMerge:
-  - ./authelia-auth.patch.yaml
+#patchesStrategicMerge:
+#  - ./authelia-auth.patch.yaml
