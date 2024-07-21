@@ -40,7 +40,7 @@ spec:
       # this is an arbitrary port and is required for the each client using the vpn
       # the matching hostname must be set in the pod config
       # this is not the bittorrent port
-      - hostname: transmission
+      - hostname: flood
         IP: 10
         ports:
         - type: udp

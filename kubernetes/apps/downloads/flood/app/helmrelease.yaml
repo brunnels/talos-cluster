@@ -22,9 +22,6 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  valuesFrom:
-    - kind: ConfigMap
-      name: authelia-ingress-hv
   values:
     controllers:
       flood:
@@ -40,14 +37,54 @@ spec:
               FLOOD_OPTION_rundir: /data
               FLOOD_OPTION_auth: none
               FLOOD_OPTION_port: &port 80
-              FLOOD_OPTION_trurl: http://transmission.downloads:9091/transmission/rpc
+              FLOOD_OPTION_trurl: http://localhost:9091/transmission/rpc
             resources:
               requests:
                 cpu: 10m
                 memory: 128Mi
               limits:
                 memory: 512Mi
+          transmission:
+            image:
+              repository: ghcr.io/onedr0p/transmission
+              tag: 4.0.5@sha256:166358481989ee720397bcc8b9d683fbb16b9f42088caed2dc4e9f7da116087a
+            env:
+              TZ: ${TIMEZONE}
+              TRANSMISSION__INCOMPLETE_DIR: /incomplete
+              TRANSMISSION__IDLE_SEEDING_LIMIT: 10080
+              TRANSMISSION__IDLE_SEEDING_LIMIT_ENABLED: true
+              TRANSMISSION__RATIO_LIMIT: 1
+              TRANSMISSION__RATIO_LIMIT_ENABLED: true
+              TRANSMISSION__UTP_ENABLED: false
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                memory: 512Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+          exporter:
+            dependsOn: app
+            image:
+              repository: docker.io/evanofslack/transmission-exporter
+              tag: latest@sha256:b68569f58c7beeac5eab2ba6747310116990ea9534262eff64c269bef3e794ee
+            resources:
+              requests:
+                cpu: 10m
+                memory: 25Mi
+              limits:
+                memory: 50Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
     defaultPodOptions:
+      hostname: *app
+      labels:
+        use-vpn-gateway: "true"
       securityContext:
         runAsNonRoot: true
         runAsUser: 568
@@ -61,6 +98,19 @@ spec:
         ports:
           http:
             port: *port
+          rpc:
+            port: 9091
+          metrics:
+            port: 19091
+    serviceMonitor:
+      app:
+        serviceName: *app
+        endpoints:
+          - port: metrics
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
     ingress:
       app:
         className: internal
@@ -80,5 +130,33 @@ spec:
                   identifier: app
                   port: http
     persistence:
-      data:
-        existingClaim: flood-data
+      config:
+        existingClaim: flood
+        advancedMounts:
+          transmission:
+            app:
+              - path: /config
+                subPath: transmission-config
+            flood:
+              - path: /data
+                subPath: flood-data
+      incomplete:
+        storageClass: openebs-hostpath
+        accessMode: ReadWriteOnce
+        size: 20Gi
+        advancedMounts:
+          transmission:
+            app:
+              - path: incomplete
+            flood:
+              - path: incomplete
+      downloads:
+        existingClaim: cifs-downloads
+        advancedMounts:
+          transmission:
+            app:
+              - path: /downloads
+                subPath: qbittorrent
+            flood:
+              - path: /downloads
+                subPath: qbittorrent
