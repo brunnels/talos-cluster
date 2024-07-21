@@ -96,6 +96,18 @@ spec:
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
+    ingress:
+      app:
+        className: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "internal.${SECRET_DOMAIN}"
+        hosts:
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       config:
         existingClaim: transmission-config
