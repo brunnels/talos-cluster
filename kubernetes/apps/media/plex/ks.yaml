@@ -25,4 +25,5 @@ spec:
     substitute:
       APP: *app
       GATUS_PATH: /web/index.html
+      VOLSYNC_CLAIM: plex-config
       VOLSYNC_CAPACITY: 25Gi
