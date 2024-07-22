@@ -27,4 +27,5 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 6Gi
+      VOLSYNC_CACHE_CAPACITY: 6Gi
       VOLSYNC_CLAIM: radarr-config
