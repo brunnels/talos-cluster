@@ -44,6 +44,10 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
           transmission:
             image:
               repository: ghcr.io/onedr0p/transmission
