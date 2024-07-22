@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: downloads-cifs-pvcs
+    - name: media-cifs-pvcs
     - name: volsync
   path: ./kubernetes/apps/media/plex/app
   prune: true
