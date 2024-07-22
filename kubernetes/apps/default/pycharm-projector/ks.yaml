@@ -24,6 +24,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 32Gi
-      VOLSYNC_CLAIM: devhome
+#      VOLSYNC_CAPACITY: 32Gi
+#      VOLSYNC_CLAIM: devhome
       GATUS_SUBDOMAIN: projector
