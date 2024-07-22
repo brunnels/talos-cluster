@@ -25,5 +25,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 100Mi
       VOLSYNC_CLAIM: sabnzbd-config
+      VOLSYNC_CAPACITY: 100Mi
+      VOLSYNC_CACHE_CAPACITY: 100Mi
