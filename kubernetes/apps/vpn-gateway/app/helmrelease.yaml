@@ -43,10 +43,10 @@ spec:
       - hostname: flood
         IP: 10
         ports:
-        - type: udp
-          port: 18289
-        - type: tcp
-          port: 18289
+          - type: udp
+            port: 18289
+          - type: tcp
+            port: 18289
     addons:
       vpn:
         enabled: true
