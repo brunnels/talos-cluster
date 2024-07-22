@@ -24,8 +24,8 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      APP: *app
+      APP: plex
       VOLSYNC_CAPACITY: 25Gi
       VOLSYNC_CACHE_CAPACITY: 25Gi
       VOLSYNC_CLAIM: plex-config
-#      GATUS_PATH: /web/index.html
+      GATUS_PATH: /web/index.html

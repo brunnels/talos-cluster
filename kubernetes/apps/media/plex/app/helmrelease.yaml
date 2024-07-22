@@ -64,23 +64,23 @@ spec:
               requests:
                 cpu: 50m
                 memory: 512Mi
-#                nvidia.com/gpu: 1
+                #nvidia.com/gpu: 1
               limits:
-#                nvidia.com/gpu: 1
+                #nvidia.com/gpu: 1
                 memory: 4Gi
-#        pod:
-#          affinity:
-#            nodeAffinity:
-#              requiredDuringSchedulingIgnoredDuringExecution:
-#                nodeSelectorTerms:
-#                  - matchExpressions:
-#                      - key: nvidia.com/gpu.present
-#                        operator: In
-#                        values:
-#                          - "true"
-#          nodeSelector:
-#            nvidia.com/gpu.present: "true"
-#          runtimeClassName: nvidia
+        #pod:
+        #  affinity:
+        #    nodeAffinity:
+        #      requiredDuringSchedulingIgnoredDuringExecution:
+        #        nodeSelectorTerms:
+        #          - matchExpressions:
+        #              - key: nvidia.com/gpu.present
+        #                operator: In
+        #                values:
+        #                  - "true"
+        #  nodeSelector:
+        #    nvidia.com/gpu.present: "true"
+        #  runtimeClassName: nvidia
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -102,7 +102,7 @@ spec:
       app:
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Video
           gethomepage.dev/name: Plex
