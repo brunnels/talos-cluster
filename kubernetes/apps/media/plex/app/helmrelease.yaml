@@ -134,32 +134,22 @@ spec:
       transcode:
         type: emptyDir
       movies:
-        storageClass: cifs-movies
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-movies
         globalMounts:
           - path: /media/movies
       music:
-        storageClass: cifs-music
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-music
         globalMounts:
           - path: /media/music
       pictures:
-        storageClass: cifs-pictures
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-pictures
         globalMounts:
           - path: /media/pictures
       tv:
-        storageClass: cifs-tv
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-tv
         globalMounts:
           - path: /media/tv
       videos:
-        storageClass: cifs-videos
-        accessMode: ReadWriteMany
-        size: 50Ti
+        existingClaim: cifs-videos
         globalMounts:
           - path: /media/videos
