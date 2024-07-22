@@ -40,18 +40,18 @@ data:
             icon: opnsense.png
             href: https://opnsense.lan.kraven.org
             description: OPNsense Router
-            widget:
-              type: opnsense
-              url: https://opnsense.lan.kraven.org
-              username: {{OPNSENSE_USER}}
-              password: {{OPNSENSE_PASS}}
+          #  widget:
+          #    type: opnsense
+          #    url: https://opnsense.lan.kraven.org
+          #    username: {{OPNSENSE_USER}}
+          #    password: {{OPNSENSE_PASS}}
         - Proxmox VE:
             icon: proxmox.png
             href: https://pve.${SECRET_DOMAIN}
             description: Proxmox Virtual Environment
             widget:
               type: proxmox
-              url: https://pve.lan.kraven.org:8006
+              url: http://pve.network:8006
               username: {{PROXMOX_API_TOKEN_ID}}
               password: {{PROXMOX_API_TOKEN_SECRET}}
         - Cloudflared:
@@ -63,10 +63,10 @@ data:
           #    accountid: {{CF_ACCOUNT_ID}}
           #    tunnelid: {{CF_TUNNEL_ID}}
           #    key: {{CF_API_TOKEN}}
-    - Observability:
-        - Prometheus (storage):
-            href: https://prometheus.${SECRET_DOMAIN}
-            icon: prometheus.png
+    #  - Observability:
+    #      - Prometheus (storage):
+    #          href: https://prometheus.${SECRET_DOMAIN}
+    #          icon: prometheus.png
   settings.yaml: |
     title: Dashboard
     favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
