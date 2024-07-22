@@ -35,85 +35,87 @@ data:
   kubernetes.yaml: |
     mode: cluster
   services.yaml: |
-    - Infrastructure:
-        - OPNsense:
-            icon: opnsense.png
-            href: https://opnsense.lan.kraven.org
-            description: OPNsense Router
-          #  widget:
-          #    type: opnsense
-          #    url: https://opnsense.lan.kraven.org
-          #    username: {{OPNSENSE_USER}}
-          #    password: {{OPNSENSE_PASS}}
-        - Proxmox VE:
-            icon: proxmox.png
-            href: https://pve.${SECRET_DOMAIN}
-            description: Proxmox Virtual Environment
+    - Calendar:
+        - Agenda:
             widget:
-              type: proxmox
-              url: http://pve.network:8006
-              username: {{PROXMOX_API_TOKEN_ID}}
-              password: {{PROXMOX_API_TOKEN_SECRET}}
+              type: calendar
+              view: agenda # optional - possible values monthly, agenda
+              maxEvents: 20 # optional - defaults to 10
+              integrations: # optional
+                - type: sonarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
+                  service_group: Downloads # group name where widget exists
+                  service_name: Sonarr # service name for that widget
+                - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr>
+                  service_group: Downloads # group name where widget exists
+                  service_name: Radarr # service name for that widget
+                - type: readarr # active widget type that is currently enabled on homepage - possible values: radarr, sonar>
+                  service_group: Downloads # group name where widget exists
+                  service_name: Readarr # service name for that widget
+    - Network:
         - Cloudflared:
-            icon: cloudflare-zero-trust.png
             href: https://dash.cloudflare.com/
+            icon: cloudflare-zero-trust.png
             description: Cloudflared Tunnel
-          #  widget:
-          #    type: cloudflared
-          #    accountid: {{CF_ACCOUNT_ID}}
-          #    tunnelid: {{CF_TUNNEL_ID}}
-          #    key: {{CF_API_TOKEN}}
-    #  - Observability:
-    #      - Prometheus (storage):
-    #          href: https://prometheus.${SECRET_DOMAIN}
-    #          icon: prometheus.png
+            widget:
+              type: cloudflared
+              accountid: {{CF_ACCOUNT_ID}}
+              tunnelid: {{CF_TUNNEL_ID}}
+              key: {{CF_API_TOKEN}}
   settings.yaml: |
     title: Dashboard
     favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
     theme: dark
-    background:
-      image: https://images.unsplash.com/photo-1502790671504-542ad42d5189?auto=format&fit=crop&w=2560&q=80
-      blur: sm
-      saturate: 50
-      brightness: 50
-      opacity: 50
+    #background:
+    #  image: https://raw.githubusercontent.com/smbonn2005/homeops/main/icons/moon.jpg
+    #  opacity: 50
     color: slate
     headerStyle: clean
     providers:
       longhorn:
         url: http://longhorn-frontend.longhorn-system
     layout:
-      Automation:
+      Home:
         style: column
-      Infrastructure:
-        icon: mdi-server
-        style: column
+        icon: mdi-home-analytics
       Git:
-        icon: mdi-desktop-tower
         style: column
+        icon: mdi-desktop-tower
       Storage:
+        style: row
+        columns: 2
         icon: mdi-desktop-tower
+      Calendar:
         style: column
-      Tools:
-        style: column
-      Observability:
-        icon: mdi-chart-line
-        style: row
-        columns: 4
+        icon: mdi-calendar
       Media:
+        style: column
         icon: mdi-play-circle
-        style: row
-        columns: 4
+      Network:
+        style: column
+        icon: mdi-server
+      DNS:
+        style: column
+        icon: mdi-server
+      Observability:
+        style: column
+        icon: mdi-chart-line
       Downloads:
-        icon: mdi-download-circle
         style: row
-        columns: 4
+        columns: 3
+        icon: mdi-download-circle
   widgets.yaml: |
     - resources:
         backend: kubernetes
         cpu: true
         expanded: true
         memory: true
+    - search:
+        provider: [duckduckgo, google]
+        focus: false
+        target: _blank
+    - greeting:
+        text_size: xl
+        text: "Welcome!"
     - kubernetes:
         cluster:
           cpu: true
@@ -126,20 +128,17 @@ data:
           memory: true
           show: false
           showLabel: true
+    - openmeteo:
+        label: Home
+        latitude: ${SECRET_LATITUDE}
+        longitude: ${SECRET_LONGITUDE}
+        units: imperial
+        cache: 5
     - longhorn:
         expanded: false
         total: true
         labels: true
         nodes: false
-    - search:
-        provider: [duckduckgo, google]
-        target: _blank
-    - openmeteo:
-        latitude: "${SECRET_LATITUDE}"
-        longitude: "${SECRET_LONGITUDE}"
-        timezone: "${TIMEZONE}"
-        units: imperial
-        cache: 15
     - datetime:
         text_size: l
         format:

@@ -43,7 +43,7 @@ spec:
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 100m
+                cpu: 10m
                 memory: 128mi
               limits:
                 memory: 512Mi
@@ -61,6 +61,9 @@ spec:
         ports:
           http:
             port: 3000
+    serviceAccount:
+      create: true
+      name: *app
     ingress:
       app:
         className: internal
@@ -106,6 +109,3 @@ spec:
           - subPath: widgets.yaml
             path: /app/config/widgets.yaml
             readOnly: true
-    serviceAccount:
-      create: true
-      name: *app
