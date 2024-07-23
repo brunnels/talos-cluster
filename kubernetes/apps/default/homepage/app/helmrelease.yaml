@@ -78,6 +78,14 @@ spec:
                   identifier: app
                   port: http
     persistence:
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /app/config/logs
+      config:
+        type: emptyDir
+        globalMounts:
+          - path: /app/config
       configmap:
         enabled: true
         type: configMap
