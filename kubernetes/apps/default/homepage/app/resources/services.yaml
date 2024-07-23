@@ -1,0 +1,10 @@
+- Network:
+    - Cloudflared:
+        href: "https://dash.cloudflare.com/"
+        icon: cloudflare-zero-trust.png
+        description: Cloudflared Tunnel
+        widget:
+          type: cloudflared
+          accountid: "{{CF_ACCOUNT_ID}}"
+          tunnelid: "{{CF_TUNNEL_ID}}"
+          key: "{{CF_API_TOKEN}}"

@@ -31,12 +31,12 @@ spec:
           app:
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v0.9.5
+              tag: v0.9.5@sha256:e23fcd332ecf927fe5c0149142040236b17686916004566c149eef06eb6f8d75
             env:
               TZ: "${TIMEZONE}"
             envFrom:
               - secretRef:
-                  name: homepage
+                  name: *app
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -78,14 +78,6 @@ spec:
                   identifier: app
                   port: http
     persistence:
-      logs:
-        type: emptyDir
-        globalMounts:
-          - path: /app/config/logs
-      config:
-        type: emptyDir
-        globalMounts:
-          - path: /app/config
       configmap:
         enabled: true
         type: configMap
