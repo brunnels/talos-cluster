@@ -134,4 +134,4 @@ spec:
                 subPath: sabnzbd/downloaded_books
               - path: /downloads/books-readarr
                 readOnly: false
-                subPath: qbittorrent/books-readarr
+                subPath: flood/books-readarr

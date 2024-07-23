@@ -133,4 +133,4 @@ spec:
                 subPath: sabnzbd/downloaded_tv
               - path: /downloads/tv-sonarr
                 readOnly: false
-                subPath: qbittorrent/tv-sonarr
+                subPath: flood/tv-sonarr

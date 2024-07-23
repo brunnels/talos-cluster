@@ -94,13 +94,13 @@ spec:
             app:
               - path: /downloads/music-lidarr
                 readOnly: false
-                subPath: qbittorrent/music-lidarr
+                subPath: flood/music-lidarr
               - path: /downloads/movies-radaarr
                 readOnly: false
-                subPath: qbittorrent/movies-radaarr
+                subPath: flood/movies-radaarr
               - path: /downloads/books-readarr
                 readOnly: false
-                subPath: qbittorrent/books-readarr
+                subPath: flood/books-readarr
               - path: /downloads/tv-sonarr
                 readOnly: false
-                subPath: qbittorrent/tv-sonarr
+                subPath: flood/tv-sonarr

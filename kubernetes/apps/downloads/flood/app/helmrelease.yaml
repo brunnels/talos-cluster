@@ -162,7 +162,7 @@ spec:
           flood:
             app:
               - path: /downloads
-                subPath: qbittorrent
+                subPath: flood
             transmission:
               - path: /downloads
-                subPath: qbittorrent
+                subPath: flood

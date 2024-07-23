@@ -86,7 +86,7 @@ spec:
       - downloads
     publicPorts:
       - IP: 10
-        hostname: qbittorrent
+        hostname: flood
         ports:
           - port: 50413
             type: udp

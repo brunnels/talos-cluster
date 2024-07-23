@@ -134,4 +134,4 @@ spec:
                 subPath: sabnzbd/downloaded_music
               - path: /downloads/music-lidarr
                 readOnly: false
-                subPath: qbittorrent/music-lidarr
+                subPath: flood/music-lidarr
