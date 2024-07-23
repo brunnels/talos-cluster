@@ -2,9 +2,18 @@
     - Cloudflared:
         href: "https://dash.cloudflare.com/"
         icon: cloudflare-zero-trust.png
-        description: Cloudflared Tunnel
+        description: Cloudflared Tunnel Status
         widget:
           type: cloudflared
           accountid: "{{CF_ACCOUNT_ID}}"
           tunnelid: "{{CF_TUNNEL_ID}}"
           key: "{{CF_API_TOKEN}}"
+          fields: ["status"]
+    - OPNSense:
+        href: "https://opnsense.lan.kraven.org"
+        description: OPNSense
+        widget:
+          type: opnsense
+          url: "https://10.50.0.1"
+          username: "{{OPNSENSE_USER}}"
+          password: "{{OPNSENSE_PASS}}"
