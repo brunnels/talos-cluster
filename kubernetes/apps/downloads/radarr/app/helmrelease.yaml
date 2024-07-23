@@ -131,6 +131,6 @@ spec:
               - path: /downloads/downloaded_movies
                 readOnly: false
                 subPath: sabnzbd/downloaded_movies
-              - path: /downloads/movies-radaarr
+              - path: /downloads/movies-radarr
                 readOnly: false
-                subPath: qbittorrent/movies-radaarr
+                subPath: qbittorrent/movies-radarr
