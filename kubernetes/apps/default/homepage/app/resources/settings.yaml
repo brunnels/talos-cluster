@@ -13,28 +13,57 @@ providers:
   longhorn:
     url: http://longhorn-frontend.longhorn-system
 layout:
-  Automation:
+#  Automation:
+#    style: column
+#  Infrastructure:
+#    icon: mdi-server
+#    style: column
+#  Git:
+#    icon: mdi-desktop-tower
+#    style: column
+#  Storage:
+#    icon: mdi-desktop-tower
+#    style: column
+#  Tools:
+#    style: column
+#  Observability:
+#    icon: mdi-chart-line
+#    style: row
+#    columns: 4
+#  Media:
+#    icon: mdi-play-circle
+#    style: row
+#    columns: 4
+#  Downloads:
+#    icon: mdi-download-circle
+#    style: row
+#    columns: 4
+  Home:
     style: column
-  Infrastructure:
-    icon: mdi-server
-    style: column
+    icon: mdi-home-analytics
   Git:
-    icon: mdi-desktop-tower
     style: column
+    icon: mdi-desktop-tower
   Storage:
+    style: row
+    columns: 2
     icon: mdi-desktop-tower
+  Calendar:
     style: column
-  Tools:
-    style: column
-  Observability:
-    icon: mdi-chart-line
-    style: row
-    columns: 4
+    icon: mdi-calendar
   Media:
+    style: column
     icon: mdi-play-circle
-    style: row
-    columns: 4
+  Infrastructure:
+    style: column
+    icon: mdi-server
+  DNS:
+    style: column
+    icon: mdi-server
+  Observability:
+    style: column
+    icon: mdi-chart-line
   Downloads:
-    icon: mdi-download-circle
     style: row
-    columns: 4
+    columns: 3
+    icon: mdi-download-circle
