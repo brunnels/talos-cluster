@@ -9,6 +9,8 @@ resources:
   - ./redis/ks.yaml
 configMapGenerator:
   - name: authelia-ingress-hv
-    namespace: databases
+    namespace: datbases
     files:
       - values.yaml=../security/authelia/app/resources/authelia-ingress-hv.yaml
+generatorOptions:
+  disableNameSuffixHash: true
