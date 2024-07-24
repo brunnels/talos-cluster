@@ -15,7 +15,7 @@
           type: proxmox
           url: https://pve.network:8006
           username: {{HOMEPAGE_VAR_PROXMOX_API_TOKEN_ID}}
-          password: {{HOMEPAGE_VAR_{PROXMOX_API_TOKEN_SECRET}}
+          password: {{HOMEPAGE_VAR_PROXMOX_API_TOKEN_SECRET}}
     - Cloudflared:
         href: https://dash.cloudflare.com/
         icon: cloudflare-zero-trust.png
