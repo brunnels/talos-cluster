@@ -6,4 +6,4 @@ metadata:
   name: "cifs-misc"
 provisioner: smb.csi.k8s.io
 parameters:
-  source: "//${SECRET_CIFS_SERVER}/misc"
+  source: "//${SECRET_QNAP_HOSTNAME}/misc"

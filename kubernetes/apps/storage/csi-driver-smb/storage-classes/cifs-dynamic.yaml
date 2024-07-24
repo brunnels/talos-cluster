@@ -6,7 +6,7 @@ metadata:
   name: cifs-dynamic
 provisioner: smb.csi.k8s.io
 parameters:
-  source: //${SECRET_CIFS_SERVER}/appdata/cifs-dynamic
+  source: //${SECRET_QNAP_HOSTNAME}/appdata/cifs-dynamic
   subDir: "$${pvc.metadata.namespace}-$${pvc.metadata.name}"
   onDelete: delete
   csi.storage.k8s.io/provisioner-secret-name: "csi-driver-smb"

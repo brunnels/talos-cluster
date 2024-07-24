@@ -5,7 +5,7 @@
     "storageDriver": {
         "name": "s3",
         "region": "us-east-1",
-        "regionendpoint": "${SECRET_S3_SERVER}",
+        "regionendpoint": "https://${SECRET_QNAP_HOSTNAME}:8010",
         "bucket": "zot-storage",
         "secure": true,
         "skipverify": false,
@@ -23,10 +23,7 @@
     "auth": {
       "ldap": {
         "credentialsFile": "/secrets/ldap-credentials.json",
-        "address": "${SECRET_LDAP_SERVER}",
-        "port": 389,
-        "startTLS": false,
-        "insecure": true,
+        "address": "ldaps://${SECRET_QNAP_HOSTNAME}:636",
         "baseDN": "${SECRET_LDAP_BASE_DN}",
         "userAttribute": "uid",
         "userGroupAttribute": "memberOf",

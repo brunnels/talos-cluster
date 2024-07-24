@@ -6,4 +6,4 @@ metadata:
   name: "cifs-books"
 provisioner: smb.csi.k8s.io
 parameters:
-  source: "//${SECRET_CIFS_SERVER}/books"
+  source: "//${SECRET_QNAP_HOSTNAME}/books"

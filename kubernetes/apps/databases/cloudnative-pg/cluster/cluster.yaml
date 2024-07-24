@@ -38,8 +38,8 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: "${SECRET_S3_CLOUDNATIVE_PG_BUCKET}-v1"
-      endpointURL: "${SECRET_S3_SERVER}"
+      destinationPath: "s3://cloudnative-pg-v1"
+      endpointURL: "https://${SECRET_QNAP_HOSTNAME}:8010"
       # Note: serverName version needs to be incremented or changed
       # when recovering from an existing cnpg cluster
       serverName: &currentCluster postgres-v1

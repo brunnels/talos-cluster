@@ -6,4 +6,4 @@ metadata:
   name: "cifs-games"
 provisioner: smb.csi.k8s.io
 parameters:
-  source: "//${SECRET_CIFS_SERVER}/games"
+  source: "//${SECRET_QNAP_HOSTNAME}/games"

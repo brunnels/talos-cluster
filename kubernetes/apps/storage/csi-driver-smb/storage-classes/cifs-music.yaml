@@ -6,4 +6,4 @@ metadata:
   name: "cifs-music"
 provisioner: smb.csi.k8s.io
 parameters:
-  source: "//${SECRET_CIFS_SERVER}/music"
+  source: "//${SECRET_QNAP_HOSTNAME}/music"
