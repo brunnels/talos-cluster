@@ -5,15 +5,14 @@ kind: CiliumNetworkPolicy
 metadata:
   # the name needs the chart name prefix so matches the policy the chart would have created
   name: vpn-gateway-pod-gateway
-  namespace: vpn-gateway
   labels:
-    app.kubernetes.io/instance: &instance vpn-gateway
-    app.kubernetes.io/name: &name pod-gateway
+    app.kubernetes.io/instance: vpn-gateway
+    app.kubernetes.io/name: pod-gateway
 spec:
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/instance: *instance
-      app.kubernetes.io/name: *name
+      app.kubernetes.io/instance: vpn-gateway
+      app.kubernetes.io/name: pod-gateway
   egress:
     # only allow vpn traffic to internet
     - toCIDR:
@@ -33,15 +32,14 @@ kind: CiliumNetworkPolicy
 metadata:
   # the name needs the chart name prefix so matches the policy the chart would have created
   name: vpn-gateway-pod-gateway-vxlan
-  namespace: vpn-gateway
   labels:
-    app.kubernetes.io/instance: &instance vpn-gateway
-    app.kubernetes.io/name: &name pod-gateway
+    app.kubernetes.io/instance: vpn-gateway
+    app.kubernetes.io/name: pod-gateway
 spec:
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/instance: *instance
-      app.kubernetes.io/name: *name
+      app.kubernetes.io/instance: vpn-gateway
+      app.kubernetes.io/name: pod-gateway
   # 8472 is the default vxlan port and is the same for all vpn types
   egress:
     - toPorts:
