@@ -1,19 +1,28 @@
-- Network:
+- Infrastructure:
+    - OPNSense:
+        href: https://opnsense.lan.kraven.org
+        description: OPNSense
+        widget:
+          type: opnsense
+          url: https://opnsense.lan.kraven.org
+          username: {{HOMEPAGE_VAR_OPNSENSE_USER}}
+          password: {{HOMEPAGE_VAR_OPNSENSE_PASS}}
+    - Proxmox VE:
+        icon: proxmox.png
+        href: https://pve.${SECRET_DOMAIN}
+        description: Proxmox Virtual Environment
+        widget:
+          type: proxmox
+          url: https://pve.network:8006
+          username: {{HOMEPAGE_VAR_PROXMOX_API_TOKEN_ID}}
+          password: {{HOMEPAGE_VAR_{PROXMOX_API_TOKEN_SECRET}}
     - Cloudflared:
-        href: "https://dash.cloudflare.com/"
+        href: https://dash.cloudflare.com/
         icon: cloudflare-zero-trust.png
         description: Cloudflared Tunnel Status
         widget:
           type: cloudflared
-          accountid: "{{HOMEPAGE_VAR_CF_ACCOUNT_ID}}"
-          tunnelid: "{{HOMEPAGE_VAR_CF_TUNNEL_ID}}"
-          key: "{{HOMEPAGE_VAR_CF_API_TOKEN}}"
+          accountid: {{HOMEPAGE_VAR_CF_ACCOUNT_ID}}
+          tunnelid: {{HOMEPAGE_VAR_CF_TUNNEL_ID}}
+          key: {{HOMEPAGE_VAR_CF_API_TOKEN}}
           fields: ["status"]
-    - OPNSense:
-        href: "https://opnsense.lan.kraven.org"
-        description: OPNSense
-        widget:
-          type: opnsense
-          url: "https://opnsense.lan.kraven.org"
-          username: "{{HOMEPAGE_VAR_OPNSENSE_USER}}"
-          password: "{{HOMEPAGE_VAR_OPNSENSE_PASS}}"
