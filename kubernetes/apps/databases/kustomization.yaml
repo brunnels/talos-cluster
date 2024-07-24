@@ -7,3 +7,8 @@ resources:
   - ./cloudbeaver/ks.yaml
   - ./cloudnative-pg/ks.yaml
   - ./redis/ks.yaml
+configMapGenerator:
+  - name: authelia-ingress-hv
+    namespace: databases
+    files:
+      - values.yaml=../security/authelia/app/resources/authelia-ingress-hv.yaml

@@ -10,3 +10,10 @@ resources:
   - ./reloader/ks.yaml
   - ./spegel/ks.yaml
   # - ./zot/ks.yaml
+configMapGenerator:
+  - name: authelia-ingress-hv
+    namespace: kube-system
+    files:
+      - values.yaml=../security/authelia/app/resources/authelia-ingress-hv.yaml
+generatorOptions:
+  disableNameSuffixHash: true

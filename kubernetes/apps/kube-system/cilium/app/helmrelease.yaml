@@ -23,6 +23,8 @@ spec:
       retries: 3
   valuesFrom:
     - kind: ConfigMap
+      name: authelia-ingress-hv
+    - kind: ConfigMap
       name: cilium-helm-values
   values:
     hubble:
