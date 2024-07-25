@@ -1,5 +1,6 @@
 - Infrastructure:
     - OPNSense:
+        icon: opnsense
         href: https://opnsense.lan.kraven.org
         description: OPNSense
         widget:
@@ -8,7 +9,7 @@
           username: {{HOMEPAGE_VAR_OPNSENSE_USER}}
           password: {{HOMEPAGE_VAR_OPNSENSE_PASS}}
     - Proxmox VE:
-        icon: proxmox.png
+        icon: proxmox
         href: https://pve.${SECRET_DOMAIN}
         description: Proxmox Virtual Environment
         widget:
@@ -16,9 +17,27 @@
           url: https://pve.network:8006
           username: {{HOMEPAGE_VAR_PROXMOX_API_TOKEN_ID}}
           password: {{HOMEPAGE_VAR_PROXMOX_API_TOKEN_SECRET}}
+    - {{HOMEPAGE_VAR_QNAP_NAME}}:
+        icon: qnap
+        href: {{HOMEPAGE_VAR_QNAP_URL}}
+        description: QNAP {{HOMEPAGE_VAR_QNAP_MODEL}}
+        widget:
+          type: qnap
+          url: {{HOMEPAGE_VAR_QNAP_URL}}
+          username: {{HOMEPAGE_VAR_QNAP_RO_USER}}
+          password: {{HOMEPAGE_VAR_QNAP_RO_PASS}}
+    - {{HOMEPAGE_VAR_QNAP_BACKUP_NAME}}:
+        icon: qnap
+        href: {{HOMEPAGE_VAR_QNAP_BACKUP_URL}}
+        description: QNAP {{HOMEPAGE_VAR_QNAP_BACKUP_MODEL}}
+        widget:
+          type: qnap
+          url: {{HOMEPAGE_VAR_QNAP_BACKUP_URL}}
+          username: {{HOMEPAGE_VAR_QNAP_BACKUP_RO_USER}}
+          password: {{HOMEPAGE_VAR_QNAP_BACKUP_RO_PASS}}
     - Cloudflared:
         href: https://dash.cloudflare.com/
-        icon: cloudflare-zero-trust.png
+        icon: cloudflare-zero-trust
         description: Cloudflared Tunnel Status
         widget:
           type: cloudflared
