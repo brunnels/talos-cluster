@@ -74,4 +74,4 @@ spec:
         existingClaim: cifs-backup
         globalMounts:
           - path: /backup
-            subpath: cloudnative-pg
+            subPath: cloudnative-pg
