@@ -55,8 +55,8 @@ spec:
         type: gluetun
         gluetun:
           image:
-            repository: docker.io/qmcgaw/gluetun
-            tag: v3.38.0@sha256:5522794f5cce6d84bc7f06b1e3a3b836ede9100c64aec94543cb503bb2ecb72f
+            repository: docker.io/qdm12/gluetun
+            tag: latest@sha256:c62be536a5ccbe3576862beb00ec8f9f37032ff1cbd9ddbaa972dc052fe522aa
         env:
           TZ: "${TIMEZONE}"
           VPN_SERVICE_PROVIDER: privado
@@ -65,6 +65,7 @@ spec:
           DOT: off
           HTTP_CONTROL_SERVER_ADDRESS: ":80"
           HTTP_CONTROL_SERVER_LOG: off
+          PUBLICIP_API: ip2location
         envFrom:
           - secretRef:
               name: *app
