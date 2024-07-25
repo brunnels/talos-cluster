@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - ./staging.yaml
   - ./production.yaml
-  - ./kraven-dev-production-tls.sops.yaml
