@@ -128,7 +128,7 @@ spec:
               name: *app
             patch: |
               - op: add
-                path: /spec/template/spec/containers/1/ports
+                path: /spec/template/spec/containers/1/ports/-
                 value:
                   containerPort: 80
                   name: gluetun
