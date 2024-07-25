@@ -86,8 +86,14 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /app/config
+      services:
+        type: secret
+        name: *app
+        globalMounts:
+          - subPath: services.yaml
+            path: /app/config/services.yaml
+            readOnly: true
       configmap:
-        enabled: true
         type: configMap
         name: *app
         globalMounts:
@@ -99,9 +105,6 @@ spec:
             readOnly: true
           - subPath: kubernetes.yaml
             path: /app/config/kubernetes.yaml
-            readOnly: true
-          - subPath: services.yaml
-            path: /app/config/services.yaml
             readOnly: true
           - subPath: settings.yaml
             path: /app/config/settings.yaml
