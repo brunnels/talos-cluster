@@ -9,3 +9,4 @@ resources:
   - ./external-services
   - ./ingress-nginx/ks.yaml
   - ./k8s-gateway/ks.yaml
+  - ./vpn-gateway/ks.yaml
