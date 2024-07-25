@@ -35,6 +35,15 @@
           url: {{ .QNAP_BACKUP_URL }}
           username: {{ .QNAP_BACKUP_RO_USER }}
           password: {{ .QNAP_BACKUP_RO_PASS }}
+- Observability:
+    - Gluetun:
+        icon: gluetun
+        description: Gluetun VPN Gateway
+        namespace: network
+        app: pod-gateway
+        widget:
+          type: gluetun
+          url: http://vpn-gateway.network
     - Cloudflared:
         href: https://dash.cloudflare.com/
         icon: cloudflare-zero-trust
