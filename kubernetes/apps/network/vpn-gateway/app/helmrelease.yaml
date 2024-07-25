@@ -55,7 +55,7 @@ spec:
         type: gluetun
         gluetun:
           image:
-            repository: docker.io/qdm12/gluetun
+            repository: ghcr.io/qdm12/gluetun
             tag: latest@sha256:c62be536a5ccbe3576862beb00ec8f9f37032ff1cbd9ddbaa972dc052fe522aa
         env:
           TZ: "${TIMEZONE}"
