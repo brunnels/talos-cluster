@@ -6,13 +6,13 @@ metadata:
   # the name needs the chart name prefix so matches the policy the chart would have created
   name: vpn-gateway-pod-gateway
   labels:
-    app.kubernetes.io/instance: vpn-gateway
-    app.kubernetes.io/name: pod-gateway
+    app.kubernetes.io/instance: &instance vpn-gateway
+    app.kubernetes.io/name: &name pod-gateway
 spec:
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/instance: vpn-gateway
-      app.kubernetes.io/name: pod-gateway
+      app.kubernetes.io/instance: *instance
+      app.kubernetes.io/name: *name
   egress:
     # only allow vpn traffic to internet
     - toCIDR:
@@ -33,13 +33,13 @@ metadata:
   # the name needs the chart name prefix so matches the policy the chart would have created
   name: vpn-gateway-pod-gateway-vxlan
   labels:
-    app.kubernetes.io/instance: vpn-gateway
-    app.kubernetes.io/name: pod-gateway
+    app.kubernetes.io/instance: &instance vpn-gateway
+    app.kubernetes.io/name: &name pod-gateway
 spec:
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/instance: vpn-gateway
-      app.kubernetes.io/name: pod-gateway
+      app.kubernetes.io/instance: *instance
+      app.kubernetes.io/name: *name
   # 8472 is the default vxlan port and is the same for all vpn types
   egress:
     - toPorts:

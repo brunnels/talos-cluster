@@ -53,14 +53,14 @@ metadata:
   name: &app cloudnative-pg-backup
   namespace: flux-system
 spec:
-  targetNamespace: dbms
+  targetNamespace: databases
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: csi-driver-smb
     - name: cloudnative-pg-cluster
-  path: ./kubernetes/databases/cloudnative-pg/backup
+  path: ./kubernetes/apps/databases/cloudnative-pg/backup
   prune: true
   sourceRef:
     kind: GitRepository
