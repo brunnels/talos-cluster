@@ -1,0 +1,77 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cloudnative-pg-backup
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      cloudnative-pg-backup:
+        type: cronjob
+        cronjob:
+          concurrencyPolicy: Forbid
+          schedule: "59 * * * *"
+        pod:
+          restartPolicy: OnFailure
+        containers:
+          app:
+            image:
+              repository: ghcr.io/cloudnative-pg/postgresql
+              tag: 16.3-9@sha256:b0f045d6cf0333419a23d6aaefc26e781bf162e2008e33c80a608cae905ac982
+            env:
+              TZ: "${TIMEZONE}"
+              PGHOST: postgres-rw.databases
+              PGPORT: "5432"
+              PGUSER: postgres
+              PGPASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: cloudnative-pg-secret
+                    key: password
+            command:
+              - "/bin/sh"
+            args:
+              - "-c"
+              - "pg_dumpall -U $PGUSER | gzip > /backup/${SECRET_DOMAIN}.cloudnative-pg.dump.gz"
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: [ "ALL" ] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    persistence:
+      backup:
+        existingClaim: cifs-backup
+        globalMounts:
+          - path: /backup
+            subpath: cloudnative-pg
