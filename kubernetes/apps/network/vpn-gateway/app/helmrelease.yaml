@@ -23,6 +23,8 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    global:
+      fullnameOverride: *app
     image:
       repository: ghcr.io/angelnu/pod-gateway
       tag: v1.10.0@sha256:d728eac85f750b37c96a0dafd038561ea4b8035857802be1128ea9b19c61e181
@@ -34,7 +36,7 @@ spec:
       # 1194 is for openvpn
       VPN_TRAFFIC_PORT: 1194
     podAnnotations:
-      configmap.reloader.stakater.com/reload: vpn-gateway-pod-gateway
+      configmap.reloader.stakater.com/reload: *app
       secret.reloader.stakater.com/reload: *app
     publicPorts:
       # this is an arbitrary port and is required for the each client using the vpn
@@ -61,7 +63,8 @@ spec:
           VPN_TYPE: openvpn
           FIREWALL: off
           DOT: off
-          # firewall do nothing since firewall is disabled
+          HTTP_CONTROL_SERVER_ADDRESS: ":80"
+          HTTP_CONTROL_SERVER_LOG: off
         envFrom:
           - secretRef:
               name: *app
@@ -73,7 +76,7 @@ spec:
             memory: 128M
         securityContext:
           capabilities: { add: ["NET_ADMIN"] }
-        # network policy is disabled because it's we need 2 CiliumNetworkPolicies
+        # network policy is disabled because we need 2 CiliumNetworkPolicies
         networkPolicy:
           enabled: false
     # all namespaces that will utilize the vpn should be added here
@@ -106,24 +109,27 @@ spec:
       #   must match the gatewayLabelValue or setGatewayAnnotationValue instead of the default 'true'.
       gatewayLabelValue:
       gatewayAnnotationValue:
-#  postRenderers:
-#    - kustomize:
-#        patches:
-#          - target:
-#              kind: Service
-#              name: vpn-gateway
-#            patch: |
-#              - op: add
-#                path: /spec/ports/-
-#                value:
-#                  name: http
-#                  port: 80
-#                  protocol: TCP
-#                  targetPort: 80
-#          - target:
-#              kind: Deployment
-#              name: vpn-gateway
-#            patch: |
-#              - op: add
-#                path: /spec/template/spec/containers/
-#                value:
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Service
+              name: *app
+            patch: |
+              - op: add
+                path: /spec/ports/-
+                value:
+                  name: gluetun
+                  port: 80
+                  protocol: TCP
+                  targetPort: 80
+          - target:
+              kind: Deployment
+              name: *app
+            patch: |
+              - op: add
+                path: /spec/template/spec/containers/1/ports
+                value:
+                  containerPort: 80
+                  name: gluetun
+                  protocol: TCP

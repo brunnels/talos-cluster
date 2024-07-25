@@ -3,8 +3,7 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  # the name needs the chart name prefix so matches the policy the chart would have created
-  name: vpn-gateway-pod-gateway
+  name: vpn-gateway
   labels:
     app.kubernetes.io/instance: &instance vpn-gateway
     app.kubernetes.io/name: &name pod-gateway
@@ -30,8 +29,7 @@ spec:
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  # the name needs the chart name prefix so matches the policy the chart would have created
-  name: vpn-gateway-pod-gateway-vxlan
+  name: vpn-gateway-vxlan
   labels:
     app.kubernetes.io/instance: &instance vpn-gateway
     app.kubernetes.io/name: &name pod-gateway
