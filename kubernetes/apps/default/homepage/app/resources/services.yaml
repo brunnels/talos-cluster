@@ -6,8 +6,8 @@
         widget:
           type: opnsense
           url: https://opnsense.lan.kraven.org
-          username: {{HOMEPAGE_VAR_OPNSENSE_USER}}
-          password: {{HOMEPAGE_VAR_OPNSENSE_PASS}}
+          username: {{ .OPNSENSE_USER }}
+          password: {{ .OPNSENSE_PASS }}
     - Proxmox VE:
         icon: proxmox
         href: https://pve.${SECRET_DOMAIN}
@@ -15,35 +15,35 @@
         widget:
           type: proxmox
           url: https://pve.network:8006
-          username: {{HOMEPAGE_VAR_PROXMOX_API_TOKEN_ID}}
-          password: {{HOMEPAGE_VAR_PROXMOX_API_TOKEN_SECRET}}
+          username: {{ .PROXMOX_API_TOKEN_ID }}
+          password: {{ .PROXMOX_API_TOKEN_SECRET }}
     - {{ .QNAP_NAME}}:
         icon: qnap
-        href: "{{ .QNAP_URL }}"
-        description: "QNAP {{ .QNAP_MODEL }}"
+        href: {{ .QNAP_URL }}
+        description: QNAP {{ .QNAP_MODEL }}
         widget:
           type: qnap
-          url: "{{ .QNAP_URL }}"
-          username: "{{ .QNAP_RO_USER }}"
-          password: "{{ .QNAP_RO_PASS }}"
+          url: {{ .QNAP_URL }}
+          username: {{ .QNAP_RO_USER }}
+          password: {{ .QNAP_RO_PASS }}
     - {{ .QNAP_BACKUP_NAME }}:
         icon: qnap
-        href: "{{ .QNAP_BACKUP_URL }}"
-        description: "QNAP {{ .QNAP_BACKUP_MODEL }}"
+        href: {{ .QNAP_BACKUP_URL }}
+        description: QNAP {{ .QNAP_BACKUP_MODEL }}
         widget:
           type: qnap
-          url: "{{ .QNAP_BACKUP_URL }}"
-          username: "{{ .QNAP_BACKUP_RO_USER }}"
-          password: "{{ .QNAP_BACKUP_RO_PASS }}"
+          url: {{ .QNAP_BACKUP_URL }}
+          username: {{ .QNAP_BACKUP_RO_USER }}
+          password: {{ .QNAP_BACKUP_RO_PASS }}
     - Cloudflared:
         href: https://dash.cloudflare.com/
         icon: cloudflare-zero-trust
         description: Cloudflared Tunnel Status
         widget:
           type: cloudflared
-          accountid: {{HOMEPAGE_VAR_CF_ACCOUNT_ID}}
-          tunnelid: {{HOMEPAGE_VAR_CF_TUNNEL_ID}}
-          key: {{HOMEPAGE_VAR_CF_API_TOKEN}}
+          accountid: {{ .CF_ACCOUNT_ID }}
+          tunnelid: {{ .CF_TUNNEL_ID }}
+          key: {{ .CF_API_TOKEN }}
 - Calendar:
     - Agenda:
         widget:
