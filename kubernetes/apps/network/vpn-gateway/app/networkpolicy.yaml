@@ -1,5 +1,6 @@
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
+# This policy allows the vpn-gateway to go out to the internet on port 1194 and also to talk to any cluster entities
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
@@ -13,19 +14,17 @@ spec:
       app.kubernetes.io/instance: *instance
       app.kubernetes.io/name: *name
   egress:
-    # only allow vpn traffic to internet
     - toCIDR:
         - 0.0.0.0/0
       toPorts:
         - ports:
-            # 1194 is for openvpn
             - port: "1194"
               protocol: UDP
-    # allow all cluster traffic
     - toEntities:
         - cluster
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
+# This policy allows the vpn-gateway to communicate over the default VXLAN port 8472
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
@@ -38,7 +37,6 @@ spec:
     matchLabels:
       app.kubernetes.io/instance: *instance
       app.kubernetes.io/name: *name
-  # 8472 is the default vxlan port and is the same for all vpn types
   egress:
     - toPorts:
         - ports:
@@ -49,7 +47,23 @@ spec:
         - ports:
             - port: "8472"
               protocol: UDP
-    - icmps:
-        - fields:
-            - type: 8
-              family: IPv4
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
+# This policy allows inbound connections to the vpn-gateway on port 80 to gluetun http_control_server
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: vpn-gateway-http-control
+  labels:
+    app.kubernetes.io/instance: &instance vpn-gateway
+    app.kubernetes.io/name: &name pod-gateway
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: *instance
+      app.kubernetes.io/name: *name
+  ingress:
+    - toPorts:
+        - ports:
+            - port: "80"
+              protocol: TCP
