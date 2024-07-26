@@ -54,3 +54,10 @@ spec:
         ports:
           http:
             port: 8191
+    persistence:
+      local:
+        storageClass: openebs-hostpath
+        accessMode: ReadWriteOnce
+        size: 2Gi
+        globalMounts:
+          - path: "/.local"
