@@ -27,6 +27,7 @@ spec:
       homepage:
         annotations:
           configmap.reloader.stakater.com/reload: *app
+          secret.reloader.stakater.com/reload: *app
         containers:
           app:
             image:
