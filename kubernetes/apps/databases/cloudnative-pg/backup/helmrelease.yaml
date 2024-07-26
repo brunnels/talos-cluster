@@ -28,7 +28,7 @@ spec:
         type: cronjob
         cronjob:
           concurrencyPolicy: Forbid
-          schedule: "59 * * * *"
+          schedule: "42 * * * *"
         pod:
           restartPolicy: OnFailure
         containers:
