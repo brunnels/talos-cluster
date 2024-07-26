@@ -44,6 +44,7 @@
         widget:
           type: gluetun
           url: http://vpn-gateway.network
+          fields: ["public_ip", "region"]
     - Cloudflared:
         href: https://dash.cloudflare.com/
         icon: cloudflare-zero-trust
