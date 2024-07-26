@@ -24,6 +24,14 @@ spec:
     # allow all cluster traffic
     - toEntities:
         - cluster
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: homepage
+      toPorts:
+        - ports:
+            - port: "80"
+              protocol: TCP
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
 apiVersion: cilium.io/v2
