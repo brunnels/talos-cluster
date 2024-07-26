@@ -34,10 +34,10 @@ spec:
               tag: 1.17.0@sha256:48dbee4cc052d57f76d7ec9c59a072733a4f46157cdf0a18c73ea2163065fc7a
             resources:
               requests:
-                cpu: 15m
-                memory: 32M
+                cpu: 10m
+                memory: 32Mi
               limits:
-                memory: 64M
+                memory: 64Mi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
