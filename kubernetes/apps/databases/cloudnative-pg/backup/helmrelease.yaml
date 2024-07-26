@@ -44,7 +44,7 @@ spec:
               PGPASSWORD:
                 valueFrom:
                   secretKeyRef:
-                    name: cloudnative-pg-secret
+                    name: cloudnative-pg
                     key: password
             command:
               - "/bin/sh"
