@@ -37,15 +37,15 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 64Mi
-              limits:
                 memory: 128Mi
+              limits:
+                memory: 256Mi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     service:
@@ -54,10 +54,3 @@ spec:
         ports:
           http:
             port: 8191
-    persistence:
-      local:
-        storageClass: openebs-hostpath
-        accessMode: ReadWriteOnce
-        size: 2Gi
-        globalMounts:
-          - path: "/.local"
