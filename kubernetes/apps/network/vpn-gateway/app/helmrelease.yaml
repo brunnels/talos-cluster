@@ -33,22 +33,22 @@ spec:
       VPN_BLOCK_OTHER_TRAFFIC: true
       VPN_LOCAL_CIDRS: "172.16.0.0/24 ${CLUSTER_CIDR} ${SERVICE_CIDR}"
       GATEWAY_ENABLE_DNSSEC: false
+      VPN_INTERFACE: "wg0"
+      # 1637 is for wireguard
+      VPN_TRAFFIC_PORT: 1637
       # 1194 is for openvpn
-      VPN_TRAFFIC_PORT: 1194
+      #VPN_TRAFFIC_PORT: 1194
     podAnnotations:
       configmap.reloader.stakater.com/reload: *app
       secret.reloader.stakater.com/reload: *app
-    publicPorts:
-      # this is an arbitrary port and is required for the each client using the vpn
-      # the matching hostname must be set in the pod config
-      # this is not the bittorrent port
-      - hostname: flood
-        IP: 10
-        ports:
-          - type: udp
-            port: 18289
-          - type: tcp
-            port: 18289
+    #publicPorts:
+    #  - hostname: flood
+    #    IP: 10
+    #    ports:
+    #      - type: udp
+    #        port: 18289
+    #      - type: tcp
+    #        port: 18289
     addons:
       vpn:
         enabled: true
@@ -59,8 +59,13 @@ spec:
             tag: latest@sha256:c62be536a5ccbe3576862beb00ec8f9f37032ff1cbd9ddbaa972dc052fe522aa
         env:
           TZ: "${TIMEZONE}"
-          VPN_SERVICE_PROVIDER: privado
-          VPN_TYPE: openvpn
+          #VPN_SERVICE_PROVIDER: privado
+          #VPN_TYPE: openvpn
+          VPN_SERVICE_PROVIDER: airvpn
+          VPN_TYPE: wireguard
+          VPN_INTERFACE: wg0
+          WIREGUARD_MTU: 1320
+          SERVER_REGIONS: Europe
           FIREWALL: off
           DOT: off
           HTTP_CONTROL_SERVER_ADDRESS: ":80"
