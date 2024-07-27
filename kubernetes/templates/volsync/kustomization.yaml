@@ -6,4 +6,5 @@ resources:
   - ./externalsecret.yaml
   - ./pvc.yaml
   - ./source.yaml
-  - ./destination.yaml
+  # comment out destination.yaml once the cluster is restored
+  #- ./destination.yaml
