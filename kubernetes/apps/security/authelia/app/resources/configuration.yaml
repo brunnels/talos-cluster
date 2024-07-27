@@ -69,7 +69,7 @@ access_control:
   default_policy: two_factor
   rules:
     # Allow free access from cluster network
-    - domain: "*"
+    - domain: "*."
       networks:
         - "${CLUSTER_CIDR}"
       policy: bypass
