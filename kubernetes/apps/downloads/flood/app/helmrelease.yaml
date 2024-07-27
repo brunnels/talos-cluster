@@ -63,6 +63,7 @@ spec:
               TRANSMISSION__RATIO_LIMIT: 1
               TRANSMISSION__RATIO_LIMIT_ENABLED: true
               TRANSMISSION__UTP_ENABLED: false
+              TRANSMISSION__PEER_PORT: 60112
             resources:
               requests:
                 cpu: 50m
