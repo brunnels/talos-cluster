@@ -5,4 +5,5 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./snapshot-controller/ks.yaml
+  - ./volsync-src-fixer/ks.yaml
   - ./volsync/ks.yaml
