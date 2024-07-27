@@ -22,7 +22,7 @@ authentication_backend:
       group_name: cn
 
 log:
-  level: "debug"
+  level: "info"
   format: "text"
   file_path: ""
   keep_stdout: false
