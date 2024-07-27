@@ -155,3 +155,15 @@ identity_providers:
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://che.${SECRET_DOMAIN}/oauth/callback"]
         userinfo_signing_algorithm: none
+
+      - client_id: "{{ .OAUTH2_PROXY_CLIENT_ID }}"
+        client_name: OAuth2 Proxy
+        client_secret: "{{ .OAUTH2_PROXY_CLIENT_SECRET }}"
+        public: false
+        authorization_policy: two_factor
+        scopes: ["openid", "profile", "groups", "email"]
+        redirect_uris: ["https://oauth-proxy.${SECRET_DOMAIN}/oauth2/callback"]
+        grant_types: ["refresh_token", "authorization_code"]
+        response_types: ["code"]
+        response_modes: ["form_post", "query", "fragment"]
+        userinfo_signing_algorithm: none
