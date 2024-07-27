@@ -66,13 +66,21 @@ notifier:
     sender: "Authelia <authelia@${SECRET_DOMAIN}>"
 
 access_control:
-  default_policy: two_factor
+  default_policy: deny
+  networks:
+    - name: internal
+      networks: [ "${LAN_CIDR}", "${CLUSTER_CIDR}", "${SERVICE_CIDR}" ]
+    - name: cluster
+      networks: [ "${CLUSTER_CIDR}" ]
   rules:
     # Allow free access from cluster network
-    - domain: "*."
+    - domain: "*.${SECRET_DOMAIN}"
       networks:
-        - "${CLUSTER_CIDR}"
+        - "cluster"
       policy: bypass
+    # 2FA if not on cluster network
+    - domain: "*.${SECRET_DOMAIN}"
+      policy: two_factor
 
 totp:
   disable: false
