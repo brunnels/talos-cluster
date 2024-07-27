@@ -4,7 +4,7 @@ authentication_backend:
     disable: true
   refresh_interval: 1m
   ldap:
-    address: "${SECRET_LDAP_SERVER}"
+    address: "ldaps://${SECRET_QNAP_HOSTNAME}}:636"
     implementation: custom
     timeout: 5s
     base_dn: "${SECRET_LDAP_BASE_DN}"
