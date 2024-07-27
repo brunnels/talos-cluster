@@ -46,9 +46,9 @@ spec:
         IP: 10
         ports:
           - type: udp
-            port: 18289
+            port: 60112
           - type: tcp
-            port: 18289
+            port: 60112
     addons:
       vpn:
         enabled: true
