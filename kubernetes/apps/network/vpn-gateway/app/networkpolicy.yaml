@@ -47,6 +47,10 @@ spec:
         - ports:
             - port: "8472"
               protocol: UDP
+    - icmps:
+        - fields:
+            - type: 8
+              family: IPv4
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
 # This policy allows inbound connections to the vpn-gateway on port 80 to gluetun http_control_server
