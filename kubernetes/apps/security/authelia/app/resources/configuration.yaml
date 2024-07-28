@@ -162,7 +162,7 @@ identity_providers:
         public: false
         authorization_policy: two_factor
         scopes: ["openid", "profile", "groups", "email"]
-        redirect_uris: ["https://oauth-proxy.${SECRET_DOMAIN}/oauth2/callback"]
+        redirect_uris: ["https://oauth2-proxy.${SECRET_DOMAIN}/oauth2/callback"]
         grant_types: ["refresh_token", "authorization_code"]
         response_types: ["code"]
         response_modes: ["form_post", "query", "fragment"]
