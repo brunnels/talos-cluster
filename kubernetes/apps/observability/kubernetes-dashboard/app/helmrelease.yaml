@@ -26,21 +26,31 @@ spec:
     app:
       env:
         TZ: "${TIMEZONE}"
+      extraArgs:
+        - --enable-insecure-login
+        - --insecure-bind-address=0.0.0.0
       ingress:
         enabled: true
-        className: internal
+        ingressClassName: internal
+        useDefaultAnnotations: false
+        issuer:
+          scope: disabled
+        tls:
+          enabled: false
+        paths:
+          web: /
+          api: /api
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Observability
           gethomepage.dev/name: Kubernetes Dashboard
           gethomepage.dev/icon: mdi-kubernetes
+          nginx.ingress.kubernetes.io/proxy-buffer-size: 16k
+          nginx.ingress.kubernetes.io/backend-protocol: HTTP
           nginx.ingress.kubernetes.io/auth-signin: "https://oauth2-proxy.${SECRET_DOMAIN}/oauth2/start?rd=$escaped_request_uri"
           nginx.ingress.kubernetes.io/auth-url: "https://oauth2-proxy.${SECRET_DOMAIN}/oauth2/auth"
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            auth_request_set $token $upstream_http_authorization;
-            proxy_set_header Authorization $token;
-          nginx.ingress.kubernetes.io/proxy-buffer-size: 16k
+          nginx.ingress.kubernetes.io/auth-response-headers: "Authorization"
         hosts:
           - "dashboard.${SECRET_DOMAIN}"
     metricsScraper:
