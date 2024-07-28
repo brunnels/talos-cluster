@@ -3,15 +3,15 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: kubernetes-dashboard-admin
+  name: &name dashboard-admin
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: cluster-admin
+  name: *name
 subjects:
-- kind: ServiceAccount
-  name: kubernetes-dashboard-admin
-  namespace: observability
-- kind: Group
-  name: oidc:Administrators
-  apiGroup: rbac.authorization.k8s.io
+  - kind: ServiceAccount
+    name: *name
+    namespace: ${NAMESPACE}
+  - kind: Group
+    name: oidc:Administrators
+    apiGroup: rbac.authorization.k8s.io
