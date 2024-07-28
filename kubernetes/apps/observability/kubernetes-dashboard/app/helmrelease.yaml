@@ -27,6 +27,7 @@ spec:
       env:
         TZ: "${TIMEZONE}"
       ingress:
+        enabled: true
         className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
