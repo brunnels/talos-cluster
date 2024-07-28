@@ -146,25 +146,15 @@ identity_providers:
         grant_types: ["authorization_code"]
         userinfo_signed_response_alg: none
 
-      - client_id: "{{ .CHE_OIDC_CLIENT_ID }}"
-        client_name: Eclipse Che
-        client_secret: "{{ .CHE_OIDC_CLIENT_SECRET }}"
-        public: false
-        authorization_policy: two_factor
-        scopes: ["openid", "profile", "groups", "email"]
-        redirect_uris: ["https://che.${SECRET_DOMAIN}/oauth/callback"]
-        grant_types: ["refresh_token", "authorization_code"]
-        response_types: ["code"]
-        response_modes: ["form_post", "query", "fragment"]
-        userinfo_signing_algorithm: none
-
       - client_id: "oauth2-proxy"
         client_name: OAuth2 Proxy
         client_secret: "{{ .OAUTH2_PROXY_CLIENT_SECRET }}"
         public: false
         authorization_policy: two_factor
         scopes: ["openid", "profile", "groups", "email"]
-        redirect_uris: ["https://oauth2-proxy.${SECRET_DOMAIN}/oauth2/callback"]
+        redirect_uris:
+          - "https://oauth2-proxy.${SECRET_DOMAIN}/oauth2/callback"
+          - "https://che.${SECRET_DOMAIN}/oauth/callback"
         grant_types: ["refresh_token", "authorization_code"]
         response_types: ["code"]
         response_modes: ["form_post", "query", "fragment"]
