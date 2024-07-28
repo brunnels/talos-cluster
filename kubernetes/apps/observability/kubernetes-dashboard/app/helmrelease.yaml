@@ -29,6 +29,7 @@ spec:
       extraArgs:
         - --enable-insecure-login
         - --insecure-bind-address=0.0.0.0
+        - --enable-skip-login
       ingress:
         enabled: true
         ingressClassName: internal
