@@ -5,4 +5,5 @@ resources:
   - ./namespace.yaml
   - ./apprise/ks.yaml
   - ./gatus/ks.yaml
+  - ./kubernetes-dashboard/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
