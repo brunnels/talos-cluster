@@ -156,7 +156,7 @@ identity_providers:
         redirect_uris: ["https://che.${SECRET_DOMAIN}/oauth/callback"]
         userinfo_signing_algorithm: none
 
-      - client_id: "{{ .OAUTH2_PROXY_CLIENT_ID }}"
+      - client_id: "oauth2-proxy"
         client_name: OAuth2 Proxy
         client_secret: "{{ .OAUTH2_PROXY_CLIENT_SECRET }}"
         public: false
