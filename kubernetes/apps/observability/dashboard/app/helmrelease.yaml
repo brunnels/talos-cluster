@@ -56,9 +56,9 @@ spec:
           nginx.ingress.kubernetes.io/configuration-snippet: |
              auth_request_set $token $upstream_http_x_auth_request_access_token;
              proxy_set_header Authorization "Bearer $token";
-#          nginx.ingress.kubernetes.io/auth-signin: "https://oauth2-proxy.${SECRET_DOMAIN}/oauth2/start?rd=$escaped_request_uri"
-#          nginx.ingress.kubernetes.io/auth-url: "https://oauth2-proxy.${SECRET_DOMAIN}/oauth2/auth"
-#          nginx.ingress.kubernetes.io/auth-response-headers: "Authorization"
+          #nginx.ingress.kubernetes.io/auth-signin: "https://oauth2-proxy.${SECRET_DOMAIN}/oauth2/start?rd=$escaped_request_uri"
+          #nginx.ingress.kubernetes.io/auth-url: "https://oauth2-proxy.${SECRET_DOMAIN}/oauth2/auth"
+          #nginx.ingress.kubernetes.io/auth-response-headers: "Authorization"
         hosts:
           - "{{ .Release.Name }}.${SECRET_DOMAIN}"
     metricsScraper:
