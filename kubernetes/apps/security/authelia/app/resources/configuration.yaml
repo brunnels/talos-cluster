@@ -151,9 +151,11 @@ identity_providers:
         client_secret: "{{ .CHE_OIDC_CLIENT_SECRET }}"
         public: false
         authorization_policy: two_factor
-        pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://che.${SECRET_DOMAIN}/oauth/callback"]
+        grant_types: ["refresh_token", "authorization_code"]
+        response_types: ["code"]
+        response_modes: ["form_post", "query", "fragment"]
         userinfo_signing_algorithm: none
 
       - client_id: "oauth2-proxy"
