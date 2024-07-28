@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: oauth2-proxy
-  path: ./kubernetes/cluster/apps/observability/dashboard/app
+  path: ./kubernetes/apps/observability/dashboard/app
   prune: true
   sourceRef:
     kind: GitRepository
