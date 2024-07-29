@@ -11,11 +11,11 @@ get_pods() {
       sed -e 's/\[//g' -e 's/\]//g' -e 's/\"//g'
 }
 
-LOG "🔍Checking for stuck volsync-src pods in all namespaces"
+LOG "🔍 Checking for stuck volsync-src pods in all namespaces"
 
 PODS=($(get_pods))
 if [ ${#PODS[@]} -eq 0 ]; then
-    LOG "🦄No volsync-src pods found"
+    LOG "🦄 No volsync-src pods found"
 else
     for POD in "${PODS[@]}"; do
         POD=(${POD//,/ })
@@ -23,10 +23,10 @@ else
         NAMESPACE="${POD[1]}"
         JOB_NAME="${POD[2]}"
         PVC_NAME="${JOB_NAME//-src/}-src"
-        LOG "💢Found stuck pod '$POD_NAME' in namespace '$NAMESPACE' using pvc '$PVC_NAME'"
+        LOG "💢 Found stuck pod '$POD_NAME' in namespace '$NAMESPACE' using pvc '$PVC_NAME'"
         kubectl -n "$NAMESPACE" delete pvc "$PVC_NAME" --wait=false
-        LOG "💥Deleted pvc '$PVC_NAME' in namespace '$NAMESPACE'"
+        LOG "💥 Deleted pvc '$PVC_NAME' in namespace '$NAMESPACE'"
         kubectl -n "$NAMESPACE" delete pod "$POD_NAME"
-        LOG "💥Deleted pod '$POD_NAME in namespace '$NAMESPACE'"
+        LOG "💥 Deleted pod '$POD_NAME in namespace '$NAMESPACE'"
     done
 fi
