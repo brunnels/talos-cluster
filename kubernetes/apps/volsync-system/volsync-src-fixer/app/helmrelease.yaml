@@ -30,7 +30,7 @@ spec:
           configmap.reloader.stakater.com/reload: *app
         cronjob:
           schedule: "30 * * * *"
-          ttlSecondsAfterFinished: 120
+          ttlSecondsAfterFinished: 3600
         containers:
           main:
             image:
