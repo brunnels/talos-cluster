@@ -5,5 +5,4 @@ resources:
   - ./namespace.yaml
   - ./apprise/ks.yaml
   - ./gatus/ks.yaml
-  - ./dashboard/ks.yaml
   - ./prometheus-operator-crds/ks.yaml

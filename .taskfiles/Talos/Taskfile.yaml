@@ -5,6 +5,7 @@ version: "3"
 vars:
   TALHELPER_CLUSTER_DIR: "{{.KUBERNETES_DIR}}/bootstrap/talos/clusterconfig"
   TALHELPER_SECRET_FILE: "{{.KUBERNETES_DIR}}/bootstrap/talos/talsecret.sops.yaml"
+  TALHELPER_ENV_FILE: "{{.KUBERNETES_DIR}}/bootstrap/talos/talenv.sops.yaml"
   TALHELPER_CONFIG_FILE: "{{.KUBERNETES_DIR}}/bootstrap/talos/talconfig.yaml"
   HELMFILE_FILE: "{{.KUBERNETES_DIR}}/bootstrap/helmfile.yaml"
   TALOSCONFIG_FILE: "{{.TALHELPER_CLUSTER_DIR}}/talosconfig"
@@ -13,6 +14,22 @@ env:
   TALOSCONFIG: "{{.TALOSCONFIG_FILE}}"
 
 tasks:
+
+  test:
+    dir: "{{.KUBERNETES_DIR}}/bootstrap/talos"
+    cmd: |
+      talhelper genconfig \
+      --config-file {{.TALHELPER_CONFIG_FILE}} \
+      --secret-file {{.TALHELPER_SECRET_FILE}} \
+      --env-file {{.TALHELPER_ENV_FILE}} \
+      --out-dir "{{.ROOT_DIR}}/clusterconfig"
+    preconditions:
+      - msg: Missing talhelper config file
+        sh: test -f {{.TALHELPER_CONFIG_FILE}}
+      - msg: Missing Sops config file
+        sh: test -f {{.SOPS_CONFIG_FILE}}
+      - msg: Missing Sops Age key file
+        sh: test -f {{.AGE_FILE}}
 
   bootstrap:
     desc: Bootstrap the Talos cluster

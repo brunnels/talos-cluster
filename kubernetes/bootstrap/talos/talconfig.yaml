@@ -31,6 +31,10 @@ nodes:
     installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/2dcd442954d67662d41c61bdb92165aaf7189aff9997bd011b6968c12ce8d9c0
     controlPlane: true
+    schematic:
+      customization:
+        extraKernelArgs:
+          - thermal.off=1
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "e8:03:9a:e4:9b:69"
@@ -131,3 +135,4 @@ controlPlane:
     - "@./patches/controller/cluster.yaml"
     - "@./patches/controller/disable-admission-controller.yaml"
     - "@./patches/controller/etcd.yaml"
+    - "@./patches/controller/apiserver-oidc.yaml"
