@@ -56,11 +56,9 @@ spec:
         gluetun:
           image:
             repository: ghcr.io/qdm12/gluetun
-            tag: v3.38.0@sha256:5522794f5cce6d84bc7f06b1e3a3b836ede9100c64aec94543cb503bb2ecb72f
+            tag: latest@sha256:cfddee0a09f7bbf7ee7fbcd3b9af8b7dfe1dddf597b652d3ec00bb4849e1b478
         env:
           TZ: "${TIMEZONE}"
-          #VPN_SERVICE_PROVIDER: privado
-          #VPN_TYPE: openvpn
           VPN_SERVICE_PROVIDER: airvpn
           VPN_TYPE: wireguard
           VPN_INTERFACE: wg0
