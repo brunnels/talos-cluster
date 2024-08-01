@@ -72,8 +72,8 @@ spec:
           value:
             - "dir_mode=0775"
             - "file_mode=0664"
-            - "uid=1001"
-            - "gid=100"
+            - "uid=0"
+            - "gid=0"
             - noperm
             - mfsymlinks
             - noserverino
