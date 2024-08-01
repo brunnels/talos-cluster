@@ -27,6 +27,8 @@ spec:
     - kind: ConfigMap
       name: cilium-helm-values
   values:
+    extraConfig:
+      enable-icmp-rules: "true"
     hubble:
       enabled: true
       metrics:
