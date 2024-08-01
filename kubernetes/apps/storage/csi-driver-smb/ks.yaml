@@ -73,7 +73,7 @@ spec:
             - "dir_mode=0775"
             - "file_mode=0664"
             - "uid=0"
-            - "gid=0"
+            - "gid=100"
             - noperm
             - mfsymlinks
             - noserverino
