@@ -65,10 +65,10 @@ spec:
           WIREGUARD_MTU: 1320
           SERVER_REGIONS: Europe
           SERVER_COUNTRIES: Netherlands
-          FIREWALL: "off"
-          DOT: "off"
+          FIREWALL: "no"
+          DOT: "no"
           HTTP_CONTROL_SERVER_ADDRESS: ":80"
-          HTTP_CONTROL_SERVER_LOG: "off"
+          HTTP_CONTROL_SERVER_LOG: "no"
           PUBLICIP_API: ip2location
         envFrom:
           - secretRef:
