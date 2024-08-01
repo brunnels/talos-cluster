@@ -33,7 +33,7 @@ spec:
       VPN_BLOCK_OTHER_TRAFFIC: true
       VPN_LOCAL_CIDRS: "172.16.0.0/24 ${CLUSTER_CIDR} ${SERVICE_CIDR}"
       GATEWAY_ENABLE_DNSSEC: false
-      VPN_INTERFACE: "wg0"
+      VPN_INTERFACE: wg0
       # 1637 is for wireguard
       VPN_TRAFFIC_PORT: 1637
       # 1194 is for openvpn
@@ -56,7 +56,7 @@ spec:
         gluetun:
           image:
             repository: ghcr.io/qdm12/gluetun
-            tag: latest@sha256:cfddee0a09f7bbf7ee7fbcd3b9af8b7dfe1dddf597b652d3ec00bb4849e1b478
+            tag: v3.38.0@sha256:5522794f5cce6d84bc7f06b1e3a3b836ede9100c64aec94543cb503bb2ecb72f
         env:
           TZ: "${TIMEZONE}"
           #VPN_SERVICE_PROVIDER: privado
