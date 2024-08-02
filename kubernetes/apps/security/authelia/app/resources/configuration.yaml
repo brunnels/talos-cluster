@@ -117,7 +117,7 @@ identity_providers:
         #public: false
         #authorization_policy: two_factor
         pre_configured_consent_duration: 1y
-        #scopes: ["openid", "profile", "groups", "email"]
+        scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://gitops.${SECRET_DOMAIN}/oauth2/callback"]
         #userinfo_signing_algorithm: none
 
@@ -127,7 +127,7 @@ identity_providers:
         #public: false
         #authorization_policy: two_factor
         pre_configured_consent_duration: 1y
-        #scopes: ["openid", "profile", "groups", "email"]
+        scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://grafana.${SECRET_DOMAIN}/login/generic_oauth"]
         #userinfo_signed_response_alg: none
 
@@ -156,7 +156,7 @@ identity_providers:
         client_secret: "{{ .OAUTH2_PROXY_CLIENT_SECRET }}"
         #public: false
         #authorization_policy: two_factor
-        #scopes: ["openid", "profile", "groups", "email"]
+        scopes: ["openid", "profile", "groups", "email"]
         redirect_uris:
           - "https://oauth2-proxy.${SECRET_DOMAIN}/oauth2/callback"
           - "https://che.${SECRET_DOMAIN}/oauth/callback"
