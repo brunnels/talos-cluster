@@ -161,7 +161,7 @@ identity_providers:
           - "https://oauth2-proxy.${SECRET_DOMAIN}/oauth2/callback"
           - "https://che.${SECRET_DOMAIN}/oauth/callback"
         grant_types: ["refresh_token", "authorization_code"]
-        #response_types: ["code"]
+        response_types: ["code"]
         #response_modes: ["form_post", "query", "fragment"]
         #userinfo_signing_algorithm: none
-        #pre_configured_consent_duration: '1 week'
+        #pre_configured_consent_duration: "1 week"
