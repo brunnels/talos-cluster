@@ -5,7 +5,8 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./grafana-dashboard.yaml
-  - ./rbac.yaml
+  - ./clusterrole.yaml
+  - ./clusterrolebinding.yaml
   - ./helmrelease.yaml
   - ../../../../templates/gatus/external
 configMapGenerator:

@@ -35,7 +35,7 @@ spec:
         gethomepage.dev/enabled: "true"
         gethomepage.dev/group: Infrastructure
         gethomepage.dev/name: Weave-gitops
-        gethomepage.dev/icon: flux-cd.png
+        gethomepage.dev/icon: flux-cd
         gethomepage.dev/description: Flux Dashboard
       hosts:
         - host: "gitops.${SECRET_DOMAIN}"

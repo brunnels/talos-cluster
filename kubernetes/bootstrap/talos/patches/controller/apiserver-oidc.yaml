@@ -1,0 +1,9 @@
+cluster:
+  apiServer:
+    extraArgs:
+      oidc-client-id: kubeapi
+      oidc-issuer-url: https://auth.${SECRET_DOMAIN}
+      oidc-username-claim: name
+      oidc-groups-claim: groups
+      oidc-username-prefix: "oidc:"
+      oidc-groups-prefix: "oidc:"

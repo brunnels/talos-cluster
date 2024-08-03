@@ -3,13 +3,16 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app operator
+  name: &app eclipse-che-operator
   namespace: flux-system
 spec:
   targetNamespace: eclipse-che
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: authelia
+    - name: cert-manager-issuers
   path: ./kubernetes/apps/eclipse-che/operator/app
   prune: true
   sourceRef:
@@ -19,6 +22,27 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
-  postBuild:
-    substitute:
-      APP: *app
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app eclipse-che-cluster-config
+  namespace: flux-system
+spec:
+  targetNamespace: eclipse-che
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
+    - name: eclipse-che-operator
+  path: ./kubernetes/apps/eclipse-che/operator/cluster-config
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
