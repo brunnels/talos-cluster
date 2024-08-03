@@ -1,3 +1,3 @@
 ---
-providerRegex: ^(cn1|wn1|wn2|wnvm1|wnvm2)$
+providerRegex: ^(cn1|cn2|cn3|wn1|wn2|wn3|wn4|wn5|wn6|wn7|wn8|wn9|wnvm1|wnvm2)$
 bypassDnsResolution: true
