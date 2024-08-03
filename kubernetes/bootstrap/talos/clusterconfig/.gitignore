@@ -1,6 +1,3 @@
-homerun-cn1.yaml
-homerun-wn1.yaml
-homerun-wn2.yaml
-homerun-wnvm1.yaml
-homerun-wnvm2.yaml
+homerun-cn*.yaml
+homerun-wn*.yaml
 talosconfig

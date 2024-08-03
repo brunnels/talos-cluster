@@ -65,13 +65,13 @@ nodes:
     patches:
       - "@./patches/wn1/gpu-worker-patch.yaml"
   - hostname: "wn2"
-    ipAddress: "10.50.0.109"
-    installDisk: "/dev/sdb"
+    ipAddress: "10.50.0.15"
+    installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/2b1fa58ebb24d7c5aab6fdb7b6f9c35b1965ec6f56d2f60ac428c7cc455aaf3e
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "00:e0:4c:68:99:ab"
+          hardwareAddr: "00:e0:4c:68:94:c2"
         dhcp: false
         addresses:
           - "10.50.0.15/24"
@@ -81,29 +81,31 @@ nodes:
         mtu: 1500
     patches:
       - "@./patches/wn2/gpu-worker-patch.yaml"
-  - hostname: "wnvm1"
-    ipAddress: "10.50.0.12"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/e440a31d2107fc545560b2ed7daab3659ce7a4eef937d63ded2fd3de016ba913
+  - hostname: "wn3"
+    ipAddress: "10.50.0.14"
+    installDisk: "/dev/nvme0n1"
+    talosImageURL: factory.talos.dev/installer/4708a49c688e9b6b7e9d46e5de43e8f29ad55419c102605032ba7dd3cd00dead
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "bc:24:11:92:18:a9"
+          hardwareAddr: "00:e0:4c:68:99:ab"
         dhcp: false
         addresses:
-          - "10.50.0.12/24"
+          - "10.50.0.14/24"
         routes:
           - network: 0.0.0.0/0
             gateway: "10.50.0.1"
         mtu: 1500
-  - hostname: "wnvm2"
+    patches:
+      - "@./patches/wn3/gpu-worker-patch.yaml"
+  - hostname: "wn4"
     ipAddress: "10.50.0.13"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/e440a31d2107fc545560b2ed7daab3659ce7a4eef937d63ded2fd3de016ba913
+    installDisk: "/dev/nvme0n1"
+    talosImageURL: factory.talos.dev/installer/4708a49c688e9b6b7e9d46e5de43e8f29ad55419c102605032ba7dd3cd00dead
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "bc:24:11:fb:fa:ef"
+          hardwareAddr: "00:e0:4c:68:29:24"
         dhcp: false
         addresses:
           - "10.50.0.13/24"
@@ -111,6 +113,8 @@ nodes:
           - network: 0.0.0.0/0
             gateway: "10.50.0.1"
         mtu: 1500
+    patches:
+      - "@./patches/wn4/gpu-worker-patch.yaml"
 
 # Global patches
 patches:
@@ -132,7 +136,7 @@ patches:
 controlPlane:
   patches:
     - "@./patches/controller/api-access.yaml"
+    - "@./patches/controller/apiserver-oidc.yaml"
     - "@./patches/controller/cluster.yaml"
     - "@./patches/controller/disable-admission-controller.yaml"
     - "@./patches/controller/etcd.yaml"
-    - "@./patches/controller/apiserver-oidc.yaml"
