@@ -7,7 +7,7 @@ spec:
   components:
     cheServer:
       extraProperties:
-        CHE_OIDC_USERNAME__CLAIM: name
+        CHE_OIDC_USERNAME__CLAIM: preferred_username
     devfileRegistry:
       disableInternalRegistry: true
       externalDevfileRegistries:
@@ -47,6 +47,8 @@ spec:
         allowGroups:
           - "oidc:Administrators"
           - "oidc:Domain Users"
+        allowUsers:
+          - "oidc:brunnels"
       gateway:
         deployment:
           containers:
