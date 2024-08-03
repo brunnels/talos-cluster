@@ -8,12 +8,12 @@ spec:
     cheServer:
       extraProperties:
         CHE_OIDC_USERNAME__CLAIM: preferred_username
-    devfileRegistry:
-      disableInternalRegistry: true
-      externalDevfileRegistries:
-        - url: "https://registry.devfile.io"
-    pluginRegistry:
-      disableInternalRegistry: true
+    #devfileRegistry:
+    #  disableInternalRegistry: true
+    #  externalDevfileRegistries:
+    #    - url: "https://registry.devfile.io"
+    #pluginRegistry:
+    #  disableInternalRegistry: true
   networking:
     annotations:
       external-dns.alpha.kubernetes.io/target: "internal.${SECRET_DOMAIN}"
