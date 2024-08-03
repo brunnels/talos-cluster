@@ -1,5 +1,9 @@
 ## Eclipse Che
 
+## THIS WON'T WORK
+- The operator chart doesn't have all dependencies.  You must install first with chectl then you can keep the CheCluster in flux if you want.
+- see https://github.com/eclipse-che/che/issues/23049
+
 #### Getting it to work with Authelia
 1.  Ensure ingress-nginx helm chart value controller.allowSnippetAnnotations=true is set
 1.  Generate and add a new external-secret provided oidc client secret
