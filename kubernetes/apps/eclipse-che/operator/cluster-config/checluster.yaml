@@ -64,6 +64,6 @@ spec:
                   value: "1h"
       identityProviderURL: https://auth.${SECRET_DOMAIN}
       oAuthClientName: kubeapi
-      oAuthSecret: *name
+      oAuthSecret: "${SECRET_KUBEAPI_OIDC_CLIENT_SECRET}"
     domain: *domain
     ingressClassName: internal
