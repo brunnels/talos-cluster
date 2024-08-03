@@ -20,8 +20,8 @@ spec:
       gethomepage.dev/enabled: "true"
       gethomepage.dev/group: Development
       gethomepage.dev/name: Eclipse Che
-      gethomepage.dev/icon: flux-cd
-      gethomepage.dev/description: Flux Dashboard
+      gethomepage.dev/icon: https://eclipse.dev/che/docs/_/img/icon-eclipse-che.svg
+      gethomepage.dev/description: Centralized developer environment
       gethomepage.dev/url: &domain "che.${SECRET_DOMAIN}"
       kubernetes.io/ingress.class: internal
       nginx.ingress.kubernetes.io/proxy-buffer-size: 16k
