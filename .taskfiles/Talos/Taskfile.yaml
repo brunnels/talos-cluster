@@ -96,7 +96,7 @@ tasks:
     desc: Add Talos worker config to node
     dir: "{{.KUBERNETES_DIR}}/bootstrap/talos"
     cmds:
-      - talosctl apply-config --insecure --nodes {{.node}} --file {{.file}} --mode=reboot
+      - talosctl apply-config --insecure --nodes {{.node}} --file {{.file}}
     requires:
       vars: ["node", "file"]
     preconditions:
