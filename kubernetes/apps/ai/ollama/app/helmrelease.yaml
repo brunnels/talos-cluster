@@ -72,7 +72,7 @@ spec:
     runtimeClassName: nvidia
     podSecurityContext:
       allowPrivilegeEscalation: false
-      readOnlyRootFilesystem: false
+      readOnlyRootFilesystem: true
       capabilities: { drop: ["ALL"] }
     securityContext:
       runAsNonRoot: true
@@ -81,3 +81,9 @@ spec:
       fsGroup: 1000
       fsGroupChangePolicy: OnRootMismatch
       seccompProfile: { type: RuntimeDefault }
+    volumes:
+      - emptyDir: {}
+        name: ollama-temp
+    volumeMounts:
+      - mountPath: /.ollama
+        name: ollama-temp
