@@ -46,11 +46,11 @@ spec:
           secretKeyRef:
             name: *app
             key: OAUTH_CLIENT_ID
-      - name: OPENAI_API_KEY
+      - name: OAUTH_CLIENT_SECRET
         valueFrom:
           secretKeyRef:
             name: *app
-            key: OPENAI_API_KEY
+            key: OAUTH_CLIENT_SECRET
     podSecurityContext:
       fsGroupChangePolicy: Always
       fsGroup: 1001
