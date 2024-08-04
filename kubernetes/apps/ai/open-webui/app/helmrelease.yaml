@@ -41,6 +41,16 @@ spec:
         value: http://authelia.security.svc.cluster.local/.well-known/openid-configuration
       - name: OAUTH_PROVIDER_NAME
         value: Authelia
+      - name: OAUTH_CLIENT_ID
+        valueFrom:
+          secretKeyRef:
+            name: *app
+            key: OAUTH_CLIENT_ID
+      - name: OPENAI_API_KEY
+        valueFrom:
+          secretKeyRef:
+            name: *app
+            key: OPENAI_API_KEY
     podSecurityContext:
       allowPrivilegeEscalation: false
       readOnlyRootFilesystem: true
