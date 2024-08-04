@@ -22,7 +22,9 @@ resources:
   - ./metrics-server.yaml
   - ./nvidia-charts.yaml
   - ./node-feature-discovery.yaml
+  - ./ollama.yaml
   - ./openebs.yaml
+  - ./open-webui.yaml
   - ./piraeus.yaml
   - ./postfinance.yaml
   - ./prometheus-community.yaml

@@ -1,0 +1,38 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app open-webui
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: *app
+      version: 3.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: *app
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    ollama:
+      enabled: false
+    ollamaUrls: ["http://ollama.ai.svc.cluster.local.:11434"]
+    ingress:
+      enabled: true
+      class: internal
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: "/"
+        external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+      host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+    persistence:
+      enabled: true
+      existingClaim: *app
