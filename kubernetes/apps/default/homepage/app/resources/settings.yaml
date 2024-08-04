@@ -11,7 +11,7 @@ color: slate
 headerStyle: clean
 providers:
   longhorn:
-    url: http://longhorn-frontend.storage
+    url: http://longhorn-frontend.longhorn-system
 layout:
 #  Automation:
 #    style: column
