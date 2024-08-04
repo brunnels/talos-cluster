@@ -14,7 +14,7 @@ cni:
 # NOTE: devices might need to be set if you have more than one active NIC on your hosts
 # devices: eno+ eth+
 endpointRoutes:
-  enabled:
+  enabled: true
 envoy:
   enabled: false
 hubble:
