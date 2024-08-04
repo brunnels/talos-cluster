@@ -25,4 +25,8 @@ spec:
     keepHistory: false
   values:
     controller:
-      tolerations: []
+      nodeSelector:
+        node-role.kubernetes.io/worker: ""
+    node:
+      nodeSelector:
+        node-role.kubernetes.io/worker: ""

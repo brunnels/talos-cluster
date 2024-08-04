@@ -1,0 +1,5 @@
+machine:
+  sysctls:
+    vm.nr_hugepages: "1024"
+  nodeLabels:
+    node-role.kubernetes.io/worker: ""

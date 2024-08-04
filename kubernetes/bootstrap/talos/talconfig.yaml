@@ -12,13 +12,15 @@ clusterPodNets:
 clusterSvcNets:
   - "10.196.0.0/16"
 additionalApiServerCertSans: &sans
-  - "10.50.0.20"
   - 127.0.0.1 # KubePrism
-  - "10.50.0.19"
-  - "homerun.lan.kraven.org"
-  - "cn1.lan.kraven.org"
-  - "cn2.lan.kraven.org"
-  - "cn3.lan.kraven.org"
+  - 10.50.0.20
+  - 10.50.0.19
+  - 10.50.0.18
+  - 10.50.0.17
+  - homerun.lan.kraven.org
+  - cn1.lan.kraven.org
+  - cn2.lan.kraven.org
+  - cn3.lan.kraven.org
 additionalMachineCertSans: *sans
 
 # Disable built-in Flannel to use Cilium
@@ -28,8 +30,8 @@ cniConfig:
 nodes:
   - hostname: "cn1"
     ipAddress: "10.50.0.19"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/2dcd442954d67662d41c61bdb92165aaf7189aff9997bd011b6968c12ce8d9c0
+    installDisk: "/dev/sdb"
+    talosImageURL: factory.talos.dev/installer/c38ec79c2adffd3f14899c479dd7f20ce6ea3881a13ee98ed1336072ecb033e7
     controlPlane: true
     schematic:
       customization:
@@ -47,10 +49,52 @@ nodes:
         mtu: 1500
         vip:
           ip: "10.50.0.20"
+  - hostname: "cn2"
+    ipAddress: "10.50.0.18"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/c38ec79c2adffd3f14899c479dd7f20ce6ea3881a13ee98ed1336072ecb033e7
+    controlPlane: true
+    schematic:
+      customization:
+        extraKernelArgs:
+          - thermal.off=1
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "e8:03:9a:e4:8e:64"
+        dhcp: false
+        addresses:
+          - "10.50.0.18/24"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.50.0.1"
+        mtu: 1500
+        vip:
+          ip: "10.50.0.20"
+  - hostname: "cn3"
+    ipAddress: "10.50.0.17"
+    installDisk: "/dev/sdb"
+    talosImageURL: factory.talos.dev/installer/c38ec79c2adffd3f14899c479dd7f20ce6ea3881a13ee98ed1336072ecb033e7
+    controlPlane: true
+    schematic:
+      customization:
+        extraKernelArgs:
+          - thermal.off=1
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "e8:03:9a:e4:66:f5"
+        dhcp: false
+        addresses:
+          - "10.50.0.17/24"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.50.0.1"
+        mtu: 1500
+        vip:
+          ip: "10.50.0.20"
   - hostname: "wn1"
     ipAddress: "10.50.0.16"
     installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/776b35ec24dae4198662912fbd5210413701d018026fa7e3c3c18035a4ccbaf8
+    talosImageURL: factory.talos.dev/installer/4708a49c688e9b6b7e9d46e5de43e8f29ad55419c102605032ba7dd3cd00dead
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
@@ -67,7 +111,7 @@ nodes:
   - hostname: "wn2"
     ipAddress: "10.50.0.15"
     installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/2b1fa58ebb24d7c5aab6fdb7b6f9c35b1965ec6f56d2f60ac428c7cc455aaf3e
+    talosImageURL: factory.talos.dev/installer/4708a49c688e9b6b7e9d46e5de43e8f29ad55419c102605032ba7dd3cd00dead
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
@@ -115,6 +159,21 @@ nodes:
         mtu: 1500
     patches:
       - "@./patches/wn4/gpu-worker-patch.yaml"
+  - hostname: "wn5"
+    ipAddress: "10.50.0.12"
+    installDisk: "/dev/nvme0n1"
+    talosImageURL: factory.talos.dev/installer/4708a49c688e9b6b7e9d46e5de43e8f29ad55419c102605032ba7dd3cd00dead
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "e4:b9:7a:e7:4c:4e"
+        dhcp: false
+        addresses:
+          - "10.50.0.12/24"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.50.0.1"
+        mtu: 1500
 
 # Global patches
 patches:

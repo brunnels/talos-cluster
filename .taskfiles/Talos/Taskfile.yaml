@@ -15,16 +15,20 @@ env:
 
 tasks:
 
-  test:
+  generate:
     dir: "{{.KUBERNETES_DIR}}/bootstrap/talos"
     cmd: |
       talhelper genconfig \
       --config-file {{.TALHELPER_CONFIG_FILE}} \
       --secret-file {{.TALHELPER_SECRET_FILE}} \
       --env-file {{.TALHELPER_ENV_FILE}} \
-      --out-dir "{{.ROOT_DIR}}/clusterconfig"
+      --out-dir "{{.TALHELPER_CLUSTER_DIR}}-new"
     preconditions:
       - msg: Missing talhelper config file
+        sh: test -f {{.TALHELPER_SECRET_FILE}}
+      - msg: Missing talhelper secret file
+        sh: test -f {{.TALHELPER_ENV_FILE}}
+      - msg: Missing talhelper env file
         sh: test -f {{.TALHELPER_CONFIG_FILE}}
       - msg: Missing Sops config file
         sh: test -f {{.SOPS_CONFIG_FILE}}
