@@ -15,6 +15,7 @@ spec:
         name: longhorn
         namespace: flux-system
   install:
+    replace: true
     remediation:
       retries: 3
   upgrade:
@@ -23,13 +24,6 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    # csi:
-    #   attacherReplicaCount: &replicas 1
-    #   provisionerReplicaCount: *replicas
-    #   resizerReplicaCount: *replicas
-    #   snapshotterReplicaCount: *replicas
-    # persistence:
-    #   defaultClassReplicaCount: 1
     defaultSettings:
       createDefaultDiskLabeledNodes: true
       defaultDataLocality: true
@@ -40,8 +34,6 @@ spec:
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
       concurrentAutomaticEngineUpgradePerNodeLimit: 3
       orphanAutoDeletion: true
-    # longhornUI:
-    #   replicas: *replicas
     ingress:
       enabled: true
       ingressClassName: internal
