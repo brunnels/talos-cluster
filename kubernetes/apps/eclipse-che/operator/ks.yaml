@@ -38,7 +38,7 @@ spec:
 #    - name: external-secrets-stores
 #    - name: eclipse-che-operator
   path: ./kubernetes/apps/eclipse-che/operator/cluster-config
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
