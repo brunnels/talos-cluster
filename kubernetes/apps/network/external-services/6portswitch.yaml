@@ -43,7 +43,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: "6portswitch.${SECRET_DOMAIN}"
+    - host: 6portswitch.${SECRET_DOMAIN}
       http:
         paths:
           - path: /
@@ -52,4 +52,4 @@ spec:
               service:
                 name: *app
                 port:
-                  name: "http-6ps"
+                  name: http-6ps
