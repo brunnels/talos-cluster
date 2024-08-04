@@ -5,3 +5,6 @@ spegel:
 service:
   registry:
     hostPort: 29999
+nodeSelector:
+  kubernetes.io/os: linux
+  node-role.kubernetes.io/worker: ""
