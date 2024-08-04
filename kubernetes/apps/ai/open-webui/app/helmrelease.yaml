@@ -53,7 +53,7 @@ spec:
             key: OPENAI_API_KEY
     podSecurityContext:
       allowPrivilegeEscalation: false
-      readOnlyRootFilesystem: true
+      readOnlyRootFilesystem: false
       capabilities: { drop: ["ALL"] }
     containerSecurityContext:
       runAsNonRoot: true
