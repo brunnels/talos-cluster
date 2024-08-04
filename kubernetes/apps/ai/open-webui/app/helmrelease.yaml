@@ -41,11 +41,10 @@ spec:
         value: https://auth.${SECRET_DOMAIN}/.well-known/openid-configuration
       - name: OAUTH_PROVIDER_NAME
         value: Authelia
-      - name: WEBUI_SECRET_KEY
-        valueFrom:
-          secretKeyRef:
-            name: *app
-            key: WEBUI_SECRET_KEY
+      - name: ENABLE_OAUTH_SIGNUP
+        value: "true"
+      - name: WEBUI_AUTH
+        value: "false"
       - name: OAUTH_CLIENT_ID
         valueFrom:
           secretKeyRef:
