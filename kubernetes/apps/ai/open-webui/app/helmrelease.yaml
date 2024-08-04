@@ -43,8 +43,13 @@ spec:
         value: Authelia
       - name: ENABLE_OAUTH_SIGNUP
         value: "true"
-      - name: WEBUI_AUTH
+      - name: ENABLE_LOGIN_FORM
         value: "false"
+      - name: WEBUI_SECRET_KEY
+        valueFrom:
+          secretKeyRef:
+            name: *app
+            key: WEBUI_SECRET_KEY
       - name: OAUTH_CLIENT_ID
         valueFrom:
           secretKeyRef:
