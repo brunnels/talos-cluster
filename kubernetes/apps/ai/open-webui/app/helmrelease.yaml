@@ -36,3 +36,19 @@ spec:
     persistence:
       enabled: true
       existingClaim: *app
+    extraEnvVars:
+      - name: OPENID_PROVIDER_URL
+        value: http://authelia.security.svc.cluster.local/.well-known/openid-configuration
+      - name: OAUTH_PROVIDER_NAME
+        value: Authelia
+    podSecurityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities: { drop: ["ALL"] }
+    containerSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1001
+      runAsGroup: 1001
+      fsGroup: 1001
+      fsGroupChangePolicy: OnRootMismatch
+      seccompProfile: { type: RuntimeDefault }

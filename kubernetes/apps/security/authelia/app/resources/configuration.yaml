@@ -126,18 +126,15 @@ identity_providers:
         scopes: ["openid"]
         token_endpoint_auth_method: client_secret_post
 
-      - client_id: "{{ .KOMGA_OIDC_CLIENT_ID }}"
-        client_name: Komga
-        client_secret: "{{ .KOMGA_OIDC_CLIENT_SECRET }}"
-        authorization_policy: one_factor
-        redirect_uris: ["https://komga.${SECRET_DOMAIN}/login/oauth2/code/authelia"]
-        scopes: ["openid", "profile", "email"]
-        grant_types: ["authorization_code"]
+      - client_id: "{{ .OPEN_WEBUI_OIDC_CLIENT_ID }}"
+        client_name: Open Webui
+        client_secret: "{{ .OPEN_WEBUI_CLIENT_SECRET }}"
+        redirect_uris: ["https://open-webui.${SECRET_DOMAIN}/oauth/callback"]
 
       - client_id: kubeapi
         client_name: Kubeapi
         client_secret: "{{ .KUBEAPI_OIDC_CLIENT_SECRET }}"
         scopes: ["openid", "profile", "groups", "email", "offline_access"]
-        redirect_uris: ["https://che.${SECRET_DOMAIN}/oauth/callback"]
+        redirect_uris: ["https://che.${SECRET_DOMAIN}/oauth/oidc/callback"]
         grant_types: ["refresh_token", "authorization_code"]
         response_types: ["code"]
