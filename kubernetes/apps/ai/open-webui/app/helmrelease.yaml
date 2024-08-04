@@ -32,7 +32,7 @@ spec:
       annotations:
         nginx.ingress.kubernetes.io/rewrite-target: "/"
         external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
-      host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+      host: "open-webui.${SECRET_DOMAIN}"
     persistence:
       enabled: true
       existingClaim: *app
