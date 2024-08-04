@@ -38,7 +38,7 @@ spec:
       existingClaim: *app
     extraEnvVars:
       - name: OPENID_PROVIDER_URL
-        value: http://authelia.security.svc.cluster.local/.well-known/openid-configuration
+        value: https://auth.${SECRET_DOMAIN}/.well-known/openid-configuration
       - name: OAUTH_PROVIDER_NAME
         value: Authelia
       - name: WEBUI_SECRET_KEY
