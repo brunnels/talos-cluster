@@ -23,7 +23,7 @@ metadata:
   namespace: network
 subsets:
   - addresses:
-      - ip: 10.50.0.2
+      - ip: 10.50.0.7
     ports:
       - name: http-9ps
         port: 80
