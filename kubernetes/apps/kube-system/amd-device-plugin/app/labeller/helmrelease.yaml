@@ -54,7 +54,7 @@ spec:
                   fieldRef:
                     fieldPath: spec.nodeName
             securityContext:
-              allowPrivilegeEscalation: false
+              privileged: true
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
             resources:
@@ -71,13 +71,6 @@ spec:
         feature.node.kubernetes.io/pci-0300_1002.present: "true"
         kubernetes.io/arch: amd64
       priorityClassName: system-node-critical
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
     serviceAccount:
       create: false
       name: amd-gpu-node-labeller
