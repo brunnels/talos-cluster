@@ -72,7 +72,7 @@ spec:
     runtimeClassName: nvidia
     podSecurityContext:
       allowPrivilegeEscalation: false
-      readOnlyRootFilesystem: true
+      readOnlyRootFilesystem: false
       capabilities: { drop: ["ALL"] }
     securityContext:
       runAsNonRoot: true
