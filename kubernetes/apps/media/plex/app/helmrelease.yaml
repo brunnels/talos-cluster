@@ -74,7 +74,7 @@ spec:
     defaultPodOptions:
       runtimeClassName: nvidia
       nodeSelector:
-        nvidia.feature.node.kubernetes.io/gpu: true
+        nvidia.feature.node.kubernetes.io/gpu: "true"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
