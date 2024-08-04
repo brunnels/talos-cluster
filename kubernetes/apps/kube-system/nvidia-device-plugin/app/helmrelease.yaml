@@ -26,6 +26,17 @@ spec:
     runtimeClassName: nvidia
     nodeSelector:
       nvidia.feature.node.kubernetes.io/gpu: "true"
+    securityContext:
+      privileged: true
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: nvidia.feature.node.kubernetes.io/gpu
+                  operator: In
+                  values:
+                    - "true"
     config:
       map:
         default: |-
