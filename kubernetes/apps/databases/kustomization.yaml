@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./cloudbeaver/ks.yaml
-  - ./cloudnative-pg/ks.yaml
+#  - ./cloudnative-pg/ks.yaml
   - ./redis/ks.yaml
 configMapGenerator:
   - name: authelia-ingress-hv
