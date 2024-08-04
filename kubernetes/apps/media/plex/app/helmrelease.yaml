@@ -63,27 +63,17 @@ spec:
               requests:
                 cpu: 50m
                 memory: 512Mi
-                #nvidia.com/gpu: 1
+                nvidia.com/gpu: 1
               limits:
-                #nvidia.com/gpu: 1
+#                nvidia.com/gpu: 1
                 memory: 4Gi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-        #pod:
-        #  affinity:
-        #    nodeAffinity:
-        #      requiredDuringSchedulingIgnoredDuringExecution:
-        #        nodeSelectorTerms:
-        #          - matchExpressions:
-        #              - key: nvidia.com/gpu.present
-        #                operator: In
-        #                values:
-        #                  - "true"
-        #  nodeSelector:
-        #    nvidia.com/gpu.present: "true"
-        #  runtimeClassName: nvidia
+          nodeSelector:
+            nvidia.feature.node.kubernetes.io/gpu: "true"
+          runtimeClassName: nvidia
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
