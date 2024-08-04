@@ -14,13 +14,13 @@ resources:
   - ./eclipse-che.yaml
   - ./external-dns.yaml
   - ./external-secrets.yaml
-  - ./gpu-operator.yaml
   - ./ingress-nginx.yaml
   - ./intel.yaml
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
   - ./longhorn.yaml
   - ./metrics-server.yaml
+  - ./nvidia-charts.yaml
   - ./node-feature-discovery.yaml
   - ./openebs.yaml
   - ./piraeus.yaml
