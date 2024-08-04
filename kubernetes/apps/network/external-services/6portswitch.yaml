@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: &app mgmt-9portswitch
+  name: &app mgmt-6switch
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
@@ -10,7 +10,7 @@ spec:
   type: ClusterIP
   clusterIP: None
   ports:
-    - name: http-9ps
+    - name: http-6ps
       port: &port 80
       protocol: TCP
       targetPort: *port
@@ -21,16 +21,16 @@ metadata:
   name: mgmt-9portswitch
 subsets:
   - addresses:
-      - ip: 10.1.0.7
+      - ip: 10.1.0.6
     ports:
-      - name: http-9ps
+      - name: http-6ps
         port: 80
         protocol: TCP
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: &app mgmt-9portswitch
+  name: &app mgmt-6portswitch
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
@@ -38,12 +38,12 @@ metadata:
     external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
     gethomepage.dev/enabled: "true"
     gethomepage.dev/group: Infrastructure
-    gethomepage.dev/name: 9 Port Switch
-    gethomepage.dev/icon: https://raw.githubusercontent.com/brunnels/assets/main/homepage/icons/8port-switch.webp
+    gethomepage.dev/name: 6 Port Switch
+    gethomepage.dev/icon: https://raw.githubusercontent.com/brunnels/assets/main/homepage/icons/6port-switch.webp
 spec:
   ingressClassName: internal
   rules:
-    - host: "9portswitch.${SECRET_DOMAIN}"
+    - host: "6portswitch.${SECRET_DOMAIN}"
       http:
         paths:
           - path: /
@@ -52,4 +52,4 @@ spec:
               service:
                 name: *app
                 port:
-                  name: "http-9ps"
+                  name: "http-6ps"
