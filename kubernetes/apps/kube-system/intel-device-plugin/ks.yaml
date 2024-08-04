@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: cert-manager
-#    - name: node-feature-discovery-rules
+    - name: node-feature-discovery-rules
   path: ./kubernetes/apps/kube-system/intel-device-plugin/operator
   prune: true
   sourceRef:
