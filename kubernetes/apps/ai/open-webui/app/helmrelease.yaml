@@ -41,6 +41,11 @@ spec:
         value: http://authelia.security.svc.cluster.local/.well-known/openid-configuration
       - name: OAUTH_PROVIDER_NAME
         value: Authelia
+      - name: WEBUI_SECRET_KEY
+        valueFrom:
+          secretKeyRef:
+            name: *app
+            key: WEBUI_SECRET_KEY
       - name: OAUTH_CLIENT_ID
         valueFrom:
           secretKeyRef:

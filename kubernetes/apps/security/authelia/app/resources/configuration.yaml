@@ -128,7 +128,7 @@ identity_providers:
 
       - client_id: "{{ .OPEN_WEBUI_OIDC_CLIENT_ID }}"
         client_name: Open Webui
-        client_secret: "{{ .OPEN_WEBUI_CLIENT_SECRET }}"
+        client_secret: "{{ .OPEN_WEBUI_OIDC_CLIENT_SECRET }}"
         redirect_uris: ["https://open-webui.${SECRET_DOMAIN}/oauth/oidc/callback"]
 
       - client_id: kubeapi
