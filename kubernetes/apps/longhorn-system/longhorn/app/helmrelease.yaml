@@ -19,6 +19,8 @@ spec:
     remediation:
       retries: 3
   upgrade:
+    force: true
+    preserveValues: true
     cleanupOnFail: true
     remediation:
       strategy: rollback
