@@ -24,9 +24,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      nodeSelector:
-        node-role.kubernetes.io/worker: ""
     node:
       nodeSelector:
         node-role.kubernetes.io/worker: ""
