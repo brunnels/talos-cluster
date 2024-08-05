@@ -33,7 +33,7 @@ spec:
           main:
             image:
               repository: docker.io/bitnami/kubectl
-              tag: 1.29.2
+              tag: 1.30.3
             command:
               - "/bin/bash"
               - "-c"
