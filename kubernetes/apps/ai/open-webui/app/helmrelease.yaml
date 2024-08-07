@@ -28,11 +28,11 @@ spec:
     ollamaUrls: ["http://ollama.ai.svc.cluster.local.:11434"]
     ingress:
       enabled: true
-      class: internal
+      class: external
       annotations:
         nginx.ingress.kubernetes.io/rewrite-target: "/"
         external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
-      host: "open-webui.${SECRET_DOMAIN}"
+      host: "ai.${SECRET_DOMAIN}"
     persistence:
       enabled: true
       existingClaim: *app
