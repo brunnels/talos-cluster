@@ -84,7 +84,7 @@ access_control:
 
 totp:
   disable: false
-  issuer: authelia.com
+  issuer: "Authelia (${SECRET_DOMAIN})"
 
 webauthn:
   disable: false
