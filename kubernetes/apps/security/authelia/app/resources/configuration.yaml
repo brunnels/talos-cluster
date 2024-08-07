@@ -64,6 +64,8 @@ notifier:
   smtp:
     address: mail.smtp2go.com:2525
     sender: "Authelia <authelia@${SECRET_DOMAIN}>"
+    username: "{{ .SMTP_USER }}"
+    password: "{{ .SMTP_PASS }}"
 
 access_control:
   default_policy: deny
