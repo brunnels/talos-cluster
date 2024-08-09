@@ -110,7 +110,7 @@ spec:
                   identifier: app
                   port: http
     persistence:
-      node_home:
+      node-home:
         type: emptyDir
         globalMounts:
           - path: /home/node
