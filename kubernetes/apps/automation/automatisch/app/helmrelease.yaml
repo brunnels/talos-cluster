@@ -53,8 +53,10 @@ spec:
               APP_ENV: production
               PROTOCOL: http
               DISABLE_SEED_USER: true
-              REDIS_HOST: redis.databases.svc.cluster.local
+#              REDIS_HOST: redis.databases.svc.cluster.local
               REDIS_SENTINEL_HOST: redis.databases.svc.cluster.local
+              REDIS_NAME: redis-master
+              REDIS_ROLE: master
               TELEMETRY_ENABLED: false
               ENABLE_BULLMQ_DASHBOARD: false
               SMTP_HOST: mail.smtp2go.com
