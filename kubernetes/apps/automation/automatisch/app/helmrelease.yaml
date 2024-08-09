@@ -112,14 +112,17 @@ spec:
     persistence:
       logs:
         type: emptyDir
+        sizeLimit: 300Mi
         globalMounts:
           - path: /automatisch/logs
       tmp:
         type: emptyDir
-      node-home:
+        sizeLimit: 100Mi
+      cache:
         type: emptyDir
+        sizeLimit: 100Mi
         globalMounts:
-          - path: /home/node
+          - path: /home/node/.cache
       storage:
         existingClaim: *app
         globalMounts:
