@@ -52,6 +52,8 @@ spec:
               LOG_LEVEL: info
               APP_ENV: production
               PROTOCOL: http
+              REDIS_HOST: redis-node-0.redis-headless.databases.svc.cluster.local
+              REDIS_PORT: 26379
               REDIS_SENTINEL_HOST: redis.databases.svc.cluster.local
               TELEMETRY_ENABLED: false
               ENABLE_BULLMQ_DASHBOARD: false
@@ -59,8 +61,6 @@ spec:
               SMTP_PORT: 2525
               SMTP_SECURE: true
               FROM_EMAIL: "Automatisch <automatisch@${SECRET_DOMAIN}>"
-              SMTP_USER: "{{ .SMTP_USER }}"
-              SMTP_PASSWORD: "{{ .SMTP_PASS }}"
             envFrom: *envFrom
             securityContext: &securityContext
               allowPrivilegeEscalation: false
