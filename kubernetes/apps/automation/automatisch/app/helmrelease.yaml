@@ -52,6 +52,7 @@ spec:
               LOG_LEVEL: info
               APP_ENV: production
               PROTOCOL: http
+              DISABLE_SEED_USER: true
               REDIS_HOST: redis-node-0.redis-headless.databases.svc.cluster.local
               REDIS_PORT: 26379
               REDIS_SENTINEL_HOST: redis.databases.svc.cluster.local
