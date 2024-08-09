@@ -45,11 +45,14 @@ spec:
               tag: 0.13.1@sha256:ca70a4005ea253bd31b9c51ba041364ba56264a157c2fd72b27550a91dea336f
             env: &env
               PORT: 3000
-              HOST: localhost
+              HOST:
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.podIP
               LOG_LEVEL: info
               APP_ENV: production
               PROTOCOL: http
-              REDIS_HOST: redis.databases.svc.cluster.local
+              REDIS_SENTINEL_HOST: redis.databases.svc.cluster.local
               TELEMETRY_ENABLED: false
               ENABLE_BULLMQ_DASHBOARD: false
               SMTP_HOST: mail.smtp2go.com
@@ -114,15 +117,15 @@ spec:
         type: emptyDir
         sizeLimit: 300Mi
         globalMounts:
-          - path: /automatisch/logs
+          - path: /automatisch/packages/backend/logs
       tmp:
         type: emptyDir
         sizeLimit: 100Mi
-      cache:
+      node-home:
         type: emptyDir
-        sizeLimit: 100Mi
+        sizeLimit: 200Mi
         globalMounts:
-          - path: /home/node/.cache
+          - path: /home/node
       storage:
         existingClaim: *app
         globalMounts:
