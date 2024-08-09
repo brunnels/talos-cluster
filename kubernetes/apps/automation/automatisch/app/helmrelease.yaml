@@ -44,11 +44,8 @@ spec:
               repository: ghcr.io/automatisch/automatisch
               tag: 0.13.1@sha256:ca70a4005ea253bd31b9c51ba041364ba56264a157c2fd72b27550a91dea336f
             env: &env
-              PORT: 3000
-              HOST:
-                valueFrom:
-                  fieldRef:
-                    fieldPath: status.podIP
+              PORT: 443
+              HOST: "{{ .Release.Name }}.${SECRET_DOMAIN}"
               LOG_LEVEL: info
               APP_ENV: production
               PROTOCOL: http
@@ -97,7 +94,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 3000
+            port: 443
     ingress:
       app:
         className: external
