@@ -3,16 +3,16 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app ollama
+  name: &app automatisch
   namespace: flux-system
 spec:
-  targetNamespace: ai
+  targetNamespace: automation
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: nvidia-device-plugin
-  path: ./kubernetes/apps/ai/ollama/app
+    - name: volsync
+  path: ./kubernetes/apps/automation/automatisch/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -24,5 +24,4 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 30Gi
-      VOLSYNC_CACHE_CAPACITY: 5Gi
+      VOLSYNC_CAPACITY: 10Gi
