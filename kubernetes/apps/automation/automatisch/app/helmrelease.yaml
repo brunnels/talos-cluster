@@ -110,17 +110,17 @@ spec:
                   identifier: app
                   port: http
     persistence:
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /automatisch/logs
       tmp:
         type: emptyDir
+      node-home:
+        type: emptyDir
+        globalMounts:
+          - path: /home/node
       storage:
         existingClaim: *app
         globalMounts:
           - path: /automatisch/storage
-            readOnly: false
-            subPath: storage
-          - path: /automatisch/logs
-            readOnly: false
-            subPath: logs
-          - path: /home/node/.cache
-            readOnly: false
-            subPath: cache
