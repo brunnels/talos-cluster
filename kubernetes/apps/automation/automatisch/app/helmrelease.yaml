@@ -58,7 +58,6 @@ spec:
               FROM_EMAIL: "Automatisch <automatisch@${SECRET_DOMAIN}>"
               SMTP_USER: "{{ .SMTP_USER }}"
               SMTP_PASSWORD: "{{ .SMTP_PASS }}"
-              YARN_CACHE_FOLDER: /cache
             envFrom: *envFrom
             securityContext: &securityContext
               allowPrivilegeEscalation: false
@@ -111,10 +110,8 @@ spec:
                   identifier: app
                   port: http
     persistence:
-      cache:
-        type: cache
-        globalMounts:
-          - path: /cache
+      tmp:
+        type: emptyDir
       storage:
         existingClaim: *app
         globalMounts:
