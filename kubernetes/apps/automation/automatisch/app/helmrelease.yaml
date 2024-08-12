@@ -40,6 +40,7 @@ spec:
                   name: *app
         containers:
           app:
+            dependsOn: git-sync
             image: &image
               repository: ghcr.io/automatisch/automatisch
               tag: 0.13.1@sha256:ca70a4005ea253bd31b9c51ba041364ba56264a157c2fd72b27550a91dea336f
@@ -51,7 +52,6 @@ spec:
               PROTOCOL: http
               DISABLE_FAVICON: true
               DISABLE_SEED_USER: true
-              REDIS_HOST: redis-node-0.redis-headless.databases.svc.cluster.local
               REDIS_SENTINEL_HOST: redis.databases.svc.cluster.local
               REDIS_NAME: redis-master
               REDIS_ROLE: master
@@ -73,6 +73,7 @@ spec:
                 cpu: 200m
                 memory: 256Mi
           worker:
+            dependsOn: git-sync
             image: *image
             env:
               <<: *env
@@ -80,6 +81,32 @@ spec:
             envFrom: *envFrom
             securityContext: *securityContext
             resources: *resources
+          git-sync:
+            image:
+              repository: registry.k8s.io/git-sync/git-sync
+              tag: v4.2.4@sha256:8bfbf28623690fba06c65ec392e42023d28ecfc7e0fbfd4443388d020dc112ea
+            command: [ "/bin/bash" ]
+            args:
+              - "-c"
+              - |
+                mv /automatisch/node_modules /home/node/ &&
+                rm -rf /automatisch &&
+              - |
+                git-sync --repo=https://github.com/automatisch/automatisch
+                --ref=main
+                --period=300s
+                --root=/tmp/automatisch
+                --link=/automatisch
+            resources:
+              requests:
+                cpu: 10m
+                memory: 25Mi
+              limits:
+                memory: 50Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -122,10 +149,25 @@ spec:
         sizeLimit: 100Mi
       node-home:
         type: emptyDir
-        sizeLimit: 200Mi
-        globalMounts:
-          - path: /home/node
+        advancedMounts:
+          automatisch:
+            app:
+              - subPath: node-modules
+                path: /automatisch/node-modules
+              - subPath: node-home
+                path: /home/node
+            worker:
+              - subPath: node-modules
+                path: /automatisch/node-modules
+              - subPath: node-home
+                path: /home/node
+            git-sync:
+              - path: /home/node
       storage:
         existingClaim: *app
-        globalMounts:
-          - path: /automatisch/storage
+        advancedMounts:
+          automatisch:
+            app:
+              - path: /automatisch/storage
+            worker:
+              - path: /automatisch/storage
