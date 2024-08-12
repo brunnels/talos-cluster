@@ -99,8 +99,7 @@ spec:
               - --repo=https://github.com/automatisch/automatisch
               - --ref=main
               - --period=300s
-              - --root=/tmp/automatisch
-              - --link=/automatisch
+              - --root=/automatisch
             resources:
               requests:
                 cpu: 10m
@@ -149,31 +148,30 @@ spec:
         advancedMounts:
           automatisch:
             app:
+              - subpath: automatisch
+                path: /automatisch
               - subPath: node-modules
                 path: /automatisch/node-modules
               - subPath: node-home
                 path: /home/node
             worker:
+              - subpath: automatisch
+                path: /automatisch
               - subPath: node-modules
                 path: /automatisch/node-modules
               - subPath: node-home
                 path: /home/node
             node-modules-cp:
               - path: /home/node
+            git-sync:
+              - subpath: automatisch
+                path: /automatisch
+
       storage:
         existingClaim: *app
         advancedMounts:
           automatisch:
             app:
-              - subPath: storage
-                path: /automatisch/storage
-              - subPath: automatisch
-                path: /automatisch
+              - path: /automatisch/storage
             worker:
-              - subPath: storage
-                path: /automatisch/storage
-              - subPath: automatisch
-                path: /automatisch
-            git-sync:
-              - subPath: automatisch
-                path: /automatisch
+              - path: /automatisch/storage
