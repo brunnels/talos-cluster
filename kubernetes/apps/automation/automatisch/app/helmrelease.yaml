@@ -38,12 +38,19 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: *app
-        containers:
-          app:
-            dependsOn: git-sync
+          node-modules-cp:
             image: &image
               repository: ghcr.io/automatisch/automatisch
               tag: 0.13.1@sha256:ca70a4005ea253bd31b9c51ba041364ba56264a157c2fd72b27550a91dea336f
+            command:
+              - "/bin/sh"
+            args:
+              - -c
+              - cp -R /automatisch/node_modules /home/node/
+        containers:
+          app:
+            dependsOn: git-sync
+            image: *image
             env: &env
               PORT: 443
               HOST: "{{ .Release.Name }}.${SECRET_DOMAIN}"
@@ -88,13 +95,12 @@ spec:
             image:
               repository: registry.k8s.io/git-sync/git-sync
               tag: v4.2.4@sha256:8bfbf28623690fba06c65ec392e42023d28ecfc7e0fbfd4443388d020dc112ea
-            command: [ "/bin/sh" ]
             args:
-              - "-c"
-              - |
-                mv /automatisch/node_modules /home/node/ &&
-                rm -rf /automatisch &&
-                git-sync --repo=https://github.com/automatisch/automatisch --ref=main --period=300s --root=/tmp/automatisch --link=/automatisch
+              - --repo=https://github.com/automatisch/automatisch
+              - --ref=main
+              - --period=300s
+              - --root=/tmp/automatisch
+              - --link=/automatisch
             resources:
               requests:
                 cpu: 10m
@@ -152,7 +158,7 @@ spec:
                 path: /automatisch/node-modules
               - subPath: node-home
                 path: /home/node
-            git-sync:
+            node-modules-cp:
               - path: /home/node
       storage:
         existingClaim: *app
