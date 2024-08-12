@@ -148,14 +148,14 @@ spec:
         advancedMounts:
           automatisch:
             app:
-              - subpath: automatisch
+              - subpath: automatisch/automatisch
                 path: /automatisch
               - subPath: node-modules
                 path: /automatisch/node-modules
               - subPath: node-home
                 path: /home/node
             worker:
-              - subpath: automatisch
+              - subpath: automatisch/automatisch
                 path: /automatisch
               - subPath: node-modules
                 path: /automatisch/node-modules
