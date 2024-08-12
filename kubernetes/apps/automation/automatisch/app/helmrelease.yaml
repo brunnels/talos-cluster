@@ -65,6 +65,9 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 3000
             resources: &resources
               requests:
                 cpu: 100m
@@ -98,15 +101,8 @@ spec:
                 memory: 25Mi
               limits:
                 memory: 50Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
     defaultPodOptions:
       securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 3000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
@@ -163,6 +159,15 @@ spec:
         advancedMounts:
           automatisch:
             app:
-              - path: /automatisch/storage
+              - subPath: storage
+                path: /automatisch/storage
+              - subPath: automatisch
+                path: /automatisch
             worker:
-              - path: /automatisch/storage
+              - subPath: storage
+                path: /automatisch/storage
+              - subPath: automatisch
+                path: /automatisch
+            git-sync:
+              - subPath: automatisch
+                path: /automatisch
