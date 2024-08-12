@@ -164,7 +164,6 @@ spec:
             node-modules-cp:
               - path: /home/node
             git-sync:
-              - subPath: automatisch
                 path: /automatisch
 
       storage:
