@@ -47,7 +47,7 @@ spec:
               GITSYNC_BRANCH: main
               GITSYNC_ROOT: /tmp/automatisch
               GITSYNC_ONE_TIME: "true"
-          node-modules-cp:
+          cp-automatisch:
             image: &image
               repository: ghcr.io/automatisch/automatisch
               tag: 0.13.1@sha256:ca70a4005ea253bd31b9c51ba041364ba56264a157c2fd72b27550a91dea336f
@@ -144,16 +144,16 @@ spec:
         advancedMounts:
           automatisch:
             app:
-              - subPath: automatisch
+              - subPath: automatisch/automatisch
                 path: /automatisch
               - subPath: node_home
                 path: /home/node
             worker:
-              - subPath: automatisch
+              - subPath: automatisch/automatisch
                 path: /automatisch
               - subPath: node_home
                 path: /home/node
-            node-modules-cp:
+            cp-automatisch:
               - subPath: automatisch
                 path: /mnt/automatisch
       storage:
