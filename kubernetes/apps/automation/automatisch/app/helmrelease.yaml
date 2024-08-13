@@ -43,12 +43,11 @@ spec:
               repository: registry.k8s.io/git-sync/git-sync
               tag: v4.2.4@sha256:8bfbf28623690fba06c65ec392e42023d28ecfc7e0fbfd4443388d020dc112ea
             env:
-              GIT_SYNC_REPO: https://github.com/automatisch/automatisch
-              GIT_SYNC_BRANCH: main
-              GIT_SYNC_ROOT: /tmp/automatisch
-              GIT_SYNC_DEST: /automatisch
-              GIT_SYNC_PERIOD: 300s
-              GIT_SYNC_ONE_TIME: "true"
+              GITSYNC_REPO: https://github.com/automatisch/automatisch
+              GITSYNC_BRANCH: main
+              GITSYNC_ROOT: /automatisch
+              GITSYNC_PERIOD: 300s
+              GITSYNC_ONE_TIME: "true"
           node-modules-cp:
             image: &image
               repository: ghcr.io/automatisch/automatisch
@@ -57,7 +56,7 @@ spec:
               - "/bin/sh"
             args:
               - -c
-              - cp -R /automatisch/node_modules /home/node/
+              - cp -R /automatisch/node_modules/* /node_modules
         containers:
           app:
             image: *image
@@ -146,19 +145,20 @@ spec:
             app:
               - subPath: automatisch
                 path: /automatisch
-              - subPath: node-modules
-                path: /automatisch/node-modules
-              - subPath: node-home
+              - subPath: node_modules
+                path: /automatisch/node_modules
+              - subPath: node_home
                 path: /home/node
             worker:
               - subPath: automatisch
                 path: /automatisch
-              - subPath: node-modules
-                path: /automatisch/node-modules
-              - subPath: node-home
+              - subPath: node_modules
+                path: /automatisch/node_modules
+              - subPath: node_home
                 path: /home/node
             node-modules-cp:
-              - path: /home/node
+              - subPath: node_modules
+                path: /node_modules
             git-sync:
               - subPath: automatisch
                 path: /automatisch
