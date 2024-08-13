@@ -58,7 +58,7 @@ spec:
               - cp -RL /tmp/automatisch/automatisch /mnt/automatisch
               - cp -R /automatisch/node_modules /mnt/automatisch/
               - rm -rf /tmp/automatisch
-              - sed -i 'set -e/a cd packages\/web && yarn build' /entrypoint.sh
+              - sed -i '/set -e/a cd packages\/web && yarn build' /entrypoint.sh
         containers:
           app:
             image: *image
