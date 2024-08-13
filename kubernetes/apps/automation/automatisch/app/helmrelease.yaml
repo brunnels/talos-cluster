@@ -100,7 +100,7 @@ spec:
           worker:
             image: *image
             command: [ "/bin/sh" ]
-            args: [ "-c", "trap : TERM INT; sleep 9999999999d & wait" ]
+            args: [ "/automatisch/entrypoint.sh"]
             env:
               <<: *env
               WORKER: true
@@ -149,12 +149,12 @@ spec:
         advancedMounts:
           automatisch:
             app:
-              - subPath: automatisch
+              - subPath: automatisch/automatisch
                 path: /automatisch
               - subPath: node_home
                 path: /home/node
             worker:
-              - subPath: automatisch
+              - subPath: automatisch/automatisch
                 path: /automatisch
               - subPath: node_home
                 path: /home/node
