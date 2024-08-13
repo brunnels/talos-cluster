@@ -52,14 +52,15 @@ spec:
               repository: ghcr.io/automatisch/automatisch
               tag: 0.13.1@sha256:ca70a4005ea253bd31b9c51ba041364ba56264a157c2fd72b27550a91dea336f
             command:
-              - "/bin/sh"
+              - /bin/sh
             args:
               - -c
-              - cp -RL /tmp/automatisch/automatisch /mnt/automatisch
-              - cp -R /automatisch/node_modules /mnt/automatisch/
-              - cp -R /mnt/automatisch/docker/entrypoint.sh /mnt/automatisch/
-              - rm -rf /tmp/automatisch/*
-              - sed -i '/set -e/a cd packages\/web && yarn build' /mnt/automatisch/entrypoint.sh
+              - |
+                cp -RL /tmp/automatisch/automatisch /mnt/automatisch &&
+                cp -R /automatisch/node_modules /mnt/automatisch/ &&
+                cp -R /mnt/automatisch/docker/entrypoint.sh /mnt/automatisch/ &&
+                rm -rf /tmp/automatisch/* &&
+                sed -i '/set -e/a cd packages\/web && yarn build' /mnt/automatisch/entrypoint.sh &&
         containers:
           app:
             image: *image
