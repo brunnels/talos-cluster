@@ -60,7 +60,8 @@ spec:
                 cp -R /automatisch/node_modules /mnt/automatisch/ &&
                 cp /mnt/automatisch/docker/entrypoint.sh /mnt/automatisch/ &&
                 rm -rf /tmp/automatisch &&
-                sed -i '/set -e/a cd packages\/web && yarn build' /mnt/automatisch/entrypoint.sh
+                sed -i '/set -e/a cd packages\/web && yarn build' /mnt/automatisch/entrypoint.sh &&
+                chown -R 1000:3000 /mnt/automatisch
         containers:
           app:
             image: *image
