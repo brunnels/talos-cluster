@@ -49,12 +49,6 @@ spec:
               GIT_SYNC_DEST: /automatisch
               GIT_SYNC_PERIOD: 300s
               GIT_SYNC_ONE_TIME: "true"
-            resources:
-              requests:
-                cpu: 10m
-                memory: 25Mi
-              limits:
-                memory: 50Mi
           node-modules-cp:
             image: &image
               repository: ghcr.io/automatisch/automatisch
@@ -102,6 +96,8 @@ spec:
           worker:
             dependsOn: git-sync
             image: *image
+            command: [ "/bin/sh" ]
+            args: [ "-c", "trap : TERM INT; sleep 9999999999d & wait" ]
             env:
               <<: *env
               WORKER: true
