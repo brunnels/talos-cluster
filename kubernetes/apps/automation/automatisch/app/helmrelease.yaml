@@ -43,11 +43,11 @@ spec:
               repository: registry.k8s.io/git-sync/git-sync
               tag: v4.2.4@sha256:8bfbf28623690fba06c65ec392e42023d28ecfc7e0fbfd4443388d020dc112ea
             env:
-              GIT_SYNC_REPO: https://github.com/automatisch/automatisch
-              GIT_SYNC_BRANCH: main
-              GIT_SYNC_ROOT: /tmp/automatisch
-              GIT_SYNC_DEST: /automatisch
-              GIT_SYNC_PERIOD: 300s
+              GIT_SYNC_REPO: "https://github.com/automatisch/automatisch"
+              GIT_SYNC_BRANCH: "main"
+              GIT_SYNC_ROOT: "/tmp/automatisch"
+              GIT_SYNC_DEST: "/automatisch"
+              GIT_SYNC_PERIOD: "300s"
               GIT_SYNC_ONE_TIME: "true"
           node-modules-cp:
             image: &image
