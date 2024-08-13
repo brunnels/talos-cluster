@@ -56,10 +56,10 @@ spec:
             args:
               - -c
               - |
-                cp -RL /tmp/automatisch/automatisch /mnt/automatisch &&
+                cp -RL /tmp/automatisch/automatisch /mnt/ &&
                 cp -R /automatisch/node_modules /mnt/automatisch/ &&
                 cp /mnt/automatisch/docker/entrypoint.sh /mnt/automatisch/ &&
-                rm -rf /tmp/automatisch/* &&
+                rm -rf /tmp/automatisch &&
                 sed -i '/set -e/a cd packages\/web && yarn build' /mnt/automatisch/entrypoint.sh
         containers:
           app:
@@ -149,12 +149,12 @@ spec:
         advancedMounts:
           automatisch:
             app:
-              - subPath: automatisch/automatisch
+              - subPath: automatisch
                 path: /automatisch
               - subPath: node_home
                 path: /home/node
             worker:
-              - subPath: automatisch/automatisch
+              - subPath: automatisch
                 path: /automatisch
               - subPath: node_home
                 path: /home/node
