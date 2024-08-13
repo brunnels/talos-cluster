@@ -47,7 +47,7 @@ spec:
               GITSYNC_BRANCH: main
               GITSYNC_ROOT: /tmp/automatisch
               GITSYNC_ONE_TIME: "true"
-          2-cp-automatisch:
+          cp-automatisch:
             image: &image
               repository: ghcr.io/automatisch/automatisch
               tag: 0.13.1@sha256:ca70a4005ea253bd31b9c51ba041364ba56264a157c2fd72b27550a91dea336f
@@ -57,11 +57,14 @@ spec:
               - -c
               - cp -RL /tmp/automatisch/automatisch /mnt/automatisch
               - cp -R /automatisch/node_modules /mnt/automatisch/
-              - rm -rf /tmp/automatisch
-              - sed -i '/set -e/a cd packages\/web && yarn build' /entrypoint.sh
+              - cp -R /mnt/automatisch/docker/entrypoint.sh /mnt/automatisch/
+              - rm -rf /tmp/automatisch/*
+              - sed -i '/set -e/a cd packages\/web && yarn build' /mnt/automatisch/entrypoint.sh
         containers:
           app:
             image: *image
+            command: [ "/bin/sh" ]
+            args: [ "/automatisch/entrypoint.sh"]
             env: &env
               PORT: 443
               HOST: "{{ .Release.Name }}.${SECRET_DOMAIN}"
