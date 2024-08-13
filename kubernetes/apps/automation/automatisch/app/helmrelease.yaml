@@ -58,7 +58,7 @@ spec:
               - |
                 cp -RL /tmp/automatisch/automatisch /mnt/automatisch &&
                 cp -R /automatisch/node_modules /mnt/automatisch/ &&
-                cp -R /mnt/automatisch/docker/entrypoint.sh /mnt/automatisch/ &&
+                cp /mnt/automatisch/docker/entrypoint.sh /mnt/automatisch/ &&
                 rm -rf /tmp/automatisch/* &&
                 sed -i '/set -e/a cd packages\/web && yarn build' /mnt/automatisch/entrypoint.sh &&
         containers:
