@@ -41,8 +41,8 @@ spec:
               repository: registry.kraven.dev/brunnels/automatisch
               tag: latest@sha256:222a6aab11e7ce4bf5b8e50ad170bd69b685411e65b7a311f078d4d2b02b7b10
             env: &env
-              PORT: 443
-              HOST: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+              PORT: &port 80
+              WEB_APP_URL: "{{ .Release.Name }}.${SECRET_DOMAIN}"
               LOG_LEVEL: info
               APP_ENV: production
               PROTOCOL: http
@@ -90,7 +90,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 443
+            port: *port
     ingress:
       app:
         className: external
