@@ -22,9 +22,6 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  valuesFrom:
-    - kind: ConfigMap
-      name: authelia-ingress-hv
   values:
     controllers:
       pgadmin:
