@@ -22,51 +22,24 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-#  valuesFrom:
-#    - kind: ConfigMap
-#      name: authelia-ingress-hv
   values:
     controllers:
       automatisch:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
-          0-init-db:
+          init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16.3@sha256:8ba3204f6b293dd168766009aae2ce4fa986a29b931c2d30ac1b30238ac750b8
             envFrom: &envFrom
               - secretRef:
                   name: *app
-          1-git-sync:
-            image:
-              repository: registry.k8s.io/git-sync/git-sync
-              tag: v4.2.4@sha256:8bfbf28623690fba06c65ec392e42023d28ecfc7e0fbfd4443388d020dc112ea
-            env:
-              GITSYNC_REPO: https://github.com/automatisch/automatisch
-              GITSYNC_BRANCH: main
-              GITSYNC_ROOT: /tmp/automatisch
-              GITSYNC_ONE_TIME: "true"
-          cp-automatisch:
-            image: &image
-              repository: ghcr.io/automatisch/automatisch
-              tag: 0.13.1@sha256:ca70a4005ea253bd31b9c51ba041364ba56264a157c2fd72b27550a91dea336f
-            command:
-              - /bin/sh
-            args:
-              - -c
-              - |
-                cp -RL /tmp/automatisch/automatisch /mnt/ &&
-                cp -R /automatisch/node_modules /mnt/automatisch/ &&
-                cp /mnt/automatisch/docker/entrypoint.sh /mnt/automatisch/ &&
-                rm -rf /tmp/automatisch &&
-                sed -i '/set -e/a cd packages\/web && yarn build' /mnt/automatisch/entrypoint.sh &&
-                chown -R 1000:3000 /mnt/automatisch
         containers:
           app:
-            image: *image
-            command: [ "/bin/sh" ]
-            args: [ "/automatisch/entrypoint.sh"]
+            image: &image
+              repository: registry.kraven.dev/brunnels/automatisch
+              tag: latest
             env: &env
               PORT: 443
               HOST: "{{ .Release.Name }}.${SECRET_DOMAIN}"
@@ -88,20 +61,15 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-              runAsNonRoot: true
-              runAsUser: 1000
-              runAsGroup: 3000
             resources: &resources
               requests:
                 cpu: 100m
                 memory: 128Mi
               limits:
                 cpu: 200m
-                memory: 1024Mi
+                memory: 256Mi
           worker:
             image: *image
-            command: [ "/bin/sh" ]
-            args: [ "/automatisch/entrypoint.sh"]
             env:
               <<: *env
               WORKER: true
@@ -110,6 +78,9 @@ spec:
             resources: *resources
     defaultPodOptions:
       securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 3000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
@@ -126,7 +97,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Development
-          gethomepage.dev/name: automatisch
+          gethomepage.dev/name: Automatisch
           gethomepage.dev/icon: https://raw.githubusercontent.com/brunnels/assets/main/homepage/icons/automatisch.webp
           gethomepage.dev/description: Workflow Automation
         hosts:
@@ -147,26 +118,10 @@ spec:
         sizeLimit: 100Mi
       node-home:
         type: emptyDir
-        advancedMounts:
-          automatisch:
-            app:
-              - subPath: automatisch/automatisch
-                path: /automatisch
-              - subPath: node_home
-                path: /home/node
-            worker:
-              - subPath: automatisch/automatisch
-                path: /automatisch
-              - subPath: node_home
-                path: /home/node
-            cp-automatisch:
-              - subPath: automatisch
-                path: /mnt
+        sizeLimit: 200Mi
+        globalMounts:
+          - path: /home/node
       storage:
         existingClaim: *app
-        advancedMounts:
-          automatisch:
-            app:
-              - path: /automatisch/storage
-            worker:
-              - path: /automatisch/storage
+        globalMounts:
+          - path: /automatisch/storage
