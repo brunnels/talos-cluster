@@ -17,5 +17,3 @@ configMapGenerator:
       - servers.json=./configs/servers.json
 generatorOptions:
   disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
