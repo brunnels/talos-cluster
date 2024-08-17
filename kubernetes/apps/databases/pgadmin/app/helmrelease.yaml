@@ -39,7 +39,7 @@ spec:
               PGADMIN_CONFIG_ENABLE_PSQL: "True"
             envFrom:
               - secretRef:
-                  name: pgadmin-secret
+                  name: *app
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
