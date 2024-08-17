@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "postgres",
+      "Group": "Servers",
+      "Host": "postgres-rw.database.svc.cluster.local",
+      "Port": 5432,
+      "MaintenanceDB": "postgres",
+      "SharedUsername": "postgres",
+      "SSLMode": "prefer",
+      "Shared": true
+    }
+  }
+}

@@ -135,18 +135,18 @@ identity_providers:
         scopes: ["openid", "profile", "email"]
         response_types: ["code"]
 
-      - client_id: "{{ .CHE_OIDC_CLIENT_ID }}"
-        client_name: Eclipse Che
-        client_secret: "{{ .CHE_OIDC_CLIENT_SECRET }}"
-        scopes: ["openid", "profile", "groups", "email", "offline_access"]
-        redirect_uris: ["https://che.${SECRET_DOMAIN}/oauth/callback"]
-        grant_types: ["refresh_token", "authorization_code"]
-        response_types: ["code"]
-
       - client_id: kubeapi
         client_name: Kubeapi
         client_secret: "{{ .KUBEAPI_OIDC_CLIENT_SECRET }}"
-        scopes: ["openid", "profile", "groups", "email", "offline_access"]
         redirect_uris: ["https://che.${SECRET_DOMAIN}/oauth/callback"]
+        scopes: ["openid", "profile", "groups", "email", "offline_access"]
         grant_types: ["refresh_token", "authorization_code"]
         response_types: ["code"]
+
+      - client_name: pgAdmin
+        client_id: "{{ .PGADMIN_OIDC_CLIENT_ID }}"
+        client_secret: '{{ .PGADMIN_OIDC_CLIENT_SECRET }}'
+        pre_configured_consent_duration: 1y
+        redirect_uris: ["https://pgadmin.${SECRET_DOMAIN}/oauth2/authorize"]
+        scopes: ["openid", "profile", "email"]
+        token_endpoint_auth_method: client_secret_basic
