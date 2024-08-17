@@ -149,4 +149,4 @@ identity_providers:
         pre_configured_consent_duration: 1y
         redirect_uris: ["https://pgadmin.${SECRET_DOMAIN}/oauth2/authorize"]
         scopes: ["openid", "profile", "email"]
-        token_endpoint_auth_method: client_secret_basic
+        response_types: ["code"]
