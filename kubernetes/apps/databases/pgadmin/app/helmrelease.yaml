@@ -86,15 +86,15 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /var/lib/pgadmin
-      server-json:
+      servers-json:
         type: configMap
         name: servers-json
         globalMounts:
           - path: /pgadmin4/servers.json
             subPath: servers.json
-      local-config:
+      pgadmin-local-config:
         type: secret
-        name: pgadmin-local-config-secret
+        name: pgadmin-local-config
         globalMounts:
           - path: /pgadmin4/config_local.py
             subPath: config_local.py
