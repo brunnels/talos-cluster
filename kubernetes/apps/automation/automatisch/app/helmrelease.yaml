@@ -39,7 +39,7 @@ spec:
           app:
             image: &image
               repository: registry.kraven.dev/brunnels/automatisch
-              tag: latest
+              tag: latest@sha256:222a6aab11e7ce4bf5b8e50ad170bd69b685411e65b7a311f078d4d2b02b7b10
             env: &env
               PORT: 443
               HOST: "{{ .Release.Name }}.${SECRET_DOMAIN}"
@@ -55,6 +55,7 @@ spec:
               ENABLE_BULLMQ_DASHBOARD: false
               SMTP_HOST: mail.smtp2go.com
               SMTP_PORT: 2525
+              SMTP_SECURE: "false"
               FROM_EMAIL: "Automatisch <automatisch@${SECRET_DOMAIN}>"
             envFrom: *envFrom
             securityContext: &securityContext
