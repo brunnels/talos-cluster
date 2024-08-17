@@ -54,8 +54,8 @@ spec:
               TELEMETRY_ENABLED: false
               ENABLE_BULLMQ_DASHBOARD: false
               SMTP_HOST: mail.smtp2go.com
-              SMTP_PORT: 2525
-              SMTP_SECURE: "false"
+              SMTP_PORT: 465
+              SMTP_SECURE: "true"
               FROM_EMAIL: "Automatisch <automatisch@${SECRET_DOMAIN}>"
             envFrom: *envFrom
             securityContext: &securityContext
