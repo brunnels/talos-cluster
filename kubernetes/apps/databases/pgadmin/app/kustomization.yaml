@@ -11,10 +11,10 @@ resources:
 configMapGenerator:
   - name: pgadmin-local-config
     files:
-      - config_local.py=./config/config_local.py
+      - config_local.py=./configs/config_local.py
   - name: servers-json
     files:
-      - servers.json=./config/servers.json
+      - servers.json=./configs/servers.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
