@@ -39,7 +39,7 @@ spec:
           app:
             image: &image
               repository: registry.kraven.dev/brunnels/automatisch
-              tag: latest@sha256:222a6aab11e7ce4bf5b8e50ad170bd69b685411e65b7a311f078d4d2b02b7b10
+              tag: latest@sha256:19015ace2c242d0bf410734797d713fa0c4c5e0fa9e73dbb6ba3edb9d62b4fa5
             env: &env
               PORT: &port 80
               HOST: "{{ .Release.Name }}.${SECRET_DOMAIN}"
