@@ -29,7 +29,8 @@ for app in \
     "kubernetes-sigs/kustomize!!?as=kustomize&type=script" \
     "stern/stern!!?as=stern&type=script" \
     "siderolabs/talos!!?as=talosctl&type=script" \
-    "yannh/kubeconform!!?as=kubeconform&type=script"
+    "yannh/kubeconform!!?as=kubeconform&type=script" \
+    "a8m/envsubst!!?as=envsubst&type=script"
 do
     echo "=== Installing ${app} ==="
     curl -fsSL "https://i.jpillora.com/${app}" | bash
