@@ -68,6 +68,7 @@ spec:
       providers:
         authelia:
           display_name: Login with Authelia
+          provider_url: "https://auth.${SECRET_DOMAIN}"
           redirect_url: "https://semaphore.${SECRET_DOMAIN}/api/auth/oidc/authelia/redirect"
           "endpoint": {
             "auth": "https://auth.${SECRET_DOMAIN}/api/oidc/authorization",
