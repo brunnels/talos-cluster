@@ -70,8 +70,8 @@ spec:
           display_name: Login with Authelia
           provider_url: "https://auth.${SECRET_DOMAIN}"
           redirect_url: "https://semaphore.${SECRET_DOMAIN}/api/auth/oidc/authelia/redirect"
-          client_id: "{{ `{{ .OIDC_CLIENT_ID }}` }}"
-          client_secret: "{{ `{{ .OIDC_CLIENT_SECRET }}` }}"
+          client_id: "{{ .OIDC_CLIENT_ID }}"
+          client_secret: "{{ .OIDC_CLIENT_SECRET }}"
           color: red darken-4
           icon: key
     email:
