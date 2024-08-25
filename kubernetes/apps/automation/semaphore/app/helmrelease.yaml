@@ -68,8 +68,12 @@ spec:
       providers:
         authelia:
           display_name: Login with Authelia
-          provider_url: "https://auth.${SECRET_DOMAIN}"
           redirect_url: "https://semaphore.${SECRET_DOMAIN}/api/auth/oidc/authelia/redirect"
+          "endpoint": {
+            "auth": "https://auth.${SECRET_DOMAIN}/api/oidc/authorization",
+            "token": "https://auth.${SECRET_DOMAIN}/api/oidc/token",
+            "userinfo": "https://auth.${SECRET_DOMAIN}/api/oidc/userinfo"
+          }
           client_id: "{{ .SEMAPHORE_OIDC_CLIENT_ID }}"
           client_secret: "{{ .SEMAPHORE_OIDC_CLIENT_SECRET }}"
           color: red darken-4
