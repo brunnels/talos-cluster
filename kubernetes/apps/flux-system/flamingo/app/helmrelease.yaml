@@ -42,6 +42,4 @@ spec:
           gethomepage.dev/name: Flamingo
           gethomepage.dev/icon: flamingo
           gethomepage.dev/description: Flamingo
-        extraTls:
-          - hosts:
-              - *host
+        tls: false
