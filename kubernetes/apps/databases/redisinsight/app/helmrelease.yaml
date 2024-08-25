@@ -82,6 +82,6 @@ spec:
                   identifier: app
                   port: http
     persistence:
-      db:
+      data:
         enabled: true
         type: emptyDir
