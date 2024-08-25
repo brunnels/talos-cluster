@@ -44,6 +44,7 @@ spec:
     general:
       host: "https://semaphore.${SECRET_DOMAIN}"
       tmp_path: /tmp/semaphore/
+      passwordLoginDisable: true
     secrets:
       accesskeyEncryptionKey: ACCESSKEY_ENCRYPTION_KEY
       cookieEncryptionKey: COOKIE_ENCRYPTION_KEY
@@ -67,13 +68,12 @@ spec:
       providers:
         authelia:
           display_name: Login with Authelia
-          provider_url: "https://auth.${SECRET_DOMAIN}/.well-known/openid-configuration"
+          provider_url: "https://auth.${SECRET_DOMAIN}"
           redirect_url: "https://semaphore.${SECRET_DOMAIN}/api/auth/oidc/authelia/redirect"
-          username_claim: preferred_username
-          name_claim: preferred_username
-          email_claim: email
           client_id: "{{ `{{ .OIDC_CLIENT_ID }}` }}"
           client_secret: "{{ `{{ .OIDC_CLIENT_SECRET }}` }}"
+          color: red
+          icon: https://raw.githubusercontent.com/authelia/authelia/d232a7f1c2cf4bb46e9936a00b81d0925094e91b/docs/static/favicon.svg
     email:
       alert: true
       host: mail.smtp2go.com
