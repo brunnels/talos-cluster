@@ -8,6 +8,7 @@ resources:
   - ./cloudnative-pg/ks.yaml
   - ./pgadmin/ks.yaml
   - ./redis/ks.yaml
+  - ./redisinsight/ks.yaml
 configMapGenerator:
   - name: authelia-ingress-hv
     namespace: databases
