@@ -32,7 +32,7 @@ spec:
         server.insecure: true
     server:
       ingress:
-        enabled: true
+        enabled: false
         ingressClassName: internal
         hostname: "{{ .Release.Name }}.${SECRET_DOMAIN}"
         annotations:
