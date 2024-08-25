@@ -33,13 +33,12 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/oblakstudio/redisinsight
-              tag: 3.1.0@sha256:80591ab43a2661e8169de52bf761cd9b2b98636f05e3e7a8d79ed4433c55cf71
+              repository: redis/redisinsight
+              tag: 2.54.0@sha256:938c50cf95f7389bc93ce4d26e6eed6855736a8e5b5b05f7e640f01d1be2d514
             env:
               TZ: "${TIMEZONE}"
-              API_PORT: &port 5542
-              SERVER_TLS: false
-              RITRUSTEDORIGINS: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+              RI_FILES_LOGGER: false
+              RI_STDOUT_LOGGER: true
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -60,10 +59,11 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
+        nameOverride: redisinsight-svc
         controller: *app
         ports:
           http:
-            port: *port
+            port: 5542
     ingress:
       app:
         className: internal
@@ -75,7 +75,7 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/RedisInsight/RedisInsight/main/resources/logo.svg
           gethomepage.dev/description: Developer GUI for Redis
         hosts:
-          - host: *host
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
