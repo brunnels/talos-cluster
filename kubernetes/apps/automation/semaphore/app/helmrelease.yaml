@@ -126,10 +126,8 @@ spec:
               kind: Deployment
               name: *app
             patch: |
-              - op: delete
+              - op: replace
                 path: /spec/template/spec/volumes/0
-              - op: add
-                path: /spec/template/spec/volumes/-
                 value:
                   name: config
                   secret:
