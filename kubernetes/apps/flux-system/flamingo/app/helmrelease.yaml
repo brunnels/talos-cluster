@@ -24,7 +24,6 @@ spec:
       retries: 3
   values:
     global:
-      domain: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
       image:
         repository: ghcr.io/flux-subsystem-argo/fsa/argocd
         tag: v2.10.5-fl.23-main-5958964b
@@ -35,16 +34,11 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
+        hostname: "{{ .Release.Name }}.${SECRET_DOMAIN}"
         annotations:
           external-dns.alpha.kubernetes.io/target: "internal.${SECRET_DOMAIN}"
-          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Infrastructure
           gethomepage.dev/name: Flamingo
           gethomepage.dev/icon: flamingo
           gethomepage.dev/description: Flamingo
-        extraTls:
-          - hosts:
-              - *host
-            secretName: flamingo-tls-secret
