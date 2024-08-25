@@ -158,3 +158,4 @@ identity_providers:
         redirect_uris: ["https://semaphore.${SECRET_DOMAIN}/api/auth/oidc/authelia/redirect"]
         scopes: ["openid", "profile", "email"]
         userinfo_signing_algorithm: none
+        token_endpoint_auth_method: client_secret_post
