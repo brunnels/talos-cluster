@@ -119,17 +119,17 @@ spec:
       name: *app
       valuesKey: DB_HOST
       targetPath: database.host
-  postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              kind: Deployment
-              name: *app
-            patch: |
-              - op: replace
-                path: /spec/template/spec/volumes/0
-                value:
-                  name: config
-                  secret:
-                    defaultMode: 420
-                    secretName: semaphore-config
+#  postRenderers:
+#    - kustomize:
+#        patches:
+#          - target:
+#              kind: Deployment
+#              name: *app
+#            patch: |
+#              - op: replace
+#                path: /spec/template/spec/volumes/0
+#                value:
+#                  name: config
+#                  secret:
+#                    defaultMode: 420
+#                    secretName: semaphore-config
