@@ -1,0 +1,47 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app flamingo
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: argo-cd
+      version: "*"
+      sourceRef:
+        kind: HelmRepository
+        name: flamingo
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    global:
+      domain: &host "gitops.${SECRET_DOMAIN}"
+      image:
+        repository: ghcr.io/flux-subsystem-argo/fsa/argocd
+        tag: v2.10.5-fl.23-main-5958964b@sha256:c7addb8f2b6312dbc4b3ba3f5a7ed675b25436202cb939c0cac4c076f0855ec5
+    configs:
+      params:
+        server.insecure: true
+    server:
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "internal.${SECRET_DOMAIN}"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Infrastructure
+          gethomepage.dev/name: Flamingo
+          gethomepage.dev/icon: flamingo
+          gethomepage.dev/description: Flamingo
+        extraTls:
+          - hosts:
+              - *host
