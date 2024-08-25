@@ -59,11 +59,11 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        nameOverride: redisinsight-svc
+        nameOverride: svc
         controller: *app
         ports:
           http:
-            port: 5542
+            port: 5540
     ingress:
       app:
         className: internal
