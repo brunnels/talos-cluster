@@ -44,7 +44,7 @@ spec:
       ANSIBLE_HOST_KEY_CHECKING: false
       SEMAPHORE_PORT: &port 3000
     general:
-      host: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
+      host: "https://semaphore.${SECRET_DOMAIN}"
       tmp_path: /tmp/semaphore/
     secrets:
       accesskeyEncryptionKey: ACCESSKEY_ENCRYPTION_KEY
@@ -75,14 +75,13 @@ spec:
           name_claim: preferred_username
           email_claim: email
     email:
-      enable: true
-      sender:
-        host: mail.smtp2go.com
-        port: 2525
-        sender: "Semaphore <semaphore@${SECRET_DOMAIN}>"
-        usernameKey: SMTP_USER
-        passwordKey: SMTP_PASS
-        existingSecret: *app
+      alert: true
+      host: mail.smtp2go.com
+      port: 2525
+      sender: "Semaphore <semaphore@${SECRET_DOMAIN}>"
+      usernameKey: SMTP_USER
+      passwordKey: SMTP_PASS
+      existingSecret: *app
     ldap:
       enable: false
     service:
@@ -92,14 +91,18 @@ spec:
     ingress:
       enabled: true
       className: internal
+      annotations:
+        external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/group: Development
+        gethomepage.dev/name: Semaphore
+        gethomepage.dev/icon: https://raw.githubusercontent.com/semaphoreui/semaphore/develop/web/public/favicon.svg
+        gethomepage.dev/description: Modern UI for Ansible, Terraform/OpenTofu, Bash and Pulumi
       hosts:
-        - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        - host: "semaphore.${SECRET_DOMAIN}"
           paths:
             - path: /
               pathType: Prefix
-      tls:
-        - hosts:
-            - *host
     # securityContext:
     #   runAsUser: 568
     #   runAsGroup: 568
