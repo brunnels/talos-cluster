@@ -78,7 +78,7 @@ spec:
       port: 2525
       sender: "Semaphore <semaphore@${SECRET_DOMAIN}>"
       usernameKey: SMTP_USER
-      passwordKey: SMTP_PASS
+      passwordKey: SMTP_PASSWORD
       existingSecret: *app
     ldap:
       enable: false
