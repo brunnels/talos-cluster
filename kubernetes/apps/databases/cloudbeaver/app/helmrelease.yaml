@@ -58,6 +58,7 @@ spec:
           app:
             image: *image
             env:
+              TZ: "${TIMEZONE}"
               CB_SERVER_NAME: *app
               CB_SERVER_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
               CLOUDBEAVER_DB_DRIVER: "postgres-jdbc"

@@ -3,7 +3,7 @@ OAUTH2_AUTO_CREATE_USER = True
 MASTER_PASSWORD_REQUIRED = False
 OAUTH2_CONFIG = [{
     "OAUTH2_NAME": "authelia",
-    "OAUTH2_DISPLAY_NAME": "Authelia",
+    "OAUTH2_DISPLAY_NAME": "Login with Authelia",
     'OAUTH2_CLIENT_ID': '{{ .PGADMIN_OIDC_CLIENT_ID }}',
     'OAUTH2_CLIENT_SECRET': '{{ .PGADMIN_OIDC_CLIENT_SECRET }}',
     "OAUTH2_TOKEN_URL": "https://auth.${SECRET_DOMAIN}/api/oidc/token",

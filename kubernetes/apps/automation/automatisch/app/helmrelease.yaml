@@ -41,6 +41,7 @@ spec:
               repository: registry.kraven.dev/brunnels/automatisch
               tag: latest@sha256:19015ace2c242d0bf410734797d713fa0c4c5e0fa9e73dbb6ba3edb9d62b4fa5
             env: &env
+              TZ: "${TIMEZONE}"
               PORT: &port 80
               HOST: "{{ .Release.Name }}.${SECRET_DOMAIN}"
               WEB_APP_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"

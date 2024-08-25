@@ -1,0 +1,126 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app semaphore
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: ansible-semaphore
+      version: 10.0.11
+      sourceRef:
+        kind: HelmRepository
+        name: cloudhippie
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    fullnameOverride: *app
+    annotations:
+      reloader.stakater.com/auto: "true"
+    extraInitContainers:
+      - name: init-db
+        image:
+          repository: ghcr.io/onedr0p/postgres-init
+          tag: 16.3@sha256:8ba3204f6b293dd168766009aae2ce4fa986a29b931c2d30ac1b30238ac750b8
+        envFrom:
+          - secretRef:
+              name: *app
+    image:
+      repository: docker.io/semaphoreui/semaphore
+      tag: v2.10.24-beta@sha256:7a9bb27c238231a36b2ed0bcfd164b5236dbc8c50ea0dad5fe3cd26c0e896289
+    extraEnvVariables:
+      TZ: "${TIMEZONE}"
+      ANSIBLE_HOST_KEY_CHECKING: false
+      SEMAPHORE_PORT: &port 3000
+    general:
+      host: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
+      tmp_path: /tmp/semaphore/
+    secrets:
+      accesskeyEncryptionKey: ACCESSKEY_ENCRYPTION_KEY
+      cookieEncryptionKey: COOKIE_ENCRYPTION_KEY
+      cookieHashKey: COOKIE_HASH_KEY
+      existingSecret: *app
+    postgresql:
+      enabled: false
+    database:
+      type: postgres
+      port: 5432
+      name: *app
+      usernameFromSecret: true
+      usernameKey: DB_USER
+      passwordKey: DB_PASS
+      existingSecret: *app
+    persistence:
+      enabled: true
+      existingClaim: *app
+    oidc:
+      enable: true
+      providers:
+        authelia:
+          display_name: Login with Authelia
+          provider_url: "https://auth.${SECRET_DOMAIN}/.well-known/openid-configuration"
+          redirect_url: "https://semaphore.${SECRET_DOMAIN}/api/auth/oidc/authelia/redirect"
+          username_claim: preferred_username
+          name_claim: preferred_username
+          email_claim: email
+    email:
+      enable: true
+      sender:
+        host: mail.smtp2go.com
+        port: 2525
+        sender: "Semaphore <semaphore@${SECRET_DOMAIN}>"
+        usernameKey: SMTP_USER
+        passwordKey: SMTP_PASS
+        existingSecret: *app
+    ldap:
+      enable: false
+    service:
+      type: ClusterIP
+      port: *port
+      internalPort: *port
+    ingress:
+      enabled: true
+      className: internal
+      hosts:
+        - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - *host
+    # securityContext:
+    #   runAsUser: 568
+    #   runAsGroup: 568
+    #   fsGroup: 568
+    #   fsGroupChangePolicy: OnRootMismatch
+    resources:
+      requests:
+        cpu: 5m
+        memory: 50M
+      limits:
+        memory: 1Gi
+  valuesFrom:
+    - kind: Secret
+      name: *app
+      valuesKey: DB_HOST
+      targetPath: database.host
+    - kind: Secret
+      name: *app
+      valuesKey: OIDC_CLIENT_ID
+      targetPath: oidc.providers.authelia.client_id
+    - kind: Secret
+      name: *app
+      valuesKey: OIDC_CLIENT_SECRET
+      targetPath: oidc.providers.authelia.client_secret
