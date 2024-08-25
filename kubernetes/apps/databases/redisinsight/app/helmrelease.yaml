@@ -83,5 +83,4 @@ spec:
                   port: http
     persistence:
       data:
-        enabled: true
-        type: emptyDir
+        existingClaim: *app
