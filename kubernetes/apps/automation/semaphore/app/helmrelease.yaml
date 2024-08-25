@@ -72,8 +72,8 @@ spec:
           redirect_url: "https://semaphore.${SECRET_DOMAIN}/api/auth/oidc/authelia/redirect"
           client_id: "{{ `{{ .OIDC_CLIENT_ID }}` }}"
           client_secret: "{{ `{{ .OIDC_CLIENT_SECRET }}` }}"
-          color: red
-          icon: https://raw.githubusercontent.com/authelia/authelia/d232a7f1c2cf4bb46e9936a00b81d0925094e91b/docs/static/favicon.svg
+          color: red darken-4
+          icon: key
     email:
       alert: true
       host: mail.smtp2go.com
