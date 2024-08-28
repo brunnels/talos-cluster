@@ -24,7 +24,5 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 500Mi
-      VOLSYNC_CACHE_CAPACITY: 500Mi
       VOLSYNC_UID: "5050"
       VOLSYNC_GID: "5050"
