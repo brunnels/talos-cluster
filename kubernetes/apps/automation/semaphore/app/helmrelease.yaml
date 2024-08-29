@@ -106,6 +106,7 @@ spec:
         gethomepage.dev/name: Semaphore
         gethomepage.dev/icon: https://raw.githubusercontent.com/semaphoreui/semaphore/develop/web/public/favicon.svg
         gethomepage.dev/description: Modern UI for Ansible, Terraform/OpenTofu, Bash and Pulumi
+        gethomepage.dev/pod-selector: app.kubernetes.io/instance=semaphore
       hosts:
         - host: "semaphore.${SECRET_DOMAIN}"
           paths:

@@ -36,6 +36,7 @@ spec:
         gethomepage.dev/group: Development
         gethomepage.dev/name: Open WebUI
         gethomepage.dev/icon: https://docs.openwebui.com/img/logo-dark.png
+        gethomepage.dev/pod-selector: app.kubernetes.io/component=open-webui
       host: "ai.${SECRET_DOMAIN}"
     persistence:
       enabled: true
