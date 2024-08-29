@@ -26,6 +26,9 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    persistence:
+      defaultDiskSelector:
+        enable: false
     defaultSettings:
       createDefaultDiskLabeledNodes: true
       defaultDataLocality: true
