@@ -53,18 +53,12 @@ spec:
           io.cilium/lb-ipam-ips: "${SVC_NETBOOT_ADDR}"
         externalTrafficPolicy: Cluster
         ports:
-          assets:
-            port: 80
-            protocol: HTTP
+#          assets:
+#            port: 80
+#            protocol: HTTP
           tftp:
             port: 69
             protocol: UDP
-          pxe:
-            port: 16000
-            protocol: TCP
-          nbd:
-            port: 10809
-            protocol: TCP
     ingress:
       app:
         className: internal
@@ -86,6 +80,6 @@ spec:
       config:
         enabled: true
         existingClaim: netboot
-      assets:
-        enabled: true
-        type: emptyDir
+#      assets:
+#        enabled: true
+#        type: emptyDir
