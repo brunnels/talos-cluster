@@ -38,8 +38,8 @@ spec:
             args:
               - "-c"
               - |
-                [ ! -f /mnt/data/iventoy.dat ] && cp /app/data/iventoy.dat /mnt/data \
-                && [ ! -f /mnt/data/mac.db ] && cp /app/data/mac.db /mnt/data \
+                [ ! -f /mnt/data/iventoy.dat ] && cp /app/data/iventoy.dat /mnt/data || true \
+                && [ ! -f /mnt/data/mac.db ] && cp /app/data/mac.db /mnt/data || true \
                 && ls -lah /mnt/data
         containers:
           app:
