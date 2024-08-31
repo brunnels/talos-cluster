@@ -8,5 +8,6 @@ resources:
   - ./external-dns/ks.yaml
   - ./external-services
   - ./ingress-nginx/ks.yaml
+  - ./iventoy/ks.yaml
   - ./k8s-gateway/ks.yaml
   - ./vpn-gateway/ks.yaml
