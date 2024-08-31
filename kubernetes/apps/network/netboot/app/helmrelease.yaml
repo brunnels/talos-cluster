@@ -56,7 +56,7 @@ spec:
         ports:
           assets:
             port: 80
-            protocol: tcp
+            protocol: TCP
           tftp:
             port: 69
             protocol: UDP
