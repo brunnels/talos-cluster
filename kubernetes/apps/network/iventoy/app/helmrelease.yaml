@@ -27,11 +27,23 @@ spec:
       iventoy:
         annotations:
           reloader.stakater.com/auto: "true"
-        containers:
-          app:
-            image:
+        initContainers:
+          # we have to do this because the /app/data directory has files that get mounted over
+          copy-files:
+            image: &image
               repository: docker.io/ziggyds/iventoy
               tag: 1.0.20@sha256:0e1d4a520cd761559aead3bfecb8c46d579aa6e97e81bc4895fe246e31e62746
+            command:
+              - "/bin/sh"
+            args:
+              - "-c"
+              - |
+                [ !-f /mnt/data/iventory.dat ] && cp /app/data/iventory.dat /mnt/data \
+                && [ !-f /mnt/data/mac.db ] && cp /app/data/mac.db /mnt/data \
+                && ls -lah /mnt/data
+        containers:
+          app:
+            image: *image
             env:
               TZ: ${TIMEZONE}
               AUTO_START_PXE: true
@@ -85,16 +97,19 @@ spec:
                   identifier: app
                   port: http
     persistence:
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /app/log
       data:
         enabled: true
         existingClaim: iventoy
         advancedMounts:
           iventoy:
+            copy-files:
+              - path: /mnt/data
             app:
               - path: /app/data
-                subPath: data
-              - path: /app/log
-                subPath: log
       iso:
         existingClaim: cifs-isos
         globalMounts:
