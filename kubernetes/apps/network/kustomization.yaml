@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
@@ -9,5 +10,6 @@ resources:
   - ./external-services
   - ./ingress-nginx/ks.yaml
   - ./iventoy/ks.yaml
+  - ./netboot/ks.yaml
   - ./k8s-gateway/ks.yaml
   - ./vpn-gateway/ks.yaml

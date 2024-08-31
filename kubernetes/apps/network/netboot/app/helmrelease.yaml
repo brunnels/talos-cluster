@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app iventoy
+  name: &app netboot
 spec:
   interval: 30m
   chart:
@@ -24,29 +24,16 @@ spec:
       retries: 3
   values:
     controllers:
-      iventoy:
+      netboot:
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          # we have to do this because the /app/data directory has files that get mounted over
-          copy-files:
-            image: &image
-              repository: docker.io/ziggyds/iventoy
-              tag: 1.0.20@sha256:0e1d4a520cd761559aead3bfecb8c46d579aa6e97e81bc4895fe246e31e62746
-            command:
-              - "/bin/sh"
-            args:
-              - "-c"
-              - |
-                [ ! -f /mnt/data/iventoy.dat ] && cp /app/data/iventoy.dat /mnt/data \
-                && [ ! -f /mnt/data/mac.db ] && cp /app/data/mac.db /mnt/data \
-                && ls -lah /mnt/data
         containers:
           app:
-            image: *image
+            image:
+              repository: ghcr.io/netbootxyz/netbootxyz
+              tag: 0.7.3-nbxyz1@sha256:8dbca4d24354fd6ace12b9970188c866341384df2925753c807e87da83587438
             env:
               TZ: ${TIMEZONE}
-              AUTO_START_PXE: true
             resources:
               requests:
                 cpu: 10m
@@ -60,25 +47,19 @@ spec:
         controller: *app
         ports:
           http:
-            port: 26000
-      iventoy:
+            port: 3000
+      netboot:
         controller: *app
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: "${SVC_IVENTOY_ADDR}"
+          io.cilium/lb-ipam-ips: "${SVC_NETBOOT_ADDR}"
         ports:
-          dhcp:
-            port: 67
-            protocol: UDP
+          assets:
+            port: 80
+            protocol: tcp
           tftp:
             port: 69
             protocol: UDP
-          pxe:
-            port: 16000
-            protocol: TCP
-          nbd:
-            port: 10809
-            protocol: TCP
     ingress:
       app:
         className: internal
@@ -86,9 +67,9 @@ spec:
           external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Infrastructure
-          gethomepage.dev/name: iVentoy
-          gethomepage.dev/icon: https://raw.githubusercontent.com/brunnels/assets/main/homepage/icons/ventoy.png
-          gethomepage.dev/description: iPXE ISO Loader
+          gethomepage.dev/name: netboot.xyz
+          gethomepage.dev/icon: https://raw.githubusercontent.com/netbootxyz/webapp/master/public/img/logo.png
+          gethomepage.dev/description: iPXE Chain Loader
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
@@ -97,19 +78,12 @@ spec:
                   identifier: app
                   port: http
     persistence:
-      logs:
-        type: emptyDir
-        globalMounts:
-          - path: /app/log
       data:
         existingClaim: *app
         advancedMounts:
-          iventoy:
-            copy-files:
-              - path: /mnt/data
+          netboot:
             app:
-              - path: /app/data
-      iso:
-        existingClaim: cifs-isos
-        globalMounts:
-          - path: /app/iso
+              - path: /config
+                subPath: config
+              - path: /assets
+                subPath: assets
