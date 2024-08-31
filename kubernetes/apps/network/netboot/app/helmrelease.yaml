@@ -25,8 +25,6 @@ spec:
   values:
     controllers:
       netboot:
-        annotations:
-          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
@@ -39,9 +37,9 @@ spec:
                 cpu: 10m
                 memory: 50M
               limits:
-                memory: 512M
-            securityContext:
-              privileged: true
+                memory: 256M
+    defaultPodOptions:
+      hostNetwork: true
     service:
       app:
         controller: *app
@@ -53,6 +51,7 @@ spec:
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: "${SVC_NETBOOT_ADDR}"
+        externalTrafficPolicy: Cluster
         ports:
           assets:
             port: 80
@@ -60,6 +59,12 @@ spec:
           tftp:
             port: 69
             protocol: UDP
+          pxe:
+            port: 16000
+            protocol: TCP
+          nbd:
+            port: 10809
+            protocol: TCP
     ingress:
       app:
         className: internal
