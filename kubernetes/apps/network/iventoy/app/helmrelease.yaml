@@ -38,7 +38,7 @@ spec:
             args:
               - "-c"
               - |
-                [ ! -f /mnt/data/iventory.dat ] && cp /app/data/iventory.dat /mnt/data \
+                [ ! -f /mnt/data/iventoy.dat ] && cp /app/data/iventoy.dat /mnt/data \
                 && [ ! -f /mnt/data/mac.db ] && cp /app/data/mac.db /mnt/data \
                 && ls -lah /mnt/data
         containers:
