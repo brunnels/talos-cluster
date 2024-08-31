@@ -10,6 +10,7 @@ resources:
   - ./cifs-downloads.yaml
   - ./cifs-dynamic.yaml
   - ./cifs-games.yaml
+  - ./cifs-isos.yaml
   - ./cifs-misc.yaml
   - ./cifs-movies.yaml
   - ./cifs-music.yaml
