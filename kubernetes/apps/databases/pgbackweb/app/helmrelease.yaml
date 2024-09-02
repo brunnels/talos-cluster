@@ -73,7 +73,7 @@ spec:
           gethomepage.dev/group: Development
           gethomepage.dev/name: PGBackWeb
           gethomepage.dev/icon: https://raw.githubusercontent.com/eduardolat/pgbackweb/main/internal/view/static/images/logo.png
-          gethomepage.dev/description: 🐘 Effortless PostgreSQL backups with a user-friendly web interface! 🌐💾
+          gethomepage.dev/description: 🐘 PostgreSQL backup interface! 🌐💾
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
