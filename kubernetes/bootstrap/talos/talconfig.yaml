@@ -159,22 +159,6 @@ nodes:
         mtu: 1500
     patches:
       - "@./patches/wn4/gpu-worker-patch.yaml"
-  - hostname: "wn5"
-    ipAddress: "10.50.0.12"
-    installDisk: "/dev/nvme0n1"
-    talosImageURL: factory.talos.dev/installer/4708a49c688e9b6b7e9d46e5de43e8f29ad55419c102605032ba7dd3cd00dead
-    controlPlane: false
-    networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "e4:b9:7a:e7:4c:4e"
-        dhcp: false
-        addresses:
-          - "10.50.0.12/24"
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "10.50.0.1"
-        mtu: 1500
-
 # Global patches
 patches:
   - # Force nameserver
