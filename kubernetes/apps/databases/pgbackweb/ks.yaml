@@ -11,7 +11,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: external-secrets-stores
     - name: csi-driver-smb
   path: ./kubernetes/apps/databases/pgbackweb/app
   prune: true
