@@ -7,11 +7,11 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: media
-  dependsOn:
-    - name: external-secrets-stores
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: volsync
   path: ./kubernetes/apps/media/overseerr/app
   prune: true
   sourceRef:
