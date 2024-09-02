@@ -5,5 +5,6 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./ks.yaml
-  - ./theme-park/ks.yaml
+  - ./overseer/ks.yaml
   - ./plex/ks.yaml
+  - ./theme-park/ks.yaml
