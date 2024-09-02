@@ -58,7 +58,6 @@ spec:
               readiness:
                 <<: *probe
                 spec:
-                  exec:
                   initialDelaySeconds: 5
                   periodSeconds: 5
             resources:
