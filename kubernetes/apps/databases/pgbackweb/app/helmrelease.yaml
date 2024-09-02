@@ -1,0 +1,98 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app pgbackweb
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      pgbackweb:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16.3@sha256:8ba3204f6b293dd168766009aae2ce4fa986a29b931c2d30ac1b30238ac750b8
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
+        containers:
+          app:
+            image:
+              repository: docker.io/eduardolat/pgbackweb
+              tag: 0.2.0@sha256:cd5aa9e57d7d331d152fa1e532b83ecd2cb467a181ffc9e151afb4858dd2174a
+            envFrom: *envFrom
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - pg_isready
+                      - -U
+                      - postgres
+                  initialDelaySeconds: 30
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
+                <<: *probe
+                spec:
+                  exec:
+                  initialDelaySeconds: 5
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 8085
+    ingress:
+      app:
+        className: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Development
+          gethomepage.dev/name: PGBackWeb
+          gethomepage.dev/icon: https://raw.githubusercontent.com/eduardolat/pgbackweb/main/internal/view/static/images/logo.png
+          gethomepage.dev/description: 🐘 Effortless PostgreSQL backups with a user-friendly web interface! 🌐💾
+        hosts:
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      backups:
+        existingClaim: cifs-backup
+        globalMounts:
+          - path: /backups
+            subPath: cloudnative-pg
