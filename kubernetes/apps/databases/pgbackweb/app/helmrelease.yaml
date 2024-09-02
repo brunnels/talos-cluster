@@ -43,7 +43,7 @@ spec:
             envFrom: *envFrom
             probes:
               liveness:
-                enabled: true
+                enabled: false
                 custom: true
                 spec: &probeSpec
                   exec:
@@ -56,7 +56,7 @@ spec:
                   timeoutSeconds: 5
                   failureThreshold: 5
               readiness:
-                enabled: true
+                enabled: false
                 custom: true
                 spec:
                   <<: *probeSpec
