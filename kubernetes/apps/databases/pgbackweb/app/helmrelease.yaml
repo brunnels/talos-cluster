@@ -40,28 +40,18 @@ spec:
             image:
               repository: docker.io/eduardolat/pgbackweb
               tag: 0.2.0@sha256:cd5aa9e57d7d331d152fa1e532b83ecd2cb467a181ffc9e151afb4858dd2174a
-            envFrom: *envFrom
-            probes:
-              liveness:
-                enabled: false
-                custom: true
-                spec: &probeSpec
-                  exec:
-                    command:
-                      - pg_isready
-                      - -U
-                      - postgres
-                  initialDelaySeconds: 30
-                  periodSeconds: 10
-                  timeoutSeconds: 5
-                  failureThreshold: 5
-              readiness:
-                enabled: false
-                custom: true
-                spec:
-                  <<: *probeSpec
-                  initialDelaySeconds: 5
-                  periodSeconds: 5
+            env:
+              TZ: "${TIMEZONE}"
+              PBW_ENCRYPTION_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: *app
+                    key: PBW_ENCRYPTION_KEY
+              PBW_POSTGRES_CONN_STRING:
+                valueFrom:
+                  secretKeyRef:
+                    name: *app
+                    key: PBW_POSTGRES_CONN_STRING
             resources:
               requests:
                 cpu: 10m
