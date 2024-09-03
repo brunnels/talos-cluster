@@ -73,7 +73,7 @@ spec:
           gethomepage.dev/group: Development
           gethomepage.dev/name: PGBackWeb
           gethomepage.dev/icon: https://raw.githubusercontent.com/eduardolat/pgbackweb/main/internal/view/static/images/logo.png
-          gethomepage.dev/description: 🐘 PostgreSQL backup interface! 🌐💾
+          gethomepage.dev/description: PostgreSQL backup interface
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
@@ -81,9 +81,3 @@ spec:
                 service:
                   identifier: app
                   port: http
-    persistence:
-      backups:
-        existingClaim: cifs-backup
-        globalMounts:
-          - path: /backups
-            subPath: cloudnative-pg
