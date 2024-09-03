@@ -86,7 +86,6 @@ spec:
           gethomepage.dev/widget.type: overseerr
           gethomepage.dev/widget.url: http://overseerr.media
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_OVERSEERR_TOKEN}}` }}"
-          nginx.ingress.kubernetes.io/configuration-snippet: ${THEME_PARK_SNIPPET}
         hosts:
           - host: "requests.${SECRET_DOMAIN}"
             paths:
