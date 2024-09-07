@@ -15,7 +15,6 @@ resources:
   - ./descheduler.yaml
   - ./eclipse-che.yaml
   - ./external-dns.yaml
-  - ./external-secrets.yaml
   - ./ingress-nginx.yaml
   - ./intel.yaml
   - ./jetstack.yaml
