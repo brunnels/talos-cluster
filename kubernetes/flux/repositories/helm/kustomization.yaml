@@ -9,6 +9,7 @@ resources:
   - ./cilium.yaml
   - ./cloudhippie.yaml
   - ./cloudnative-pg.yaml
+  - ./coder.yaml
   - ./coredns.yaml
   - ./csi-driver-smb.yaml
   - ./descheduler.yaml

@@ -12,12 +12,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: volsync
+    - name: cloudnative-pg-cluster
   path: ./kubernetes/apps/automation/semaphore/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  wait: true
+  wait: false # no flux ks dependents
   interval: 30m
   retryInterval: 1m
   timeout: 5m

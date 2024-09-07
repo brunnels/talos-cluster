@@ -12,12 +12,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: volsync
+    - name: cloudnative-pg-cluster
   path: ./kubernetes/apps/databases/cloudbeaver/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  wait: false
+  wait: false # no flux ks dependents
   interval: 30m
   retryInterval: 1m
   timeout: 5m
