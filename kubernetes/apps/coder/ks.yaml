@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
     - name: cloudnative-pg-cluster
-  path: ./kubernetes/apps/automation/coder/app
+  path: ./kubernetes/apps/coder/app
   prune: true
   sourceRef:
     kind: GitRepository

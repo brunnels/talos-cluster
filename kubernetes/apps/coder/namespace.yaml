@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: automation
+  name: coder
   labels:
     kustomize.toolkit.fluxcd.io/prune: disabled
   annotations:
