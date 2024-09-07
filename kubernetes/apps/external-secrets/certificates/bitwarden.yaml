@@ -18,6 +18,29 @@ spec:
     encoding: PKCS8
     size: 2048
     rotationPolicy: Always
+  duration: 168h # 7d
+  renewBefore: 24h # 1d
+  issuerRef:
+    name: home-ca-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: bitwarden-css-certs
+  namespace: external-secrets
+spec:
+  secretName: bitwarden-css-certs
+  dnsNames:
+    - bitwarden-secrets-manager.external-secrets.svc.cluster.local
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
+    rotationPolicy: Always
+  usages:
+    - client auth
   issuerRef:
     name: home-ca-issuer
     kind: ClusterIssuer
