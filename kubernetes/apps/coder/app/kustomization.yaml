@@ -9,4 +9,4 @@ resources:
   - ./helmrelease.yaml
 #  - ./role.yaml
 #  - ./rolebinding.yaml
-  - ../../../../templates/gatus/external
+  - ../../../templates/gatus/external
