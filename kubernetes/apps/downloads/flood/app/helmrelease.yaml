@@ -38,7 +38,7 @@ spec:
             env:
               TZ: "${TIMEZONE}"
               FLOOD_OPTION_rundir: /data
-              FLOOD_OPTION_auth: none
+#              FLOOD_OPTION_auth: none
               FLOOD_OPTION_port: &port 80
               FLOOD_OPTION_trurl: http://flood:9091/transmission/rpc
             resources:
