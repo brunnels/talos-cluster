@@ -5,4 +5,5 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./automatisch/ks.yaml
+  - ./home-assistant/ks.yaml
   - ./semaphore/ks.yaml
