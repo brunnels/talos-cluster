@@ -24,5 +24,5 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: hass
       VOLSYNC_CAPACITY: 5Gi
+      GATUS_SUBDOMAIN: hass
