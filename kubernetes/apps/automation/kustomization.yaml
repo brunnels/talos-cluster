@@ -5,5 +5,13 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./automatisch/ks.yaml
+  - ./esphome/ks.yaml
   - ./home-assistant/ks.yaml
   - ./semaphore/ks.yaml
+configMapGenerator:
+  - name: authelia-ingress-hv
+    namespace: automation
+    files:
+      - values.yaml=../security/authelia/app/resources/authelia-ingress-hv.yaml
+generatorOptions:
+  disableNameSuffixHash: true
