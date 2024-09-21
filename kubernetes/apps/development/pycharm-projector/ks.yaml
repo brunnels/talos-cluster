@@ -6,13 +6,13 @@ metadata:
   name: &app pycharm-projector
   namespace: flux-system
 spec:
-  targetNamespace: default
+  targetNamespace: development
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: volsync
-  path: ./kubernetes/apps/default/pycharm-projector/app
+  path: ./kubernetes/apps/development/pycharm-projector/app
   prune: true
   sourceRef:
     kind: GitRepository
