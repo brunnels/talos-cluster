@@ -74,7 +74,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Development
+          gethomepage.dev/group: Management
           gethomepage.dev/name: Sshwifty
           gethomepage.dev/icon: https://raw.githubusercontent.com/nirui/sshwifty/master/ui/sshwifty.svg
           gethomepage.dev/description: Sshwifty Web SSH & Telnet Client

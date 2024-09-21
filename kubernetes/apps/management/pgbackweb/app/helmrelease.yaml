@@ -70,7 +70,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Development
+          gethomepage.dev/group: Management
           gethomepage.dev/name: PGBackWeb
           gethomepage.dev/icon: https://raw.githubusercontent.com/eduardolat/pgbackweb/main/internal/view/static/images/logo.png
           gethomepage.dev/description: PostgreSQL backup interface

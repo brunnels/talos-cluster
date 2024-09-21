@@ -99,7 +99,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Development
+          gethomepage.dev/group: Automation
           gethomepage.dev/name: Automatisch
           gethomepage.dev/icon: https://raw.githubusercontent.com/brunnels/assets/main/homepage/icons/automatisch.webp
           gethomepage.dev/description: Workflow Automation
