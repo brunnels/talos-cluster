@@ -39,7 +39,9 @@ spec:
               tag: 2024.9.0@sha256:c90aab590daead25ed0eff5f263b7de26a71e5c551c94af4da4a4746b163e681
             env:
               TZ: "${TIMEZONE}"
-              ESPHOME_DASHBOARD_USE_PING: true
+              PLATFORMIO_CORE_DIR: /cache/platformio
+              PLATFORMIO_GLOBALLIB_DIR: /cache/platformio/lib
+              PLATFORMIO_SETTING_ENABLE_TELEMETRY: No
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
