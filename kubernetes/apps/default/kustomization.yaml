@@ -5,5 +5,5 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./homepage/ks.yaml
-  - ./theme-park/ks.yaml
+#  - ./theme-park/ks.yaml
   - ./pycharm-projector/ks.yaml
