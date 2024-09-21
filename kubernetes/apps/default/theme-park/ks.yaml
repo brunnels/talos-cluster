@@ -6,11 +6,11 @@ metadata:
   name: &app theme-park
   namespace: flux-system
 spec:
-  targetNamespace: media
+  targetNamespace: default
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/media/theme-park/app
+  path: ./kubernetes/apps/default/theme-park/app
   prune: true
   sourceRef:
     kind: GitRepository
