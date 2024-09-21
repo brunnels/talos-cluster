@@ -7,7 +7,7 @@ resources:
   - ./redisinsight/ks.yaml
 configMapGenerator:
   - name: authelia-ingress-hv
-    namespace: management
+    namespace: development
     files:
       - values.yaml=../security/authelia/app/resources/authelia-ingress-hv.yaml
 generatorOptions:
