@@ -45,6 +45,7 @@ spec:
       host: "https://semaphore.${SECRET_DOMAIN}"
       tmp_path: /tmp/semaphore/
       passwordLoginDisable: true
+      sshConfigPath: /tmp/semaphore/.ssh/config
     secrets:
       accesskeyEncryptionKey: ACCESSKEY_ENCRYPTION_KEY
       cookieEncryptionKey: COOKIE_ENCRYPTION_KEY
