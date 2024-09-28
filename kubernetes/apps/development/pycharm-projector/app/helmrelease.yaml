@@ -31,12 +31,12 @@ spec:
         containers:
           app:
             image:
-              repository: registry.kraven.dev/brunnels/projector-pycharm-p
-              tag: 2024.2.3-1
+              repository: registry.kraven.dev/brunnels/projector-pycharm
+              tag: 2024.1.6-1
             env:
               TZ: "${TIMEZONE}"
               AUTHORIZED_KEY: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFtsfTKydEzzYz2d+wF1voVSEdiKbOKrkY6PrHg1SmWd"
-              PROJECTOR_DIR: "/usr/share/projector"
+              PROJECTOR_VARIANT: professional
             probes:
               liveness:
                 enabled: true
@@ -54,10 +54,10 @@ spec:
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 8
+                cpu: 4
                 memory: 2048M
               limits:
-                memory: 8096M
+                memory: 6144M
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
