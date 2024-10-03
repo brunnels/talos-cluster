@@ -36,7 +36,7 @@ spec:
               name: *app
     image:
       repository: docker.io/semaphoreui/semaphore
-      tag: v2.10.25-beta@sha256:06c484916c4ab731448e08db2ad9d802ae5abefd95d23b685efcfa311e09ee4a
+      tag: v2.10.26-beta@sha256:67f3308f9017bfbf9476c0aa792fd731568f74170b84097e4ad1be093355cbb6
     extraEnvVariables:
       TZ: "${TIMEZONE}"
       ANSIBLE_HOST_KEY_CHECKING: false
