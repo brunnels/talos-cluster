@@ -12,18 +12,21 @@ spec:
   clusterIP: None
   ports:
     - name: https-pve
-      port: &port 8006
+      port: 8006
       protocol: TCP
-      targetPort: *port
+      targetPort: 8006
 ---
 apiVersion: v1
 kind: Endpoints
 metadata:
-  name: pve
+  name: &app pve
   namespace: network
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
 subsets:
   - addresses:
-      - ip: 10.50.0.10
+      - ip: 10.50.0.2
     ports:
       - name: https-pve
         port: 8006

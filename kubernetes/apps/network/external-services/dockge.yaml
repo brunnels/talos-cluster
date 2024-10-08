@@ -19,8 +19,11 @@ spec:
 apiVersion: v1
 kind: Endpoints
 metadata:
-  name: dockge
+  name: &app dockge
   namespace: network
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
 subsets:
   - addresses:
       - ip: 10.50.0.4
