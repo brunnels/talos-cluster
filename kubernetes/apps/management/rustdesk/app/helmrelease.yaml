@@ -29,24 +29,24 @@ spec:
           reloader.stakater.com/auto: "true"
         containers:
           hbbr:
-            &image image:
+            image: &image
               repository: ghcr.io/rustdesk/rustdesk-server
               tag: 1.1.12@sha256:9b1197d116f7bb4d3ad93a50bc1bc59ddb388de267df221a351f5ce10fac3dcf
             env:
               TZ: ${TIMEZONE}
             command: ["hbbr"]
-            &probes probes:
+            probes: &probes
               liveness:
                 enabled: false
               readiness:
                 enabled: false
               startup:
                 enabled: false
-            &securityContext securityContext:
+            securityContext: &securityContext
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            &resources resources:
+            resources: &resources
               requests:
                 cpu: 10m
                 memory: 128Mi
