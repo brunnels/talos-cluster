@@ -14,9 +14,25 @@ spec:
   privateKey:
     algorithm: ECDSA
     size: 256
-    rotationPolicy: Always
-  duration: 168h # 7d
-  renewBefore: 24h # 1d
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: &name strong-selfsigned-ca
+spec:
+  isCA: true
+  commonName: *name
+  subject:
+    organizations:
+      - ${SECRET_DOMAIN}
+  secretName: strong-root-secret
+  privateKey:
+    algorithm: ECDSA
+    size: 384
   issuerRef:
     name: selfsigned-issuer
     kind: ClusterIssuer
