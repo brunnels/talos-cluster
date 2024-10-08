@@ -57,8 +57,8 @@ spec:
             env:
               TZ: ${TIMEZONE}
               DB_URL: /db/db_v2.sqlite3
-              RELAY: "10.10.30.20:21117"
-            command: [ "hbbs", "-r rustdesk-hbbr:21117" ]
+              RELAY: "${SVC_RUSTDESK_ADDR}:21117"
+            command: [ "hbbs", "-r rustdesk:21117" ]
             probes: *probes
             securityContext: *securityContext
             resources: *resources
@@ -71,33 +71,34 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     service:
-      hbbr:
+      hbbs:
         controller: *app
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: ${SVC_RUSTDESK_ADDR}
+          external-dns.alpha.kubernetes.io/hostname: rustdesk.${SECRET_DOMAIN}
         ports:
-          first:
+          hbbr-1:
             enabled: true
             port: 21117
             protocol: "TCP"
-          second:
+          hbbr-2:
             enabled: true
             port: 21119
             protocol: "TCP"
-      hbbs:
-        controller: *app
-        ports:
-          first:
+          hbbs-1:
             enabled: true
             port: 21115
             protocol: "TCP"
-          second:
+          hbbs-2:
             enabled: true
             port: 21116
             protocol: "TCP"
-          third:
+          hbbs-3:
             enabled: true
             port: 21116
             protocol: "UDP"
-          fourth:
+          hbbs-4:
             enabled: true
             port: 21118
             protocol: "TCP"
