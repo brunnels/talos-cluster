@@ -5,5 +5,6 @@ kind: Kustomization
 namespace: network
 resources:
   - ./dockge.yaml
+  - ./pbs.yaml
   - ./pve.yaml
   - ./registry.yaml
