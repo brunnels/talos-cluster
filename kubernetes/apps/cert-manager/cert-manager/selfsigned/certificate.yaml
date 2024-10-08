@@ -14,6 +14,9 @@ spec:
   privateKey:
     algorithm: ECDSA
     size: 256
+    rotationPolicy: Always
+  duration: 168h # 7d
+  renewBefore: 24h # 1d
   issuerRef:
     name: selfsigned-issuer
     kind: ClusterIssuer
