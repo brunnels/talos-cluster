@@ -78,7 +78,7 @@ spec:
           gethomepage.dev/icon: esphome
           gethomepage.dev/description: ESP Microcontroller Automation
           gethomepage.dev/widget.type: esphome
-          gethomepage.dev/widget.url: "http://esphome.automation"
+          gethomepage.dev/widget.url: "http://esphome.automation:6052"
           nginx.ingress.kubernetes.io/configuration-snippet: ${THEME_PARK_SNIPPET}
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
