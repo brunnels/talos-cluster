@@ -130,21 +130,27 @@ spec:
       config:
         type: secret
         name: *app
-        globalMounts:
-          - path: /config/configuration.yaml
-            subPath: configuration.yaml
-            readOnly: true
+        advancedMounts:
+          authelia:
+            app:
+              - path: /config/configuration.yaml
+                subPath: configuration.yaml
+                readOnly: true
       oidc-issuer:
         type: secret
         name: authelia-oidc-issuer
-        globalMounts:
-          - subPath: private_key.pem
-            path: /oidc_issuer/private_key.pem
-            readOnly: true
+        advancedMounts:
+          authelia:
+            app:
+              - subPath: private_key.pem
+                path: /oidc_issuer/private_key.pem
+                readOnly: true
       trusted-certs:
-        type: secret
-        name: authelia-trusted-certs
-        globalMounts:
-          - subPath: ldap_tls.pem
-            path: /trusted_certs/ldap_tls.pem
-            readOnly: true
+        type: configMap
+        name: letsencrypt-certs
+        advancedMounts:
+          authelia:
+            app:
+              - subPath: letsencrypt-certs.pem
+                path: /trusted_certs/letsencrypt-certs.pem
+                readOnly: true
