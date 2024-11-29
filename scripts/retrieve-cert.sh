@@ -8,8 +8,10 @@ REMPORT=${2:-443}
 INFO=$3
 
 CERT_DATA="$(echo |\
-openssl s_client -connect "${REMHOST}:${REMPORT}" 2>&1 \
-| sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p')"
+openssl s_client -showcerts -connect "${REMHOST}:${REMPORT}" 2>&1 | openssl x509 -outform PEM)"
+#openssl s_client -connect "${REMHOST}:${REMPORT}")"
+#| sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p'
+#| openssl x509 -inform pem -noout -text)"
 
 if [ "$INFO" == "--info" ]; then
     COMMON_NAME=$(echo "$CERT_DATA" | openssl x509 -noout -subject | awk -F'CN = ' '{print $2}')
