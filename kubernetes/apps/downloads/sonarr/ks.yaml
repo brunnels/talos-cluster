@@ -27,5 +27,5 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CLAIM: sonarr-config
-      VOLSYNC_CAPACITY: 2Gi
-      VOLSYNC_CACHE_CAPACITY: 2Gi
+      VOLSYNC_CAPACITY: 4Gi
+      VOLSYNC_CACHE_CAPACITY: 4Gi
