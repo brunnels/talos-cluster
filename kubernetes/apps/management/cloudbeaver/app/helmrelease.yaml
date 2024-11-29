@@ -44,7 +44,7 @@ spec:
           copy-files:
             image: &image
               repository: docker.io/dbeaver/cloudbeaver
-              tag: 24.2.4@sha256:5f5f8399107771d33a4aff51e1574fcc82ae6de8820dc325ea40d4e06d2d0405
+              tag: 24.2.3@sha256:44887b8a6b56b96d85134a31ca56cdd277706c88dead3f17dba20abf19187b56
             command:
               - "/bin/sh"
             args:
