@@ -12,6 +12,44 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  archlinux:
+    name: workstation (archlinux)
+    runs-on: ubuntu-latest
+    container:
+      image: greyltc/archlinux-aur:yay
+      options: --user root
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Test Arch dependencies
+        shell: bash
+        run: >-
+          sudo -E -u ab -D~ bash -c '
+          cd $GITHUB_WORKSPACE;
+          yay -Syu --needed --noconfirm --noprogressbar go-task;
+          go-task workstation:arch
+          '
+
+  generic-linux:
+    name: workstation (generic-linux)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Homebrew
+        id: setup-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Setup Workflow Tools
+        shell: bash
+        run: brew install go-task
+
+      - name: Run Workstation Generic linux tasks
+        shell: bash
+        run: task workstation:generic-linux
+
   configure:
     if: ${{ github.repository == 'onedr0p/cluster-template' }}
     name: configure
@@ -33,14 +71,14 @@ jobs:
         uses: actions/setup-python@v5
         id: setup-python
         with:
-          python-version: "3.11" # minimum supported version
+          python-version: "3.11"
 
       - name: Cache homebrew packages
         if: ${{ github.event_name == 'pull_request' }}
         uses: actions/cache@v4
         id: cache-homebrew-packages
         with:
-          key: homebrew-${{ runner.os }}-${{ steps.setup-homebrew.outputs.gems-hash }}-${{ hashFiles('.taskfiles/Workstation/Brewfile') }}
+          key: homebrew-${{ runner.os }}-${{ steps.setup-homebrew.outputs.gems-hash }}-${{ hashFiles('.taskfiles/workstation/Brewfile') }}
           path: /home/linuxbrew/.linuxbrew
 
       - name: Cache venv
@@ -70,7 +108,7 @@ jobs:
 
       - name: Run Sops Age key task
         shell: bash
-        run: task sops:age-keygen
+        run: task bootstrap:age-keygen
 
       - name: Run init tasks
         shell: bash
@@ -84,8 +122,6 @@ jobs:
         shell: bash
         run: task configure --yes
 
-      - name: Run repo clean and reset tasks
+      - name: Run clean
         shell: bash
-        run: |
-          task repository:clean
-          task repository:reset --yes
+        run: task bootstrap:clean

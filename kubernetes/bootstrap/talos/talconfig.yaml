@@ -5,22 +5,23 @@ talosVersion: v1.8.3
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: v1.31.3
 
-clusterName: "homerun"
-endpoint: https://10.50.0.20:6443
+clusterName: "korg"
+endpoint: https://10.0.150.100:6443
+
 clusterPodNets:
-  - "10.169.0.0/16"
+  - "10.69.0.0/16"
 clusterSvcNets:
-  - "10.196.0.0/16"
+  - "10.96.0.0/16"
+
 additionalApiServerCertSans: &sans
-  - 127.0.0.1 # KubePrism
-  - 10.50.0.20
-  - 10.50.0.19
-  - 10.50.0.18
-  - 10.50.0.17
-  - homerun.lan.kraven.org
-  - cn1.lan.kraven.org
-  - cn2.lan.kraven.org
-  - cn3.lan.kraven.org
+  - "10.0.150.100"
+  - "10.0.150.100"
+  - "korg.lan.kraven.org"
+  - "korg-n1.lan.kraven.org"
+  - "korg-n2.lan.kraven.org"
+  - "korg-n3.lan.kraven.org"
+  - "korg-n4.lan.kraven.org"
+  - "127.0.0.1"
 additionalMachineCertSans: *sans
 
 # Disable built-in Flannel to use Cilium
@@ -28,150 +29,92 @@ cniConfig:
   name: none
 
 nodes:
-  - hostname: "cn1"
-    ipAddress: "10.50.0.19"
-    installDisk: "/dev/sdb"
-    talosImageURL: factory.talos.dev/installer/c38ec79c2adffd3f14899c479dd7f20ce6ea3881a13ee98ed1336072ecb033e7
+  - hostname: "korg-n1"
+    ipAddress: "10.0.150.99"
+    installDisk: "/dev/sda"
+    machineSpec:
+      secureboot: true
+    talosImageURL: factory.talos.dev/installer-secureboot/1329571905803b4111d4e2ddd512cd7f9e8626bb7dc8ad9bbd6fa84c4a80ba60
     controlPlane: true
-    schematic:
-      customization:
-        extraKernelArgs:
-          - thermal.off=1
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "e8:03:9a:e4:9b:69"
+          hardwareAddr: "1c:fd:08:7c:b3:5e"
         dhcp: false
         addresses:
-          - "10.50.0.19/24"
+          - "10.0.150.99/24"
         routes:
           - network: 0.0.0.0/0
-            gateway: "10.50.0.1"
+            gateway: "10.0.150.1"
         mtu: 1500
         vip:
-          ip: "10.50.0.20"
-  - hostname: "cn2"
-    ipAddress: "10.50.0.18"
+          ip: "10.0.150.100"
+  - hostname: "korg-n2"
+    ipAddress: "10.0.150.98"
     installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/c38ec79c2adffd3f14899c479dd7f20ce6ea3881a13ee98ed1336072ecb033e7
+    machineSpec:
+      secureboot: true
+    talosImageURL: factory.talos.dev/installer-secureboot/1329571905803b4111d4e2ddd512cd7f9e8626bb7dc8ad9bbd6fa84c4a80ba60
     controlPlane: true
-    schematic:
-      customization:
-        extraKernelArgs:
-          - thermal.off=1
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "e8:03:9a:e4:8e:64"
+          hardwareAddr: "1c:fd:08:7c:b3:12"
         dhcp: false
         addresses:
-          - "10.50.0.18/24"
+          - "10.0.150.98/24"
         routes:
           - network: 0.0.0.0/0
-            gateway: "10.50.0.1"
+            gateway: "10.0.150.1"
         mtu: 1500
         vip:
-          ip: "10.50.0.20"
-  - hostname: "cn3"
-    ipAddress: "10.50.0.17"
-    installDisk: "/dev/sdb"
-    talosImageURL: factory.talos.dev/installer/c38ec79c2adffd3f14899c479dd7f20ce6ea3881a13ee98ed1336072ecb033e7
+          ip: "10.0.150.100"
+  - hostname: "korg-n3"
+    ipAddress: "110.0.150.97"
+    installDisk: "/dev/sda"
+    machineSpec:
+      secureboot: true
+    talosImageURL: factory.talos.dev/installer-secureboot/1329571905803b4111d4e2ddd512cd7f9e8626bb7dc8ad9bbd6fa84c4a80ba60
     controlPlane: true
-    schematic:
-      customization:
-        extraKernelArgs:
-          - thermal.off=1
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "e8:03:9a:e4:66:f5"
+          hardwareAddr: "1c:fd:08:7c:b2:3f"
         dhcp: false
         addresses:
-          - "10.50.0.17/24"
+          - "110.0.150.97/24"
         routes:
           - network: 0.0.0.0/0
-            gateway: "10.50.0.1"
+            gateway: "10.0.150.1"
         mtu: 1500
         vip:
-          ip: "10.50.0.20"
-  - hostname: "wn1"
-    ipAddress: "10.50.0.16"
+          ip: "10.0.150.100"
+  - hostname: "korg-n4"
+    ipAddress: "110.0.150.96"
     installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/4708a49c688e9b6b7e9d46e5de43e8f29ad55419c102605032ba7dd3cd00dead
-    controlPlane: false
+    machineSpec:
+      secureboot: true
+    talosImageURL: factory.talos.dev/installer-secureboot/1329571905803b4111d4e2ddd512cd7f9e8626bb7dc8ad9bbd6fa84c4a80ba60
+    controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "1c:86:0b:27:14:2b"
+          hardwareAddr: "1c:fd:08:7c:b2:58"
         dhcp: false
         addresses:
-          - "10.50.0.16/24"
+          - "110.0.150.96/24"
         routes:
           - network: 0.0.0.0/0
-            gateway: "10.50.0.1"
+            gateway: "10.0.150.1"
         mtu: 1500
-    patches:
-      - "@./patches/wn1/gpu-worker-patch.yaml"
-  - hostname: "wn2"
-    ipAddress: "10.50.0.15"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/4708a49c688e9b6b7e9d46e5de43e8f29ad55419c102605032ba7dd3cd00dead
-    controlPlane: false
-    networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "00:e0:4c:68:94:c2"
-        dhcp: false
-        addresses:
-          - "10.50.0.15/24"
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "10.50.0.1"
-        mtu: 1500
-    patches:
-      - "@./patches/wn2/gpu-worker-patch.yaml"
-  - hostname: "wn3"
-    ipAddress: "10.50.0.14"
-    installDisk: "/dev/nvme0n1"
-    talosImageURL: factory.talos.dev/installer/4708a49c688e9b6b7e9d46e5de43e8f29ad55419c102605032ba7dd3cd00dead
-    controlPlane: false
-    networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "00:e0:4c:68:99:ab"
-        dhcp: false
-        addresses:
-          - "10.50.0.14/24"
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "10.50.0.1"
-        mtu: 1500
-    patches:
-      - "@./patches/wn3/gpu-worker-patch.yaml"
-  - hostname: "wn4"
-    ipAddress: "10.50.0.13"
-    installDisk: "/dev/nvme0n1"
-    talosImageURL: factory.talos.dev/installer/4708a49c688e9b6b7e9d46e5de43e8f29ad55419c102605032ba7dd3cd00dead
-    controlPlane: false
-    networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "00:e0:4c:68:29:24"
-        dhcp: false
-        addresses:
-          - "10.50.0.13/24"
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "10.50.0.1"
-        mtu: 1500
-    patches:
-      - "@./patches/wn4/gpu-worker-patch.yaml"
+        vip:
+          ip: "10.0.150.100"
+
 # Global patches
 patches:
-  - # Force nameserver
-    |-
-    machine:
-      network:
-        nameservers:
-          - 10.50.0.1
   - "@./patches/global/cluster-discovery.yaml"
   - "@./patches/global/containerd.yaml"
   - "@./patches/global/disable-search-domain.yaml"
+  - "@./patches/global/dns.yaml"
   - "@./patches/global/hostdns.yaml"
   - "@./patches/global/kubelet.yaml"
+  - "@./patches/global/ntp.yaml"
   - "@./patches/global/openebs-local.yaml"
   - "@./patches/global/sysctl.yaml"
 
@@ -179,7 +122,6 @@ patches:
 controlPlane:
   patches:
     - "@./patches/controller/api-access.yaml"
-    - "@./patches/controller/apiserver-oidc.yaml"
     - "@./patches/controller/cluster.yaml"
     - "@./patches/controller/disable-admission-controller.yaml"
     - "@./patches/controller/etcd.yaml"

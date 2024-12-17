@@ -24,6 +24,3 @@ Brewfile.lock.json
 wiki
 # Bootstrap
 /config.yaml
-# Local history
-.lh
-unimplemented

@@ -1,5 +1,7 @@
 ---
 autoDirectNodeRoutes: true
+bgpControlPlane:
+  enabled: true
 bpf:
   masquerade: false # Required for Talos `.machine.features.hostDNS.forwardKubeDNSToHost`
 cgroup:
@@ -8,7 +10,7 @@ cgroup:
   hostRoot: /sys/fs/cgroup
 cluster:
   id: 1
-  name: "homerun"
+  name: "korg"
 cni:
   exclusive: false
 # NOTE: devices might need to be set if you have more than one active NIC on your hosts
@@ -18,57 +20,19 @@ endpointRoutes:
 envoy:
   enabled: false
 hubble:
-  enabled: true
-  metrics:
-    enabled:
-      - dns:query
-      - drop
-      - tcp
-      - flow
-      - port-distribution
-      - icmp
-      - http
-    serviceMonitor:
-      enabled: true
-    dashboards:
-      enabled: true
-      annotations:
-        grafana_folder: Cilium
-  relay:
-    enabled: true
-    rollOutPods: true
-    prometheus:
-      serviceMonitor:
-        enabled: true
-  ui:
-    enabled: true
-    rollOutPods: true
-    ingress:
-      enabled: true
-      className: internal
-      annotations:
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/group: Observability
-        gethomepage.dev/name: Hubble
-        gethomepage.dev/icon: cilium.png
-        gethomepage.dev/description: Network Monitoring Dashboard
-      hosts:
-        - "hubble.${SECRET_DOMAIN}"
-      tls:
-        - hosts:
-            - "hubble.${SECRET_DOMAIN}"
+  enabled: false
 ipam:
   mode: kubernetes
-ipv4NativeRoutingCIDR: "10.169.0.0/16"
+ipv4NativeRoutingCIDR: "10.69.0.0/16"
 k8sServiceHost: 127.0.0.1
 k8sServicePort: 7445
 kubeProxyReplacement: true
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 l2announcements:
-  enabled: true
+  enabled: false # https://github.com/cilium/cilium/issues/28985
 loadBalancer:
   algorithm: maglev
-  mode: snat
+  mode: "dsr"
 localRedirectPolicy: true
 operator:
   replicas: 1
@@ -93,3 +57,5 @@ securityContext:
       - NET_ADMIN
       - SYS_ADMIN
       - SYS_RESOURCE
+socketLB:
+  hostNamespaceOnly: true

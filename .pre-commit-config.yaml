@@ -12,10 +12,10 @@ repos:
   rev: 37.431.6
   hooks:
   - id: renovate-config-validator
-- repo: https://github.com/rhysd/actionlint
-  rev: v1.7.1
-  hooks:
-  - id: actionlint
+#- repo: https://github.com/rhysd/actionlint
+#  rev: v1.7.1
+#  hooks:
+#  - id: actionlint
 - repo: https://github.com/adrienverge/yamllint
   rev: v1.35.1
   hooks:

@@ -2,33 +2,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./angelnu-charts.yaml
-  - ./backube.yaml
-  - ./bitnami.yaml
   - ./bjw-s.yaml
   - ./cilium.yaml
-  - ./cloudhippie.yaml
-  - ./cloudnative-pg.yaml
-  - ./coder.yaml
   - ./coredns.yaml
-  - ./csi-driver-smb.yaml
-  - ./descheduler.yaml
-  - ./eclipse-che.yaml
-  - ./external-dns.yaml
-  - ./ingress-nginx.yaml
-  - ./intel.yaml
   - ./jetstack.yaml
-  - ./k8s-gateway.yaml
-  - ./longhorn.yaml
   - ./metrics-server.yaml
-  - ./nvidia-charts.yaml
-  - ./node-feature-discovery.yaml
-  - ./ollama.yaml
   - ./openebs.yaml
-  - ./open-webui.yaml
-  - ./piraeus.yaml
   - ./postfinance.yaml
   - ./prometheus-community.yaml
   - ./spegel.yaml
   - ./stakater.yaml
-  - ./weave-gitops.yaml
+  - ./external-dns.yaml
+  - ./ingress-nginx.yaml
+  - ./k8s-gateway.yaml

@@ -12,13 +12,15 @@ cgroup:
   hostRoot: /sys/fs/cgroup
 cluster:
   id: 1
-  name: "#{ bootstrap_cluster_name|default('home-kubernetes', true) }#"
+  name: "#{ bootstrap_cluster_name | default('home-kubernetes', true) }#"
 cni:
   exclusive: false
 # NOTE: devices might need to be set if you have more than one active NIC on your hosts
 # devices: eno+ eth+
 endpointRoutes:
   enabled: true
+envoy:
+  enabled: false
 hubble:
   enabled: false
 ipam:
@@ -41,7 +43,7 @@ l2announcements:
   #% endif %#
 loadBalancer:
   algorithm: maglev
-  mode: snat
+  mode: "#{ bootstrap_loadbalancer_mode | default('dsr', true) }#"
 localRedirectPolicy: true
 operator:
   replicas: 1
@@ -66,3 +68,5 @@ securityContext:
       - NET_ADMIN
       - SYS_ADMIN
       - SYS_RESOURCE
+socketLB:
+  hostNamespaceOnly: true

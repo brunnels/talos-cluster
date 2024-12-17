@@ -3,34 +3,22 @@ set -e
 set -o noglob
 
 apk add --no-cache \
-    age bash bind-tools ca-certificates curl direnv gettext python3 \
-    py3-pip moreutils jq git iputils openssh-client \
-    starship fzf fish yq helm
+    age bash bind-tools ca-certificates curl direnv fish fzf \
+    gettext git github-cli helm iputils jq k9s python3 py3-pip \
+    moreutils openssh-client openssl starship yq
 
 apk add --no-cache \
     --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community \
-        kubectl sops
+        flux kubectl kustomize go-task sops
 
 apk add --no-cache \
     --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing \
-        lsd
+        cloudflared cilium-cli helmfile kubeconform kubectl-krew lsd stern
 
 for app in \
     "budimanjojo/talhelper!!?as=talhelper&type=script" \
-    "cilium/cilium-cli!!?as=cilium&type=script" \
-    "cli/cli!!?as=gh&type=script" \
-    "cloudflare/cloudflared!!?as=cloudflared&type=script" \
-    "derailed/k9s!!?as=k9s&type=script" \
-    "fluxcd/flux2!!?as=flux&type=script" \
-    "go-task/task!!?as=task&type=script" \
-    "helmfile/helmfile!!?as=helmfile&type=script" \
     "kubecolor/kubecolor!!?as=kubecolor&type=script" \
-    "kubernetes-sigs/krew!!?as=krew&type=script" \
-    "kubernetes-sigs/kustomize!!?as=kustomize&type=script" \
-    "stern/stern!!?as=stern&type=script" \
-    "siderolabs/talos!!?as=talosctl&type=script" \
-    "yannh/kubeconform!!?as=kubeconform&type=script" \
-    "a8m/envsubst!!?as=envsubst&type=script"
+    "siderolabs/talos!!?as=talosctl&type=script"
 do
     echo "=== Installing ${app} ==="
     curl -fsSL "https://i.jpillora.com/${app}" | bash
@@ -40,12 +28,10 @@ done
 mkdir -p /home/vscode/.config/fish/{completions,conf.d}
 
 # Setup autocompletions for fish
-for tool in cilium flux helm helmfile k9s kubectl kustomize talhelper talosctl; do
-    $tool completion fish > /home/vscode/.config/fish/completions/$tool.fish
-done
 gh completion --shell fish > /home/vscode/.config/fish/completions/gh.fish
-stern --completion fish > /home/vscode/.config/fish/completions/stern.fish
-yq shell-completion fish > /home/vscode/.config/fish/completions/yq.fish
+kubectl completion fish > /home/vscode/.config/fish/completions/kubectl.fish
+talhelper completion fish > /home/vscode/.config/fish/completions/talhelper.fish
+talosctl completion fish > /home/vscode/.config/fish/completions/talosctl.fish
 
 # Add hooks into fish
 tee /home/vscode/.config/fish/conf.d/hooks.fish > /dev/null <<EOF
@@ -60,6 +46,7 @@ tee /home/vscode/.config/fish/conf.d/aliases.fish > /dev/null <<EOF
 alias ls lsd
 alias kubectl kubecolor
 alias k kubectl
+alias task go-task
 EOF
 
 # Custom fish prompt
