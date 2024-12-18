@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.8.3
+talosVersion: v1.9.0
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.31.3
+kubernetesVersion: v1.32.0
 
 clusterName: "korg"
 endpoint: https://10.0.150.100:6443
@@ -14,7 +14,6 @@ clusterSvcNets:
   - "10.96.0.0/16"
 
 additionalApiServerCertSans: &sans
-  - "10.0.150.100"
   - "10.0.150.100"
   - "korg.lan.kraven.org"
   - "korg-n1.lan.kraven.org"
@@ -34,7 +33,7 @@ nodes:
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/1329571905803b4111d4e2ddd512cd7f9e8626bb7dc8ad9bbd6fa84c4a80ba60
+    talosImageURL: factory.talos.dev/installer-secureboot/c1fb556ff528092586c3a4879e4b2fdcb1b4b5a99e7010e31033f7ef3ef6f0a2
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -53,7 +52,7 @@ nodes:
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/1329571905803b4111d4e2ddd512cd7f9e8626bb7dc8ad9bbd6fa84c4a80ba60
+    talosImageURL: factory.talos.dev/installer-secureboot/c1fb556ff528092586c3a4879e4b2fdcb1b4b5a99e7010e31033f7ef3ef6f0a2
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -68,18 +67,18 @@ nodes:
         vip:
           ip: "10.0.150.100"
   - hostname: "korg-n3"
-    ipAddress: "110.0.150.97"
+    ipAddress: "10.0.150.97"
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/1329571905803b4111d4e2ddd512cd7f9e8626bb7dc8ad9bbd6fa84c4a80ba60
+    talosImageURL: factory.talos.dev/installer-secureboot/c1fb556ff528092586c3a4879e4b2fdcb1b4b5a99e7010e31033f7ef3ef6f0a2
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "1c:fd:08:7c:b2:3f"
         dhcp: false
         addresses:
-          - "110.0.150.97/24"
+          - "10.0.150.97/24"
         routes:
           - network: 0.0.0.0/0
             gateway: "10.0.150.1"
@@ -87,18 +86,18 @@ nodes:
         vip:
           ip: "10.0.150.100"
   - hostname: "korg-n4"
-    ipAddress: "110.0.150.96"
+    ipAddress: "10.0.150.96"
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/1329571905803b4111d4e2ddd512cd7f9e8626bb7dc8ad9bbd6fa84c4a80ba60
+    talosImageURL: factory.talos.dev/installer-secureboot/c1fb556ff528092586c3a4879e4b2fdcb1b4b5a99e7010e31033f7ef3ef6f0a2
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "1c:fd:08:7c:b2:58"
         dhcp: false
         addresses:
-          - "110.0.150.96/24"
+          - "10.0.150.96/24"
         routes:
           - network: 0.0.0.0/0
             gateway: "10.0.150.1"
@@ -114,14 +113,17 @@ patches:
   - "@./patches/global/dns.yaml"
   - "@./patches/global/hostdns.yaml"
   - "@./patches/global/kubelet.yaml"
+  - "@./patches/global/modules.yaml"
   - "@./patches/global/ntp.yaml"
   - "@./patches/global/openebs-local.yaml"
+  - "@./patches/global/serial-tty.yaml"
   - "@./patches/global/sysctl.yaml"
 
 # Controller patches
 controlPlane:
   patches:
     - "@./patches/controller/api-access.yaml"
+    - "@./patches/controller/apiserver-oidc.yaml"
     - "@./patches/controller/cluster.yaml"
     - "@./patches/controller/disable-admission-controller.yaml"
     - "@./patches/controller/etcd.yaml"
