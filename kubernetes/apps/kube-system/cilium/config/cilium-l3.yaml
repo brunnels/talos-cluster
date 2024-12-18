@@ -13,6 +13,7 @@ spec:
       neighbors:
         - peerAddress: "10.0.150.1/32"
           peerASN: 65534
+          peerPort: 179
       serviceSelector:
         matchExpressions:
           - {key: somekey, operator: NotIn, values: ['never-used-value']}
