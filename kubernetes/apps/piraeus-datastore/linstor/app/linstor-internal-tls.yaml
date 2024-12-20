@@ -3,7 +3,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: linstor-internal-ca
-  namespace: ${NS}
+  namespace: piraeus-datastore
 spec:
   commonName: linstor-internal-ca
   secretName: linstor-internal-ca
@@ -21,7 +21,7 @@ apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: linstor-internal-ca
-  namespace: ${NS}
+  namespace: piraeus-datastore
 spec:
   ca:
     secretName: linstor-internal-ca
