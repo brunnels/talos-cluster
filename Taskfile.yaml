@@ -10,6 +10,7 @@ vars:
   KUBERNETES_DIR: '{{.ROOT_DIR}}/kubernetes'
   SCRIPTS_DIR: '{{.ROOT_DIR}}/scripts'
   BOOTSTRAP_CONFIG_FILE: '{{.ROOT_DIR}}/config.yaml'
+  KUBECONFIG_FILE: "{{.ROOT_DIR}}/kubeconfig"
   MAKEJINJA_CONFIG_FILE: '{{.ROOT_DIR}}/makejinja.toml'
   SOPS_CONFIG_FILE: '{{.ROOT_DIR}}/.sops.yaml'
 
@@ -21,6 +22,7 @@ env:
 
 includes:
   bootstrap: .taskfiles/bootstrap
+  flux: .taskfiles/flux
   kubernetes: .taskfiles/kubernetes
   talos: .taskfiles/talos
   workstation: .taskfiles/workstation
