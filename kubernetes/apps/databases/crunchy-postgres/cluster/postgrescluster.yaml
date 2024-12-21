@@ -5,26 +5,28 @@ kind: PostgresCluster
 metadata:
   name: &name postgres
 spec:
-  postgresVersion: 16
-
   metadata:
     labels:
       crunchy-userinit.ramblurr.github.com/enabled: "true"
       crunchy-userinit.ramblurr.github.com/superuser: &superuser "postgres"
-
-  service:
-    type: LoadBalancer
-    metadata:
-      annotations:
-        external-dns.alpha.kubernetes.io/hostname: postgres.bjw-s.dev
-        lbipam.cilium.io/ips: 10.1.1.134
-
+  postgresVersion: 16
+  monitoring:
+    pgmonitor:
+      exporter:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 64M
+          limits:
+            memory: 512M
   patroni: # turn on sync writes to at least 1 other replica
     dynamicConfiguration:
       synchronous_mode: true
       postgresql:
         max_wal_size: 5GB
         synchronous_commit: "on"
+        parameters:
+          max_connections: 500
   instances:
     - name: postgres
       metadata:
@@ -44,9 +46,7 @@ spec:
           whenUnsatisfiable: "DoNotSchedule"
           labelSelector:
             matchLabels:
-              postgres-operator.crunchydata.com/cluster: *name
               postgres-operator.crunchydata.com/data: postgres
-
   users:
     # Superuser
     - name: *superuser
@@ -111,8 +111,9 @@ spec:
     pgbackrest:
       configuration: &backupConfig
         - secret:
-            name: crunchy-postgres-secret
+            name: crunchy-postgres
       global: &backupFlag
+        # Global
         compress-type: "bz2"
         compress-level: "9"
         # QNAP
@@ -136,46 +137,40 @@ spec:
             endpoint: "${SECRET_QNAP_HOSTNAME}:8010"
             region: "us-east-1"
           schedules:
-            full: "0 1 * * 0" # Sunday at 01:00
-            differential: "0 1 * * 1-6" # Mon-Sat at 01:00
-            incremental: "0 2-23 * * *" # Every hour except 01:00
+            full: "30 1 * * 0" # Sunday at 01:30
+            differential: "30 1 * * 1-6" # Mon-Sat at 01:30
+            incremental: "30 3-23 * * *" # Every hour except 01:30-2:30
   dataSource:
     pgbackrest:
-      stanza: "db"
+      stanza: db
       configuration: *backupConfig
       global: *backupFlag
       repo:
         name: "repo1"
         s3: *qnap
-
-  monitoring:
-    pgmonitor:
-      exporter:
-        resources:
-          requests:
-            cpu: 10m
-            memory: 64M
-          limits:
-            memory: 512M
-
   proxy:
     pgBouncer:
+      service:
+        metadata:
+          annotations:
+            external-dns.alpha.kubernetes.io/hostname: postgres.${SECRET_DOMAIN}
+            lbipam.cilium.io/ips: ${SVC_POSTGRES_ADDR}
+        type: LoadBalancer
       port: 5432
       replicas: *replicas
-      metadata:
-        labels:
-          app.kubernetes.io/name: crunchy-postgres-pgbouncer
       config:
         global:
           # Grafana requires session
           # Ref: https://github.com/grafana/grafana/issues/74260
           pool_mode: session
           client_tls_sslmode: prefer
+          default_pool_size: "100"
+          max_client_conn: "500"
       topologySpreadConstraints:
         - maxSkew: 1
-          topologyKey: "kubernetes.io/hostname"
-          whenUnsatisfiable: "DoNotSchedule"
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
               postgres-operator.crunchydata.com/cluster: *name
-              postgres-operator.crunchydata.com/role: "pgbouncer"
+              postgres-operator.crunchydata.com/role: pgbouncer
