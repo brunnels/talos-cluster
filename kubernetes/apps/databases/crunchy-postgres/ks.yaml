@@ -16,7 +16,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops-kubernetes
+    name: home-kubernetes
   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -35,7 +35,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops-kubernetes
+    name: home-kubernetes
   wait: true
   dependsOn:
     - name: crunchy-postgres-operator
@@ -56,7 +56,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops-kubernetes
+    name: home-kubernetes
   wait: true
   dependsOn:
     - name: crunchy-postgres-cluster
@@ -78,7 +78,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops-kubernetes
+    name: home-kubernetes
   wait: true
   dependsOn:
     - name: crunchy-postgres-cluster
