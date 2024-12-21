@@ -73,7 +73,9 @@ spec:
       databases:
         - lidarr_main
         - lidarr_log
-        -
+      password:
+        type: AlphaNumeric
+
     - name: piped
       databases:
         - piped
