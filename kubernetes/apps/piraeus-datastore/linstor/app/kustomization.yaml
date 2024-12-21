@@ -3,6 +3,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./cluster.yaml
-  - ./linstor-api-tls.yaml
-  - ./linstor-internal-tls.yaml
+  - ./certificates.yaml
+  - ./issuers.yaml
   - ./satellites.yaml
