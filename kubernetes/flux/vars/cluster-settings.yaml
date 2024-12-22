@@ -15,3 +15,4 @@ data:
     sub_filter '</body>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/{{ .Release.Name }}/nord.css"></body>';
     sub_filter_once on;
   SVC_POSTGRES_ADDR: "10.0.155.4"
+  SVC_LINSTOR_CTRL_ADDR: "10.0.155.5"
