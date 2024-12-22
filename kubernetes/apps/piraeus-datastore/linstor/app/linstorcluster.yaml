@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/piraeusdatastore/piraeus-operator/refs/heads/v2/config/crd/bases/piraeus.io_linstorclusters.yaml
 apiVersion: piraeus.io/v1
 kind: LinstorCluster
 metadata:
