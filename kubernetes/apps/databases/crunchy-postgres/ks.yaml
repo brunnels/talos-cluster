@@ -95,7 +95,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: crunchy-postgres-operator
-  path: ./kubernetes/apps/database/crunchy-postgres/users
+  path: ./kubernetes/apps/databases/crunchy-postgres/users
   prune: true
   sourceRef:
     kind: GitRepository
