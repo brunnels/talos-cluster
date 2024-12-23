@@ -29,3 +29,16 @@ parameters:
   property.linstor.csi.linbit.com/DrbdOptions/Net/rr-conflict: retry-connect
 volumeBindingMode: Immediate
 allowVolumeExpansion: true
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: linbit-snapshot
+reclaimPolicy: Delete
+provisioner: linstor.csi.linbit.com
+parameters:
+  linstor.csi.linbit.com/storagePool: "data"
+  linstor.csi.linbit.com/layerList: "storage"
+  linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
+allowVolumeExpansion: true
+volumeBindingMode: Immediate
