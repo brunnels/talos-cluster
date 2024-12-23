@@ -8,7 +8,7 @@ spec:
   metadata:
     labels:
       crunchy-userinit.ramblurr.github.com/enabled: "true"
-      crunchy-userinit.ramblurr.github.com/superuser: &superuser "postgres"
+      crunchy-userinit.ramblurr.github.com/superuser: "postgres"
   postgresVersion: 16
   monitoring:
     pgmonitor:
@@ -49,7 +49,7 @@ spec:
               postgres-operator.crunchydata.com/data: postgres
   users:
     # Superuser
-    - name: *superuser
+    - name: postgres
       databases:
         - postgres
       options: "SUPERUSER"
