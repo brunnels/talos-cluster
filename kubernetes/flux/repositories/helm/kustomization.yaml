@@ -9,6 +9,7 @@ resources:
   - ./coredns.yaml
   - ./crunchydata.yaml
   - ./crunchy-userinit.yaml
+  - ./crunchy-users.yaml
   - ./external-dns.yaml
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
