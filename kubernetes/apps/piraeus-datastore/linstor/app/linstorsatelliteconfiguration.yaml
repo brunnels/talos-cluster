@@ -9,10 +9,13 @@ spec:
     certManager:
       name: linstor-internal-ca
       kind: Issuer
-  #storagePools:
-  #- name: "data"
-  #  lvmPool:
-  #    volumeGroup: "data"
+  storagePools:
+  - name: "data"
+    zfsThinPool:
+      zPool: "data"
+    source:
+      hostDevices:
+      - /dev/nvme0n1
   patches:
     - target:
         kind: Pod
