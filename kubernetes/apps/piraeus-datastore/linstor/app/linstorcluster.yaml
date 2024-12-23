@@ -26,7 +26,7 @@ spec:
           name: linstor-controller
           annotations:
             external-dns.alpha.kubernetes.io/hostname: linstor-controller.${SECRET_DOMAIN}
-            lbipam.cilium.io/ips:  ${SVC_LINSTOR_CTRL_ADDR}
+            lbipam.cilium.io/ips:  ${SVC_LINSTOR_CTRL_ADDR:=temp}
         spec:
           type: LoadBalancer
           externalTrafficPolicy: Cluster
