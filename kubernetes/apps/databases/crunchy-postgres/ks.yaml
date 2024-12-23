@@ -89,7 +89,7 @@ metadata:
   name: &app crunchy-postgres-users
   namespace: flux-system
 spec:
-  targetNamespace: database
+  targetNamespace: databases
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
