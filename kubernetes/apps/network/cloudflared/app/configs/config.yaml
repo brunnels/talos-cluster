@@ -5,6 +5,10 @@ originRequest:
 ingress:
   - hostname: "${SECRET_DOMAIN}"
     service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
+    originRequest:
+      noTLSverify: true
   - hostname: "*.${SECRET_DOMAIN}"
     service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
+    originRequest:
+      noTLSverify: true
   - service: http_status:404
