@@ -23,20 +23,20 @@ tasks:
       - which talhelper
 
   apply-node:
-    desc: Apply Talos config to a node [HOSTNAME=required]
+    desc: Apply Talos config to a node [NODENAME=required]
     cmds:
-      - talosctl --nodes {{.HOSTNAME}} apply-config --mode={{.MODE}} --file {{.TALHELPER_CLUSTER_DIR}}/{{.CLUSTER_NAME}}-{{.HOSTNAME}}.yaml
-      - talosctl --nodes {{.HOSTNAME}} health --wait-timeout=10m --server=false
+      - talosctl --nodes {{.NODENAME}} apply-config --mode={{.MODE}} --file {{.TALHELPER_CLUSTER_DIR}}/{{.CLUSTER_NAME}}-{{.NODENAME}}.yaml
+      - talosctl --nodes {{.NODENAME}} health --wait-timeout=10m --server=false
     vars:
       CLUSTER_NAME:
         sh: yq '.clusterName' {{.TALHELPER_CONFIG_FILE}}
       MODE: '{{.MODE | default "auto"}}'
     requires:
-      vars: [HOSTNAME]
+      vars: [NODENAME]
     preconditions:
-      - talosctl --nodes {{.HOSTNAME}} get machineconfig &>/dev/null
+      - talosctl --nodes {{.NODENAME}} get machineconfig &>/dev/null
       - talosctl config info &>/dev/null
-      - test -f {{.TALHELPER_CLUSTER_DIR}}/{{.CLUSTER_NAME}}-{{.HOSTNAME}}.yaml
+      - test -f {{.TALHELPER_CLUSTER_DIR}}/{{.CLUSTER_NAME}}-{{.NODENAME}}.yaml
       - test -f {{.TALOSCONFIG}}
       - which talosctl yq
 
