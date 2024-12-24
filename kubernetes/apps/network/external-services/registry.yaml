@@ -26,7 +26,7 @@ metadata:
     app.kubernetes.io/instance: *app
 subsets:
   - addresses:
-      - ip: 10.0.150.6
+      - ip: 10.0.140.6
     ports:
       - name: http-registry
         port: 80
