@@ -14,7 +14,6 @@ spec:
     - name: piraeus-operator
   path: ./kubernetes/apps/piraeus-datastore/linstor/app
   prune: true
-  force: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -59,7 +58,6 @@ spec:
     - name: piraeus-operator
   path: ./kubernetes/apps/piraeus-datastore/linstor/gui
   prune: true
-  force: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
