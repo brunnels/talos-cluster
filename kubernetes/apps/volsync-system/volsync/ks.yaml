@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: openebs-hostpath
-    - name: linstor-cluster
+    - name: linstor
   path: ./kubernetes/apps/volsync-system/volsync/snapshot-controller
   prune: true
   sourceRef:
