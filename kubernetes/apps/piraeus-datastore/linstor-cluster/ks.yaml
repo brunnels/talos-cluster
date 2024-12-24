@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app linstor
+  name: &app linstor-cluster
   namespace: flux-system
 spec:
   targetNamespace: piraeus-datastore
@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: piraeus-operator
-  path: ./kubernetes/apps/piraeus-datastore/linstor/app
+  path: ./kubernetes/apps/piraeus-datastore/linstor-cluster/app
   prune: true
   force: true
   sourceRef:
