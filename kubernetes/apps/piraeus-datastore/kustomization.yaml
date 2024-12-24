@@ -5,4 +5,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./piraeus-operator/ks.yaml
-#  - ./linstor/ks.yaml
+  - ./linstor/ks.yaml

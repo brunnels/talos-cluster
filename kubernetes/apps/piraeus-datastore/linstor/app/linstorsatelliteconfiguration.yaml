@@ -18,6 +18,13 @@ spec:
       - /dev/nvme0n1
   patches:
     - target:
+        kind: DaemonSet
+        name: linstor-satellite
+      patch: |-
+        - op: add
+          path: /metadata/annotations/reloader.stakater.com~1auto
+          value: "true"
+    - target:
         kind: Pod
         name: satellite
       patch: |

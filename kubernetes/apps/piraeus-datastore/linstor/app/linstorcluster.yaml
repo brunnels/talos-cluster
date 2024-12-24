@@ -13,3 +13,25 @@ spec:
     certManager:
       name: linstor-api-ca
       kind: Issuer
+  patches:
+    - target:
+        kind: Deployment
+        name: linstor-controller
+      patch: |-
+        - op: add
+          path: /metadata/annotations/reloader.stakater.com~1auto
+          value: "true"
+    - target:
+        kind: Deployment
+        name: linstor-csi-controller
+      patch: |-
+        - op: add
+          path: /metadata/annotations/reloader.stakater.com~1auto
+          value: "true"
+    - target:
+        kind: DaemonSet
+        name: linstor-csi-node
+      patch: |-
+        - op: add
+          path: /metadata/annotations/reloader.stakater.com~1auto
+          value: "true"
