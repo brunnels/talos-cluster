@@ -36,7 +36,7 @@ spec:
               tag: 1.8.2@sha256:c1a65e35be51e4d3c975b9f227384ab0b4583c75324d558b251aed2dbceab75c
             env:
               TZ: "${TIMEZONE}"
-              LB_LINSTOR_API_HOST: http://linstor-controller.piraeus-datastore.cluster.local:3370
+              LB_LINSTOR_API_HOST: http://linstor-controller.piraeus-datastore:3370
             probes:
               liveness: &probes
                 enabled: true
