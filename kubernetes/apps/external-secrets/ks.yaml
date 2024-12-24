@@ -10,14 +10,16 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: cert-manager
+    - name: cert-manager-issuers
+    - name: self-signed-issuers
   path: ./kubernetes/apps/external-secrets/certificates
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
   wait: true
-  dependsOn:
-    - name: self-signed-issuers
   interval: 30m
   retryInterval: 1m
   timeout: 5m
