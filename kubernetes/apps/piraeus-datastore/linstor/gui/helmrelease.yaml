@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: registry.kraven.dev/brunnels/linstor-gui
-              tag: 1.8.2
+              tag: 1.8.2@sha256:6502ef574a8256f5a6a9904c8e85ac55d3014f231dc3013d8ce5113b64ae23c1
             env:
               TZ: "${TIMEZONE}"
               LB_LINSTOR_API_HOST: linstor-controller.piraeus-datastore.cluster.local:3370
