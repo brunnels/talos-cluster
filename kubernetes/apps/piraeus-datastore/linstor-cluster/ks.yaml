@@ -34,7 +34,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: linstor
-  path: ./kubernetes/apps/piraeus-datastore/linstor/storageclass
+  path: ./kubernetes/apps/piraeus-datastore/linstor-cluster/storageclass
   prune: true
   force: true
   sourceRef:
