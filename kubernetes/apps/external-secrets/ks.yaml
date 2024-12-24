@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: self-signed-issuers
+    - name: cert-manager-selfsigned-issuers
   path: ./kubernetes/apps/external-secrets/certificates
   prune: true
   sourceRef:
