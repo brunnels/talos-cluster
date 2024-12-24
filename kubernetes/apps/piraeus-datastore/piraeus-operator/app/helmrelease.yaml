@@ -27,17 +27,7 @@ spec:
       retries: 3
   values:
     installCRDs: true
-    autogenerate: false
     tls:
       certManagerIssuerRef:
-        name: ca-bootstrapper
-        kind: Issuer
-    imageConfigOverride:
-      - base: quay.io/piraeusdatastore
-        components:
-          linstor-controller:
-            tag: v1.30.2
-            image: piraeus-server
-          linstor-satellite:
-            tag: v1.30.2
-            image: piraeus-server
+        name: selfsigned-issuer
+        kind: ClusterIssuer
