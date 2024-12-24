@@ -54,6 +54,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: ingress-nginx-certificates
+    - name: cloudflared
   path: ./kubernetes/apps/network/ingress-nginx/external
   prune: true
   sourceRef:
