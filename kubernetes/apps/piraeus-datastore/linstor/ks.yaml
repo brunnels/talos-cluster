@@ -51,6 +51,7 @@ metadata:
   name: &app linstor-gui
   namespace: flux-system
 spec:
+  targetNamespace: piraeus-datastore
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
