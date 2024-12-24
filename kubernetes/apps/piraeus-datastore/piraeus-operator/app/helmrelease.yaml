@@ -27,6 +27,7 @@ spec:
       retries: 3
   values:
     installCRDs: true
+    autogenerate: false
     tls:
       certManagerIssuerRef:
         name: selfsigned-issuer
