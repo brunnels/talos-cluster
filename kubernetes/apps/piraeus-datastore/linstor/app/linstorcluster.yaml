@@ -34,7 +34,7 @@ spec:
             spec:
               containers:
                 - name: nginx
-                  image: nginx-latest
+                  image: ghcr.io/nginxinc/nginx-unprivileged:1.27.3-alpine@sha256:3f25b8b661605365f89d4873d3a627510e1d1e7ac2bd170c40e91934e43d45ca
     - target:
         kind: Deployment
         name: linstor-csi-controller
