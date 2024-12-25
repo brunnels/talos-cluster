@@ -3,8 +3,6 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: linbit-local
-  annotations:
-    storageclass.kubernetes.io/is-default-class: "true"
 provisioner: linstor.csi.linbit.com
 parameters:
   linstor.csi.linbit.com/storagePool: "data"
@@ -17,10 +15,12 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: linbit-replicated
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
 provisioner: linstor.csi.linbit.com
 parameters:
   linstor.csi.linbit.com/storagePool: "data"
-  linstor.csi.linbit.com/autoPlace: "3"
+  linstor.csi.linbit.com/autoPlace: "2"
   linstor.csi.linbit.com/layerList: "drbd storage"
   linstor.csi.linbit.com/allowRemoteVolumeAccess: "true"
   property.linstor.csi.linbit.com/DrbdOptions/auto-quorum: suspend-io
