@@ -1,0 +1,24 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: linstor-gui
+  annotations:
+    external-dns.alpha.kubernetes.io/target: "linstor.${SECRET_DOMAIN}"
+    nginx.ingress.kubernetes.io/rewrite-target: /ui/$1
+  labels:
+    app.kubernetes.io/instance: linstor-gui
+    app.kubernetes.io/name: linstor-gui
+spec:
+  ingressClassName: internal
+  rules:
+  - host: "linstor.${SECRET_DOMAIN}"
+    http:
+      paths:
+      - backend:
+          service:
+            name: linstor-controller
+            port:
+              number: 3370
+        path: /
+        pathType: Prefix

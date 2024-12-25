@@ -5,5 +5,6 @@ kind: Kustomization
 resources:
   - ./linstorcluster.yaml
   - ./certificate.yaml
+  - ./ingress.yaml
   - ./issuer.yaml
   - ./linstorsatelliteconfiguration.yaml
