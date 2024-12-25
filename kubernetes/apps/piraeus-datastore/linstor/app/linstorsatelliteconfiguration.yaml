@@ -11,7 +11,7 @@ spec:
       kind: Issuer
   storagePools:
   - name: "data"
-    zfsThinPool:
+    zfsPool:
       zPool: "data"
     source:
       hostDevices:
