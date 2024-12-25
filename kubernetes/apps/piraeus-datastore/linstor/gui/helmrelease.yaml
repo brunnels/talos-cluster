@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: registry.kraven.dev/brunnels/linstor-gui
-              tag: 1.8.2@sha256:c1a65e35be51e4d3c975b9f227384ab0b4583c75324d558b251aed2dbceab75c
+              tag: 1.8.2@sha256:2e5053035b96b47be15057fc1408741eb9c85df098d6305b9666510667c6d4c9
             env:
               TZ: "${TIMEZONE}"
               LB_LINSTOR_API_HOST: http://linstor-controller.piraeus-datastore:3370
@@ -50,24 +50,24 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-#            securityContext:
-#              allowPrivilegeEscalation: false
-#              readOnlyRootFilesystem: true
-#              capabilities: { drop: ["ALL"] }
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
                 memory: 128Mi
               limits:
                 memory: 512Mi
-#    defaultPodOptions:
-#      securityContext:
-#        runAsNonRoot: true
-#        runAsUser: 1000
-#        runAsGroup: 100
-#        fsGroup: 100
-#        fsGroupChangePolicy: OnRootMismatch
-#        seccompProfile: { type: RuntimeDefault }
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 100
+        fsGroup: 100
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: *app
