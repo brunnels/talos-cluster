@@ -21,6 +21,11 @@ spec:
         - op: add
           path: /metadata/annotations/reloader.stakater.com~1auto
           value: "true"
+        - op: add
+          path: /spec/template/spec/containers:
+          value:
+            - name: nginx
+              image: nginx:latest
     - target:
         kind: Deployment
         name: linstor-csi-controller
