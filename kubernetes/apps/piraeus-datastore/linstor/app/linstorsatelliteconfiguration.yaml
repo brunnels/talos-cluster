@@ -11,11 +11,11 @@ spec:
       kind: Issuer
   storagePools:
   - name: "data"
-    zfsPool:
+    zfsThinPool:
       zPool: "data"
     source:
       hostDevices:
-      - /dev/nvme0n1
+        - /dev/nvme0n1
   patches:
     - target:
         kind: DaemonSet
