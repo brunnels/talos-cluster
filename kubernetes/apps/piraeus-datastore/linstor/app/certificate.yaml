@@ -33,3 +33,19 @@ spec:
   issuerRef:
     name: selfsigned-issuer
     kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: linstor-gui-tls
+  namespace: network
+spec:
+  commonName: linstor-gui-tls
+  dnsNames:
+    - linstor--gui-tls
+  issuerRef:
+    kind: Issuer
+    name: linstor-api-ca
+  secretName: linstor-gui-tls
+  usages:
+    - client auth
