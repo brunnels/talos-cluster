@@ -41,7 +41,7 @@ metadata:
 spec:
   commonName: linstor-gui-tls
   dnsNames:
-    - linstor--gui-tls
+    - linstor-gui-tls
   issuerRef:
     kind: Issuer
     name: linstor-api-ca
