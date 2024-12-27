@@ -12,7 +12,6 @@ spec:
   storagePools:
   - name: data
     lvmThinPool:
-      volumeGroup: linstor
       thinPool: data
     source:
       hostDevices:
