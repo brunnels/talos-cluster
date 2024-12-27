@@ -1,6 +1,9 @@
 machine:
   kernel:
     modules:
+      - name: dm_raid
+      - name: dm_thin_pool
+      - name: dm_cache
       - name: drbd
         parameters:
           - usermode_helper=disabled
@@ -8,3 +11,4 @@ machine:
       - name: zfs
       - name: spl
       - name: nvme_tcp
+      - name: nvme_rdma
