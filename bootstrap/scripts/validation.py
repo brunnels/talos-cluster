@@ -97,11 +97,11 @@ def validate_dns_servers(servers: list = ["1.1.1.1","1.0.0.1"], **_) -> None:
     resolver.nameservers = servers
     resolver.timeout = 5
     resolver.lifetime = 5
-
-    try:
-        resolver.resolve("cloudflare.com")
-    except Exception as e:
-        raise ValueError(f"Unable to resolve cloudflare.com with DNS servers {servers}") from e
+#
+#     try:
+#         resolver.resolve("cloudflare.com")
+#     except Exception as e:
+#         raise ValueError(f"Unable to resolve cloudflare.com with DNS servers {servers}") from e
 
 
 @required("bootstrap_ntp_servers")

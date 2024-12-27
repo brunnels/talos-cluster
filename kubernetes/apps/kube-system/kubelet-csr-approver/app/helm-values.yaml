@@ -1,0 +1,3 @@
+---
+providerRegex: ^korg-n\d+$
+bypassDnsResolution: true
