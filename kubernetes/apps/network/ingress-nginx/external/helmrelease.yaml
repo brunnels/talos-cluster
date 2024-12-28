@@ -78,6 +78,8 @@ spec:
         default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-staging-tls"
 #        default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
         publish-status-address: *hostname
+      publishService:
+        enabled: false
       resources:
         requests:
           cpu: 100m
