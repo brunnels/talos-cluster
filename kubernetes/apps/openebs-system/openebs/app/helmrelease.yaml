@@ -28,9 +28,6 @@ spec:
           enabled: false
         zfs:
           enabled: false
-      replicated:
-        mayastor:
-          enabled: false
     openebs-crds:
       csi:
         volumeSnapshots:
@@ -47,3 +44,8 @@ spec:
         name: openebs-hostpath
         isDefaultClass: false
         basePath: /var/openebs/local
+      mayastor:
+        csi:
+          node:
+            initContainers:
+              enabled: false
