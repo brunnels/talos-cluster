@@ -45,6 +45,12 @@ spec:
         isDefaultClass: false
         basePath: /var/openebs/local
     mayastor:
+      etcd:
+        localpvScConfig:
+          basePath: "/var/openebs/local/localpv-hostpath/etcd"
+      obs:
+        callhome:
+          enabled: false
       loki-stack:
         enabled: false
       promtail:
