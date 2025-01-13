@@ -5,6 +5,7 @@ version: '3'
 vars:
   TALHELPER_CLUSTER_DIR: '{{.KUBERNETES_DIR}}/bootstrap/talos/clusterconfig'
   TALHELPER_CONFIG_FILE: '{{.KUBERNETES_DIR}}/bootstrap/talos/talconfig.yaml'
+  TALHELPER_ENV_FILE: '{{.KUBERNETES_DIR}}/bootstrap/talos/talenv.sops.yaml'
   TALHELPER_SECRET_FILE: '{{.KUBERNETES_DIR}}/bootstrap/talos/talsecret.sops.yaml'
   TALOSCONFIG: '{{.TALHELPER_CLUSTER_DIR}}/talosconfig'
 
@@ -15,24 +16,30 @@ tasks:
 
   generate-config:
     desc: Generate Talos configuration
-    cmd: talhelper genconfig --config-file {{.TALHELPER_CONFIG_FILE}} --secret-file {{.TALHELPER_SECRET_FILE}} --out-dir {{.TALHELPER_CLUSTER_DIR}}
+    cmd: |
+      talhelper genconfig \
+      --config-file {{.TALHELPER_CONFIG_FILE}} \
+      --secret-file {{.TALHELPER_SECRET_FILE}} \
+      --env-file {{.TALHELPER_ENV_FILE}} \
+      --out-dir "{{.TALHELPER_CLUSTER_DIR}}"
     preconditions:
       - test -f {{.TALHELPER_CONFIG_FILE}}
+      - test -f {{.TALHELPER_ENV_FILE}}
       - test -f {{.SOPS_CONFIG_FILE}}
       - test -f {{.SOPS_AGE_KEY_FILE}}
       - which talhelper
 
   apply-node:
-    desc: Apply Talos config to a node [HOSTNAME=required]
+    desc: Apply Talos config to a node [HOSTNAME=required, IP=required]
     cmds:
-      - talosctl --nodes {{.HOSTNAME}} apply-config --mode={{.MODE}} --file {{.TALHELPER_CLUSTER_DIR}}/kubernetes-{{.HOSTNAME}}.yaml
-      - talosctl --nodes {{.HOSTNAME}} health --wait-timeout=10m --server=false
+      - talosctl --nodes {{.IP}} apply-config --mode={{.MODE}} --file {{.TALHELPER_CLUSTER_DIR}}/kubernetes-{{.HOSTNAME}}.yaml
+      - talosctl --nodes {{.IP}} health --wait-timeout=10m --server=false
     vars:
       MODE: '{{.MODE | default "auto"}}'
     requires:
-      vars: [HOSTNAME]
+      vars: [HOSTNAME, IP]
     preconditions:
-      - talosctl --nodes {{.HOSTNAME}} get machineconfig
+      - talosctl --nodes {{.IP}} get machineconfig
       - talosctl config info
       - test -f {{.TALHELPER_CLUSTER_DIR}}/kubernetes-{{.HOSTNAME}}.yaml
       - test -f {{.TALOSCONFIG}}

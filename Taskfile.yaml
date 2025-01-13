@@ -19,6 +19,7 @@ includes:
   kubernetes: .taskfiles/kubernetes
   talos: .taskfiles/talos
   template: .taskfiles/template
+  flux: .taskfiles/flux
 
 tasks:
 
