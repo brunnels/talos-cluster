@@ -45,6 +45,12 @@ spec:
         isDefaultClass: false
         basePath: /var/openebs/local
       mayastor:
+        loki-stack:
+          enabled: false
+        promtail:
+          enabled: false
+        metrics:
+          enabled: false
         csi:
           node:
             initContainers:
