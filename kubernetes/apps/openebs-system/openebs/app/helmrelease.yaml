@@ -31,7 +31,7 @@ spec:
     openebs-crds:
       csi:
         volumeSnapshots:
-          enabled: false
+          enabled: true
     localpv-provisioner:
       localpv:
         image:

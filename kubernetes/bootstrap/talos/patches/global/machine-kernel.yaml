@@ -4,7 +4,4 @@ machine:
       - name: dm_raid
       - name: dm_thin_pool
       - name: dm_cache
-      - name: nvme_tcp
       - name: nvme_rdma
-      - name: ext4
-      - name: xfs
