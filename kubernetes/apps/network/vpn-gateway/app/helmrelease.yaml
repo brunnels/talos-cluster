@@ -56,7 +56,7 @@ spec:
         gluetun:
           image:
             repository: ghcr.io/qdm12/gluetun
-            tag: latest@sha256:aaaf6c7c108f7f7caae978499b4cb823a135324992ce7cea4acd405a29298141
+            tag: latest@sha256:183c74263a07f4c931979140ac99ff4fbc44dcb1ca5b055856ef580b0fafdf1c
         env:
           TZ: "${TIMEZONE}"
           VPN_SERVICE_PROVIDER: airvpn
