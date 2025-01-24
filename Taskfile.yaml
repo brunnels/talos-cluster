@@ -12,6 +12,7 @@ vars:
   TALHELPER_CLUSTER_DIR: '{{.KUBERNETES_DIR}}/bootstrap/talos/clusterconfig'
   TALHELPER_CONFIG_FILE: '{{.KUBERNETES_DIR}}/bootstrap/talos/talconfig.yaml'
   TALHELPER_SECRET_FILE: '{{.KUBERNETES_DIR}}/bootstrap/talos/talsecret.sops.yaml'
+  TALHELPER_ENV_FILE: '{{.KUBERNETES_DIR}}/bootstrap/talos/talenv.sops.yaml'
   TALOSCONFIG: '{{.TALHELPER_CLUSTER_DIR}}/talosconfig'
 
 env:
