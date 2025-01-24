@@ -55,15 +55,15 @@ spec:
         enabled: false
       promtail:
         enabled: false
-      metrics:
-        enabled: false
-      io_engine:
-        envcontext: "iova-mode=pa"
-        metrics:
-          enabled: false
-      base:
-        metrics:
-          enabled: false
+#      metrics:
+#        enabled: false
+#      io_engine:
+#        envcontext: "iova-mode=pa"
+#        metrics:
+#          enabled: false
+#      base:
+#        metrics:
+#          enabled: false
       csi:
         node:
           initContainers:

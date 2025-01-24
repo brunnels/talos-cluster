@@ -1,0 +1,33 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/openebs.io/diskpool_v1beta2.json
+apiVersion: "openebs.io/v1beta2"
+kind: DiskPool
+metadata:
+  name: pool-n1
+spec:
+  node: korg-n1
+  disks: ["/dev/nvme0n1"]
+---
+apiVersion: "openebs.io/v1beta2"
+kind: DiskPool
+metadata:
+  name: pool-n2
+spec:
+  node: korg-n2
+  disks: ["/dev/nvme0n1"]
+---
+apiVersion: "openebs.io/v1beta2"
+kind: DiskPool
+metadata:
+  name: pool-n3
+spec:
+  node: korg-n3
+  disks: ["/dev/nvme0n1"]
+---
+apiVersion: "openebs.io/v1beta2"
+kind: DiskPool
+metadata:
+  name: pool-n4
+spec:
+  node: korg-n4
+  disks: ["/dev/nvme0n1"]
