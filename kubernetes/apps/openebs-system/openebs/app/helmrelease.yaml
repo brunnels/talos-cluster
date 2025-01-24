@@ -55,15 +55,9 @@ spec:
         enabled: false
       promtail:
         enabled: false
-#      metrics:
-#        enabled: false
-      io_engine:
-        envcontext: "iova-mode=pa"
-#        metrics:
-#          enabled: false
-#      base:
-#        metrics:
-#          enabled: false
+      # add iommu.passthrough=1 to your talos kernel args or you need iova-mode=va if io-engine pods don't start
+      #io_engine:
+      #  envcontext: "iova-mode=pa"
       csi:
         node:
           initContainers:
