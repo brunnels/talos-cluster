@@ -10,6 +10,6 @@ instance:
   sync:
     kind: GitRepository
     url: "ssh://git@github.com/brunnels/talos-cluster.git"
-    ref: "refs/heads/korg"
+    ref: "refs/heads/dev2"
     path: kubernetes/flux/cluster
     pullSecret: github-deploy-key
