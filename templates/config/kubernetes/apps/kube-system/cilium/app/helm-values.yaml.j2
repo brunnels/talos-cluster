@@ -1,13 +1,16 @@
 ---
 autoDirectNodeRoutes: true
-#% if bgp.enabled %#
-bgpControlPlane:
-  enabled: true
-#% endif %#
 bpf:
   masquerade: true
   # Ref: https://github.com/siderolabs/talos/issues/10002
   hostLegacyRouting: true
+#% if bgp.enabled %#
+bgpControlPlane:
+  enabled: true
+#% endif %#
+cni:
+  # Required for pairing with Multus CNI
+  exclusive: false
 cgroup:
   automount:
     enabled: false
@@ -25,7 +28,7 @@ hubble:
 ipam:
   mode: kubernetes
 ipv4NativeRoutingCIDR: "#{ pod_network.split(',')[0] }#"
-#% if feature_gates.dual_stack_ipv4_first %#
+#% if dual_stack_ipv4_first %#
 ipv6NativeRoutingCIDR: "#{ pod_network.split(',')[1] }#"
 ipv6:
   enabled: true
@@ -35,10 +38,11 @@ k8sServicePort: 7445
 kubeProxyReplacement: true
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 l2announcements:
-  #% if ((bgp.enabled) or (feature_gates.dual_stack_ipv4_first)) %#
-  enabled: false # https://github.com/cilium/cilium/issues/28985
-  #% else %#
+  #% if not dual_stack_ipv4_first %#
   enabled: true
+  #% else %#
+  # Ref: https://github.com/cilium/cilium/issues/28985
+  enabled: false
   #% endif %#
 loadBalancer:
   algorithm: maglev
@@ -70,6 +74,8 @@ securityContext:
       - IPC_LOCK
       - SYS_ADMIN
       - SYS_RESOURCE
+      - PERFMON
+      - BPF
       - DAC_OVERRIDE
       - FOWNER
       - SETGID
@@ -80,7 +86,3 @@ securityContext:
       - SYS_RESOURCE
 socketLB:
   hostNamespaceOnly: true
-# Graceful Helmfile to HelmRelease takeover
-commonLabels:
-  helm.toolkit.fluxcd.io/name: cilium
-  helm.toolkit.fluxcd.io/namespace: kube-system

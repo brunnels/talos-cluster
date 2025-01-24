@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.9.1
+talosVersion: v1.9.2
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.32.0
+kubernetesVersion: v1.32.1
 
 clusterName: kubernetes
 endpoint: https://#{ controller_vip }#:6443
@@ -36,8 +36,8 @@ nodes:
       serial: "#{ item.disk }#"
     #% endif %#
     machineSpec:
-      secureboot: #{ true if secureboot.enabled else false | lower }#
-    talosImageURL: factory.talos.dev/installer#{ "-secureboot" if secureboot.enabled else ""}#/#{ item.schematic_id }#
+      secureboot: #{ true if item.secureboot else false | lower }#
+    talosImageURL: factory.talos.dev/installer#{ "-secureboot" if item.secureboot else ""}#/#{ item.schematic_id }#
     controlPlane: #{ (item.controller) | string | lower }#
     networkInterfaces:
       - deviceSelector:
@@ -76,35 +76,56 @@ nodes:
           ip: "#{ controller_vip }#"
         #% endif %#
         #% endif %#
+    #% if talos_patches('%s' % (item.name)) | length == 0 %#
+    #% if item.encrypt_disk %#
+    patches:
+      - # Encrypt system disk with TPM
+        |-
+        machine:
+          systemDiskEncryption:
+            state:
+              provider: luks2
+              keys:
+                - slot: 0
+                  tpm: {}
+            ephemeral:
+              provider: luks2
+              keys:
+                - slot: 0
+                  tpm: {}
+    #% endif %#
+    #% else %#
     #% for file in talos_patches('%s' % (item.name)) %#
     #% if loop.index == 1 %#
     patches:
+    #% if item.encrypt_disk %#
+      - |-
+        machine:
+          systemDiskEncryption:
+            state:
+              provider: luks2
+              keys:
+                - slot: 0
+                  tpm: {}
+            ephemeral:
+              provider: luks2
+              keys:
+                - slot: 0
+                  tpm: {}
+    #% endif %#
     #% endif %#
       - "@./patches/#{ item.name }#/#{ file | basename }#"
     #% endfor %#
+    #% endif %#
   #% endfor %#
 
+#% for file in talos_patches('global') %#
+#% if loop.index == 1 %#
 # Global patches
 patches:
-  #% if secureboot.enabled and secureboot.encrypt_disk %#
-  - # Encrypt system disk with TPM
-    |-
-    machine:
-      systemDiskEncryption:
-        ephemeral:
-          provider: luks2
-          keys:
-            - slot: 0
-              tpm: {}
-        state:
-          provider: luks2
-          keys:
-            - slot: 0
-              tpm: {}
-  #% endif %#
-  #% for file in talos_patches('global') %#
+#% endif %#
   - "@./patches/global/#{ file | basename }#"
-  #% endfor %#
+#% endfor %#
 
 #% for file in talos_patches('controller') %#
 #% if loop.index == 1 %#

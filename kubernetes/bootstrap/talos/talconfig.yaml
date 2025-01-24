@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.9.1
+talosVersion: v1.9.2
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.32.0
+kubernetesVersion: v1.32.1
 
 clusterName: kubernetes
 endpoint: https://10.0.150.100:6443
@@ -32,7 +32,7 @@ nodes:
     ipAddress: "10.0.150.99"
     installDisk: "/dev/sda"
     machineSpec:
-      secureboot: True
+      secureboot: true
     talosImageURL: factory.talos.dev/installer-secureboot/6374013326626d3d647774bd6e614fee59b2cf34d1532a244c1ffee47b5fb6c7
     controlPlane: true
     networkInterfaces:
@@ -58,7 +58,7 @@ nodes:
     ipAddress: "10.0.150.98"
     installDisk: "/dev/sda"
     machineSpec:
-      secureboot: True
+      secureboot: true
     talosImageURL: factory.talos.dev/installer-secureboot/6374013326626d3d647774bd6e614fee59b2cf34d1532a244c1ffee47b5fb6c7
     controlPlane: true
     networkInterfaces:
@@ -78,7 +78,7 @@ nodes:
     ipAddress: "10.0.150.97"
     installDisk: "/dev/sda"
     machineSpec:
-      secureboot: True
+      secureboot: true
     talosImageURL: factory.talos.dev/installer-secureboot/6374013326626d3d647774bd6e614fee59b2cf34d1532a244c1ffee47b5fb6c7
     controlPlane: true
     networkInterfaces:
@@ -98,7 +98,7 @@ nodes:
     ipAddress: "10.0.150.96"
     installDisk: "/dev/sda"
     machineSpec:
-      secureboot: True
+      secureboot: true
     talosImageURL: factory.talos.dev/installer-secureboot/6374013326626d3d647774bd6e614fee59b2cf34d1532a244c1ffee47b5fb6c7
     controlPlane: false
     networkInterfaces:
