@@ -46,7 +46,7 @@ There are **4 stages** outlined below for completing this project, make sure you
 
 1. Head over to the [Talos Linux Image Factory](https://factory.talos.dev) and follow the instructions. Be sure to only choose the **bare-minimum system extensions** as some might require additional configuration and prevent Talos from booting without it. You can always add system extensions after Talos is installed and working.
 
-2. This will eventually lead you to download a Talos Linux ISO file (or for SBCs the RAW file). Make sure to note the schematic ID you will need this later on.
+2. This will eventually lead you to download a Talos Linux ISO file (or for SBCs the RAW file). Make sure to note the **schematic ID** you will need this later on.
 
 3. Flash the Talos ISO or RAW file to a USB drive and boot from it on your nodes.
 
@@ -58,7 +58,7 @@ There are **4 stages** outlined below for completing this project, make sure you
 
 3. **Install** and **activate** [mise](https://mise.jdx.dev/) following the instructions for your workstation [here](https://mise.jdx.dev/getting-started.html).
 
-4. Use `mise` to install the **required** CLI tools.
+4. Use `mise` to install the **required** CLI tools:
 
    📍 _If `mise` is having trouble compiling Python, try running `mise settings python.compile=0` and try these commands again_
 
@@ -73,7 +73,7 @@ There are **4 stages** outlined below for completing this project, make sure you
 > [!IMPORTANT]
 > The [config.sample.yaml](./config.sample.yaml) file contains config that are **vital** to the template process.
 
-1. Generate the `config.yaml` from the [config.sample.yaml](./config.sample.yaml) configuration file.
+1. Generate the `config.yaml` from the [config.sample.yaml](./config.sample.yaml) configuration file:
 
    📍 _If the below command fails `mise` is either not install or configured incorrectly._
 
@@ -83,19 +83,19 @@ There are **4 stages** outlined below for completing this project, make sure you
 
 2. Fill out the `config.yaml` configuration file using the comments in that file as a guide.
 
-3. Run the following command which will generate all the files needed to continue.
+3. Template out all the configuration files:
 
     ```sh
     task configure
     ```
 
-4. Push you changes to git
+4. Push your changes to git:
 
    📍 _**Verify** all the `./kubernetes/**/*.sops.*` files are **encrypted** with SOPS_
 
     ```sh
     git add -A
-    git commit -m "Initial commit :rocket:"
+    git commit -m "chore: initial commit :rocket:"
     git push
     ```
 
@@ -103,33 +103,33 @@ There are **4 stages** outlined below for completing this project, make sure you
 
 1. Install Talos:
 
-   📍 _It might take a while for the cluster to be setup (10+ minutes is normal). During which time you will see a variety of error messages like: "couldn't get current server API group list," "error: no matching resources found", etc. **This is a normal.** If this step gets interrupted, e.g. by pressing <kbd>Ctrl</kbd> + <kbd>C</kbd>, you likely will need to [reset the cluster](#-reset) before trying again_
+   📍 _It might take a while for the cluster to be setup (10+ minutes is normal). During which time you will see a variety of error messages like: "couldn't get current server API group list," "error: no matching resources found", etc. 'Ready' will remain "False" as no CNI is deployed yet. **This is a normal.** If this step gets interrupted, e.g. by pressing <kbd>Ctrl</kbd> + <kbd>C</kbd>, you likely will need to [reset the cluster](#-reset) before trying again_
 
     ```sh
     task bootstrap:talos
     ```
 
-2. Install cilium, coredns, spegel, flux and sync the cluster to the repository state:
+2. Push your changes to git:
+
+    ```sh
+    git add -A
+    git commit -m "chore: add talhelper encrypted secret :lock:"
+    git push
+    ```
+
+3. Install cilium, coredns, spegel, flux and sync the cluster to the repository state:
 
     ```sh
     task bootstrap:apps
     ```
 
-### Stage 5: Cluster Verification
+4. Watch the rollout of your cluster happen:
 
-_Mic check, 1, 2_ - In a few moments applications should be lighting up like Christmas in July 🎄
-
-1. View common resources in your cluster.
+   📍 _Depending on the features you choose a successful rollout will include pods being deployed into the **cert-manager, flux-system, network and openebs-system** namespaces_
 
     ```sh
-    task kubernetes:resources
+    watch kubectl get pods --all-namespaces
     ```
-
-2. ⚠️ It might take `cert-manager` awhile to generate certificates, this is normal so be patient.
-
-3. 🏆 **Congratulations** if all goes smooth you will have a Kubernetes cluster managed by Flux and your Git repository is driving the state of your cluster.
-
-4. 🧠 Now it's time to pause and go get some motel motor oil ☕ and admire you made it this far!
 
 ## 📣 Flux w/ Cloudflare post installation
 
@@ -160,7 +160,7 @@ By default Flux will periodically check your git repository for changes. In orde
 > [!IMPORTANT]
 > This will only work after you have switched over certificates to the Let's Encrypt Production servers.
 
-1. Obtain the webhook path
+1. Obtain the webhook path:
 
     📍 _Hook id and path should look like `/hook/12ebd1e363c641dc3c2e430ecf3cee2b3c7a5ac9e1234506f6f5f3ce1230e123`_
 
@@ -168,7 +168,7 @@ By default Flux will periodically check your git repository for changes. In orde
     kubectl -n flux-system get receiver github-receiver -o jsonpath='{.status.webhookPath}'
     ```
 
-2. Piece together the full URL with the webhook path appended
+2. Piece together the full URL with the webhook path appended:
 
     ```text
     https://flux-webhook.${cloudflare.domain}/hook/12ebd1e363c641dc3c2e430ecf3cee2b3c7a5ac9e1234506f6f5f3ce1230e123
@@ -195,33 +195,25 @@ task talos:reset # --force
 # (Re)generate the Talos config
 task talos:generate-config
 # Apply the config to the node
-task talos:apply-node HOSTNAME=? MODE=?
-# e.g. task talos:apply-config HOSTNAME=k8s-0 MODE=auto
+task talos:apply-node IP=? MODE=?
+# e.g. task talos:apply-config IP=10.10.10.10 MODE=auto
 ```
 
 ### ⬆️ Updating Talos and Kubernetes versions
 
 > [!IMPORTANT]
-> Ensure the `talosVersion` and `kubernetesVersion` in `talhelper.yaml` are up-to-date with the version you wish to upgrade to.
+> Ensure the `talosVersion` and `kubernetesVersion` in `talconfig.yaml` are up-to-date with the version you wish to upgrade to.
 
 ```sh
 # Upgrade node to a newer Talos version
-task talos:upgrade-node HOSTNAME=?
-# e.g. task talos:upgrade HOSTNAME=k8s-0
+task talos:upgrade-node IP=?
+# e.g. task talos:upgrade IP=10.10.10.10
 ```
 
 ```sh
 # Upgrade cluster to a newer Kubernetes version
 task talos:upgrade-k8s
 # e.g. task talos:upgrade-k8s
-```
-
-## 🧹 Tidy up
-
-After you have successfully bootstrapped Talos, Kubernetes and Flux it might be a good idea to clean up the repository and remove the [templates](./templates) directory and any files related to the templating process. This will also remove most of the cruft brought in from the upstream template repo.
-
-```sh
-task template:cleanup
 ```
 
 ## 🤖 Renovate
@@ -276,10 +268,47 @@ Below is a general guide on trying to debug an issue with an resource or applica
 
 Resolving problems that you have could take some tweaking of your YAML manifests in order to get things working, other times it could be a external factor like permissions on NFS. If you are unable to figure out your problem see the help section below.
 
-## 👉 Help
+## 🧹 Tidy up
+
+Once your cluster is fully configured and you no longer need to run `task configure`, it's a good idea to clean up the repository by removing the [templates](./templates) directory and any files related to the templating process. This will help eliminate unnecessary clutter from the upstream template repository and resolve any "duplicate registry" warnings from Renovate.
+
+1. Tidy up your repository:
+
+    ```sh
+    task template:tidy
+    ```
+
+2. Push your changes to git:
+
+    ```sh
+    git add -A
+    git commit -m "chore: tidy up :broom:"
+    git push
+    ```
+
+## 👉 Community Support
 
 - Make a post in this repository's Github [Discussions](https://github.com/onedr0p/cluster-template/discussions).
 - Start a thread in the `#support` or `#cluster-template` channels in the [Home Operations](https://discord.gg/home-operations) Discord server.
+
+## 🙋 GitHub Sponsors Support
+
+If you're having difficulty with this project, can't find the answers you need through the community support options above, or simply want to show your appreciation while gaining deeper insights, I’m offering one-on-one paid support through GitHub Sponsors for a limited time. Payment and scheduling will be coordinated through [GitHub Sponsors](https://github.com/sponsors/onedr0p).
+
+<details>
+
+<summary>Click to expand the details</summary>
+
+<br>
+
+- **Rate**: $50/hour (no longer than 2 hours / day).
+- **What’s Included**: Assistance with deployment, debugging, or answering questions related to this project.
+- **What to Expect**:
+  1. Sessions will focus on specific questions or issues you are facing.
+  2. I will provide guidance, explanations, and actionable steps to help resolve your concerns.
+  3. Support is limited to this project and does not extend to unrelated tools or custom feature development.
+
+</details>
 
 ## ❔ What's next
 

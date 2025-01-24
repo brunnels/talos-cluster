@@ -23,7 +23,7 @@ releases:
   - name: cilium
     namespace: kube-system
     chart: cilium/cilium
-    version: 1.16.5
+    version: 1.16.6
     values:
       - ../apps/kube-system/cilium/app/helm-values.yaml
     needs:
@@ -32,20 +32,11 @@ releases:
   - name: coredns
     namespace: kube-system
     chart: coredns/coredns
-    version: 1.37.1
+    version: 1.37.3
     values:
       - ../apps/kube-system/coredns/app/helm-values.yaml
     needs:
       - kube-system/cilium
-
-  - name: spegel
-    namespace: kube-system
-    chart: oci://ghcr.io/spegel-org/helm-charts/spegel
-    version: v0.0.30
-    values:
-      - ../apps/kube-system/spegel/app/helm-values.yaml
-    needs:
-      - kube-system/coredns
 
   - name: flux-operator
     namespace: flux-system
@@ -54,7 +45,7 @@ releases:
     values:
       - ../apps/flux-system/flux-operator/app/helm-values.yaml
     needs:
-      - kube-system/spegel
+      - kube-system/coredns
 
   - name: flux-instance
     namespace: flux-system

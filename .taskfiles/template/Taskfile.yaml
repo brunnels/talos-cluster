@@ -22,7 +22,8 @@ tasks:
     cmds:
       - task: render-configs
       - task: encrypt-secrets
-      - task: kubeconform
+      - task: validate-kubernetes-config
+      - task: validate-talos-config
     preconditions:
       - msg: |
           An existing Age key interferes with age key in this repository.
@@ -64,12 +65,19 @@ tasks:
       - test -f {{.SOPS_CONFIG_FILE}}
       - which sops
 
-  kubeconform:
+  validate-kubernetes-config:
     desc: Validate Kubernetes manifests with kubeconform
     cmd: bash {{.TEMPLATE_RESOURCES_DIR}}/kubeconform.sh {{.KUBERNETES_DIR}}
     preconditions:
       - test -f {{.TEMPLATE_RESOURCES_DIR}}/kubeconform.sh
       - which kubeconform
+
+  validate-talos-config:
+    desc: Validate the Talhelper config
+    cmd: talhelper validate talconfig {{.TALHELPER_CONFIG_FILE}}
+    preconditions:
+      - test -f {{.TALHELPER_CONFIG_FILE}}
+      - which talhelper
 
   tidy:
     desc: Archive template related files and directories
@@ -78,14 +86,15 @@ tasks:
       - mkdir -p {{.TIDY_FOLDER}}
       - rm -rf {{.ROOT_DIR}}/.github/tests
       - rm -rf {{.ROOT_DIR}}/.github/workflows/e2e.yaml
+      - rm -rf {{.ROOT_DIR}}/.github/workflows/mise.yaml
       - |
-        {{.SED}} 's/(..\.j2)\?//g' {{.ROOT_DIR}}/.github/renovate.json5
+        {{.SED}} -i 's/(..\.j2)\?//g' {{.ROOT_DIR}}/.github/renovate.json5
       - mv {{.TEMPLATE_DIR}} {{.TIDY_FOLDER}}/templates
       - mv {{.MAKEJINJA_CONFIG_FILE}} {{.TIDY_FOLDER}}/makejinja.toml
       - mv {{.ROOT_DIR}}/requirements.txt {{.TIDY_FOLDER}}/requirements.txt
       - mv {{.TEMPLATE_CONFIG_FILE}} {{.TIDY_FOLDER}}/config.yaml
       - |
-        {{.SED}} '/template:/d' {{.ROOT_DIR}}/Taskfile.yaml
+        {{.SED}} -i '/template:/d' {{.ROOT_DIR}}/Taskfile.yaml
       - mv {{.ROOT_DIR}}/.taskfiles/template {{.TIDY_FOLDER}}/.taskfiles/
     vars:
       TIDY_FOLDER: '{{.PRIVATE_DIR}}/{{now | unixEpoch}}'
