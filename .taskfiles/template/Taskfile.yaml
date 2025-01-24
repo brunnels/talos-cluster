@@ -74,7 +74,7 @@ tasks:
 
   validate-talos-config:
     desc: Validate the Talhelper config
-    cmd: talhelper validate talconfig {{.TALHELPER_CONFIG_FILE}}
+    cmd: talhelper validate talconfig {{.TALHELPER_CONFIG_FILE}} --env-file {{.TALHELPER_ENV_FILE}}
     preconditions:
       - test -f {{.TALHELPER_CONFIG_FILE}}
       - which talhelper

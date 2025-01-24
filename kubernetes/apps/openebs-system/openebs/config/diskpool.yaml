@@ -6,7 +6,7 @@ metadata:
   name: pool-n1
 spec:
   node: korg-n1
-  disks: ["/dev/nvme0n1"]
+  disks: ["aio:///dev/disk/by-id/nvme-eui.ace42e00958d2ecc"]
 ---
 apiVersion: "openebs.io/v1beta2"
 kind: DiskPool
@@ -14,7 +14,7 @@ metadata:
   name: pool-n2
 spec:
   node: korg-n2
-  disks: ["/dev/nvme0n1"]
+  disks: ["aio:///dev/disk/by-id/nvme-eui.ace42e00958d2ed4"]
 ---
 apiVersion: "openebs.io/v1beta2"
 kind: DiskPool
@@ -22,7 +22,7 @@ metadata:
   name: pool-n3
 spec:
   node: korg-n3
-  disks: ["/dev/nvme0n1"]
+  disks: ["aio:///dev/disk/by-id/nvme-eui.ace42e00958d2ed7"]
 ---
 apiVersion: "openebs.io/v1beta2"
 kind: DiskPool
@@ -30,4 +30,4 @@ metadata:
   name: pool-n4
 spec:
   node: korg-n4
-  disks: ["/dev/nvme0n1"]
+  disks: ["aio:///dev/disk/by-id/nvme-eui.ace42e00958d2eed"]
