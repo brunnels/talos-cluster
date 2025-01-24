@@ -14,7 +14,6 @@ clusterSvcNets:
   - "10.96.0.0/16"
 
 additionalApiServerCertSans: &sans
-  - "10.0.150.100"
   - "korg.lan.kraven.org"
   - "korg-n1.lan.kraven.org"
   - "korg-n2.lan.kraven.org"
