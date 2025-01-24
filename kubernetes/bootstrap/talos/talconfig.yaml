@@ -19,7 +19,6 @@ additionalApiServerCertSans: &sans
   - "korg-n1.lan.kraven.org"
   - "korg-n2.lan.kraven.org"
   - "korg-n3.lan.kraven.org"
-  - "korg-n4.lan.kraven.org"
   - "127.0.0.1"
 additionalMachineCertSans: *sans
 
@@ -33,7 +32,7 @@ nodes:
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/6374013326626d3d647774bd6e614fee59b2cf34d1532a244c1ffee47b5fb6c7
+    talosImageURL: factory.talos.dev/installer-secureboot/66665bc1d194953dbe747370c6e8510aad56d55d4f7d28a9253fe809ff1310d4
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -59,7 +58,7 @@ nodes:
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/6374013326626d3d647774bd6e614fee59b2cf34d1532a244c1ffee47b5fb6c7
+    talosImageURL: factory.talos.dev/installer-secureboot/66665bc1d194953dbe747370c6e8510aad56d55d4f7d28a9253fe809ff1310d4
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -79,7 +78,7 @@ nodes:
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/6374013326626d3d647774bd6e614fee59b2cf34d1532a244c1ffee47b5fb6c7
+    talosImageURL: factory.talos.dev/installer-secureboot/66665bc1d194953dbe747370c6e8510aad56d55d4f7d28a9253fe809ff1310d4
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -99,7 +98,7 @@ nodes:
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/6374013326626d3d647774bd6e614fee59b2cf34d1532a244c1ffee47b5fb6c7
+    talosImageURL: factory.talos.dev/installer-secureboot/66665bc1d194953dbe747370c6e8510aad56d55d4f7d28a9253fe809ff1310d4
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
