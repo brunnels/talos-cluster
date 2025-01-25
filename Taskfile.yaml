@@ -25,6 +25,8 @@ includes:
   kubernetes: .taskfiles/kubernetes
   talos: .taskfiles/talos
   template: .taskfiles/template
+  fetcher: .taskfiles/fetcher
+  volsync: .taskfiles/volsync
 
 tasks:
 

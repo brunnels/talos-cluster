@@ -24,4 +24,4 @@ cluster:
           kind: PodSecurityConfiguration
           exemptions:
             namespaces:
-              - openebs-system
+              - rook-ceph
