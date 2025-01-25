@@ -3,37 +3,29 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: rook-ceph-operator
+  name: snapshot-controller
 spec:
   interval: 30m
-  timeout: 15m
   chart:
     spec:
-      chart: rook-ceph
-      version: v1.16.2
+      chart: snapshot-controller
+      version: 4.0.1
       sourceRef:
         kind: HelmRepository
-        name: rook-ceph
+        name: piraeus
         namespace: flux-system
   install:
+    crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    crds: CreateReplace
     remediation:
       strategy: rollback
       retries: 3
   values:
-    csi:
-      cephFSKernelMountOptions: ms_mode=prefer-crc
-      enableLiveness: true
+    controller:
+      replicaCount: 1
       serviceMonitor:
-        enabled: true
-    enableDiscoveryDaemon: true
-    monitoring:
-      enabled: true
-    resources:
-      requests:
-        memory: 128Mi # unchangable
-        cpu: 100m # unchangable
-      limits: {}
+        create: true

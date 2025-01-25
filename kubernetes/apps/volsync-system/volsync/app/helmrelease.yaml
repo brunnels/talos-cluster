@@ -3,17 +3,16 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: rook-ceph-operator
+  name: volsync
 spec:
   interval: 30m
-  timeout: 15m
   chart:
     spec:
-      chart: rook-ceph
-      version: v1.16.2
+      chart: volsync
+      version: 0.12.0-rc.1
       sourceRef:
         kind: HelmRepository
-        name: rook-ceph
+        name: backube
         namespace: flux-system
   install:
     remediation:
@@ -24,16 +23,12 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    csi:
-      cephFSKernelMountOptions: ms_mode=prefer-crc
-      enableLiveness: true
-      serviceMonitor:
-        enabled: true
-    enableDiscoveryDaemon: true
-    monitoring:
-      enabled: true
-    resources:
-      requests:
-        memory: 128Mi # unchangable
-        cpu: 100m # unchangable
-      limits: {}
+    manageCRDs: true
+    replicaCount: 1
+    metrics:
+      disableAuth: true
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      seccompProfile: { type: RuntimeDefault }
