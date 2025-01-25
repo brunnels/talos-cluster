@@ -293,7 +293,7 @@ Once your cluster is fully configured and you no longer need to run `task config
 
 ## 🙋 GitHub Sponsors Support
 
-If you're having difficulty with this project, can't find the answers you need through the community support options above, or simply want to show your appreciation while gaining deeper insights, I’m offering one-on-one paid support through GitHub Sponsors for a limited time. Payment and scheduling will be coordinated through [GitHub Sponsors](https://github.com/sponsors/onedr0p).
+If you're having difficulty with this project, can't find the answers you need through the community support options above, or simply want to show your appreciation while gaining deeper insights, I'm offering one-on-one paid support through GitHub Sponsors for a limited time. Payment and scheduling will be coordinated through [GitHub Sponsors](https://github.com/sponsors/onedr0p).
 
 <details>
 
@@ -302,7 +302,7 @@ If you're having difficulty with this project, can't find the answers you need t
 <br>
 
 - **Rate**: $50/hour (no longer than 2 hours / day).
-- **What’s Included**: Assistance with deployment, debugging, or answering questions related to this project.
+- **What's Included**: Assistance with deployment, debugging, or answering questions related to this project.
 - **What to Expect**:
   1. Sessions will focus on specific questions or issues you are facing.
   2. I will provide guidance, explanations, and actionable steps to help resolve your concerns.

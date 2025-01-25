@@ -60,7 +60,7 @@ spec:
               GATUS_DELAY_START_SECONDS: 5
               WEB_PORT: &port 80
             envFrom:
-            - secretRef:
+              - secretRef:
                 name: *app
             probes:
               liveness: &probes

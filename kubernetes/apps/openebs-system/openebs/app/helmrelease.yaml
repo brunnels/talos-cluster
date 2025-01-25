@@ -31,7 +31,7 @@ spec:
     openebs-crds:
       csi:
         volumeSnapshots:
-          enabled: true
+          enabled: false
     localpv-provisioner:
       localpv:
         image:
@@ -44,20 +44,20 @@ spec:
         name: openebs-hostpath
         isDefaultClass: false
         basePath: /var/openebs/local
-    mayastor:
-      etcd:
-        localpvScConfig:
-          basePath: "/var/openebs/local/localpv-hostpath/etcd"
-      obs:
-        callhome:
-          enabled: false
-      loki-stack:
-        enabled: false
-      promtail:
-        enabled: false
-      io_engine:
-        envcontext: "iova-mode=pa"
-      csi:
-        node:
-          initContainers:
-            enabled: false
+#    mayastor:
+#      etcd:
+#        localpvScConfig:
+#          basePath: "/var/openebs/local/localpv-hostpath/etcd"
+#      obs:
+#        callhome:
+#          enabled: false
+#      loki-stack:
+#        enabled: false
+#      promtail:
+#        enabled: false
+#      io_engine:
+#        envcontext: "iova-mode=pa"
+#      csi:
+#        node:
+#          initContainers:
+#            enabled: false
