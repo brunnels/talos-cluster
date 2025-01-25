@@ -28,9 +28,14 @@ spec:
           enabled: false
         zfs:
           enabled: false
+      replicated:
+        mayastor:
+          # switch to true for mayastor
+          enabled: false
     openebs-crds:
       csi:
         volumeSnapshots:
+          # switch to true for mayastor
           enabled: false
     localpv-provisioner:
       localpv:
@@ -44,6 +49,7 @@ spec:
         name: openebs-hostpath
         isDefaultClass: false
         basePath: /var/openebs/local
+# uncomment for mayastor
 #    mayastor:
 #      etcd:
 #        localpvScConfig:
@@ -55,6 +61,7 @@ spec:
 #        enabled: false
 #      promtail:
 #        enabled: false
+#      # only required if io-engine pods error with this message in logs
 #      io_engine:
 #        envcontext: "iova-mode=pa"
 #      csi:
