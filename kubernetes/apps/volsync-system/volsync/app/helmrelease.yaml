@@ -22,6 +22,9 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: volsync-snapshot-controller
+      namespace: volsync-system
   values:
     manageCRDs: true
     replicaCount: 1
