@@ -15,6 +15,7 @@ resources:
   - ./k8s-gateway.yaml
   - ./metrics-server.yaml
   - ./openebs.yaml
+  - ./piraeus.yaml
   - ./prometheus-community.yaml
   - ./rook-ceph.yaml
   - ./spegel.yaml
