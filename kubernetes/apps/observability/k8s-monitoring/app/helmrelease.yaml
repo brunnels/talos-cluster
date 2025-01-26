@@ -39,7 +39,7 @@ spec:
         secret:
           create: false
           name: k8s-monitoring-metrics
-          namespace: monitoring-system
+          namespace: observability
         metricProcessingRules: |-
           write_relabel_config {
             source_labels = ["namespace","pod"]
@@ -63,7 +63,7 @@ spec:
         secret:
           create: false
           name: k8s-monitoring-logs
-          namespace: monitoring-system
+          namespace: observability
       - name: traces
         type: otlp
         url: https://tempo-prod-04-prod-us-east-0.grafana.net/tempo/v1/traces
@@ -72,7 +72,7 @@ spec:
         secret:
           create: false
           name: k8s-monitoring-traces
-          namespace: monitoring-system
+          namespace: observability
 
     clusterMetrics:
       enabled: true
