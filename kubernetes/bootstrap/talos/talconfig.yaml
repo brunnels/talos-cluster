@@ -32,7 +32,7 @@ nodes:
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/9584e0e3216566ed1f8d1f7f98d457eb5c968bc65114a6259a56354eb3e76ae6
+    talosImageURL: factory.talos.dev/installer-secureboot/810f7a1b95fd41a652264bd7e172b67e1eda2a7bbccfa3ca764463021cb0de56
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -43,7 +43,7 @@ nodes:
         routes:
           - network: "0.0.0.0/0"
             gateway: "10.0.150.1"
-        mtu: 1500
+        mtu: 9000
         vip:
           ip: "10.0.150.100"
     extensionServices: &extensionServices
@@ -58,7 +58,7 @@ nodes:
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/9584e0e3216566ed1f8d1f7f98d457eb5c968bc65114a6259a56354eb3e76ae6
+    talosImageURL: factory.talos.dev/installer-secureboot/810f7a1b95fd41a652264bd7e172b67e1eda2a7bbccfa3ca764463021cb0de56
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -69,7 +69,7 @@ nodes:
         routes:
           - network: "0.0.0.0/0"
             gateway: "10.0.150.1"
-        mtu: 1500
+        mtu: 9000
         vip:
           ip: "10.0.150.100"
     extensionServices: *extensionServices
@@ -78,7 +78,7 @@ nodes:
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/9584e0e3216566ed1f8d1f7f98d457eb5c968bc65114a6259a56354eb3e76ae6
+    talosImageURL: factory.talos.dev/installer-secureboot/810f7a1b95fd41a652264bd7e172b67e1eda2a7bbccfa3ca764463021cb0de56
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -89,7 +89,7 @@ nodes:
         routes:
           - network: "0.0.0.0/0"
             gateway: "10.0.150.1"
-        mtu: 1500
+        mtu: 9000
         vip:
           ip: "10.0.150.100"
     extensionServices: *extensionServices
@@ -98,7 +98,7 @@ nodes:
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/9584e0e3216566ed1f8d1f7f98d457eb5c968bc65114a6259a56354eb3e76ae6
+    talosImageURL: factory.talos.dev/installer-secureboot/810f7a1b95fd41a652264bd7e172b67e1eda2a7bbccfa3ca764463021cb0de56
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
@@ -109,19 +109,19 @@ nodes:
         routes:
           - network: "0.0.0.0/0"
             gateway: "10.0.150.1"
-        mtu: 1500
+        mtu: 9000
     extensionServices: *extensionServices
 
 
 # Global patches
 patches:
   - "@./patches/global/machine-files.yaml"
-  #- "@./patches/global/machine-kernel.yaml"
   - "@./patches/global/machine-kubelet.yaml"
   - "@./patches/global/machine-network.yaml"
-  #- "@./patches/global/machine-nodelabels.yaml"
   - "@./patches/global/machine-sysctls.yaml"
+  - "@./patches/global/machine-sysfs.yaml"
   - "@./patches/global/machine-time.yaml"
+  - "@./patches/global/machine-udev.yaml"
 
 # Controller patches
 controlPlane:
