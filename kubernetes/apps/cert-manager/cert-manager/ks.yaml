@@ -70,7 +70,7 @@ metadata:
   name: &app cert-manager-selfsigned-issuers
   namespace: flux-system
 spec:
-  targetNamespace: cert-manager
+  targetNamespace: cert-manager-issuers
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
