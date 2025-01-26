@@ -28,6 +28,7 @@ spec:
   values:
     controllers:
       gatus:
+        replicas: 1
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
