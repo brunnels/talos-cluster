@@ -32,8 +32,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../../flux/components/gatus/guarded
+#  components:
+#    - ../../../../flux/components/gatus/guarded
   dependsOn:
     - name: rook-ceph-operator
   path: ./kubernetes/apps/rook-ceph/cluster
