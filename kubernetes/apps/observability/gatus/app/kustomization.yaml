@@ -8,10 +8,11 @@ resources:
   - ./clusterrole.yaml
   - ./clusterrolebinding.yaml
   - ./helmrelease.yaml
-  - ../../../../templates/gatus/external
 configMapGenerator:
   - name: gatus
     files:
       - config.yaml=./resources/config.yaml
 generatorOptions:
   disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

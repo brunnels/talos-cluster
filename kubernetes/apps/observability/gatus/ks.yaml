@@ -10,16 +10,16 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../flux/components/gatus/external
   dependsOn:
-    - name: crunchy-postgres-cluster
-    - name: crunchy-postgres-stores
     - name: external-secrets-stores
   path: ./kubernetes/apps/observability/gatus/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
-  wait: false # no flux ks dependents
+  wait: false
   interval: 30m
   timeout: 5m
   postBuild:
