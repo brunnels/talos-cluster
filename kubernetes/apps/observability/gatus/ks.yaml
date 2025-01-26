@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../flux/components/gatus/external
+    - ../../../../flux/components/gatus/external
   dependsOn:
     - name: external-secrets-stores
   path: ./kubernetes/apps/observability/gatus/app
