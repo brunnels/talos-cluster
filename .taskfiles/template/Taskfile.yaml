@@ -62,7 +62,7 @@ tasks:
         sh: find "{{.KUBERNETES_DIR}}" -type f -name "*.sops.*"
     preconditions:
       - test -f {{.SOPS_AGE_KEY_FILE}}
-      - test -f {{.SOPS_CONFIG_FILE}}
+      - test -f {{.ROOT_DIR}}/.sops.yaml
       - which sops
 
   validate-kubernetes-config:
@@ -74,9 +74,10 @@ tasks:
 
   validate-talos-config:
     desc: Validate the Talhelper config
-    cmd: talhelper validate talconfig {{.TALHELPER_CONFIG_FILE}} --env-file {{.TALHELPER_ENV_FILE}}
+    dir: "{{.TALHELPER_DIR}}"
+    cmd: talhelper validate talconfig {{.TALHELPER_DIR}}/talconfig.yaml
     preconditions:
-      - test -f {{.TALHELPER_CONFIG_FILE}}
+      - test -f {{.TALHELPER_DIR}}/talconfig.yaml
       - which talhelper
 
   tidy:
