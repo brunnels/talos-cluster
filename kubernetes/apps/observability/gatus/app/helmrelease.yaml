@@ -60,7 +60,7 @@ spec:
               WEB_PORT: &port 80
             envFrom:
               - secretRef:
-                name: *app
+                  name: *app
             probes:
               liveness: &probes
                 enabled: true
