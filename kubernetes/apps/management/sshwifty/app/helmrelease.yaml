@@ -29,10 +29,12 @@ spec:
           app:
             image:
               repository: docker.io/niruix/sshwifty
-              tag: latest
+              tag: 0.3.16-beta-release@sha256:60228687f67f6139df65f5383fec87e3507bf5986f9bfe0b01b2636a72b1310c
             env:
               TZ: "${TIMEZONE}"
               SSHWIFTY_HOSTNAME: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+              SSHWIFTY_READTIMEOUT: 90
+              SSHWIFTY_HEARTBEATTIMEOUT: 60
             probes:
               liveness:
                 enabled: true
