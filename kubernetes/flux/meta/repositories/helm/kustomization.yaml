@@ -11,6 +11,7 @@ resources:
   - ./crunchy-userinit.yaml
   - ./crunchydata.yaml
   - ./external-dns.yaml
+  - ./grafana.yaml
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
