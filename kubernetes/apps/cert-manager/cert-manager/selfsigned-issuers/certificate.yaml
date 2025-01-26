@@ -15,7 +15,7 @@ spec:
     algorithm: ECDSA
     size: 256
   issuerRef:
-    name: selfsigned-issuer
+    name: ca-issuer
     kind: ClusterIssuer
     group: cert-manager.io
 ---
@@ -35,6 +35,6 @@ spec:
     algorithm: ECDSA
     size: 384
   issuerRef:
-    name: selfsigned-issuer
+    name: strong-ca-issuer
     kind: ClusterIssuer
     group: cert-manager.io
