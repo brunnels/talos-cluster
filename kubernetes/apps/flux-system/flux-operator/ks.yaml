@@ -30,6 +30,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../flux/components/gatus/external
   path: ./kubernetes/apps/flux-system/flux-operator/instance
   prune: false # never should be deleted
   sourceRef:
@@ -38,3 +40,7 @@ spec:
   wait: false
   interval: 30m
   timeout: 5m
+  postBuild:
+    substitute:
+      APP: flux-webhook
+      GATUS_STATUS: "400"
