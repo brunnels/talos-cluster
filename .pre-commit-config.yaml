@@ -7,6 +7,7 @@ exclude: |
       | .*\.sops\.toml
       | config.sample.yaml
       | .github/workflows/e2e.yaml
+      | .*/resources/snmp.yaml
     )$
 
 repos:

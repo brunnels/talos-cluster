@@ -218,6 +218,11 @@ spec:
           revision: 14
           datasource: Prometheus
       network:
+        arista-switch:
+          # renovate: depName="Arista General Statistics by IP"
+          gnetId: 10222
+          revision: 1
+          datasource: Prometheus
         cert-manager:
           # renovate: depName="Cert-manager-Kubernetes"
           gnetId: 20842
@@ -240,6 +245,21 @@ spec:
         nginx-request-handling-performance:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
           datasource: Prometheus
+        nut-exporter:
+          url: https://raw.githubusercontent.com/DRuggeri/nut_exporter/master/dashboard/dashboard.json
+          datasource: Prometheus
+        opnsense:
+          # renovate: depName="OPNsense"
+          gnetId: 21113
+          revision: 1
+          datasource:
+            - { name: DS_PROMETHEUS-K0, value: Prometheus }
+        proxmox:
+          # renovate: depName="Proxmox via Prometheus"
+          gnetId: 10347
+          revision: 5
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
       storage:
         etcd-storage:
           # renovate: depName="etcd"
