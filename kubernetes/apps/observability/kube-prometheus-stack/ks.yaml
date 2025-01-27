@@ -10,6 +10,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../flux/components/gatus/guarded
   dependsOn:
     - name: external-secrets-stores
   path: ./kubernetes/apps/observability/kube-prometheus-stack/app
@@ -20,3 +22,6 @@ spec:
   wait: false
   interval: 30m
   timeout: 5m
+  postBuild:
+    substitute:
+      APP: alertmanager

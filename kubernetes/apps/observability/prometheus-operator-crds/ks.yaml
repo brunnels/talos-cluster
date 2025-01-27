@@ -10,6 +10,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../flux/components/gatus/guarded
   path: ./kubernetes/apps/observability/prometheus-operator-crds/app
   prune: false # never should be deleted
   sourceRef:
@@ -18,3 +20,6 @@ spec:
   wait: false
   interval: 30m
   timeout: 5m
+  postBuild:
+    substitute:
+      APP: prometheus
