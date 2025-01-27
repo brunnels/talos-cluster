@@ -1,6 +1,4 @@
 ---
-client:
-  insecure: true
 web:
   port: ${WEB_PORT}
 storage:
