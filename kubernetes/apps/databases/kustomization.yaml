@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ./crunchy-postgres/ks.yaml
 components:
+  - ../../flux/components/alerts
   - ../../flux/components/namespace
 patches:
   - # Add the name to the namespace
@@ -14,3 +15,14 @@ patches:
         value: databases
     target:
       kind: Namespace
+  - # Add the namespace to the alert
+    patch: &patch |
+      - op: add
+        path: /metadata/namespace
+        value: databases
+    target:
+      kind: Alert
+  - # Add the namespace to the provider
+    patch: *patch
+    target:
+      kind: Provider

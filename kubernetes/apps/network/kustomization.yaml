@@ -6,6 +6,7 @@ resources:
   - ./external/ks.yaml
   - ./internal/ks.yaml
 components:
+  - ../../flux/components/alerts
   - ../../flux/components/namespace
 patches:
   - # Add the name to the namespace
@@ -15,3 +16,14 @@ patches:
         value: network
     target:
       kind: Namespace
+  - # Add the namespace to the alert
+    patch: &patch |
+      - op: add
+        path: /metadata/namespace
+        value: network
+    target:
+      kind: Alert
+  - # Add the namespace to the provider
+    patch: *patch
+    target:
+      kind: Provider
