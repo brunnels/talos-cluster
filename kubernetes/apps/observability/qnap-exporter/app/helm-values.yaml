@@ -1,0 +1,5 @@
+---
+nas:
+  hostname: "{{ .QNAP_NAME }}"
+  snmp:
+    agent: "udp://${SECRET_QNAP_HOSTNAME}:161"

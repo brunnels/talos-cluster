@@ -37,11 +37,10 @@ spec:
         ingressClassName: internal
         annotations:
           nginx.ingress.kubernetes.io/rewrite-target: "/"
-          external-dns.alpha.kubernetes.io/target: "internal.${SECRET_DOMAIN}"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Storage
           gethomepage.dev/name: Rook Dashboard
-          gethomepage.dev/icon: https://avatars.githubusercontent.com/u/22860722
+          gethomepage.dev/icon: rook
         host:
           name: "rook.${SECRET_DOMAIN}"
           path: /

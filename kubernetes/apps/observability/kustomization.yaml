@@ -6,6 +6,7 @@ resources:
   - ./gatus/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
+  - ./qnap-exporter/ks.yaml
 components:
   - ../../flux/components/alerts
   - ../../flux/components/namespace
