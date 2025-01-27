@@ -10,6 +10,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../flux/components/gatus/guarded
   dependsOn:
     - name: external-secrets-stores
   path: ./kubernetes/apps/flux-system/weave-gitops/app
@@ -19,5 +21,8 @@ spec:
     name: flux-system
   wait: false
   interval: 30m
-  retryInterval: 1m
   timeout: 5m
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: gitops
