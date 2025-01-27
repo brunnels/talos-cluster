@@ -1,4 +1,6 @@
 ---
+client:
+  insecure: true # TODO: remove when not using staging certs
 web:
   port: ${WEB_PORT}
 storage:

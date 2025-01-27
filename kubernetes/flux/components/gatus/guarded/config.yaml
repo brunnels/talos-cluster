@@ -22,4 +22,3 @@ endpoints:
       - "[STATUS] == ${GATUS_STATUS:-200}"
     alerts:
       - type: pushover
-    insecure: true # TODO: remove when not using staging certs
