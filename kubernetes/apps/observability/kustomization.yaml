@@ -7,21 +7,24 @@ resources:
   - ./kube-prometheus-stack/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
 components:
-#  - ../../flux/components/alerts
+  - ../../flux/components/alerts
   - ../../flux/components/namespace
 patches:
   - # Add the name to the namespace
-    patch: &patch |
+    patch: |
       - op: add
         path: /metadata/name
         value: observability
     target:
       kind: Namespace
-#  - # Add the name to the alert
-#    patch: *patch
-#    target:
-#      kind: Alert
-#  - # Add the name to the provider
-#    patch: *patch
-#    target:
-#      kind: Provider
+  - # Add the namespace to the alert
+    patch: &patch |
+      - op: add
+        path: /metadata/namespace
+        value: observability
+    target:
+      kind: Alert
+  - # Add the namespace to the provider
+    patch: *patch
+    target:
+      kind: Provider
