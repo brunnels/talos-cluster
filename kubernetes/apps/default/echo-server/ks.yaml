@@ -10,6 +10,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../flux/components/gatus/external
   path: ./kubernetes/apps/default/echo-server/app
   prune: true
   sourceRef:
@@ -18,3 +20,6 @@ spec:
   wait: false
   interval: 30m
   timeout: 5m
+  postBuild:
+    substitute:
+      APP: *app
