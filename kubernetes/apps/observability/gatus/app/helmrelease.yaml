@@ -96,6 +96,21 @@ spec:
         ports:
           http:
             port: *port
+    serviceMonitor:
+      app:
+        serviceName: *app
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
+            metricRelabelings:
+              - action: labeldrop
+                regex: (pod)
+              - action: replace
+                sourceLabels: ["service"]
+                targetLabel: instance
     ingress:
       app:
         annotations:
@@ -106,6 +121,7 @@ spec:
           gethomepage.dev/description: Status Page
           gethomepage.dev/widget.type: gatus
           gethomepage.dev/widget.url: http://gatus.observability
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         className: external
         hosts:
           - host: "status.${SECRET_DOMAIN}"
