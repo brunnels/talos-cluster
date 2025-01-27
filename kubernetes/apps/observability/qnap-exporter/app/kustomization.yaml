@@ -9,5 +9,7 @@ configMapGenerator:
   - name: qnap-exporter-helm-values
     files:
       - values.yaml=./helm-values.yaml
+generatorOptions:
+  disableNameSuffixHash: true
 configurations:
   - kustomizeconfig.yaml
