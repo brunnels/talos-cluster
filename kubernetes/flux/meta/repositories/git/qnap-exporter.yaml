@@ -10,7 +10,7 @@ spec:
   # renovate: datasource=helm depName=qnap-exporter
   url: https://github.com/bsosnowski/qnap-exporter
   ref:
-    tag: v.0.1.1
+    tag: v0.1.1
   ignore: |
     # exclude all
     /*
