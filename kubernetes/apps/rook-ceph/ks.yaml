@@ -46,5 +46,5 @@ spec:
   timeout: 15m
   postBuild:
     substitute:
-      APP: *app
+      APP: "rook-dashboard"
       GATUS_SUBDOMAIN: rook
