@@ -37,6 +37,14 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: alertmanager
+          gethomepage.dev/name: Alert Manager
+          gethomepage.dev/group: Observability
+          gethomepage.dev/app: alertmanager
+          gethomepage.dev/description: Monitoring Alerting Service
+          gethomepage.dev/pod-selector: app.kubernetes.io/component=alertmanager
         hosts: ["alertmanager.${SECRET_DOMAIN}"]
         pathType: Prefix
       alertmanagerSpec:
@@ -74,7 +82,7 @@ spec:
         ingressClassName: internal
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/icon: prometheus.png
+          gethomepage.dev/icon: prometheus
           gethomepage.dev/name: Prometheus
           gethomepage.dev/group: Observability
           gethomepage.dev/app: prometheus
