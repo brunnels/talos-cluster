@@ -6,7 +6,7 @@ resources:
 #  - ./bazarr-exporter/ks.yaml
 #  - ./jellyseerr-exporter/ks.yaml
 #  - ./mqtt-exporter/ks.yaml
-#  - ./nut-exporter/ks.yaml
+  - ./nut-exporter/ks.yaml
 #  - ./opnsense-exporter/ks.yaml
 #  - ./plex-exporter/ks.yaml
 #  - ./prowlarr-exporter/ks.yaml
