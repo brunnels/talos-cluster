@@ -3,9 +3,9 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
-  name: cpgo-postgres
+  name: &name cpgo-postgres
 spec:
-  jobLabel: cpgo-postgres
+  jobLabel: *name
   namespaceSelector:
     matchNames:
       - databases

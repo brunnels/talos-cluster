@@ -1,0 +1,21 @@
+#+title: Authelia
+* Secrets
+- ~AUTHELIA_IDENTITY_PROVIDERS_OIDC_HMAC_SECRET~
+  - Random string with atleast 64 characters, used to sign JWTs. [[https://www.authelia.com/configuration/identity-providers/openid-connect/provider/#hmac_secret][Reference]]
+- ~AUTHELIA_IDENTITY_PROVIDERS_OIDC_JWKS~
+  - Private key. [[https://www.authelia.com/configuration/identity-providers/openid-connect/provider/#jwks][Reference]]
+- ~AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET~
+  - The secret used with the HMAC algorithm to sign the JWT. [[https://www.authelia.com/configuration/identity-validation/reset-password/#jwt_secret][Reference]]
+- ~AUTHELIA_SESSION_SECRET~
+  - The secret key used to encrypt session data in Redis. [[https://www.authelia.com/configuration/session/introduction/#secret][Reference]]
+- ~AUTHELIA_STORAGE_ENCRYPTION_KEY~
+  - The encryption key used to encrypt data in the database. [[https://www.authelia.com/configuration/storage/introduction/#encryption_key][Reference]]
+** Generating a secret
+#+begin_src sh :noeval
+docker run authelia/authelia:latest authelia crypto hash generate argon2 --random --random.length 64 --random.charset alphanumeric
+#+end_src
+[[https://www.authelia.com/reference/guides/generating-secure-values/][Reference]]
+** Generating a private key
+#+begin_src sh :noeval
+openssl genrsa 4096
+#+end_src
