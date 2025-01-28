@@ -5,16 +5,3 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
-configMapGenerator:
-  - name: nut-exporter-dashboard
-    files:
-      - prometheus-nut-exporter.json=./dashboard/prometheus-nut-exporter.json
-    options:
-      labels:
-        grafana_dashboard: "true"
-      annotations:
-        grafana_folder: "Network"
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled

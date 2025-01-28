@@ -245,8 +245,10 @@ spec:
         nginx-request-handling-performance:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
           datasource: Prometheus
-        nut-exporter:
-          url: https://raw.githubusercontent.com/DRuggeri/nut_exporter/master/dashboard/dashboard.json
+        nut-status:
+          # renovate: depName="NUT Status"
+          gnetId: 14104
+          revision: 3
           datasource: Prometheus
         opnsense:
           # renovate: depName="OPNsense"
