@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+#  - ./bazarr-exporter/ks.yaml
+#  - ./jellyseerr-exporter/ks.yaml
+#  - ./mqtt-exporter/ks.yaml
+#  - ./nut-exporter/ks.yaml
+#  - ./opnsense-exporter/ks.yaml
+#  - ./plex-exporter/ks.yaml
+#  - ./prowlarr-exporter/ks.yaml
+#  - ./pve-exporter/ks.yaml
+#  - ./qbittorrent-exporter/ks.yaml
+  - ./qnap-exporter/ks.yaml
+#  - ./radarr-exporter/ks.yaml
+#  - ./snmp-exporter/ks.yaml
+#  - ./sonarr-exporter/ks.yaml
+#  - ./speedtest-exporter/ks.yaml
+#  - ./tautulli-exporter/ks.yaml
+#  - ./transmission-exporter/ks.yaml

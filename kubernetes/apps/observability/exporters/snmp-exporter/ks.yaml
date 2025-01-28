@@ -3,16 +3,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app qnap-exporter
+  name: &app snmp-exporter-arista
   namespace: flux-system
 spec:
   targetNamespace: observability
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: external-secrets-stores
-  path: ./kubernetes/apps/observability/qnap-exporter/app
+  path: ./kubernetes/apps/observability/exporters/snmp-exporter/arista
   prune: true
   sourceRef:
     kind: GitRepository
