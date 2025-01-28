@@ -249,7 +249,8 @@ spec:
           # renovate: depName="NUT Status"
           gnetId: 14104
           revision: 3
-          datasource: Prometheus
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
         opnsense:
           # renovate: depName="OPNsense"
           gnetId: 21113
