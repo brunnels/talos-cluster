@@ -23,9 +23,7 @@ spec:
     image:
       repository: ghcr.io/external-secrets/external-secrets
     bitwarden-sdk-server:
-      enabled: true
-      podAnnotations:
-        secret.reloader.stakater.com/reload: "bitwarden-css-certs,bitwarden-secrets-manager,bitwarden-tls-certs"
+      enabled: false
     certController:
       image:
         repository: ghcr.io/external-secrets/external-secrets
