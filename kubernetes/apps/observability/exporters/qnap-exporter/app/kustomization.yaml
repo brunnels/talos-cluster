@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./pushsecret.yaml
 configMapGenerator:
   - name: qnap-exporter-helm-values
     files:
