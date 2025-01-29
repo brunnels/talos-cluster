@@ -63,6 +63,12 @@ spec:
       password:
         type: AlphaNumeric
 
+    - name: authelia
+      databases:
+        - authelia
+      password:
+        type: AlphaNumeric
+
     - name: autobrr
       databases:
         - autobrr
