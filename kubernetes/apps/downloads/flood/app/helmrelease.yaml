@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: docker.io/jesec/flood
-              tag: master@sha256:85df7441049511f9fe64d3c99fa2ec1d1f70d1b9d5fe751a28e6c88ce1136234
+              tag: master@sha256:dfeaed8772bea34029bc733fdaa08f323d2eed88f17e94bba3b9a3e2d8df8386
             env:
               TZ: "${TIMEZONE}"
               FLOOD_OPTION_rundir: /data
