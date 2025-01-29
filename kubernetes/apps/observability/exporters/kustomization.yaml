@@ -14,7 +14,7 @@ resources:
 #  - ./qbittorrent-exporter/ks.yaml
   - ./qnap-exporter/ks.yaml
 #  - ./radarr-exporter/ks.yaml
-  - ./snmp-exporter/ks.yaml
+#  - ./snmp-exporter/ks.yaml
 #  - ./sonarr-exporter/ks.yaml
 #  - ./speedtest-exporter/ks.yaml
 #  - ./tautulli-exporter/ks.yaml
