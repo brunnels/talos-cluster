@@ -144,7 +144,7 @@ spec:
       secret-files:
         enabled: true
         type: secret
-        name: authelia-secret-files
+        name: authelia-files
         advancedMounts:
           authelia:
             app:
