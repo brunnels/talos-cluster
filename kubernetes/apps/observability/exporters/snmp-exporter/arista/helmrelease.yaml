@@ -44,14 +44,17 @@ spec:
           module: ["arista_sw"]
           target: "${SECRET_ARISTA_SWITCH}"
           auth: ["public_v2"]
+          timeout: 10s
         - name: arista-if
           module: ["if_mib"]
           target: "${SECRET_ARISTA_SWITCH}"
           auth: ["public_v2"]
+          timeout: 10s
         - name: arista-ip
           module: ["ip_mib"]
           target: "${SECRET_ARISTA_SWITCH}"
           auth: ["public_v2"]
+          timeout: 10s
       path: /snmp
       scrapeTimeout: 10s
       relabelings:
