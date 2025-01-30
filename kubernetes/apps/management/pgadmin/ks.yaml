@@ -12,6 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../flux/components/gatus/guarded
+    - ../../../../flux/components/volsync
   path: ./kubernetes/apps/management/pgadmin/app
   prune: true
   sourceRef:
