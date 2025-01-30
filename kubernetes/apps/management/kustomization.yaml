@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./pgadmin/ks.yaml
+components:
+  - ../../flux/components/alerts
+  - ../../flux/components/namespace
+patches:
+  - # Add the name to the namespace
+    patch: |
+      - op: add
+        path: /metadata/name
+        value: management
+    target:
+      kind: Namespace
+  - # Add the namespace to the alert
+    patch: &patch |
+      - op: add
+        path: /metadata/namespace
+        value: management
+    target:
+      kind: Alert
+  - # Add the namespace to the provider
+    patch: *patch
+    target:
+      kind: Provider
