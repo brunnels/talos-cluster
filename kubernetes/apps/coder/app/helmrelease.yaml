@@ -43,7 +43,7 @@ spec:
           value: "https://coder.${SECRET_DOMAIN}"
         - name: CODER_WILDCARD_ACCESS_URL
           value: "*.coder.${SECRET_DOMAIN}"
-        - name: CODER_TELEMETRY
+        - name: CODER_TELEMETRY_ENABLE
           value: "false"
         - name: CODER_DISABLE_PASSWORD_AUTH
           value: "true"
