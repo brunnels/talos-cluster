@@ -9,7 +9,7 @@ configMapGenerator:
   - name: pgadmin-local-config
     files:
       - config_local.py=./resources/config_local.py
-  - name: pgadmin-servers-json
+  - name: pgadmin-servers
     files:
       - servers.json=./resources/servers.json
 generatorOptions:
