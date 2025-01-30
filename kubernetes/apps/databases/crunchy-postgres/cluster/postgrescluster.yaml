@@ -75,9 +75,9 @@ spec:
       password:
         type: AlphaNumeric
 
-    - name: gatus
+    - name: coder
       databases:
-        - gatus
+        - coder
       password:
         type: AlphaNumeric
 
