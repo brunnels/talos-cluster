@@ -13,6 +13,11 @@ spec:
   components:
     - ../../../../flux/components/gatus/guarded
     - ../../../../flux/components/volsync
+  dependsOn:
+    - name: crunchy-postgres-cluster
+    - name: crunchy-postgres-stores
+    - name: external-secrets-stores
+    - name: volsync
   path: ./kubernetes/apps/management/pgadmin/app
   prune: true
   sourceRef:
