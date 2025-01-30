@@ -149,15 +149,6 @@ spec:
           authelia:
             app:
               - path: /app/secrets
-      oidc-issuer:
-        type: secret
-        name: authelia-oidc-issuer
-        advancedMounts:
-          authelia:
-            app:
-              - subPath: private_key.pem
-                path: /oidc_issuer/private_key.pem
-                readOnly: true
       trusted-certs:
         type: configMap
         name: letsencrypt-certs
