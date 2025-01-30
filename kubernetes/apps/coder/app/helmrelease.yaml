@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: *app
-      version: 2.18.5@sha256:8191de6bb90ce105d705ec158a2d98065c246d1c53ae01d768f44cd2edd9c806
+      version: 2.18.5
       sourceRef:
         kind: HelmRepository
         name: *app
