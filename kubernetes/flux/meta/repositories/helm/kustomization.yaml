@@ -6,6 +6,7 @@ resources:
   - ./backube.yaml
   - ./bjw-s.yaml
   - ./cilium.yaml
+  - ./coder.yaml
   - ./controlplaneio.yaml
   - ./coredns.yaml
   - ./crunchy-userinit.yaml
