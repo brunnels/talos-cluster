@@ -15,7 +15,7 @@ spec:
             summary: Number of alive provisionerd replicas is below the threshold = 1.
           labels:
             severity: critical
-            runbook_url: https://runbooks.${SECRET_DOMAIN}/coder#provisionerdreplicas
+            runbook_url: https://runbooks.${SECRET_DOMAIN}/coder/coder#provisionerdreplicas
         - alert: ProvisionerdReplicas
           expr: sum(coderd_provisionerd_num_daemons{pod=~`coder.*`, pod!~`.*provisioner.*`, namespace=`coder`}) < 3
           for: 5m
@@ -23,7 +23,7 @@ spec:
             summary: Number of alive provisionerd replicas is below the threshold = 3.
           labels:
             severity: notify
-            runbook_url: https://runbooks.${SECRET_DOMAIN}/coder#provisionerdreplicas
+            runbook_url: https://runbooks.${SECRET_DOMAIN}/coder/coder#provisionerdreplicas
         - alert: ProvisionerdReplicas
           expr: sum(coderd_provisionerd_num_daemons{pod=~`coder.*`, pod!~`.*provisioner.*`, namespace=`coder`}) < 2
           for: 5m
@@ -31,4 +31,4 @@ spec:
             summary: Number of alive provisionerd replicas is below the threshold = 2.
           labels:
             severity: warning
-            runbook_url: https://runbooks.${SECRET_DOMAIN}/coder#provisionerdreplicas
+            runbook_url: https://runbooks.${SECRET_DOMAIN}/coder/coder#provisionerdreplicas

@@ -24,6 +24,8 @@ configMapGenerator:
     options:
       labels:
         runbook_docs: "true"
+      annotations:
+        runbook_folder: "./coder"
     files:
       - coderd.md=./runbooks/coderd.md
       - provisionerd.md=./runbooks/provisionerd.md
