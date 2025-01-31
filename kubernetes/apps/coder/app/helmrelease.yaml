@@ -34,6 +34,9 @@ spec:
         requests:
           cpu: 71m
       env:
+        - name: CODER_PROMETHEUS_ENABLE
+          value: "true"
+
         - name: CODER_PG_CONNECTION_URL
           valueFrom:
             secretKeyRef:
