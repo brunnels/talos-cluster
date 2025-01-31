@@ -44,12 +44,14 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 256Mi
+                memory: 128Mi
         containers:
           app:
             image:
               repository: docker.io/dannyben/madness
               tag: 1.2.2@sha256:f79313694cebc0b5f86969aa444b0d98bc9064962dc115f5b35b7b355202f2ce
+            args:
+              - server
             env:
               TZ: "${TIMEZONE}"
             securityContext:
