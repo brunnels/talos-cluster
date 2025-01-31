@@ -35,7 +35,7 @@ spec:
               tag: 1.29.0@sha256:38907bdecffcc545e838723049cbfe0bc4c10f905b4eedf946be369328249871
             env:
               FOLDER: /docs
-              LABEL: runbook-docs
+              LABEL: runbook_docs
               NAMESPACE: ALL
               UNIQUE_FILENAMES: true
               METHOD: WATCH
