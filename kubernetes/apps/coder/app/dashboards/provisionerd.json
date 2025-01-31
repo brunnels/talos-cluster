@@ -24,6 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 78,
   "links": [],
   "panels": [
     {
@@ -31,7 +32,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "",
+      "description": "Provisioners are responsible for building workspaces.\n\ncoderd runs built-in provisioners by default. Control this with the CODER_PROVISIONER_DAEMONS environment variable or --provisioner-daemons flag.\n\nYou can also consider External Provisioners. Running both built-in and external provisioners is perfectly valid, although dedicated (external) provisioners will generally give the best build performance.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -56,7 +57,7 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 6,
+        "w": 9,
         "x": 0,
         "y": 0
       },
@@ -66,6 +67,7 @@
         "graphMode": "area",
         "justifyMode": "center",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -77,7 +79,7 @@
         "textMode": "value_and_name",
         "wideLayout": false
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -115,33 +117,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "",
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 6,
-        "y": 0
-      },
-      "id": 20,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "Provisioners are responsible for building workspaces.\n\n`coderd` runs built-in provisioners by default. Control this with the `CODER_PROVISIONER_DAEMONS` environment variable or `--provisioner-daemons` flag.\n\nYou can also consider [External Provisioners](https://coder.com/docs/v2/latest/admin/provisioners). Running both built-in and external provisioners is perfectly valid,\nalthough dedicated (external) provisioners will generally give the best build performance.",
-        "mode": "markdown"
-      },
-      "pluginVersion": "10.4.0",
-      "transparent": true,
-      "type": "text"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "description": "",
+      "description": "The maximum number of simultaneous builds is equivalent to the number of provisionerd daemons running.\n\nThe \"Capacity\" panel shows the how many simultaneous builds are possible.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -166,8 +142,8 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 6,
-        "x": 12,
+        "w": 9,
+        "x": 9,
         "y": 0
       },
       "id": 21,
@@ -176,6 +152,7 @@
         "graphMode": "area",
         "justifyMode": "center",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "last"
@@ -187,7 +164,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -225,33 +202,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "",
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 18,
-        "y": 0
-      },
-      "id": 22,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "The maximum number of simultaneous builds is equivalent to the number of `provisionerd` daemons running.\n\nThe \"Capacity\" panel shows the how many simultaneous builds are possible.",
-        "mode": "markdown"
-      },
-      "pluginVersion": "10.4.0",
-      "transparent": true,
-      "type": "text"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "description": "",
+      "description": "This shows the median and 90th percentile workspace build times.\n\nLong build times can impede developers' productivity while they wait for workspaces to start or be created.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -273,8 +224,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 6,
+        "h": 5,
+        "w": 9,
         "x": 0,
         "y": 7
       },
@@ -284,6 +235,7 @@
         "graphMode": "none",
         "justifyMode": "center",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -295,7 +247,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -334,33 +286,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "",
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 6,
-        "y": 7
-      },
-      "id": 24,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "This shows the median and 90th percentile workspace build times.\n\nLong build times can impede developers' productivity while they wait for workspaces to start or be created.",
-        "mode": "markdown"
-      },
-      "pluginVersion": "10.4.0",
-      "transparent": true,
-      "type": "text"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "description": "",
+      "description": "NOTE: this will not show the current hour.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -373,6 +299,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "bars",
             "fillOpacity": 100,
             "gradientMode": "none",
@@ -454,9 +381,9 @@
         ]
       },
       "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 12,
+        "h": 5,
+        "w": 9,
+        "x": 9,
         "y": 7
       },
       "id": 25,
@@ -473,7 +400,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -499,33 +426,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "",
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 18,
-        "y": 7
-      },
-      "id": 26,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "_NOTE: this will not show the current hour._",
-        "mode": "markdown"
-      },
-      "pluginVersion": "10.4.0",
-      "transparent": true,
-      "type": "text"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "description": "",
+      "description": "The cumulative CPU used per core-second. If the process was using a full CPU core, that would be represented as 1 second.\n\nRequests & limits are shown if set.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -538,6 +439,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "bars",
             "fillOpacity": 100,
             "gradientMode": "none",
@@ -636,10 +538,10 @@
         ]
       },
       "gridPos": {
-        "h": 7,
-        "w": 6,
+        "h": 6,
+        "w": 9,
         "x": 0,
-        "y": 14
+        "y": 12
       },
       "id": 28,
       "options": {
@@ -654,7 +556,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -707,33 +609,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "",
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 6,
-        "y": 14
-      },
-      "id": 30,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "The cumulative CPU used per core-second. If the process was using a full CPU core, that would be represented as 1 second.\n\nRequests & limits are shown if set.",
-        "mode": "markdown"
-      },
-      "pluginVersion": "10.4.0",
-      "transparent": true,
-      "type": "text"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "description": "",
+      "description": "This shows the total memory used by each container; it is the same metric which the OOM killer uses.\n\nRequests & limits are shown if set.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -746,6 +622,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "bars",
             "fillOpacity": 100,
             "gradientMode": "none",
@@ -844,10 +721,10 @@
         ]
       },
       "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 12,
-        "y": 14
+        "h": 6,
+        "w": 9,
+        "x": 9,
+        "y": 12
       },
       "id": 29,
       "options": {
@@ -862,7 +739,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -912,40 +789,19 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "description": "",
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 18,
-        "y": 14
-      },
-      "id": 31,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "This shows the total memory used by each container; it is the same metric which the [OOM killer](https://www.kernel.org/doc/gorman/html/understand/understand016.html) uses.\n\nRequests & limits are shown if set.",
-        "mode": "markdown"
-      },
-      "pluginVersion": "10.4.0",
-      "transparent": true,
-      "type": "text"
-    },
-    {
-      "datasource": {
         "type": "loki",
         "uid": "loki"
+      },
+      "description": "This panel shows all logs across built-in and external provisioners.",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
       },
       "gridPos": {
         "h": 18,
         "w": 18,
         "x": 0,
-        "y": 21
+        "y": 18
       },
       "id": 27,
       "options": {
@@ -958,6 +814,7 @@
         "sortOrder": "Descending",
         "wrapLogMessage": false
       },
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -972,36 +829,11 @@
       ],
       "title": "Logs",
       "type": "logs"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "description": "",
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 18,
-        "y": 21
-      },
-      "id": 32,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "This panel shows all logs across built-in and [external provisioners](https://coder.com/docs/v2/latest/admin/provisioners).",
-        "mode": "markdown"
-      },
-      "pluginVersion": "10.4.0",
-      "transparent": true,
-      "type": "text"
     }
   ],
+  "preload": false,
   "refresh": "30s",
-  "schemaVersion": 39,
+  "schemaVersion": 40,
   "tags": [],
   "templating": {
     "list": []
@@ -1014,6 +846,6 @@
   "timezone": "browser",
   "title": "Provisioners",
   "uid": "provisionerd",
-  "version": 10,
+  "version": 1,
   "weekStart": ""
 }
