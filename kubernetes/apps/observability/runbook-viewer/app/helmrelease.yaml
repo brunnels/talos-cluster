@@ -29,7 +29,7 @@ spec:
     controllers:
       runbook-viewer:
         initContainers:
-          init-config:
+          gather-docs:
             image:
               repository: ghcr.io/kiwigrid/k8s-sidecar
               tag: 1.29.0@sha256:38907bdecffcc545e838723049cbfe0bc4c10f905b4eedf946be369328249871
@@ -38,7 +38,6 @@ spec:
               FOLDER_ANNOTATION: runbook_folder
               LABEL: runbook_docs
               NAMESPACE: ALL
-              UNIQUE_FILENAMES: true
               METHOD: WATCH
             restartPolicy: Always
             resources: &resources
