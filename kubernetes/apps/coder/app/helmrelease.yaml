@@ -34,8 +34,8 @@ spec:
         requests:
           cpu: 71m
       env:
-        - name: CODER_PROMETHEUS_ENABLE
-          value: "true"
+        - name: CODER_PROMETHEUS_ADDRESS
+          value: "0.0.0.0:2112"
 
         - name: CODER_PG_CONNECTION_URL
           valueFrom:
