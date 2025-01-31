@@ -3,10 +3,28 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-#  - ./clusterrole.yaml
-#  - ./clusterrolebinding.yaml
+  - ./alerts
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./servicemonitor.yaml
-#  - ./role.yaml
-#  - ./rolebinding.yaml
+configMapGenerator:
+  - name: coder-dashboards
+    options:
+      labels:
+        grafana_dashboard: "true"
+      annotations:
+        grafana_folder: "Coder"
+    files:
+      - coderd.json=./dashboards/coderd.json
+      - provisionerd.json=./dashboards/provisionerd.json
+      - status.json=./dashboards/status.json
+      - workspace_detail.json=./dashboards/workspace_detail.json
+      - workspaces.json=./dashboards/workspaces.json
+  - name: coder-runbooks
+    options:
+      labels:
+        runbook_docs: "true"
+    files:
+      - coderd.md=./runbooks/coderd.md
+      - provisionerd.md=./runbooks/provisionerd.md
+generatorOptions:
+  disableNameSuffixHash: true

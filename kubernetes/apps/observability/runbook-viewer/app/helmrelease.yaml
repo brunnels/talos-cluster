@@ -77,7 +77,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: "runbook-viewer.${SECRET_DOMAIN}"
+          - host: "runbooks.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:

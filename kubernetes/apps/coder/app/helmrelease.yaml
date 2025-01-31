@@ -28,56 +28,44 @@ spec:
     podAnnotations:
       secret.reloader.stakater.com/reload: *app
     coder:
+      podAnnotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "2112"
       resources:
         limits:
           memory: 1Gi
         requests:
           cpu: 71m
+      envFrom:
+        - secretRef:
+            name: *app
       env:
-        - name: CODER_PROMETHEUS_ADDRESS
-          value: "0.0.0.0:2112"
-
-        - name: CODER_PG_CONNECTION_URL
-          valueFrom:
-            secretKeyRef:
-              name: *app
-              key: CODER_PG_CONNECTION_URL
         - name: CODER_ACCESS_URL
           value: "https://coder.${SECRET_DOMAIN}"
-        - name: CODER_WILDCARD_ACCESS_URL
-          value: "*.coder.${SECRET_DOMAIN}"
-        - name: CODER_TELEMETRY_ENABLE
-          value: "false"
         - name: CODER_DISABLE_PASSWORD_AUTH
           value: "true"
+        - name: CODER_EMAIL_FROM
+          value: "Authelia <admin@${SECRET_DOMAIN}>"
+        - name: CODER_EMAIL_TLS_STARTTLS
+          value: "true"
+        - name: CODER_LOGGING_HUMAN
+          value: "/dev/stderr"
+        - name: CODER_OIDC_ICON_URL
+          value: "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/authelia.svg"
         - name: CODER_OIDC_ISSUER_URL
           value: "https://auth.${SECRET_DOMAIN}"
         - name: CODER_OIDC_SCOPES
           value: "openid,profile,email,groups,offline_access"
-        - name: CODER_OIDC_ALLOWED_GROUPS
-          valueFrom:
-            secretKeyRef:
-              name: *app
-              key: CODER_OIDC_ALLOWED_GROUPS
-        - name: CODER_OIDC_EMAIL_DOMAIN
-          valueFrom:
-            secretKeyRef:
-              name: *app
-              key: CODER_OIDC_EMAIL_DOMAIN
-        - name: CODER_OIDC_CLIENT_ID
-          valueFrom:
-            secretKeyRef:
-              name: *app
-              key: CODER_OIDC_CLIENT_ID
-        - name: CODER_OIDC_CLIENT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: *app
-              key: CODER_OIDC_CLIENT_SECRET
         - name: CODER_OIDC_SIGN_IN_TEXT
-          value: Sign in with Authelia
-        - name: CODER_OIDC_ICON_URL
-          value: https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/authelia.svg
+          value: "Sign in with Authelia"
+        - name: CODER_PROMETHEUS_ENABLE
+          value: "true"
+        - name: CODER_PROMETHEUS_COLLECT_AGENT_STATS
+          value: "true"
+        - name: CODER_TELEMETRY_ENABLE
+          value: "false"
+        - name: CODER_WILDCARD_ACCESS_URL
+          value: "*.coder.${SECRET_DOMAIN}"
       service:
         loadBalancerIP: ${SVC_CODER_ADDR}
         annotations:

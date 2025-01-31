@@ -47,7 +47,7 @@ storage:
 notifier:
   disable_startup_check: true
   smtp:
-    sender: "Authelia <authelia@${SECRET_DOMAIN}>"
+    sender: "Authelia <admin@${SECRET_DOMAIN}>"
 
 access_control:
   default_policy: deny
