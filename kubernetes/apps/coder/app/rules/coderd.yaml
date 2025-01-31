@@ -78,22 +78,6 @@ spec:
           labels:
             severity: critical
             runbook_url: https://runbooks.${SECRET_DOMAIN}/coder/coder#coderdreplicas
-        - alert: CoderdReplicas
-          expr: sum(up{pod=~`coder.*`, pod!~`.*provisioner.*`, namespace=`coder`}) < 3
-          for: 5m
-          annotations:
-            summary: Number of alive coderd replicas is below the threshold = 3.
-          labels:
-            severity: notify
-            runbook_url: https://runbooks.${SECRET_DOMAIN}/coder/coder#coderdreplicas
-        - alert: CoderdReplicas
-          expr: sum(up{pod=~`coder.*`, pod!~`.*provisioner.*`, namespace=`coder`}) < 2
-          for: 5m
-          annotations:
-            summary: Number of alive coderd replicas is below the threshold = 2.
-          labels:
-            severity: warning
-            runbook_url: https://runbooks.${SECRET_DOMAIN}/coder/coder#coderdreplicas
     - name: Coderd Workspace Build Failures
       rules:
         - alert: CoderdWorkspaceBuildFailures
