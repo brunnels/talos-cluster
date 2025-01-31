@@ -3,7 +3,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: coderd-rules
+  name: provisionerd-rules
 spec:
   groups:
     - name: Provisionerd Replicas
