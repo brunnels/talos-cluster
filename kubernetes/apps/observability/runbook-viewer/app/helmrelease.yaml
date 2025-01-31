@@ -83,6 +83,9 @@ spec:
                 service:
                   identifier: app
                   port: http
+    serviceAccount:
+      create: true
+      name: *app
     persistence:
       docs:
         type: emptyDir
