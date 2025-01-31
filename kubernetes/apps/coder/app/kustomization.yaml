@@ -3,10 +3,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./coderd-prometheusrule.yaml
+#  - ./coderd-prometheusrule.yaml
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./provisionerd-prometheusrule.yaml
+#  - ./provisionerd-prometheusrule.yaml
 configMapGenerator:
   - name: coder-dashboards
     options:
