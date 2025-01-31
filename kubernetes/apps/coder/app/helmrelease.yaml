@@ -83,7 +83,7 @@ spec:
                 name: *app
               patch: |
                 - op: add
-                  path: /spec/ports
+                  path: /spec/ports/-
                   value:
                     - name: prom-http
                       port: 2112
