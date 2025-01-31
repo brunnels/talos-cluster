@@ -7,5 +7,6 @@ resources:
 #  - ./clusterrolebinding.yaml
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./servicemonitor.yaml
 #  - ./role.yaml
 #  - ./rolebinding.yaml

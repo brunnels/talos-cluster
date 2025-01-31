@@ -79,6 +79,7 @@ spec:
         - name: CODER_OIDC_ICON_URL
           value: https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/authelia.svg
       service:
+        loadBalancerIP: ${SVC_CODER_ADDR}
         annotations:
           io.cilium/lb-ipam-ips: ${SVC_CODER_ADDR}
       ingress:
