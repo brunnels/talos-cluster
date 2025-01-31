@@ -81,6 +81,12 @@ spec:
       password:
         type: AlphaNumeric
 
+    - name: grafana
+      databases:
+        - grafana
+      password:
+        type: AlphaNumeric
+
     - name: lidarr
       databases:
         - lidarr_main

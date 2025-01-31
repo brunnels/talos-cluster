@@ -13,6 +13,8 @@ spec:
   components:
     - ../../../../flux/components/gatus/guarded
   dependsOn:
+    - name: crunchy-postgres-cluster
+    - name: crunchy-postgres-stores
     - name: external-secrets-stores
   path: ./kubernetes/apps/observability/grafana/app
   prune: true
