@@ -75,6 +75,9 @@ spec:
           value: Sign in with Authelia
         - name: CODER_OIDC_ICON_URL
           value: https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/authelia.svg
+      service:
+        annotations:
+          io.cilium/lb-ipam-ips: ${SVC_CODER_ADDR}
       ingress:
         enable: true
         className: internal
