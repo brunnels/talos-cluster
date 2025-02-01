@@ -1,0 +1,166 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app home-assistant
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  values:
+    controllers:
+      home-assistant:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/home-assistant
+              tag: 2025.1.4@sha256:6389f9593b4acd80c74322f56c9229fae631e752a3bf49839be12442a153e0dc
+            env:
+              TZ: "${TIMEZONE}"
+              HASS_LATITUDE: "${SECRET_LATITUDE}"
+              HASS_LONGITUDE: "${SECRET_LONGITUDE}"
+              HASS_ELEVATION: "174"
+            envFrom:
+              - secretRef:
+                  name: *app
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 2Gi
+                cpu: 20m
+          code-server:
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.96.4@sha256:f93810f7f6636b3af3b1a750faf612349cddb89fbb6d28d69123a214fc75ee9e
+            env:
+              TZ: "${TIMEZONE}"
+              HASS_SERVER: http://localhost:8123
+            args: [
+              "--auth", "none",
+              "--disable-telemetry",
+              "--disable-update-check",
+              "--user-data-dir", "/config/.vscode",
+              "--extensions-dir", "/config/.vscode",
+              "--port", "12321",
+              "/config"
+            ]
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+                cpu: 20m
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: *app
+        nameOverride: *app
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: ${SVC_HOME_ASSISTANT_ADDR:=temp}
+        ports:
+          http:
+            port: 8123
+          codeserver:
+            port: 12321
+      codeserver:
+        controller: *app
+        type: ClusterIP
+        ports:
+          http:
+            enabled: true
+            port: 8080
+    ingress:
+      app:
+        className: internal
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Automation
+          gethomepage.dev/icon: home-assistant
+          gethomepage.dev/name: Home Assistant
+          gethomepage.dev/pod-selector: app.kubernetes.io/name=home-assistant
+        hosts:
+          - host: hass.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+      codeserver:
+        className: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Automation
+          gethomepage.dev/icon: vscode
+          gethomepage.dev/name: Home Assistant Code
+          gethomepage.dev/pod-selector: app.kubernetes.io/name=home-assistant
+          nginx.ingress.kubernetes.io/auth-method: GET
+          nginx.ingress.kubernetes.io/auth-url: http://authelia.security.svc.cluster.local/api/verify
+          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
+          nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
+          nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
+        hosts:
+          - host: hass.${SECRET_DOMAIN}
+            paths:
+              - path: /code/(.*)
+                service:
+                  identifier: codeserver
+                  port: http
+    persistence:
+      config:
+        existingClaim: *app
+        globalMounts:
+          - path: /config
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/logs
+      tts:
+        type: emptyDir
+        globalMounts:
+          - path: /config/tts
+      tmp:
+        type: emptyDir
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /tmp
+                subPath: hass-tmp
+            code-server:
+              - path: /tmp
+                subPath: code-server-tmp

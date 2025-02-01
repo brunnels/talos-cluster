@@ -16,3 +16,4 @@ data:
     sub_filter_once on;
   SVC_POSTGRES_ADDR: "10.0.155.4"
   SVC_CODER_ADDR: "10.0.155.5"
+  SVC_HOME_ASSISTANT_ADDR: "10.0.155.6"
