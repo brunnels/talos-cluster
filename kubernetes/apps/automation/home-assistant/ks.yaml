@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../flux/components/gatus/guarded
-#    - ../../../../flux/components/volsync
+    - ../../../../flux/components/volsync
   dependsOn:
     - name: crunchy-postgres-cluster
     - name: crunchy-postgres-stores
