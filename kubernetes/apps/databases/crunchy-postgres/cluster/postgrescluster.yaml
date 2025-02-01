@@ -87,6 +87,12 @@ spec:
       password:
         type: AlphaNumeric
 
+    - name: haas
+      databases:
+        - haas
+      password:
+        type: AlphaNumeric
+
     - name: lidarr
       databases:
         - lidarr_main
