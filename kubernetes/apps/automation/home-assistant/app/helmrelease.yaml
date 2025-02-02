@@ -179,10 +179,14 @@ spec:
           - path: /etc/default-configuration.yaml
             subPath: default-configuration.yaml
             readOnly: true
+#      config:
+#        existingClaim: *app
+#        globalMounts:
+#          - path: /config
       config:
-        existingClaim: *app
-        globalMounts:
-          - path: /config
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
       secrets:
         type: secret
         name: *app
