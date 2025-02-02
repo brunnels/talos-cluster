@@ -41,7 +41,7 @@ spec:
               - "-c"
               - |
                 [ -f "/config/configuraton.yaml" ] \
-                && cp /config/default-configuration.yaml /config/configuration.yaml \
+                && cp /etc/default-configuration.yaml /config/configuration.yaml \
                 || echo "Nothing to do, Configuration file already present."
         containers:
           app:
@@ -182,7 +182,7 @@ spec:
         type: configMap
         name: haas-default-configuration
         globalMounts:
-          - path: /config/default-configuration.yaml
+          - path: /etc/default-configuration.yaml
             subPath: default-configuration.yaml
             readOnly: true
       config:
