@@ -113,6 +113,9 @@ spec:
           gethomepage.dev/icon: home-assistant
           gethomepage.dev/name: Home Assistant
           gethomepage.dev/pod-selector: app.kubernetes.io/name=home-assistant
+          service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"
+          nginx.ingress.kubernetes.io/cors-allow-headers: "X-Forwarded-For, X-Real-IP, X-Frame-Options, X-Content-Type-Options, X-Forwarded-Proto"
+          nginx.org/websocket-services: home-assistant-app
         hosts:
           - host: hass.${SECRET_DOMAIN}
             paths:
