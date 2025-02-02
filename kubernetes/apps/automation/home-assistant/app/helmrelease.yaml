@@ -49,11 +49,11 @@ spec:
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 10m
+                cpu: 100m
                 memory: 128Mi
               limits:
+                cpu: 500m
                 memory: 2Gi
-                cpu: 20m
           code-server:
             image:
               repository: ghcr.io/coder/code-server
@@ -72,11 +72,11 @@ spec:
             ]
             resources:
               requests:
-                cpu: 10m
-                memory: 128Mi
+                cpu: 100m
+                memory: 1Gi
               limits:
-                memory: 512Mi
-                cpu: 20m
+                cpu: 500m
+                memory: 4Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
