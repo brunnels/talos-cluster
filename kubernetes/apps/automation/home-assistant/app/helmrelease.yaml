@@ -40,8 +40,8 @@ spec:
             args:
               - "-c"
               - |
-                [ ! -f "/config/configuraton.yaml" ] \
-                && cp /config/default-configuraton.yaml /config/configuration.yaml \
+                [ -f "/config/configuraton.yaml" ] \
+                && cp /config/default-configuration.yaml /config/configuration.yaml \
                 || echo "Nothing to do, Configuration file already present."
         containers:
           app:
