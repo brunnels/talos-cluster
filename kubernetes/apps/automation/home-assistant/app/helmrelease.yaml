@@ -42,7 +42,7 @@ spec:
               - |
                 [ ! -f "/config/configuration.yaml" ] \
                 && ( cp /etc/default-configuration.yaml /config/configuration.yaml \
-                     && echo "[]" /config/automations.yaml \
+                     && echo "[]" > /config/automations.yaml \
                     && touch /config/scenes.yaml /config/scripts.yaml /config/secrets.yaml ) \
                 || echo "Nothing to do, Configuration file already present."
         containers:
