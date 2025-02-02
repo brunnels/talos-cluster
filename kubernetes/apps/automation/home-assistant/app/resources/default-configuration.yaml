@@ -7,7 +7,6 @@ homeassistant:
   unit_system: !env_var HASS_UNIT_SYSTEM us_customary
   currency: !env_var HASS_CURRENCY USD
   time_zone: !env_var TZ UTC
-  customize: !include customize.yaml
   country: !env_var HASS_COUNTRY US
 # Loads default set of integrations. Do not remove.
 default_config:
