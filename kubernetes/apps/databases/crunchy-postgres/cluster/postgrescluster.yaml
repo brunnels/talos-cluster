@@ -87,9 +87,9 @@ spec:
       password:
         type: AlphaNumeric
 
-    - name: haas
+    - name: hass
       databases:
-        - haas
+        - hass
       password:
         type: AlphaNumeric
 
