@@ -171,6 +171,10 @@ spec:
 #                service:
 #                  identifier: codeserver
 #                  port: http
+    configMaps:
+      dockerenv:
+        data:
+          dockerenv: ""
     persistence:
       default-configuraton:
         type: configMap
