@@ -91,7 +91,7 @@ spec:
         nameOverride: *app
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: ${SVC_HOME_ASSISTANT_ADDR:=temp}
+          lbipam.cilium.io/ips: ${SVC_HOME_ASSISTANT_ADDR}
         ports:
           http:
             port: 8123
@@ -103,7 +103,7 @@ spec:
         ports:
           http:
             enabled: true
-            port: 8080
+            port: 12321
     ingress:
       app:
         className: internal
@@ -117,7 +117,7 @@ spec:
           nginx.ingress.kubernetes.io/cors-allow-headers: "X-Forwarded-For, X-Real-IP, X-Frame-Options, X-Content-Type-Options, X-Forwarded-Proto"
           nginx.org/websocket-services: home-assistant-app
         hosts:
-          - host: hass.${SECRET_DOMAIN}
+          - host: "hass.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
@@ -138,7 +138,7 @@ spec:
           nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
           nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
         hosts:
-          - host: hass.${SECRET_DOMAIN}
+          - host: "hass.${SECRET_DOMAIN}"
             paths:
               - path: /code/(.*)
                 service:
