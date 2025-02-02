@@ -13,10 +13,10 @@ scene: !include scenes.yaml
 http:
   use_x_forwarded_for: true
   trusted_proxies:
-    - !secret HASS_HTTP_TRUSTED_PROXY_1 10.69.0.0/16
+    - !secret HASS_HTTP_TRUSTED_PROXY_1
 
 recorder:
-  purge_keep_days: !secret HAAS_PURGE_KEEP_DAYS 14
+  purge_keep_days: !secret HAAS_PURGE_KEEP_DAYS
   auto_purge: true
   db_url: !secret HASS_POSTGRES_URL
   exclude:
