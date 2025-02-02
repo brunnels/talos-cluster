@@ -41,7 +41,8 @@ spec:
               - "-c"
               - |
                 [ ! -f "/config/configuration.yaml" ] \
-                && cp /etc/default-configuration.yaml /config/configuration.yaml \
+                && ( cp /etc/default-configuration.yaml /config/configuration.yaml \
+                     && touch scenes.yaml scripts.yaml secrets.yaml ) \
                 || echo "Nothing to do, Configuration file already present."
         containers:
           app:
