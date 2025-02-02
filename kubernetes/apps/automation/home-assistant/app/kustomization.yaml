@@ -6,7 +6,7 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
 configMapGenerator:
-  - name: haas_default_configuration
+  - name: haas-default-configuration
     files:
       - default-configuraton.yaml=./resources/default-configuraton.yaml
 generatorOptions:
