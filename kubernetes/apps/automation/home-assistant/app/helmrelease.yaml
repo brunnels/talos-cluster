@@ -50,16 +50,9 @@ spec:
             image:
               repository: ghcr.io/onedr0p/home-assistant
               tag: 2025.1.4@sha256:6389f9593b4acd80c74322f56c9229fae631e752a3bf49839be12442a153e0dc
-            env:
-              TZ: "${TIMEZONE}"
-              HASS_LATITUDE: "${SECRET_LATITUDE}"
-              HASS_LONGITUDE: "${SECRET_LONGITUDE}"
-              HASS_ELEVATION: "174"
-              HASS_HTTP_TRUSTED_PROXY_1: "${CLUSTER_CIDR}"
-              HAAS_PURGE_KEEP_DAYS: 30
-            envFrom:
-              - secretRef:
-                  name: *app
+            args: [
+              "--log-file", "/config/logs/home-assistant.log"
+            ]
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -69,7 +62,6 @@ spec:
                 cpu: 100m
                 memory: 128Mi
               limits:
-                cpu: 500m
                 memory: 2Gi
           code-server:
             image:
@@ -191,14 +183,35 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /config
+      secrets:
+        type: secret
+        name: *app
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /config/secret.yaml
+                subPath: secret.yaml
+                readOnly: true
+      dockerenv:
+        type: configMap
+        name: home-assistant-dockerenv
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /.dockerenv
+                subPath: dockerenv
       logs:
         type: emptyDir
-        globalMounts:
-          - path: /config/logs
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /config/logs
       tts:
         type: emptyDir
-        globalMounts:
-          - path: /config/tts
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /config/tts
       tmp:
         type: emptyDir
         advancedMounts:
