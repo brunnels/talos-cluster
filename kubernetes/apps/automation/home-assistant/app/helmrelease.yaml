@@ -31,23 +31,30 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
+          initContainers:
+            add-default-configuration:
+              image:
+                repository: docker.io/library/busybox
+                tag: 1.37.0@sha256:a5d0ce49aa801d475da48f8cb163c354ab95cab073cd3c138bd458fc8257fbf1
+              command:
+                - "/bin/sh"
+              args:
+                - "-c"
+                - |
+                  [ -f "/config/default-configuraton.yaml" ] \
+                  && cp /default-configuraton.yaml /config/configuration.yaml \
+                  || echo "Nothing to do, Configuration file already present."
           app:
             image:
               repository: ghcr.io/onedr0p/home-assistant
               tag: 2025.1.4@sha256:6389f9593b4acd80c74322f56c9229fae631e752a3bf49839be12442a153e0dc
             env:
               TZ: "${TIMEZONE}"
-              HASS_TIME_ZONE: "${TIMEZONE}"
               HASS_LATITUDE: "${SECRET_LATITUDE}"
               HASS_LONGITUDE: "${SECRET_LONGITUDE}"
               HASS_ELEVATION: "174"
-              HASS_PURGE_KEEP_DAYS: 30
-              HASS_USE_X_FORWARDED_FOR: "true"
-              HASS_HTTP_TRUSTED_PROXY_1: "${LAN_CIDR}"
-              HASS_PORT: &port 8123
-              HASS_EXTERNAL_URL: &host "hass.${SECRET_DOMAIN}"
-              HASS_APPLICATION_URL: *host
-              HASS_UNIT_SYSTEM: us_customary
+              HASS_HTTP_TRUSTED_PROXY_1: "${CLUSTER_CIDR}"
+              HAAS_PURGE_KEEP_DAYS: 30
             envFrom:
               - secretRef:
                   name: *app
@@ -102,7 +109,7 @@ spec:
 #          lbipam.cilium.io/ips: ${SVC_HOME_ASSISTANT_ADDR}
         ports:
           http:
-            port: *port
+            port: 8123
           code-server:
             port: 12321
 #      codeserver:
@@ -116,7 +123,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: *host
+          - host: "hass.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
@@ -171,6 +178,15 @@ spec:
 #                  identifier: codeserver
 #                  port: http
     persistence:
+      default-configuraton:
+        type: configMap
+        name: haas_default_configuration
+        advancedMounts:
+          home-assistant:
+            add-default-configuration:
+              - path: /default-configuration.yaml
+                subPath: default-configuration.yaml
+                readOnly: true
       config:
         existingClaim: *app
         globalMounts:

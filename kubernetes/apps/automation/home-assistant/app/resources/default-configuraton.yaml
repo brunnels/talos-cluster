@@ -1,0 +1,43 @@
+---
+homeassistant:
+  name: !env_var HASS_NAME Home
+  latitude: !env_var HASS_LATITUDE
+  longitude: !env_var HASS_LONGITUDE
+  elevation: !env_var HASS_ELEVATION
+  unit_system: !env_var HASS_UNIT_SYSTEM us_customary
+  currency: !env_var HASS_CURRENCY USD
+  time_zone: !env_var TZ UTC
+  customize: !include customize.yaml
+  country: !env_var HASS_COUNTRY US
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - !env_var HASS_HTTP_TRUSTED_PROXY_1 10.69.0.0/16
+
+recorder:
+  purge_keep_days: !env_var HAAS_PURGE_KEEP_DAYS 14
+  auto_purge: true
+  db_url: !env_var HASS_POSTGRES_URL
+  exclude:
+    domains:
+      - automation
+      - weblink
+      - updater
+      - calendar
+      - group
+      - zone
+      - zwave
+    entities:
+      - sun.sun
+      - sensor.date
