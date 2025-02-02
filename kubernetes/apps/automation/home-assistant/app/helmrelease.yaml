@@ -68,7 +68,7 @@ spec:
               tag: 4.96.4@sha256:f93810f7f6636b3af3b1a750faf612349cddb89fbb6d28d69123a214fc75ee9e
             env:
               TZ: "${TIMEZONE}"
-              HASS_SERVER: http://localhost:8123
+              HASS_SERVER: "http://localhost:8123"
             args: [
               "--auth", "none",
               "--disable-telemetry",
@@ -103,6 +103,8 @@ spec:
         ports:
           http:
             port: *port
+          code-server:
+            port: 12321
 #      codeserver:
 #        controller: *app
 #        type: ClusterIP
@@ -120,6 +122,15 @@ spec:
                 service:
                   identifier: app
                   port: http
+      code-server:
+        className: internal
+        hosts:
+          - host: "hass-code.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: code-server
 #    ingress:
 #      app:
 #        className: internal
