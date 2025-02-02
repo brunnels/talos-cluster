@@ -30,20 +30,20 @@ spec:
       home-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          add-default-configuration:
+            image:
+              repository: docker.io/library/busybox
+              tag: 1.37.0@sha256:a5d0ce49aa801d475da48f8cb163c354ab95cab073cd3c138bd458fc8257fbf1
+            command:
+              - "/bin/sh"
+            args:
+              - "-c"
+              - |
+                [ -f "/config/default-configuraton.yaml" ] \
+                && cp /default-configuraton.yaml /config/configuration.yaml \
+                || echo "Nothing to do, Configuration file already present."
         containers:
-          initContainers:
-            add-default-configuration:
-              image:
-                repository: docker.io/library/busybox
-                tag: 1.37.0@sha256:a5d0ce49aa801d475da48f8cb163c354ab95cab073cd3c138bd458fc8257fbf1
-              command:
-                - "/bin/sh"
-              args:
-                - "-c"
-                - |
-                  [ -f "/config/default-configuraton.yaml" ] \
-                  && cp /default-configuraton.yaml /config/configuration.yaml \
-                  || echo "Nothing to do, Configuration file already present."
           app:
             image:
               repository: ghcr.io/onedr0p/home-assistant
@@ -180,7 +180,7 @@ spec:
     persistence:
       default-configuraton:
         type: configMap
-        name: haas-default-configuration
+        name: haas-default-configuratio
         advancedMounts:
           home-assistant:
             add-default-configuration:
