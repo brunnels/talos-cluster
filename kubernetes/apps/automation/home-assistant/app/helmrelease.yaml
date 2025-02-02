@@ -37,9 +37,15 @@ spec:
               tag: 2025.1.4@sha256:6389f9593b4acd80c74322f56c9229fae631e752a3bf49839be12442a153e0dc
             env:
               TZ: "${TIMEZONE}"
-              HASS_LATITUDE: "${SECRET_LATITUDE}"
-              HASS_LONGITUDE: "${SECRET_LONGITUDE}"
-              HASS_ELEVATION: "174"
+              HOME_ASSISTANT_TIME_ZONE: "${TIMEZONE}"
+              HOME_ASSISTANT_LATITUDE: "${SECRET_LATITUDE}"
+              HOME_ASSISTANT_LONGITUDE: "${SECRET_LONGITUDE}"
+              HOME_ASSISTANT_ELEVATION: "174"
+              HOME_ASSISTANT_EXTERNAL_URL: "hass.${SECRET_DOMAIN}"
+              HOME_ASSISTANT_PURGE_KEEP_DAYS: 30
+              HOME_ASSISTANT_USE_X_FORWARDED_FOR: "true"
+              HOME_ASSISTANT_TRUSTED_PROXIES: "${LAN_CIDR}"
+              HOME_ASSISTANT_UNIT_SYSTEM: us_customary
             envFrom:
               - secretRef:
                   name: *app
