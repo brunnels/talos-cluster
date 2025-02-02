@@ -8,6 +8,6 @@ resources:
 configMapGenerator:
   - name: haas-default-configuration
     files:
-      - default-configuraton.yaml=./resources/default-configuraton.yaml
+      - default-configuration.yaml=./resources/default-configuration.yaml
 generatorOptions:
   disableNameSuffixHash: true
