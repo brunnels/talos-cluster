@@ -197,8 +197,8 @@ spec:
         advancedMounts:
           home-assistant:
             app:
-              - path: /config/secret.yaml
-                subPath: secret.yaml
+              - path: /config/secrets.yaml
+                subPath: secrets.yaml
                 readOnly: true
       dockerenv:
         type: configMap
