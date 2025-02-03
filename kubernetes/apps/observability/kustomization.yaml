@@ -8,9 +8,9 @@ resources:
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
-  - ./loki/ks.yaml
+#  - ./loki/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
-  - ./promtail/ks.yaml
+#  - ./promtail/ks.yaml
   - ./runbook-viewer/ks.yaml
 components:
   - ../../flux/components/alerts
