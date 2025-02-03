@@ -147,7 +147,7 @@ spec:
         hosts:
           - host: "hass-code.${SECRET_DOMAIN}"
             paths:
-              - path: /code/(.*)
+              - path: /
                 service:
                   identifier: app
                   port: code-server
