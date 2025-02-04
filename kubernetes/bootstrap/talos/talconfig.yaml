@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.9.2
+talosVersion: v1.9.3
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: v1.32.1
 
@@ -32,7 +32,22 @@ nodes:
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/810f7a1b95fd41a652264bd7e172b67e1eda2a7bbccfa3ca764463021cb0de56
+    schematic: &schematic
+      customization:
+        extraKernelArgs:
+          - i915.modeset=1                      # Meteor Lake CPU / iGPU
+          - i915.enable_guc=3                   # Meteor Lake CPU / iGPU
+          - apparmor=0                          # Less security, faster puter
+          - init_on_alloc=0                     # Less security, faster puter
+          - init_on_free=0                      # Less security, faster puter
+          - intel_iommu=on                      # PCI Passthrough
+          - iommu=pt                            # PCI Passthrough
+          - mitigations=off                     # Less security, faster puter
+          - module_blacklist=igc                # Disable onboard NIC
+          - security=none                       # Less security, faster puter
+          - sysctl.kernel.kexec_load_disabled=1 # Meteor Lake CPU / iGPU
+          - talos.auditd.disabled=1             # Less security, faster puter
+    talosImageURL: factory.talos.dev/installer-secureboot/21650fcef151ac4d56048f0546c3920553ce5a6d99f4218979171364313eed76
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -58,7 +73,8 @@ nodes:
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/810f7a1b95fd41a652264bd7e172b67e1eda2a7bbccfa3ca764463021cb0de56
+    schematic: *schematic
+    talosImageURL: factory.talos.dev/installer-secureboot/21650fcef151ac4d56048f0546c3920553ce5a6d99f4218979171364313eed76
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -78,7 +94,8 @@ nodes:
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/810f7a1b95fd41a652264bd7e172b67e1eda2a7bbccfa3ca764463021cb0de56
+    schematic: *schematic
+    talosImageURL: factory.talos.dev/installer-secureboot/21650fcef151ac4d56048f0546c3920553ce5a6d99f4218979171364313eed76
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -98,7 +115,8 @@ nodes:
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/810f7a1b95fd41a652264bd7e172b67e1eda2a7bbccfa3ca764463021cb0de56
+    schematic: *schematic
+    talosImageURL: factory.talos.dev/installer-secureboot/21650fcef151ac4d56048f0546c3920553ce5a6d99f4218979171364313eed76
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
@@ -115,6 +133,10 @@ nodes:
 
 # Global patches
 patches:
+  - |-
+    - op: replace
+      path: /machine/install/wipe
+      value: true
   - "@./patches/global/machine-files.yaml"
   - "@./patches/global/machine-kubelet.yaml"
   - "@./patches/global/machine-network.yaml"
