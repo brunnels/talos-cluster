@@ -133,10 +133,6 @@ nodes:
 
 # Global patches
 patches:
-  - |-
-    - op: replace
-      path: /machine/install/wipe
-      value: true
   - "@./patches/global/machine-files.yaml"
   - "@./patches/global/machine-kubelet.yaml"
   - "@./patches/global/machine-network.yaml"
