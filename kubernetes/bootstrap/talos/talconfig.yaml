@@ -29,7 +29,7 @@ cniConfig:
 nodes:
   - hostname: "korg-n1"
     ipAddress: "10.0.150.99"
-    installDisk: "/dev/sda"
+    installDisk: "/dev/disk/by-id/ata-SATA_SSD_DA09079110EC06342341"
     machineSpec:
       secureboot: true
     schematic: &schematic
@@ -70,7 +70,7 @@ nodes:
             mountPath: /usr/local/etc/nut/nut.conf
   - hostname: "korg-n2"
     ipAddress: "10.0.150.98"
-    installDisk: "/dev/sda"
+    installDisk: "/dev/disk/by-id/ata-SATA_SSD_DC4E079110EC06342361"
     machineSpec:
       secureboot: true
     schematic: *schematic
@@ -91,7 +91,7 @@ nodes:
     extensionServices: *extensionServices
   - hostname: "korg-n3"
     ipAddress: "10.0.150.97"
-    installDisk: "/dev/sda"
+    installDisk: "/dev/disk/by-id/ata-SATA_SSD_DC4E079110EC06341678"
     machineSpec:
       secureboot: true
     schematic: *schematic
@@ -112,7 +112,7 @@ nodes:
     extensionServices: *extensionServices
   - hostname: "korg-n4"
     ipAddress: "10.0.150.96"
-    installDisk: "/dev/sda"
+    installDisk: "/dev/disk/by-id/ata-SATA_SSD_B7A307871B5300035278"
     machineSpec:
       secureboot: true
     schematic: *schematic
