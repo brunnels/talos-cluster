@@ -3,7 +3,9 @@
 apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 resources:
-  - ../alerts
-  - ../namespace
-  - ../sops
-  - ../substitutions
+  - ../alerts/alert.yaml
+  - ../alerts/provider.yaml
+  - ../namespace/namespace.yaml
+  - ../sops/sops-age.sops.yaml
+  - ../substitutions/cluster-secrets.sops.yaml
+  - ../substitutions/cluster-settings.yaml
