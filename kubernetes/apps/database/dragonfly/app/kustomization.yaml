@@ -7,4 +7,4 @@ resources:
   - https://raw.githubusercontent.com/dragonflydb/dragonfly-operator/v1.1.9/manifests/crd.yaml
   - ./clusterrole.yaml
   - ./clusterrolebinding.yaml
-  - ./rbac.yaml
+  - ./helmrelease.yaml
