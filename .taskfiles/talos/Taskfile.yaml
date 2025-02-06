@@ -61,6 +61,23 @@ tasks:
     desc: Resets nodes back to maintenance mode
     dir: '{{.TALHELPER_DIR}}'
     prompt: This will destroy your cluster and reset the nodes back to maintenance mode... continue?
-    cmd: talhelper gencommand reset --extra-flags="--reboot {{- if eq .CLI_FORCE false }} --system-labels-to-wipe STATE --system-labels-to-wipe EPHEMERAL{{ end }} --graceful=false --wait=false" | bash
+    cmds:
+      - task: backup-cert-manager-tls-certs
+      - talhelper gencommand reset --extra-flags="--reboot {{- if eq .CLI_FORCE false }} --system-labels-to-wipe STATE --system-labels-to-wipe EPHEMERAL{{ end }} --graceful=false --wait=false" | bash
     preconditions:
       - which talhelper
+
+  backup-cert-manager-tls-certs:
+    desc: Backup cert-manager tls certs
+    cmds:
+      - for: { var: SECRETS }
+        cmd: |
+          kubectl -n cert-manager get secrets {{.ITEM}} -o yaml | ksd > {{.KUBERNETES_DIR}}/bootstrap/apps/{{.ITEM}}.sops.yaml
+          sops --encrypt --in-place {{.KUBERNETES_DIR}}/bootstrap/apps/{{.ITEM}}.sops.yaml
+          git add {{.KUBERNETES_DIR}}/bootstrap/apps/{{.ITEM}}.sops.yaml
+    vars:
+      SECRETS:
+        sh: kubectl -n cert-manager get secret --no-headers | grep "\-tls" | awk '{print $1}'
+    preconditions:
+      - which ksd
+      - which sops
