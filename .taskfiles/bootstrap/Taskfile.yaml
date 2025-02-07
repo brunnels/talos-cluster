@@ -27,13 +27,18 @@ tasks:
         cmd: kubectl create namespace {{base .ITEM}} --dry-run=client --output=yaml | kubectl apply --server-side --filename -
       - for: { var: APPLY_SECRETS }
         cmd: sops exec-file {{.ITEM}} "kubectl --namespace flux-system apply --server-side --filename {}"
+      - for: { var: APPLY_CERTS }
+        cmd: sops exec-file {{.ITEM}} "kubectl --namespace cert-manager apply --server-side --filename {}"
       - kubectl --namespace flux-system apply --server-side --filename {{.KUBERNETES_DIR}}/flux/components/substitutions/cluster-settings.yaml
       - helmfile --file {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
+      - kubectl apply --server-side --filename {{.KUBERNETES_DIR}}/bootstrap/apps/ds-debug-tools.yaml
     vars:
       APPLY_NAMESPACES:
         sh: ls -d {{.KUBERNETES_DIR}}/apps/*
       APPLY_SECRETS:
         sh: find {{.KUBERNETES_DIR}}/bootstrap/apps {{.KUBERNETES_DIR}}/flux -type f -name '*.sops.yaml'
+      APPLY_CERTS:
+        sh: find {{.KUBERNETES_DIR}}/bootstrap/certs -type f -name '*.sops.yaml'
     preconditions:
       - test -f {{.KUBECONFIG}}
       - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml

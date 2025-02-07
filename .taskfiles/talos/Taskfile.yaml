@@ -69,19 +69,17 @@ tasks:
 
   backup-cert-manager-tls-certs:
     desc: Backup cert-manager tls certs
-    prompt: This will overwrite any existing certs... continue?
     cmds:
       - for: { var: SECRETS }
         cmd: |
+          mkdir -p {{.KUBERNETES_DIR}}/bootstrap/certs \
           kubectl -n cert-manager get secrets {{.ITEM}} -o yaml  \
             | yq 'del(.metadata.namespace,.metadata.resourceVersion,.metadata.uid,.metadata.creationTimestamp)' \
-            | ksd > {{.KUBERNETES_DIR}}/bootstrap/apps/certs/{{.ITEM}}.sops.yaml
-          sops --encrypt --in-place {{.KUBERNETES_DIR}}/bootstrap/apps/certs/{{.ITEM}}.sops.yaml
-          git add {{.KUBERNETES_DIR}}/bootstrap/apps/certs/{{.ITEM}}.sops.yaml
+            | ksd > {{.KUBERNETES_DIR}}/bootstrap/certs/{{.ITEM}}.sops.yaml
+          sops --encrypt --in-place {{.KUBERNETES_DIR}}/bootstrap/certs/{{.ITEM}}.sops.yaml
+          git add {{.KUBERNETES_DIR}}/bootstrap/certs/{{.ITEM}}.sops.yaml
     vars:
       SECRETS:
         sh: kubectl -n cert-manager get secret --no-headers | grep "\-tls" | awk '{print $1}'
     preconditions:
-      - which ksd
-      - which sops
-      - which yq
+      - which kubectl ksd sops yq git awk

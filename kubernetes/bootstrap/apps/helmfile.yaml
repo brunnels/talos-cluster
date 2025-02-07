@@ -41,6 +41,12 @@ releases:
     values: ['{{ requiredEnv "KUBERNETES_DIR" }}/apps/cert-manager/cert-manager/app/helm-values.yaml']
     needs: ['kube-system/coredns']
 
+  - name: wipe-rook
+    namespace: kube-system
+    chart: oci://ghcr.io/bjw-s/helm/app-template
+    version: 3.6.1
+    values: ['{{ requiredEnv "KUBERNETES_DIR" }}/bootstrap/apps/templates/wipe-rook.yaml.gotmpl']
+
   - name: flux-operator
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
