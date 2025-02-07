@@ -17,21 +17,21 @@ spec:
   install:
     remediation:
       retries: 3
-  postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              group: rbac.authorization.k8s.io
-              version: v1
-              kind: ClusterRole
-              name: external-secrets-controller
-            patch: |
-              - op: add
-                path: /rules/-
-                value:
-                  - apiGroups: ["authorization.k8s.io"]
-                    resources: ["selfsubjectrulesreviews"]
-                    verbs: ["create"]
+#  postRenderers:
+#    - kustomize:
+#        patches:
+#          - target:
+#              group: rbac.authorization.k8s.io
+#              version: v1
+#              kind: ClusterRole
+#              name: external-secrets-controller
+#            patch: |
+#              - op: add
+#                path: /rules/-
+#                value:
+#                  - apiGroups: ["authorization.k8s.io"]
+#                    resources: ["selfsubjectrulesreviews"]
+#                    verbs: ["create"]
   upgrade:
     cleanupOnFail: true
     remediation:
