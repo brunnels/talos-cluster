@@ -37,7 +37,7 @@ session:
       default_redirection_url: "https://${SECRET_DOMAIN}"
   redis:
     database_index: 2
-    host: dragonfly.databases.svc.cluster.local
+    host: dragonfly.database.svc.cluster.local
 
 storage:
   postgres:
