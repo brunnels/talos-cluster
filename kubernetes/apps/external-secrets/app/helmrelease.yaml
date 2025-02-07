@@ -27,7 +27,7 @@ spec:
               name: external-secrets-controller
             patch: |
               - op: add
-                path: /rules
+                path: /rules/-
                 value:
                   - apiGroups: ["authorization.k8s.io"]
                     resources: ["selfsubjectrulesreviews"]
