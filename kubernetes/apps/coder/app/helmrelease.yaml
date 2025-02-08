@@ -58,10 +58,6 @@ spec:
           value: "openid,profile,email,groups,offline_access"
         - name: CODER_OIDC_SIGN_IN_TEXT
           value: "Sign in with Authelia"
-        - name: CODER_OIDC_USER_ROLE_FIELD
-          value: groups
-        - name: CODER_OIDC_USER_ROLE_MAPPING
-          value: '{"Admins":["template-admin","user-admin"]}'
         - name: CODER_PROMETHEUS_ENABLE
           value: "true"
         - name: CODER_PROMETHEUS_COLLECT_AGENT_STATS
