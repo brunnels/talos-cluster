@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: provisionerd-rules
+spec:
+  groups:
+    - name: Provisionerd Replicas
+      rules:
+        - alert: ProvisionerdReplicas
+          expr: sum(coderd_provisionerd_num_daemons{pod=~`coder.*`, pod!~`.*provisioner.*`, namespace=`coder`}) < 1
+          for: 5m
+          annotations:
+            summary: Number of alive provisionerd replicas is below the threshold = 1.
+          labels:
+            severity: critical
+            runbook_url: https://runbooks.${SECRET_DOMAIN}/coder/coder#provisionerdreplicas
+        - alert: ProvisionerdReplicas
+          expr: sum(coderd_provisionerd_num_daemons{pod=~`coder.*`, pod!~`.*provisioner.*`, namespace=`coder`}) < 3
+          for: 5m
+          annotations:
+            summary: Number of alive provisionerd replicas is below the threshold = 3.
+          labels:
+            severity: notify
+            runbook_url: https://runbooks.${SECRET_DOMAIN}/coder/coder#provisionerdreplicas
+        - alert: ProvisionerdReplicas
+          expr: sum(coderd_provisionerd_num_daemons{pod=~`coder.*`, pod!~`.*provisioner.*`, namespace=`coder`}) < 2
+          for: 5m
+          annotations:
+            summary: Number of alive provisionerd replicas is below the threshold = 2.
+          labels:
+            severity: warning
+            runbook_url: https://runbooks.${SECRET_DOMAIN}/coder/coder#provisionerdreplicas
