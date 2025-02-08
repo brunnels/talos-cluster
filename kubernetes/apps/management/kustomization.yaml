@@ -13,6 +13,6 @@ patches:
       - op: add
         path: /metadata/annotations/-
         value:
-          volsync.backube/privileged-movers: "true"
+          volsync.backube~1privileged-movers: "true"
     target:
       kind: Namespace
