@@ -8,7 +8,7 @@ components:
 resources:
   - ./pgadmin/ks.yaml
 #patches:
-  - # Add volsync annotation
+#  - # Add volsync annotation
 #    patch: |
 #      - op: add
 #        path: /metadata/annotations/-
