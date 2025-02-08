@@ -5,8 +5,8 @@ kind: Kustomization
 namespace: management
 components:
   - ../../flux/components/common
-resources:
-  - ./pgadmin/ks.yaml
+resources: []
+#  - ./pgadmin/ks.yaml
 #patches:
 #  - # Add volsync annotation
 #    patch: |

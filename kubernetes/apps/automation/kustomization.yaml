@@ -6,8 +6,8 @@ namespace: automation
 components:
   - ../../flux/components/common
   - ../../flux/components/ingress/secure
-resources:
-  - ./home-assistant/ks.yaml
+resources: []
+#  - ./home-assistant/ks.yaml
 #patches:
 #  - # Add volsync annotation
 #    patch: |

@@ -38,14 +38,6 @@ controllers:
           privileged: true
     pod:
       restartPolicy: Never
-defaultPodOptions:
-  topologySpreadConstraints:
-    - maxSkew: 1
-      topologyKey: kubernetes.io/hostname
-      whenUnsatisfiable: DoNotSchedule
-      labelSelector:
-        matchLabels:
-          app.kubernetes.io/name: wipe-rook
 persistence:
   host-var:
     type: hostPath

@@ -46,6 +46,7 @@ releases:
     chart: oci://ghcr.io/bjw-s/helm/app-template
     version: 3.6.1
     values: ['{{ requiredEnv "KUBERNETES_DIR" }}/bootstrap/apps/templates/wipe-rook.yaml.gotmpl']
+    needs: ['kube-system/coredns']
 
   - name: flux-operator
     namespace: flux-system
