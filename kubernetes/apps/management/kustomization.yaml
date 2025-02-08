@@ -7,3 +7,12 @@ components:
   - ../../flux/components/common
 resources:
   - ./pgadmin/ks.yaml
+patches:
+  - # Add volsync annotation
+    patch: |
+      - op: add
+        path: /metadata/annotations/-
+        value:
+          volsync.backube/privileged-movers: "true"
+    target:
+      kind: Namespace
