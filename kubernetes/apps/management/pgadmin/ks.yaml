@@ -18,7 +18,7 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
     - name: volsync
-      namespace: volsybc-system
+      namespace: volsync-system
   interval: 30m
   path: ./kubernetes/apps/management/pgadmin/app
   postBuild:
