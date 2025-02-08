@@ -1,0 +1,72 @@
+- Infrastructure:
+    - OPNSense:
+        icon: opnsense
+        href: https://opnsense.lan.kraven.org
+        description: OPNSense
+        widget:
+          type: opnsense
+          url: https://opnsense.lan.kraven.org
+          username: {{ .OPNSENSE_USER }}
+          password: {{ .OPNSENSE_PASS }}
+    - Proxmox VE:
+        icon: proxmox
+        href: https://pve.${SECRET_DOMAIN}
+        description: Proxmox Virtual Environment
+        widget:
+          type: proxmox
+          url: https://pve.network:8006
+          username: {{ .PROXMOX_API_TOKEN_ID }}
+          password: {{ .PROXMOX_API_TOKEN_SECRET }}
+    - {{ .QNAP_NAME}}:
+        icon: qnap
+        href: {{ .QNAP_URL }}
+        description: QNAP {{ .QNAP_MODEL }}
+        widget:
+          type: qnap
+          url: {{ .QNAP_URL }}
+          username: {{ .QNAP_RO_USER }}
+          password: {{ .QNAP_RO_PASS }}
+    - {{ .QNAP_BACKUP_NAME }}:
+        icon: qnap
+        href: {{ .QNAP_BACKUP_URL }}
+        description: QNAP {{ .QNAP_BACKUP_MODEL }}
+        widget:
+          type: qnap
+          url: {{ .QNAP_BACKUP_URL }}
+          username: {{ .QNAP_BACKUP_RO_USER }}
+          password: {{ .QNAP_BACKUP_RO_PASS }}
+- Observability:
+    - Gluetun:
+        icon: gluetun
+        description: Gluetun VPN Gateway
+        namespace: network
+        app: pod-gateway
+        widget:
+          type: gluetun
+          url: http://vpn-gateway.network
+          fields: ["public_ip", "region"]
+    - Cloudflared:
+        href: https://dash.cloudflare.com/
+        icon: cloudflare-zero-trust
+        description: Cloudflared Tunnel Status
+        widget:
+          type: cloudflared
+          accountid: {{ .CF_ACCOUNT_ID }}
+          tunnelid: {{ .CF_TUNNEL_ID }}
+          key: {{ .CF_API_TOKEN }}
+- Calendar:
+    - Agenda:
+        widget:
+          type: calendar
+          view: agenda
+          maxEvents: 20
+          integrations:
+            - type: sonarr
+              service_group: Downloads
+              service_name: Sonarr
+            - type: radarr
+              service_group: Downloads
+              service_name: Radarr
+            - type: readarr
+              service_group: Downloads
+              service_name: Readarr
