@@ -122,7 +122,7 @@ spec:
     persistence:
       config:
         type: persistentVolumeClaim
-        storageClassName: openebs-hostpath
+        storageClass: openebs-hostpath
         accessMode: ReadWriteOnce
         size: 5Gi
       config-file:
