@@ -11,8 +11,7 @@ patches:
   - # Add volsync annotation
     patch: |
       - op: add
-        path: /metadata/annotations/volsync.backube~1privileged-movers
-        value: true
+        path: /metadata/annotations/privileged-movers
+        value: 1
     target:
       kind: Namespace
-      name: *namespace
