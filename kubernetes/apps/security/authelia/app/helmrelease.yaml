@@ -22,6 +22,11 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: crunchy-postgres-cluster
+      namespace: database
+    - name: dragonfly-cluster
+      namespace: database
   values:
     controllers:
       authelia:

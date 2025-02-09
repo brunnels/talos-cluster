@@ -7,3 +7,5 @@ components:
   - ../../flux/components/common
 resources:
   - ./openebs/ks.yaml
+  - ./snapshot-controller/ks.yaml
+  - ./volsync/ks.yaml

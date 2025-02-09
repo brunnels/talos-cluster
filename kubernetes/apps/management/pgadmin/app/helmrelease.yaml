@@ -24,6 +24,11 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: crunchy-postgres-cluster
+      namespace: database
+    - name: volsync
+      namespace: storage
   values:
     controllers:
       pgadmin:

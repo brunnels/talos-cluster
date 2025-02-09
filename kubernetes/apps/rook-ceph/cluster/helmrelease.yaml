@@ -76,8 +76,8 @@ spec:
           requireMsgr2: true
       storage:
         useAllNodes: true
-        useAllDevices: false
-        devicePathFilter: /dev/nvme0n1
+        useAllDevices: true
+        devicePathFilter: /dev/nvme0*
         config:
           osdsPerDevice: "1"
     cephBlockPools:

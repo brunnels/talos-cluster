@@ -23,8 +23,10 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+    - name: crunchy-postgres-cluster
+      namespace: database
+    - name: volsync
+      namespace: storage
   values:
     controllers:
       home-assistant:
