@@ -8,9 +8,9 @@ resources:
 configMapGenerator:
   - name: pgadmin-local-config
     files:
-      - config_local.py.gotmpl=./resources/config_local.py
+      - config_local.py=./resources/config_local.py.gotmpl
   - name: pgadmin-servers
     files:
-      - servers.json.gotmpl=./resources/servers.json
+      - servers.json=./resources/servers.json.gotmpl
 generatorOptions:
   disableNameSuffixHash: true
