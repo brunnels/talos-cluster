@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: docker.io/dpage/pgadmin4
-              tag: 8.13@sha256:561c1f8f99f2fe24bc63814db9e30292cf4360331de9182da21e3554ce61bdaa
+              tag: 9.0@sha256:1b2f1ecb93ed2c20530703f77acdfa0da8c2470a4e17044504057cea2d6b4fac
             env:
               TZ: "${TIMEZONE}"
               PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
