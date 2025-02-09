@@ -5,7 +5,6 @@ kind: ConfigMap
 metadata:
   name: cluster-settings
 data:
-  CLUSTER: main
   TIMEZONE: "US/Central"
   CLUSTER_CIDR: "10.69.0.0/16"
   SERVICE_CIDR: "10.96.0.0/16"
