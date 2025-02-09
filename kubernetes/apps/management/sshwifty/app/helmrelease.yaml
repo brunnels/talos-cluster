@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: docker.io/niruix/sshwifty
-              tag: 0.3.16-beta-release@sha256:60228687f67f6139df65f5383fec87e3507bf5986f9bfe0b01b2636a72b1310c
+              tag: 0.3.17-beta-release@sha256:837fd62b5cccab6ca2233058b2c5e001f1aae434e2a97f7c2da4307b01460b0e
             env:
               TZ: "${TIMEZONE}"
               SSHWIFTY_HOSTNAME: "{{ .Release.Name }}.${SECRET_DOMAIN}"
