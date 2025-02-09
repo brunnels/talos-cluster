@@ -2,7 +2,7 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: &namespace automation
+namespace: automation
 components:
   - ../../flux/components/common
   - ../../flux/components/ingress/secure
@@ -16,4 +16,3 @@ patches:
         value: "true"
     target:
       kind: Namespace
-      name: *namespace
