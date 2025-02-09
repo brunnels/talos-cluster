@@ -1,7 +1,7 @@
 # one liner to delete all not running pods
 
 ```shell
-kubectl get po -A --no-headers | awk '{if ($4 != "Running") print $1, $2}' | xargs -l bash -c 'kubectl -n $0 delete pod $1'
+kubectl get po -A --no-headers | awk '{if ($4 != "Running") print $1, $2, $4}' | xargs -l bash -c 'kubectl -n $0 delete pod $1'
 ```
 
 # check un-resolved kustomizations and helmreleases
