@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: docker.io/dpage/pgadmin4
-              tag: "8.14@sha256:8a68677a97b8c8d1427dc915672a26d2c4a04376916a68256f53d669d6171be7"
+              tag: "9.0.0@sha256:1b2f1ecb93ed2c20530703f77acdfa0da8c2470a4e17044504057cea2d6b4fac"
             env:
               TZ: "${TIMEZONE}"
               PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
@@ -54,19 +54,19 @@ spec:
                   secretKeyRef:
                     name: *app
                     key: PGADMIN_DEFAULT_PASSWORD
-#            probes:
-#              liveness: &probes
-#                enabled: true
-#                custom: true
-#                spec:
-#                  httpGet:
-#                    path: /misc/ping
-#                    port: *port
-#                  initialDelaySeconds: 0
-#                  periodSeconds: 10
-#                  timeoutSeconds: 1
-#                  failureThreshold: 3
-#              readiness: *probes
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /misc/ping
+                    port: *port
+                  initialDelaySeconds: 30
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
             resources:
               requests:
                 cpu: 10m
