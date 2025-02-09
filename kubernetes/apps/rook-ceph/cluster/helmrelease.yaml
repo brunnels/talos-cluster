@@ -77,7 +77,7 @@ spec:
       storage:
         useAllNodes: true
         useAllDevices: false
-        devicePathFilter: /dev/disk/by-id/nvme-SK_hynix_BC501*
+        devicePathFilter: /dev/nvme0n1
         config:
           osdsPerDevice: "1"
     cephBlockPools:
