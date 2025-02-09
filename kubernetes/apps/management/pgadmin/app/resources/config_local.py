@@ -1,6 +1,8 @@
-AUTHENTICATION_SOURCES = ["oauth2", "internal"]
+AUTO_DISCOVER_SERVERS = False
+AUTHENTICATION_SOURCES = ["oauth2"]
 OAUTH2_AUTO_CREATE_USER = True
 MASTER_PASSWORD_REQUIRED = False
+CONFIG_DATABASE_URI = {{ index . "uri" | quote }}
 OAUTH2_CONFIG = [{
     "OAUTH2_NAME": "authelia",
     "OAUTH2_DISPLAY_NAME": "Login with Authelia",
