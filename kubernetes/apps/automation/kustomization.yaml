@@ -2,18 +2,18 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: automation
+namespace: &namespace automation
 components:
   - ../../flux/components/common
   - ../../flux/components/ingress/secure
 resources:
   - ./home-assistant/ks.yaml
-#patches:
-#  - # Add volsync annotation
-#    patch: |
-#      - op: add
-#        path: /metadata/annotations/-
-#        value:
-#          volsync.backube~1privileged-movers: "true"
-#    target:
-#      kind: Namespace
+patches:
+  - # Add volsync annotation
+    patch: |
+      - op: add
+        path: "/metadata/annotations/volsync.backube~1privileged-movers"
+        value: "true"
+    target:
+      kind: Namespace
+      name: *namespace

@@ -15,6 +15,8 @@ spec:
   dependsOn:
     - name: crunchy-postgres-cluster
       namespace: database
+    - name: volsync
+      namespace: storage
   interval: 30m
   path: ./kubernetes/apps/management/pgadmin/app
   postBuild:
