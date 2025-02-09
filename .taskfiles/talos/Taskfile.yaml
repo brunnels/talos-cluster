@@ -70,16 +70,17 @@ tasks:
   backup-cert-manager-tls-certs:
     desc: Backup cert-manager tls certs
     cmds:
-      - for: { var: SECRETS }
+      - for: { var: CERTS }
         cmd: |
           mkdir -p {{.KUBERNETES_DIR}}/bootstrap/certs
           kubectl -n cert-manager get secrets {{.ITEM}} -o yaml  \
-            | yq 'del(.metadata.namespace,.metadata.resourceVersion,.metadata.uid,.metadata.creationTimestamp)' \
-            | ksd > {{.KUBERNETES_DIR}}/bootstrap/certs/{{.ITEM}}.sops.yaml
+            | yq '.stringData = .data | .stringData |= with_entries(.value |= @base64d)' \
+            | yq 'del(.data,.metadata.namespace,.metadata.resourceVersion,.metadata.uid,.metadata.creationTimestamp)' \
+            > {{.KUBERNETES_DIR}}/bootstrap/certs/{{.ITEM}}.sops.yaml
           sops --encrypt --in-place {{.KUBERNETES_DIR}}/bootstrap/certs/{{.ITEM}}.sops.yaml
           git add {{.KUBERNETES_DIR}}/bootstrap/certs/{{.ITEM}}.sops.yaml
     vars:
-      SECRETS:
+      CERTS:
         sh: kubectl -n cert-manager get secret --no-headers | grep "\-tls" | awk '{print $1}'
     preconditions:
-      - which kubectl ksd sops yq git awk
+      - which kubectl sops yq git awk
