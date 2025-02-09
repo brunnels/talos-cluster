@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: docker.io/rocm/k8s-device-plugin
-              tag: 1.31.0.0@sha256:12b7f6dbdaec2870f0ef10ca8e59cbc529d31d14c65dae1d5997bff0154b5a66
+              tag: 1.31.0.3@sha256:7b58e41e3280e2e6b6054ad23db8f4c2f3c626c187838d72a20b556cc834bb8f
             workingDir: /root
             command: ["./k8s-device-plugin"]
             args: ["-logtostderr=true", "-stderrthreshold=INFO", "-v=5"]
