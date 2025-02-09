@@ -22,9 +22,6 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  dependsOn:
-    - name: openebs-hostpath
-      namespace: storage
   values:
     controllers:
       gatus:
@@ -122,7 +119,6 @@ spec:
     persistence:
       config:
         type: persistentVolumeClaim
-        storageClass: openebs-hostpath
         accessMode: ReadWriteOnce
         size: 5Gi
       config-file:
