@@ -12,6 +12,9 @@ spec:
   components:
     - ../../../../flux/components/gatus/guarded
     - ../../../../flux/components/volsync
+  dependsOn:
+    - name: crunchy-postgres-cluster
+      namespace: database
   interval: 30m
   path: ./kubernetes/apps/automation/home-assistant/app
   postBuild:

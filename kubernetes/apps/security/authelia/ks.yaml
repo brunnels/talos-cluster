@@ -12,6 +12,10 @@ spec:
   components:
     - ../../../../flux/components/gatus/external
   dependsOn:
+    - name: crunchy-postgres-cluster
+      namespace: database
+    - name: dragonfly-cluster
+      namespace: database
     - name: external-secrets-stores
       namespace: external-secrets
   interval: 30m
