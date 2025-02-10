@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app gnmic
+  name: &app opnsense-exporter
 spec:
   interval: 30m
   chart:
@@ -22,23 +22,35 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: kube-prometheus-stack
+      namespace: observability
   values:
     controllers:
-      gnmic:
+      opnsense-exporter:
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
-              repository: ghcr.io/openconfig/gnmic
-              tag: 0.4.0@sha256:1cc06d317a6db441d62296bf2203c3090fde10c8fc1d7b4be0f8cf56c1c0ccf9
+              repository: ghcr.io/athennamind/opnsense-exporter
+              tag: 0.0.7@sha256:4b1981b836781b2dbb115fe1167ab4ddc4c7bece28f2b1c6c4c9f105be45fbf4
             args:
-              - subscribe
-              - --config
-              - /app/config.yaml
+              - --web.listen-address=:8080
             env:
               TZ: "${TIMEZONE}"
+              OPNSENSE_EXPORTER_OPS_PROTOCOL: https
+              OPNSENSE_EXPORTER_INSTANCE_LABEL: firewall
             envFrom:
               - secretRef:
                   name: *app
+            probes:
+              liveness: &probes
+                enabled: true
+              readiness: *probes
+              startup:
+                enabled: false
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -47,13 +59,12 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 256Mi
+                memory: 128Mi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 100
-        fsGroup: 100
+        runAsUser: 65534
+        runAsGroup: 65534
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     service:
@@ -61,10 +72,7 @@ spec:
         controller: *app
         ports:
           metrics:
-            port: 9273
-    serviceAccount:
-      create: true
-      name: *app
+            port: 8080
     serviceMonitor:
       app:
         serviceName: *app
@@ -74,11 +82,3 @@ spec:
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
-    persistence:
-      config-file:
-        type: configMap
-        name: *app
-        globalMounts:
-          - path: /app/config.yaml
-            subPath: config.yaml
-            readOnly: true
