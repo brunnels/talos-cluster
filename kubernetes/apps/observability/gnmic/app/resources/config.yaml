@@ -1,0 +1,71 @@
+timeout: 10s
+skip-verify: true
+encoding: json_ietf
+log: true
+
+address:
+  - "arista.${SECRET_INTERNAL_DOMAIN}:6030"
+
+subscriptions:
+  eos_bgp_neighbors:
+    paths:
+      - /network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors
+    mode: stream
+    stream-mode: on_change
+    sample-interval: 5s
+
+  eos_cpu:
+    paths:
+      - /components/component/cpu
+    mode: stream
+    stream-mode: sample
+    sample-interval: 5s
+
+  eos_mem:
+    paths:
+      - /components/component/state/memory
+    mode: stream
+    stream-mode: sample
+    sample-interval: 5s
+
+  eos_interface_stats:
+    paths:
+      - /interfaces/interface[name=*]/state/counters
+    mode: stream
+    stream-mode: sample
+    sample-interval: 5s
+
+outputs:
+  prom:
+    type: prometheus
+    listen: :9273
+    path: /metrics
+    metric-prefix: gnmic
+    append-subscription-name: true
+    export-timestamps: true
+    debug: false
+    event-processors:
+      - trim-prefixes
+      - up-down-map
+
+processors:
+  trim-prefixes:
+    event-strings:
+      value-names:
+        - ".*"
+      transforms:
+        - path-base:
+            apply-on: "name"
+  up-down-map:
+    event-strings:
+      value-names:
+        - oper-state
+      transforms:
+        - replace:
+            apply-on: "value"
+            old: "up"
+            new: "1"
+        - replace:
+            apply-on: "value"
+            old: "down"
+            new: "0"

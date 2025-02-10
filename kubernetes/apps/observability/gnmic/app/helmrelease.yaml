@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app runbook-viewer
+  name: &app gnmic
 spec:
   interval: 30m
   chart:
@@ -24,39 +24,30 @@ spec:
       retries: 3
   values:
     controllers:
-      runbook-viewer:
-        initContainers:
-          gather-docs:
-            image:
-              repository: ghcr.io/kiwigrid/k8s-sidecar
-              tag: 1.29.0@sha256:38907bdecffcc545e838723049cbfe0bc4c10f905b4eedf946be369328249871
-            env:
-              TZ: "${TIMEZONE}"
-              FOLDER: /docs
-              FOLDER_ANNOTATION: runbook_folder
-              LABEL: runbook_docs
-              NAMESPACE: ALL
-              METHOD: WATCH
-            restartPolicy: Always
-            resources: &resources
-              requests:
-                cpu: 10m
-              limits:
-                memory: 128Mi
+      gnmic:
         containers:
           app:
             image:
-              repository: docker.io/dannyben/madness
-              tag: 1.2.2@sha256:f79313694cebc0b5f86969aa444b0d98bc9064962dc115f5b35b7b355202f2ce
-            args:
-              - server
+              repository: ghcr.io/openconfig/gnmic
+              tag: 0.4.0@sha256:1cc06d317a6db441d62296bf2203c3090fde10c8fc1d7b4be0f8cf56c1c0ccf9
+            command:
+              - subscribe
+              - --config
+              - /app/config.yaml
             env:
               TZ: "${TIMEZONE}"
+            envFrom:
+              - secretRef:
+                  name: *app
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            resources: *resources
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 256Mi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -69,23 +60,25 @@ spec:
       app:
         controller: *app
         ports:
-          http:
-            port: 3000
-    ingress:
-      app:
-        className: internal
-        hosts:
-          - host: "runbooks.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+          metrics:
+            port: 9273
     serviceAccount:
       create: true
       name: *app
+    serviceMonitor:
+      app:
+        serviceName: *app
+        endpoints:
+          - port: metrics
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
     persistence:
-      docs:
-        type: emptyDir
+      config-file:
+        type: configMap
+        name: *app
         globalMounts:
-          - path: /docs
+          - path: /app/config.yaml
+            subPath: config.yaml
+            readOnly: true
