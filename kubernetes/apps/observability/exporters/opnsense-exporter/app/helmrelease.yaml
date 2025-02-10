@@ -82,3 +82,7 @@ spec:
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
+            metricRelabelings:
+              - action: replace
+                targetLabel: opnsense_instance
+                replacement: opnsense
