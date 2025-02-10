@@ -4,4 +4,4 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./gnmic-exporter/ks.yaml
-#  - ./opnsense-exporter/ks.yaml garbage.  use os-node_exporter in opensense and add scrapeconfig and dashboard 22569
+  - ./opnsense-exporter/ks.yaml
