@@ -12,6 +12,7 @@ spec:
   components:
     - ../../../../flux/components/gatus/guarded
     - ../../../../flux/components/volsync
+    - ../../../../flux/components/ingress/secure
   dependsOn:
     - name: crunchy-postgres-cluster
       namespace: database
@@ -24,6 +25,7 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: hass
       VOLSYNC_CAPACITY: 5Gi
+      INGRESS_SECURE_PATH: spec/values/ingress/code-server/annotations
   prune: true
   sourceRef:
     kind: GitRepository

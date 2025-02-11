@@ -11,5 +11,5 @@ annotations:
   nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
 fieldSpecs:
   - kind: HelmRelease
-    path: spec/values/ingress/app/annotations
+    path: "${INGRESS_SECURE_PATH:=spec/values/ingress/app/annotations}"
     create: true
