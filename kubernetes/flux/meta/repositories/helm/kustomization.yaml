@@ -11,6 +11,7 @@ resources:
   - ./coredns.yaml
   - ./crunchy-userinit.yaml
   - ./crunchydata.yaml
+  - ./csi-driver-smb.yaml
   - ./external-dns.yaml
   - ./external-secrets.yaml
   - ./grafana.yaml

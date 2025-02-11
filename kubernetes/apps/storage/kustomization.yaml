@@ -6,6 +6,7 @@ namespace: storage
 components:
   - ../../flux/components/common
 resources:
+  - ./csi-driver-smb/ks.yaml
   - ./openebs-hostpath/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./volsync/ks.yaml
