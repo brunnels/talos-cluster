@@ -6,4 +6,4 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
 transformers:
-  - ../../../../../flux/components/ingress/secure/ingress-secure-authelia.yaml
+  - ../../../../flux/components/ingress/secure/ingress-secure-authelia.yaml
