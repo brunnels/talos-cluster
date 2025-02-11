@@ -60,7 +60,7 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 2Gi
-          code-server:
+          codeserver:
             image:
               repository: ghcr.io/coder/code-server
               tag: 4.96.4@sha256:f93810f7f6636b3af3b1a750faf612349cddb89fbb6d28d69123a214fc75ee9e
@@ -101,7 +101,7 @@ spec:
         ports:
           http:
             port: 8123
-          code-server:
+          codeserver:
             port: 12321
 #      codeserver:
 #        controller: *app
@@ -128,7 +128,7 @@ spec:
                 service:
                   identifier: app
                   port: http
-      code-server:
+      codeserver:
         className: internal
         annotations:
           gethomepage.dev/enabled: "true"
@@ -142,7 +142,7 @@ spec:
               - path: /
                 service:
                   identifier: app
-                  port: code-server
+                  port: codeserver
     configMaps:
       dockerenv:
         data:
@@ -195,6 +195,6 @@ spec:
             app:
               - path: /tmp
                 subPath: hass-tmp
-            code-server:
+            codeserverr:
               - path: /tmp
-                subPath: code-server-tmp
+                subPath: codeserver-tmp
