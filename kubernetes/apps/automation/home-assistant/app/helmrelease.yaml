@@ -111,7 +111,7 @@ spec:
 #            enabled: true
 #            port: 12321
     ingress:
-      homeassistant:
+      hass:
         className: internal
         annotations:
           gethomepage.dev/enabled: "true"

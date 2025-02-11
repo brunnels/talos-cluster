@@ -25,7 +25,6 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: hass
       VOLSYNC_CAPACITY: 5Gi
-#      INGRESS_SECURE_PATH: spec/values/ingress/app/annotations
   prune: true
   sourceRef:
     kind: GitRepository
