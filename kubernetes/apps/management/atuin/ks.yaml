@@ -21,6 +21,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      GATUS_SUBDOMAIN: sh
   prune: true
   sourceRef:
     kind: GitRepository
