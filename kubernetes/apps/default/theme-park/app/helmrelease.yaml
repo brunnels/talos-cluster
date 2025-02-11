@@ -20,7 +20,6 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
   values:
     controllers:
@@ -35,16 +34,13 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 32Mi
               limits:
                 memory: 64Mi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 100
-        fsGroup: 100
-        fsGroupChangePolicy: OnRootMismatch
+        runAsUser: 65534
+        runAsGroup: 65534
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
@@ -58,7 +54,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hosts:
-          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: "theme-park.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:

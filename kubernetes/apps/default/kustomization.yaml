@@ -7,3 +7,4 @@ components:
   - ../../flux/components/common
 resources:
   - ./echo-server/ks.yaml
+  - ./theme-park/ks.yaml
