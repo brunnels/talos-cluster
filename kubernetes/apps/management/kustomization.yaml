@@ -6,12 +6,13 @@ namespace: management
 components:
   - ../../flux/components/common
 resources:
+  - ./atuin/ks.yaml
   - ./pgadmin/ks.yaml
-patches:
-  - # Add volsync annotation
-    patch: |
-      - op: add
-        path: "/metadata/annotations/volsync.backube~1privileged-movers"
-        value: "true"
-    target:
-      kind: Namespace
+#patches:
+#  - # Add volsync annotation
+#    patch: |
+#      - op: add
+#        path: "/metadata/annotations/volsync.backube~1privileged-movers"
+#        value: "true"
+#    target:
+#      kind: Namespace
