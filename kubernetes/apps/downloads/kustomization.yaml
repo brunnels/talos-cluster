@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: downloads
+components:
+  - ../../flux/components/common
+resources:
+  - ./cifs-pvcs/ks.yaml
+patches:
+  - # Add volsync annotation
+    patch: |
+      - op: add
+        path: "/metadata/annotations/volsync.backube~1privileged-movers"
+        value: "true"
+    target:
+      kind: Namespace
