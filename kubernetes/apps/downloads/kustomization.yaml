@@ -16,3 +16,10 @@ patches:
         value: "true"
     target:
       kind: Namespace
+  - # Add vpn-gateway annotation
+    patch: |
+      - op: add
+        path: "/metadata/annotations/vpn-routed-gateway"
+        value: "true"
+    target:
+      kind: Namespace
