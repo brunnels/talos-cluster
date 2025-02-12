@@ -16,8 +16,8 @@ spec:
   dependsOn:
     - name: crunchy-postgres-cluster
       namespace: database
-    - name: volsync
-      namespace: storage
+    - name: external-secrets-stores
+      namespace: external-secrets
   interval: 30m
   path: ./kubernetes/apps/automation/home-assistant/app
   postBuild:

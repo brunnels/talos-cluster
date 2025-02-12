@@ -5,7 +5,6 @@ kind: Kustomization
 namespace: automation
 components:
   - ../../flux/components/common
-  - ../../flux/components/ingress/secure
 resources:
   - ./home-assistant/ks.yaml
 patches:

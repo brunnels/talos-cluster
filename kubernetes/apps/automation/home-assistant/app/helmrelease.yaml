@@ -22,6 +22,9 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: volsync
+      namespace: storage
   values:
     controllers:
       home-assistant:
