@@ -7,7 +7,7 @@ components:
   - ../../flux/components/common
 resources:
   - ./cifs-pvcs/ks.yaml
-  - ./flaresolverr/app/ks.yaml
+  - ./flaresolverr/ks.yaml
 patches:
   - # Add volsync annotation
     patch: |
