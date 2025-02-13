@@ -75,11 +75,11 @@ spec:
       password:
         type: AlphaNumeric
 
-    - name: coder
-      databases:
-        - coder
-      password:
-        type: AlphaNumeric
+#    - name: coder
+#      databases:
+#        - coder
+#      password:
+#        type: AlphaNumeric
 
     - name: grafana
       databases:
