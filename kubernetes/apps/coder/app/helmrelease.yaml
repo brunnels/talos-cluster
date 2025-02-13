@@ -66,13 +66,13 @@ spec:
           value: "false"
         - name: CODER_WILDCARD_ACCESS_URL
           value: "*.coder.${SECRET_DOMAIN}"
-#        - name: CODER_OIDC_GROUP_AUTO_CREATE
-#          value: "true"
-#        - name: CODER_OIDC_GROUP_FIELD
-#          value: "groups"
-#        - name: CODER_OIDC_GROUP_MAPPING
-#          value: |
-#            {"Admins": "CoderAdmins"}
+        - name: CODER_OIDC_GROUP_AUTO_CREATE
+          value: "true"
+        - name: CODER_OIDC_GROUP_FIELD
+          value: "groups"
+        - name: CODER_OIDC_GROUP_MAPPING
+          value: |
+            {"Admins": "CoderAdmins"}
         - name: CODER_OIDC_ROLE_FIELD
           value: "groups"
         - name: CODER_OIDC_USER_ROLE_MAPPING
