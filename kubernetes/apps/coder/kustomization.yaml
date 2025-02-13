@@ -5,5 +5,5 @@ kind: Kustomization
 namespace: coder
 components:
   - ../../flux/components/common
-resources: []
-#  - ./ks.yaml
+resources:
+  - ./ks.yaml
