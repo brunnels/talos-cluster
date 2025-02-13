@@ -40,10 +40,8 @@ spec:
               tag: 9.0.0@sha256:1b2f1ecb93ed2c20530703f77acdfa0da8c2470a4e17044504057cea2d6b4fac
             env:
               TZ: "${TIMEZONE}"
-              PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
-              PGADMIN_CONFIG_ENABLE_PSQL: "True"
-              PGADMIN_DISABLE_POSTFIX: "true"
               PGADMIN_LISTEN_PORT: &port 80
+              PGADMIN_DISABLE_POSTFIX: "true"
               PGADMIN_DEFAULT_EMAIL:
                 valueFrom:
                   secretKeyRef:
