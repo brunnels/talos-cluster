@@ -117,7 +117,7 @@ identity_providers:
         client_secret: '{{ secret "/app/secrets/OPEN_WEBUI_OIDC_CLIENT_SECRET" }}'
         redirect_uris: ["https://ai.${SECRET_DOMAIN}/oauth/oidc/callback"]
         scopes: ["openid", "profile", "email", "groups"]
-        response_types: ["code"]
+        responseTypes: ["code", "token", "id_token"]
 
       - client_name: pgAdmin
         client_id: '{{ env "PGADMIN_OIDC_CLIENT_ID" }}'
