@@ -51,6 +51,13 @@ spec:
     ingress:
       enabled: true
       ingressClassName: internal
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/description: Cluster Dashboard
+        gethomepage.dev/group: observe
+        gethomepage.dev/icon: sh-target
+        gethomepage.dev/name: headlamp
+        gethomepage.dev/app: *app
       hosts:
         - host: headlamp.${SECRET_DOMAIN}
           paths:
@@ -69,3 +76,18 @@ spec:
       - name: headlamp-plugins
         persistentVolumeClaim:
           claimName: headlamp
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              group: rbac.authorization.k8s.io
+              version: v1
+              kind: ClusterRoleBinding
+              name: headlamp-admin
+            patch: |
+              - op: add
+                path: /subjects/-
+                value:
+                  kind: Group
+                  name: Admins
+                  apiGroup: rbac.authorization.k8s.io
