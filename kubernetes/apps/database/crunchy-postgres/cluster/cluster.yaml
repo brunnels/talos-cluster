@@ -27,6 +27,9 @@ spec:
         synchronous_commit: "on"
         parameters:
           max_connections: 500
+  databaseInitSQL:
+    name: db-init-sql
+    key: init.sql
   instances:
     - name: postgres
       metadata:
@@ -69,11 +72,11 @@ spec:
       password:
         type: AlphaNumeric
 
-    - name: autobrr
-      databases:
-        - autobrr
-      password:
-        type: AlphaNumeric
+#    - name: autobrr
+#      databases:
+#        - autobrr
+#      password:
+#        type: AlphaNumeric
 
     - name: coder
       databases:

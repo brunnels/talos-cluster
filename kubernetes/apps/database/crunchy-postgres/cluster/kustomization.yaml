@@ -7,3 +7,12 @@ resources:
   - ./externalsecret.yaml
   - ./gatus.yaml
   - ./podmonitor.yaml
+configMapGenerator:
+  - name: db-init-sql
+    files:
+      - resources/dbinit.sql
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
+generatorOptions:
+  disableNameSuffixHash: true
