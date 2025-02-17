@@ -7,5 +7,5 @@ components:
   - ../../flux/components/common
 resources:
   - ./flux-operator/ks.yaml
-  - ./headlamp/ks.yaml
+#  - ./headlamp/ks.yaml
   - ./weave-gitops/ks.yaml
