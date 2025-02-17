@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../../shared/meta/components/gatus/guarded
+    - ../../../../flux/components/gatus/guarded
     - ../../../../flux/components/ingress/secure
   dependsOn:
     - name: crunchy-postgres-cluster
