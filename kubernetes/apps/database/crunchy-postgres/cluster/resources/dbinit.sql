@@ -9,4 +9,4 @@ CREATE DATABASE dashbrr;
 GRANT ALL PRIVILEGES ON DATABASE dashbrr TO dashbrr;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO dashbrr;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO dashbrr;
----------- END DASHBRR ------------
+---------- END DASHBRR --------------

@@ -6,7 +6,7 @@ namespace: downloads
 components:
   - ../../flux/components/common
 resources:
-#  - ./dashbrr/ks.yaml
+  - ./dashbrr/ks.yaml
   - ./cifs-pvcs/ks.yaml
   - ./flaresolverr/ks.yaml
 patches:
