@@ -27,9 +27,9 @@ spec:
         synchronous_commit: "on"
         parameters:
           max_connections: 500
-#  databaseInitSQL:
-#    name: db-init-sql
-#    key: init.sql
+  databaseInitSQL:
+    name: db-init-sql
+    key: init.sql
   instances:
     - name: postgres
       metadata:
@@ -78,11 +78,11 @@ spec:
       password:
         type: AlphaNumeric
 
-#    - name: dashbrr
-#      databases:
-#        - dashbrr
-#      password:
-#        type: AlphaNumeric
+    - name: dashbrr
+      databases:
+        - dashbrr
+      password:
+        type: AlphaNumeric
 
     - name: grafana
       databases:
