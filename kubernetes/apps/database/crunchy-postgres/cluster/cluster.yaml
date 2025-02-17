@@ -81,6 +81,12 @@ spec:
       password:
         type: AlphaNumeric
 
+    - name: dashbrr
+      databases:
+        - dashbrr
+      password:
+        type: AlphaNumeric
+
     - name: grafana
       databases:
         - grafana
