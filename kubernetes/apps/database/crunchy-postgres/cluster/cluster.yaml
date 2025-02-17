@@ -72,11 +72,11 @@ spec:
       password:
         type: AlphaNumeric
 
-#    - name: autobrr
-#      databases:
-#        - autobrr
-#      password:
-#        type: AlphaNumeric
+    - name: autobrr
+      databases:
+        - autobrr
+      password:
+        type: AlphaNumeric
 
     - name: coder
       databases:
