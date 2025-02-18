@@ -12,5 +12,6 @@ resources:
   - ./grafana/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./loki/ks.yaml
+  - ./peanut/ks.yaml
   - ./promtail/ks.yaml
   - ./runbook-viewer/ks.yaml

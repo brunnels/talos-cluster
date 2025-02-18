@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./helm-release.yaml
+  - ./externalsecret.yaml
+configMapGenerator:
+  - name: peanut-dashboard
+    options:
+      labels:
+        grafana_dashboard: "true"
+      annotations:
+        grafana_folder: "System"
+    files:
+      - ./resources/dashboard.json
+  - name: peanut
+    files:
+      - ./resources/nut.conf
+      - ./resources/upsmon.conf
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
