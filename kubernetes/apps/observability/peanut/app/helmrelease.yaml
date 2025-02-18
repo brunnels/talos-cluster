@@ -92,16 +92,9 @@ spec:
     persistence:
       tmp:
         type: emptyDir
-      config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        storageClass: openebs-hostpath
-        size: 500Mi
       config-files:
         type: configMap
         name: *app
         globalMounts:
-          - path: /config/nut.conf
-            subPath: nut.conf
-          - path: /config/upsmon.conf
-            subPath: upsmon.conf
+          - path: /config/settings.yml
+            subPath: settings.yml

@@ -1,0 +1,5 @@
+NUT_SERVERS:
+  - HOST: 10.0.200.1
+    PORT: 3493
+    USERNAME: monuser
+    PASSWORD: secret

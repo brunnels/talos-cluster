@@ -16,7 +16,6 @@ configMapGenerator:
       - ./resources/dashboard.json
   - name: peanut
     files:
-      - ./resources/nut.conf
-      - ./resources/upsmon.conf
+      - ./resources/settings.yml
 generatorOptions:
   disableNameSuffixHash: true
