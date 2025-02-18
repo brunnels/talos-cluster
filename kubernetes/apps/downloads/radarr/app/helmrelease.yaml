@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app dashbrr
+  name: &app radarr
 spec:
   interval: 30m
   chart:
@@ -22,23 +22,29 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: volsync
+      namespace: storage
   values:
     controllers:
-      dashbrr:
+      radarr:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
-              repository: ghcr.io/autobrr/dashbrr
-              tag: pr-67
-              # tag: v0.2.0@sha256:b3b898d4bf9b463bf802e7af188de45e6ca08eb96e828b4e9cbfde6e418441ad
+              repository: ghcr.io/onedr0p/radarr-develop
+              tag: 5.19.1.9704@sha256:a7d1426e06c9da902cc79af75f9c45ed3277bfddfe383fe7132cfda681b0ef65
             env:
-              TZ: ${TIMEZONE}
-              DASHBRR__CONFIG_PATH: /config/config.toml
-              DASHBRR__DB_PATH: /cache/._  # cache path is derived from DASHBRR__DB_PATH
-              DASHBRR__LISTEN_ADDR: 0.0.0.0:8080
-              GIN_MODE: debug
+              TZ: "${TIMEZONE}"
+              RADARR__APP__INSTANCENAME: Radarr
+              RADARR__APP__THEME: dark
+              RADARR__AUTH__METHOD: External
+              RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              RADARR__LOG__DBENABLED: "False"
+              RADARR__LOG__LEVEL: info
+              RADARR__SERVER__PORT: &port 80
+              RADARR__UPDATE__BRANCH: develop
             envFrom:
               - secretRef:
                   name: *app
@@ -48,12 +54,12 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /health
-                    port: &port 8080
+                    path: /ping
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
-                  timeoutSeconds: 3
-                  failureThreshold: 5
+                  timeoutSeconds: 1
+                  failureThreshold: 3
               readiness: *probes
             securityContext:
               allowPrivilegeEscalation: false
@@ -63,7 +69,7 @@ spec:
               requests:
                 cpu: 100m
               limits:
-                memory: 1Gi
+                memory: 2Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -83,48 +89,37 @@ spec:
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Downloads
-          gethomepage.dev/name: Dashbrr
-          gethomepage.dev/icon: dashbrr
-          gethomepage.dev/description: Media stack management
-          gethomepage.dev/widget.type: dashbrr
-          gethomepage.dev/widget.url: http://dashbrr.downloads
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_DASHBRR_TOKEN}}` }}"
+          gethomepage.dev/name: Radarr
+          gethomepage.dev/icon: radarr
+          gethomepage.dev/description: Movie Downloads
+          gethomepage.dev/widget.type: radarr
+          gethomepage.dev/widget.url: http://radarr.downloads
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_RADARR_TOKEN}}` }}"
           nginx.ingress.kubernetes.io/configuration-snippet: ${THEME_PARK_SNIPPET}
         hosts:
-          - host: "dashbrr.${SECRET_DOMAIN}"
+          - host: "radarr.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-    serviceAccount:
-      create: true
-      name: *app
-    rbac:
-      roles:
-        app:
-          forceRename: *app
-          type: ClusterRole
-          rules:
-            - apiGroups: [""]
-              resources: ["services"]
-              verbs: ["get", "watch", "list"]
-      bindings:
-        app:
-          forceRename: *app
-          type: ClusterRoleBinding
-          roleRef:
-            kind: ClusterRole
-            name: *app
-            apiGroup: rbac.authorization.k8s.io
-          subjects:
-            - kind: ServiceAccount
-              name: *app
-              namespace: downloads
     persistence:
       config:
-        type: configMap
-        name: *app
-      cache:
+        existingClaim: *app
+      tmp:
         type: emptyDir
-        sizeLimit: 1Gi
+      media:
+        existingClaim: cifs-movies
+        globalMounts:
+          - path: /media/movies
+      downloads:
+        existingClaim: cifs-downloads
+        advancedMounts:
+          radarr:
+            app:
+              - path: /downloads/downloaded_movies
+                readOnly: false
+                subPath: sabnzbd/downloaded_movies
+              - path: /downloads/movies-radarr
+                readOnly: false
+                subPath: flood/movies-radarr
