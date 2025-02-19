@@ -115,6 +115,12 @@ spec:
       password:
         type: AlphaNumeric
 
+    - name: pgbackweb
+      databases:
+        - pgbackweb
+      password:
+        type: AlphaNumeric
+
     - name: prowlarr
       databases:
         - prowlarr_main
