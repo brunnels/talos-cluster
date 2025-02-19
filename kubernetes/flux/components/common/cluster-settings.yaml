@@ -10,10 +10,11 @@ data:
   SERVICE_CIDR: "10.96.0.0/16"
   LAN_CIDR: "10.0.150.0/24"
 
-  VOLSYNC_PVC_STORAGECLASS: ceph-block
-  VOLSYNC_SNAPSHOTCLASS: csi-ceph-blockpool
-  VOLSYNC_CACHE_SNAPSHOTCLASS: ceph-block
-  VOLSYNC_STORAGECLASS: ceph-block
+  VOLSYNC_PVC_STORAGECLASS: "ceph-block"
+  VOLSYNC_SNAPSHOTCLASS: "csi-ceph-blockpool"
+  VOLSYNC_CACHE_SNAPSHOTCLASS: "ceph-block"
+  VOLSYNC_STORAGECLASS: "ceph-block"
+  VOLSYNC_S3_BUCKET: "korg_volsync"
 
   THEME_PARK_SNIPPET: >
     proxy_set_header Accept-Encoding "";
