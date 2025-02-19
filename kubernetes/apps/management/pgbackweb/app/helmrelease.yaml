@@ -92,3 +92,12 @@ spec:
     persistence:
       tmp:
         type: emptyDir
+      trusted-certs:
+        type: configMap
+        name: letsencrypt-certs
+        advancedMounts:
+          pgbackweb:
+            app:
+              - subPath: letsencrypt-certs.pem
+                path: /trusted_certs/letsencrypt-certs.pem
+                readOnly: true
