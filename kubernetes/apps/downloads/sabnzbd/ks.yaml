@@ -14,7 +14,7 @@ spec:
     - ../../../../flux/components/ingress/secure
     - ../../../../flux/components/volsync
   dependsOn:
-    - name: downloads-cifs-pvcs
+    - name: cifs-pvcs-downloads
       namespace: downloads
     - name: external-secrets-stores
       namespace: external-secrets

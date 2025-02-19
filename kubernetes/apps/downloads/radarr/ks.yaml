@@ -13,10 +13,10 @@ spec:
     - ../../../../flux/components/gatus/guarded
     - ../../../../flux/components/ingress/secure
   dependsOn:
+    - name: cifs-pvcs-downloads
+      namespace: downloads
     - name: crunchy-postgres-cluster
       namespace: database
-    - name: downloads-cifs-pvcs
-      namespace: downloads
     - name: external-secrets-stores
       namespace: external-secrets
   interval: 30m

@@ -13,7 +13,7 @@ spec:
     - ../../../../flux/components/gatus/guarded
     - ../../../../flux/components/ingress/secure
   dependsOn:
-    - name: downloads-cifs-pvcs
+    - name: cifs-pvcs-downloads
       namespace: downloads
     - name: crunchy-postgres-cluster
       namespace: database
