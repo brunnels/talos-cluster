@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app atuin
+  name: &app pgbackweb
 spec:
   interval: 30m
   chart:
@@ -24,29 +24,19 @@ spec:
       retries: 3
   values:
     controllers:
-      atuin:
-        replicas: 2
-        strategy: RollingUpdate
+      pgbackweb:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
-              repository: ghcr.io/atuinsh/atuin
-              tag: 18.4.0@sha256:8c6fa0aea944bf2a39665c9c69df1c2c0f9c05207bda5b942d450142285e3ee1
+              repository: docker.io/eduardolat/pgbackweb
+              tag: 0.4.2@sha256:e568691203b92e37c5a0977c9979006960f3de5e66530743fdd1805e1cbcaa23
             env:
               TZ: "${TIMEZONE}"
-              ATUIN_HOST: 0.0.0.0
-              ATUIN_PORT: &port 80
-              ATUIN_OPEN_REGISTRATION: "true"
-              ATUIN_METRICS__ENABLE: "true"
-              ATUIN_METRICS__HOST: 0.0.0.0
-              ATUIN_METRICS__PORT: &metricsPort 8080
-              ATUIN_TLS__ENABLE: "false"
             envFrom:
               - secretRef:
                   name: *app
-            args: ["server", "start"]
             probes:
               liveness: &probes
                 enabled: true
@@ -54,7 +44,7 @@ spec:
                 spec:
                   httpGet:
                     path: /
-                    port: *port
+                    port: &port 8085
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -69,7 +59,7 @@ spec:
                 cpu: 10m
                 memory: 128Mi
               limits:
-                memory: 256Mi
+                memory: 512Mi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -77,46 +67,25 @@ spec:
         runAsGroup: 100
         fsGroup: 100
         fsGroupChangePolicy: OnRootMismatch
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app.kubernetes.io/name: *app
     service:
       app:
         controller: *app
         ports:
           http:
             port: *port
-          metrics:
-            port: *metricsPort
-    serviceMonitor:
-      app:
-        serviceName: atuin
-        endpoints:
-          - port: metrics
-            scheme: http
-            path: /metrics
-            interval: 1m
-            scrapeTimeout: 10s
     ingress:
       app:
         className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Management
-          gethomepage.dev/name: Atuin
-          gethomepage.dev/icon: atuin
-          gethomepage.dev/description: Magical Shell History
+          gethomepage.dev/name: PGBackWeb
+          gethomepage.dev/icon: pgbackweb-light
+          gethomepage.dev/description: PostgreSQL backup interface
         hosts:
-          - host: sh.${SECRET_DOMAIN}
+          - host: "pgbackweb.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-    persistence:
-      config:
-        type: emptyDir
