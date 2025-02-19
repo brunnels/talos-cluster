@@ -1,0 +1,172 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app flood
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: volsync
+      namespace: storage
+  values:
+    controllers:
+      flood:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: docker.io/jesec/flood
+              tag: master@sha256:85df7441049511f9fe64d3c99fa2ec1d1f70d1b9d5fe751a28e6c88ce1136234
+            env:
+              TZ: "${TIMEZONE}"
+              FLOOD_OPTION_rundir: /data
+              # sometimes flood won't come up the first time with auth: none
+              #FLOOD_OPTION_auth: none
+              FLOOD_OPTION_port: &port 80
+              FLOOD_OPTION_trurl: http://flood:9091/transmission/rpc
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+          transmission:
+            image:
+              repository: ghcr.io/brunnels/transmission
+              tag: 4.0.6@sha256:95009d4043d3da0084fdfdc1ab4b24a320193c5ca2fd2248153a51d677d6bf8d
+            env:
+              TZ: "${TIMEZONE}"
+              TRANSMISSION__INCOMPLETE_DIR: /incomplete
+              TRANSMISSION__IDLE_SEEDING_LIMIT: 10080
+              TRANSMISSION__IDLE_SEEDING_LIMIT_ENABLED: true
+              TRANSMISSION__RATIO_LIMIT: 1
+              TRANSMISSION__RATIO_LIMIT_ENABLED: true
+              TRANSMISSION__UTP_ENABLED: false
+              TRANSMISSION__PEER_PORT: 60112
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+          exporter:
+            dependsOn: app
+            image:
+              repository: docker.io/evanofslack/transmission-exporter
+              tag: latest@sha256:b68569f58c7beeac5eab2ba6747310116990ea9534262eff64c269bef3e794ee
+            env:
+              TRANSMISSION_ADDR: http://flood:9091
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 50Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+    defaultPodOptions:
+      hostname: *app
+      labels:
+        use-vpn-gateway: "true"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 100
+        fsGroup: 100
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+          rpc:
+            port: 9091
+          metrics:
+            port: 19091
+    serviceMonitor:
+      app:
+        serviceName: *app
+        endpoints:
+          - port: metrics
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
+    ingress:
+      app:
+        className: internal
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Flood
+          gethomepage.dev/icon: flood
+          gethomepage.dev/description: Bittorrent UI
+          gethomepage.dev/widget.type: flood
+          gethomepage.dev/widget.url: http://flood.downloads
+          nginx.ingress.kubernetes.io/configuration-snippet: ${THEME_PARK_SNIPPET}
+        hosts:
+          - host: "flood.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        existingClaim: *app
+        advancedMounts:
+          flood:
+            app:
+              - path: /data
+                subPath: flood-data
+            transmission:
+              - path: /config
+                subPath: transmission-config
+      incomplete:
+        storageClass: openebs-hostpath
+        accessMode: ReadWriteOnce
+        size: 20Gi
+        advancedMounts:
+          flood:
+            app:
+              - path: incomplete
+            transmission:
+              - path: incomplete
+      downloads:
+        existingClaim: cifs-downloads
+        advancedMounts:
+          flood:
+            app:
+              - path: /downloads
+                subPath: flood
+            transmission:
+              - path: /downloads
+                subPath: flood
