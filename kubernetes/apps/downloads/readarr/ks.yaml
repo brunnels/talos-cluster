@@ -12,6 +12,7 @@ spec:
   components:
     - ../../../../flux/components/gatus/guarded
     - ../../../../flux/components/ingress/secure
+    - ../../../../flux/components/volsync
   dependsOn:
     - name: cifs-pvcs-downloads
       namespace: downloads
