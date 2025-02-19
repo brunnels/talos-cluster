@@ -78,5 +78,5 @@ spec:
             - noperm
             - mfsymlinks
             - noserverino
-            - multichannel
+#            - multichannel
 #            - max_channels=4
