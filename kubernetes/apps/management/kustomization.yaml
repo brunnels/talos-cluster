@@ -8,4 +8,4 @@ components:
 resources:
   - ./atuin/ks.yaml
   - ./pgadmin/ks.yaml
-  - ./pgbackweb/ks.yaml
+#  - ./pgbackweb/ks.yaml
