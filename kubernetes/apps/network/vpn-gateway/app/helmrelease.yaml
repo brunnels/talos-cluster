@@ -87,8 +87,8 @@ spec:
     # all namespaces that will utilize the vpn should be added here
     # the namespaces will also need the webhook.namespaceSelector added to their labels
     # with a boolean value
-    routed_namespaces: []
-#      - downloads
+    routed_namespaces:
+      - downloads
     webhook:
       image:
         repository: ghcr.io/angelnu/gateway-admision-controller
