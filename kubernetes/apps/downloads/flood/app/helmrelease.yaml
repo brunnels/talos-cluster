@@ -37,11 +37,12 @@ spec:
               tag: 4.9.3@sha256:e9c8a3fd460ad1e81b47e7e17ec257a998f4e92e2b8c4935190d63c28e5b9b50
             env:
               TZ: "${TIMEZONE}"
-              FLOOD_OPTION_rundir: /data
-              # sometimes flood won't come up the first time with auth: none
-              #FLOOD_OPTION_auth: none
+              FLOOD_OPTION_noauth: "true"
               FLOOD_OPTION_port: &port 80
+              FLOOD_OPTION_rundir: /data
               FLOOD_OPTION_trurl: http://flood:9091/transmission/rpc
+              FLOOD_OPTION_truser: none
+              FLOOD_OPTION_trpass: none
             resources:
               requests:
                 cpu: 10m
@@ -53,8 +54,8 @@ spec:
               capabilities: { drop: ["ALL"] }
           transmission:
             image:
-              repository: ghcr.io/onedr0p/transmission
-              tag: 4.0.5@sha256:166358481989ee720397bcc8b9d683fbb16b9f42088caed2dc4e9f7da116087a
+              repository: ghcr.io/brunnels/transmission
+              tag: 4.0.6@sha256:95009d4043d3da0084fdfdc1ab4b24a320193c5ca2fd2248153a51d677d6bf8d
             env:
               TZ: "${TIMEZONE}"
               TRANSMISSION__INCOMPLETE_DIR: /incomplete
