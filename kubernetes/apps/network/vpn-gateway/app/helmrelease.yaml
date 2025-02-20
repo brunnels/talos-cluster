@@ -85,8 +85,8 @@ spec:
         networkPolicy:
           enabled: false
     # all namespaces that will utilize the vpn should be added here
-    # the namespaces will also need the webhook.namespaceSelector added to their labels
-    # with a boolean value
+    # the namespaces will also need the webhook.namespaceSelector added to their labels or annotations
+    # with a boolean value. IF THIS IS MISSING THE VPN WILL NOT BE USED!!!
     routed_namespaces:
       - downloads
     webhook:
