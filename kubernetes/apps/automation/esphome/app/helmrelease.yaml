@@ -28,7 +28,6 @@ spec:
   values:
     controllers:
       esphome:
-        replicas: 0
         containers:
           app:
             image:
