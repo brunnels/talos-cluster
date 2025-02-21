@@ -4,6 +4,8 @@ apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PostgresCluster
 metadata:
   name: &name postgres
+  annotations:
+    postgres-operator.crunchydata.com/autoCreateUserSchema: "true"
 spec:
   metadata:
     labels:
@@ -35,8 +37,6 @@ spec:
       metadata:
         labels:
           app.kubernetes.io/name: crunchy-postgres
-        annotations:
-          postgres-operator.crunchydata.com/autoCreateUserSchema: "true"
       replicas: &replicas 3
       dataVolumeClaimSpec:
         storageClassName: openebs-hostpath
