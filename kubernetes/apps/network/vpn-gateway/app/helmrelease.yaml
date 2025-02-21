@@ -87,7 +87,7 @@ spec:
     # all namespaces that will utilize the vpn should be added here
     # the namespaces will also need the webhook.namespaceSelector added to their labels or annotations
     # with a boolean value. IF THIS IS MISSING THE VPN WILL NOT BE USED!!!
-    routed_namespaces:
+    routed_namespaces: &routedNamespaces
       - downloads
     webhook:
       image:
@@ -97,7 +97,12 @@ spec:
       # -- string: Selector for namespace. boolean
       # All pods in this namespace will get evaluated by the webhook.
       namespaceSelector:
-        label: vpn-routed-gateway
+        type: custom
+        custom:
+          matchExpressions:
+            - key: kubernetes.io/metadata.name
+              operator: "In"
+              values: *routedNamespaces
 
       # -- boolean: Default behaviour for new PODs in the evaluated namespace
       # if true then the gatewayLabel and gatewayAnnotations will not be utilized and the
