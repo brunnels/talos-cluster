@@ -6,6 +6,7 @@ namespace: automation
 components:
   - ../../flux/components/common
 resources:
+  - ./esphome/ks.yaml
   - ./home-assistant/ks.yaml
 patches:
   - # Add volsync annotation
