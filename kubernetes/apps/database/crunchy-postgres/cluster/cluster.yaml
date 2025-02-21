@@ -96,12 +96,12 @@ spec:
       password:
         type: AlphaNumeric
 
-    - name: lidarr
-      databases:
-        - lidarr_main
-        - lidarr_log
-      password:
-        type: AlphaNumeric
+#    - name: lidarr
+#      databases:
+#        - lidarr_main
+#        - lidarr_log
+#      password:
+#        type: AlphaNumeric
 
     - name: pgadmin
       databases:
