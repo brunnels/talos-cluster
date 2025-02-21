@@ -10,7 +10,7 @@ resources:
   - ./cifs-pvcs/ks.yaml
   - ./flaresolverr/ks.yaml
   - ./flood/ks.yaml
-#  - ./lidarr/ks.yaml
+  - ./lidarr/ks.yaml
   - ./prowlarr/ks.yaml
   - ./readarr/ks.yaml
   - ./sabnzbd/ks.yaml
