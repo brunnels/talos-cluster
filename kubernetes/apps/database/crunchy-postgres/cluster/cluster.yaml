@@ -35,6 +35,8 @@ spec:
       metadata:
         labels:
           app.kubernetes.io/name: crunchy-postgres
+        annotations:
+          postgres-operator.crunchydata.com/autoCreateUserSchema: "true"
       replicas: &replicas 3
       dataVolumeClaimSpec:
         storageClassName: openebs-hostpath
@@ -96,12 +98,12 @@ spec:
       password:
         type: AlphaNumeric
 
-#    - name: lidarr
-#      databases:
-#        - lidarr_main
-#        - lidarr_log
-#      password:
-#        type: AlphaNumeric
+    - name: lidarr
+      databases:
+        - lidarr_main
+        - lidarr_log
+      password:
+        type: AlphaNumeric
 
     - name: pgadmin
       databases:
