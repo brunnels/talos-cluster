@@ -24,7 +24,7 @@ patches:
   - # Add vpn-gateway annotation
     patch: |
       - op: add
-        path: "/metadata/annotations/vpn-routed-gateway"
+        path: "/metadata/labels/vpn-routed-gateway"
         value: "true"
     target:
       kind: Namespace

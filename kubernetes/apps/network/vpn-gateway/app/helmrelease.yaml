@@ -106,8 +106,8 @@ spec:
 
       # -- boolean: gatewayLabel and gatewayAnnotation controls the label/annotation key of which the value,
       #   by default, must be 'true' on the pod in order for the gateway sidecar to be injected.
-      gatewayLabel:
-      gatewayAnnotation: use-vpn-gateway
+      gatewayLabel: use-vpn-gateway
+      gatewayAnnotation:
 
       # -- string: When a value is configured for the gatewayLabelValue or setGatewayAnnotationValue,
       #   the value of the label and/or annotation set on the gatewayLabel or gatewayAnnotation
