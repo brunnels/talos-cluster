@@ -1,0 +1,125 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app lidarr
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: volsync
+      namespace: storage
+  values:
+    controllers:
+      lidarr:
+        replicas: 0
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/rafaribe/lidarr-develop
+              tag: 2.9.6.4552@sha256:bbfafd5fce417b986edfdcdbfbb2dbeebc4519f1e50af73950cfc78d11beb49f
+            env:
+              TZ: "${TIMEZONE}"
+              LIDARR__APP__INSTANCENAME: Lidarr
+              LIDARR__APP__THEME: dark
+              LIDARR__AUTH__METHOD: External
+              LIDARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              LIDARR__LOG__LEVEL: info
+              LIDARR__SERVER__PORT: &port 80
+              LIDARR__UPDATE__BRANCH: develop
+            envFrom:
+              - secretRef:
+                  name: *app
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 3
+                  failureThreshold: 5
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 2Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 100
+        fsGroup: 100
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+    ingress:
+      app:
+        className: internal
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Lidarr
+          gethomepage.dev/icon: lidarr
+          gethomepage.dev/description: Music Downloads
+          gethomepage.dev/widget.type: lidarr
+          gethomepage.dev/widget.url: http://lidarr.downloads
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_LIDARR_TOKEN}}` }}"
+          nginx.ingress.kubernetes.io/configuration-snippet: ${THEME_PARK_SNIPPET}
+        hosts:
+          - host: "lidarr.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        existingClaim: lidarr-config
+      tmp:
+        type: emptyDir
+      media:
+        existingClaim: cifs-music
+        globalMounts:
+          - path: /media/music
+      downloads:
+        existingClaim: cifs-downloads
+        advancedMounts:
+          lidarr:
+            app:
+              - path: /downloads/downloaded_music
+                readOnly: false
+                subPath: sabnzbd/downloaded_music
+              - path: /downloads/music-lidarr
+                readOnly: false
+                subPath: flood/music-lidarr
