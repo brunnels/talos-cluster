@@ -103,8 +103,8 @@ spec:
               values: *routedNamespaces
 
       # -- boolean: Default behaviour for new PODs in the evaluated namespace
-      # if true then the gatewayLabel and gatewayAnnotations will not be utilized and the
-      # gateway will be injected into every pod in the namespace
+      # if true then the gatewayLabel and gatewayAnnotation below will not be utilized and the
+      # gateway will be injected into every pod in the routed_namespaces
       gatewayDefault: false
 
       # -- boolean: gatewayLabel and gatewayAnnotation controls the label/annotation key of which the value,
