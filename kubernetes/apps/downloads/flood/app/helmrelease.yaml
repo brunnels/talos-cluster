@@ -30,8 +30,6 @@ spec:
       flood:
         annotations:
           reloader.stakater.com/auto: "true"
-        labels:
-          use-vpn-gateway: "true"
         containers:
           app:
             image:
@@ -94,6 +92,8 @@ spec:
               capabilities: { drop: ["ALL"] }
     defaultPodOptions:
       hostname: *app
+      labels:
+        use-vpn-gateway: "true"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
