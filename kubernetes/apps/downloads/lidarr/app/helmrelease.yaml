@@ -105,7 +105,7 @@ spec:
                   port: http
     persistence:
       config:
-        existingClaim: lidarr-config
+        existingClaim: *app
       tmp:
         type: emptyDir
       media:
