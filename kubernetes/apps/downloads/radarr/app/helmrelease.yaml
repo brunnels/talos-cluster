@@ -83,6 +83,8 @@ spec:
         ports:
           http:
             port: *port
+        labels:
+          com.dashbrr.service.type: *app
     ingress:
       app:
         className: internal
@@ -132,10 +134,11 @@ spec:
                 name: *app
               patch: |
                 - op: add
-                  path: /metadata/labels
-                  value:
-                    com.dashbrr.service.type: "radarr"
-                    com.dashbrr.service.url: "http://radarr.downloads"
-                    com.dashbrr.service.apikey: "$${DASHBRR_RADARR_API_KEY}"
-                    com.dashbrr.service.name: "Movies"
-                    com.dashbrr.service.access_url: "https://radarr.${SECRET_DOMAIN}"
+                  path: /metadata/annotations/com.dashbrr.service.url
+                  value: "http://radarr.downloads"
+                - op: add
+                  path: /metadata/annotations/com.dashbrr.service.apikey
+                  value: "$${DASHBRR_RADARR_API_KEY}"
+                - op: add
+                  path: /metadata/annotations/com.dashbrr.service.access_url
+                  value: "https://radarr.${SECRET_DOMAIN}"
