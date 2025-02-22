@@ -35,9 +35,7 @@ spec:
               # tag: v0.2.0@sha256:b3b898d4bf9b463bf802e7af188de45e6ca08eb96e828b4e9cbfde6e418441ad
             env:
               TZ: ${TIMEZONE}
-              DASHBRR__CONFIG_PATH: /config/config.toml
-              DASHBRR__DB_PATH: /cache/._  # cache path is derived from DASHBRR__DB_PATH
-              DASHBRR__LISTEN_ADDR: 0.0.0.0:8080
+              DASHBRR__LISTEN_ADDR: 0.0.0.0:80
               GIN_MODE: debug
               CACHE_TYPE: redis
               REDIS_HOST: dragonfly.database.svc.cluster.local
@@ -52,7 +50,7 @@ spec:
                 spec:
                   httpGet:
                     path: /health
-                    port: &port 8080
+                    port: &port 80
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 3
@@ -125,9 +123,6 @@ spec:
               name: *app
               namespace: downloads
     persistence:
-      config:
-        type: configMap
-        name: *app
       cache:
         type: emptyDir
         sizeLimit: 1Gi
