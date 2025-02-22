@@ -28,6 +28,7 @@ spec:
   values:
     controllers:
       sonarr:
+        replicas: 0
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
