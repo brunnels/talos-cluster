@@ -98,7 +98,9 @@ spec:
       config:
         existingClaim: *app
       cache:
-        existingClaim: tautulli-cache
+        storageClass: openebs-hostpath
+        accessMode: ReadWriteOnce
+        size: 15Gi
         globalMounts:
           - path: /config/cache
       logs:
