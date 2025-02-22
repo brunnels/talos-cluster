@@ -28,7 +28,6 @@ spec:
   values:
     controllers:
       tautulli:
-        replicas: 0
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
