@@ -28,7 +28,6 @@ spec:
   values:
     controllers:
       lidarr:
-        replicas: 0
         annotations:
           reloader.stakater.com/auto: "true"
         containers:

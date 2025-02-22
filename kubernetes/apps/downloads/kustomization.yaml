@@ -6,12 +6,13 @@ namespace: downloads
 components:
   - ../../flux/components/common
 resources:
-  - ./dashbrr/ks.yaml
   - ./cifs-pvcs/ks.yaml
+  - ./dashbrr/ks.yaml
   - ./flaresolverr/ks.yaml
   - ./flood/ks.yaml
   - ./lidarr/ks.yaml
   - ./prowlarr/ks.yaml
+  - ./radarr/ks.yaml
   - ./readarr/ks.yaml
   - ./sabnzbd/ks.yaml
   - ./sonarr/ks.yaml
