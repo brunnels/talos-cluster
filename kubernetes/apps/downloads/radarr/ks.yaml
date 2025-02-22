@@ -34,18 +34,3 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: false
-  patches:
-    - target:
-        version: v1
-        kind: Service
-        name: *app
-      patch: |
-        - op: add
-          path: "/metadata/labels/com.dashbrr.service.url"
-          value: "http://radarr.downloads"
-        - op: add
-          path: "/metadata/labels/com.dashbrr.service.apikey"
-          value: "$${DASHBRR_RADARR_API_KEY}"
-        - op: add
-          path: "/metadata/labels/com.dashbrr.service.access_url"
-          value: "https://radarr.${SECRET_DOMAIN}"

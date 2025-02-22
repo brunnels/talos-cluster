@@ -83,8 +83,6 @@ spec:
         ports:
           http:
             port: *port
-        labels:
-          com.dashbrr.service.type: *app
     ingress:
       app:
         className: internal
