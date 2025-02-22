@@ -134,11 +134,11 @@ spec:
                 name: *app
               patch: |
                 - op: add
-                  path: /metadata/annotations/com.dashbrr.service.url
+                  path: "/metadata/labels/com.dashbrr.service.url"
                   value: "http://radarr.downloads"
                 - op: add
-                  path: /metadata/annotations/com.dashbrr.service.apikey
+                  path: "/metadata/labels/com.dashbrr.service.apikey"
                   value: "$${DASHBRR_RADARR_API_KEY}"
                 - op: add
-                  path: /metadata/annotations/com.dashbrr.service.access_url
+                  path: "/metadata/labels/com.dashbrr.service.access_url"
                   value: "https://radarr.${SECRET_DOMAIN}"
