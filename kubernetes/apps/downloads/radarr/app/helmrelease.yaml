@@ -83,12 +83,6 @@ spec:
         ports:
           http:
             port: *port
-        labels:
-          com.dashbrr.service.type: "radarr"
-          com.dashbrr.service.url: "http://radarr.downloads"
-          com.dashbrr.service.apikey: "$${DASHBRR_RADARR_API_KEY}"
-          com.dashbrr.service.name: "Movies"
-          com.dashbrr.service.access_url: "https://radarr.${SECRET_DOMAIN}"
     ingress:
       app:
         className: internal
@@ -129,3 +123,19 @@ spec:
               - path: /downloads/movies-radarr
                 readOnly: false
                 subPath: flood/movies-radarr
+    postRenderers:
+      - kustomize:
+          patches:
+            - target:
+                version: v1
+                kind: Service
+                name: *app
+              patch: |
+                - op: add
+                  path: /metadata/labels
+                  value:
+                    com.dashbrr.service.type: "radarr"
+                    com.dashbrr.service.url: "http://radarr.downloads"
+                    com.dashbrr.service.apikey: "$${DASHBRR_RADARR_API_KEY}"
+                    com.dashbrr.service.name: "Movies"
+                    com.dashbrr.service.access_url: "https://radarr.${SECRET_DOMAIN}"
