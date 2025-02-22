@@ -37,12 +37,8 @@ spec:
               TZ: ${TIMEZONE}
               DASHBRR__LISTEN_ADDR: 0.0.0.0:80
               GIN_MODE: debug
-              CACHE_TYPE: redis
-              REDIS_HOST: dragonfly.database.svc.cluster.local
-              REDIS_PORT: 6379
-              DASHBRR__CACHE_TYPE: redis
-              DASHBRR__REDIS_HOST: dragonfly.database.svc.cluster.local
-              DASHBRR__REDIS_PORT: 6379
+              CACHE_TYPE: "redis"
+              REDIS_HOST: "dragonfly.database.svc.cluster.local"
             envFrom:
               - secretRef:
                   name: *app
@@ -90,10 +86,6 @@ spec:
           gethomepage.dev/name: Dashbrr
           gethomepage.dev/icon: dashbrr
           gethomepage.dev/description: Media stack management
-          gethomepage.dev/widget.type: dashbrr
-          gethomepage.dev/widget.url: http://dashbrr.downloads
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_DASHBRR_TOKEN}}` }}"
-          nginx.ingress.kubernetes.io/configuration-snippet: ${THEME_PARK_SNIPPET}
         hosts:
           - host: "dashbrr.${SECRET_DOMAIN}"
             paths:

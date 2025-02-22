@@ -33,3 +33,5 @@ services:
 - Next run the following command to import the services into the database:
 
 `dashbrr config import services.yaml`
+
+- After the import is done you can comment out the api keys from your external secret if you want
