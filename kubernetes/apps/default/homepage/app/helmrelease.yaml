@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.7.0
+      version: 3.7.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -66,6 +66,39 @@ spec:
     serviceAccount:
       create: true
       name: *app
+    rbac:
+      roles:
+        app:
+          forceRename: *app
+          type: ClusterRole
+          rules:
+            - apiGroups: [""]
+              resources: ["namespaces", "nodes", "pods"]
+              verbs: ["get", "list"]
+
+            - apiGroups: ["extensions", "networking.k8s.io"]
+              resources: ["ingresses"]
+              verbs: ["get", "list"]
+
+            - apiGroups: ["metrics.k8s.io"]
+              resources: ["nodes", "pods"]
+              verbs: ["get", "list"]
+
+            - apiGroups: ["apiextensions.k8s.io"]
+              resources: ["customresourcedefinitions/status"]
+              verbs: ["get"]
+      bindings:
+        app:
+          forceRename: *app
+          type: ClusterRoleBinding
+          roleRef:
+            kind: ClusterRole
+            name: *app
+            apiGroup: rbac.authorization.k8s.io
+          subjects:
+            - kind: ServiceAccount
+              name: *app
+              namespace: default
     ingress:
       app:
         className: internal
