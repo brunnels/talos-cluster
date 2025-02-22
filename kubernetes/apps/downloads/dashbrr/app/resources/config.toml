@@ -1,0 +1,16 @@
+services:
+  radarr:
+    - url: "http://radarr.downloads"
+      apikey: "${DASHBRR_RADARR_API_KEY}"
+  sonarr:
+    - url: "http://sonarr.downloads"
+      apikey: "${DASHBRR_SONARR_API_KEY}"
+  prowlarr:
+    - url: "http://prowlarr.downloads"
+      apikey: "${DASHBRR_PROWLARR_API_KEY}"
+  overseerr:
+    - url: "http://overseerr.media"
+      apikey: "${DASHBRR_OVERSEERR_API_KEY}"
+  plex:
+    - url: "http://plex.media"
+      apikey: "${DASHBRR_PLEX_API_KEY}"

@@ -40,6 +40,8 @@ spec:
               DASHBRR__LISTEN_ADDR: 0.0.0.0:8080
               GIN_MODE: debug
               CACHE_TYPE: redis
+              REDIS_HOST: dragonfly.database.svc.cluster.local
+              REDIS_PORT: 6379
             envFrom:
               - secretRef:
                   name: *app
