@@ -5,14 +5,14 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./ks.yaml
-  - ./flaresolverr/ks.yaml
-  - ./flood/ks.yaml
-  - ./lidarr/ks.yaml
-  - ./prowlarr/ks.yaml
-  - ./radarr/ks.yaml
-  - ./readarr/ks.yaml
-  - ./sabnzbd/ks.yaml
-  - ./sonarr/ks.yaml
+  # - ./flaresolverr/ks.yaml
+  # - ./flood/ks.yaml
+  # - ./lidarr/ks.yaml
+  # - ./prowlarr/ks.yaml
+  # - ./radarr/ks.yaml
+  # - ./readarr/ks.yaml
+  # - ./sabnzbd/ks.yaml
+  # - ./sonarr/ks.yaml
 #  - ./unpackerr/ks.yaml
 configMapGenerator:
   - name: authelia-ingress-hv
