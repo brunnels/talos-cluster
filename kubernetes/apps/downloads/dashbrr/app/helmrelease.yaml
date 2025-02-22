@@ -40,6 +40,9 @@ spec:
               CACHE_TYPE: redis
               REDIS_HOST: dragonfly.database.svc.cluster.local
               REDIS_PORT: 6379
+              DASHBRR__CACHE_TYPE: redis
+              DASHBRR__REDIS_HOST: dragonfly.database.svc.cluster.local
+              DASHBRR__REDIS_PORT: 6379
             envFrom:
               - secretRef:
                   name: *app
