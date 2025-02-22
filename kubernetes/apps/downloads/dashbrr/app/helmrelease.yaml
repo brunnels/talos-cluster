@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/autobrr/dashbrr
-              tag: pr-69
+              tag: pr-63
               # tag: v0.2.0@sha256:b3b898d4bf9b463bf802e7af188de45e6ca08eb96e828b4e9cbfde6e418441ad
             env:
               TZ: ${TIMEZONE}
@@ -39,6 +39,7 @@ spec:
               DASHBRR__DB_PATH: /cache/._  # cache path is derived from DASHBRR__DB_PATH
               DASHBRR__LISTEN_ADDR: 0.0.0.0:8080
               GIN_MODE: debug
+              CACHE_TYPE: redis
             envFrom:
               - secretRef:
                   name: *app
