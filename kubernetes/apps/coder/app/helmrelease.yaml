@@ -88,15 +88,14 @@ spec:
         host: "coder.${SECRET_DOMAIN}"
     postRenderers:
       - kustomize:
-          patches:
-            - target:
-                kind: Service
-                name: coder
-              patch: |
-                - op: add
-                  path: /spec/ports/-
-                  value:
-                    - name: prom-http
-                      port: 2112
-                      protocol: TCP
-                      targetPort: 2112
+          patchesStrategicMerge:
+            - apiVersion: v1
+              kind: Service
+              metadata:
+                name: *app
+              spec:
+                ports:
+                  - name: prom-http
+                    port: 2112
+                    protocol: TCP
+                    targetPort: 2112
