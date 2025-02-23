@@ -6,5 +6,7 @@ namespace: media
 components:
   - ../../flux/components/common
 resources:
+  - ./cifs-pvcs/ks.yaml
+  - ./overseerr/ks.yaml
   - ./pingvin/ks.yaml
   - ./tautulli/ks.yaml
