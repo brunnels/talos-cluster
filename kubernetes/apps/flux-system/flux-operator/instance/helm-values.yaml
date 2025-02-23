@@ -11,5 +11,5 @@ instance:
     kind: GitRepository
     url: "ssh://git@github.com/brunnels/talos-cluster.git"
     pullSecret: github-deploy-key
-    ref: "refs/heads/kdev2"
+    ref: "refs/heads/main"
     path: kubernetes/flux/cluster
