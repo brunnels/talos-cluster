@@ -23,10 +23,10 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: intel-device-plugins-gpu
-      namespace: system
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+    - name: intel-device-plugin-gpu
+      namespace: kube-system
+    - name: volsync
+      namespace: storage
   values:
     controllers:
       plex:
