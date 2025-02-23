@@ -35,7 +35,7 @@ spec:
           app:
             image:
               repository: ghcr.io/openconfig/gnmic
-              tag: 0.4.0@sha256:1cc06d317a6db441d62296bf2203c3090fde10c8fc1d7b4be0f8cf56c1c0ccf9
+              tag: 0.40.0@sha256:1cc06d317a6db441d62296bf2203c3090fde10c8fc1d7b4be0f8cf56c1c0ccf9
             args:
               - subscribe
               - --config
