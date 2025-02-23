@@ -90,14 +90,13 @@ spec:
     - kustomize:
         patches:
           - target:
-              version: v1
               kind: Service
-              name: coder
+              name: *app
             patch: |
               - op: add
                 path: /spec/ports/-
                 value:
-                  - name: prom-http
-                    port: 2112
-                    protocol: TCP
-                    targetPort: 2112
+                  name: prom-http
+                  port: 2112
+                  protocol: TCP
+                  targetPort: 2112
