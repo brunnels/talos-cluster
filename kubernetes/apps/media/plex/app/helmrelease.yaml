@@ -136,7 +136,7 @@ spec:
             endpoints:
               - name: "plex"
                 group: external
-                url: "https://plex.${SECRET_DOMAIN}/"
+                url: "https://plex.${SECRET_DOMAIN}/web/index.html"
                 interval: 1m
                 client:
                   dns-resolver: tcp://1.1.1.1:53
@@ -146,7 +146,7 @@ spec:
                   - type: pushover
               - name: "plex-local"
                 group: internal
-                url: "https://plex-local.${SECRET_DOMAIN}/"
+                url: "https://plex-local.${SECRET_DOMAIN}/web/index.html"
                 interval: 1m
                 conditions:
                   - "[STATUS] == 200"

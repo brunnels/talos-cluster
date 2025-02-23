@@ -16,6 +16,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      VOLSYNC_CAPACITY: 40Gi
   prune: true
   sourceRef:
     kind: GitRepository
