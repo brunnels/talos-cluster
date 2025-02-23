@@ -16,9 +16,10 @@ data:
   VOLSYNC_STORAGECLASS: "ceph-block"
   VOLSYNC_S3_BUCKET: "korg_volsync"
 
+  THEME_PARK_THEME: "nord"
   THEME_PARK_SNIPPET: >
     proxy_set_header Accept-Encoding "";
-    sub_filter '</body>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/{{ .Release.Name }}/nord.css"></body>';
+    sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/{{ .Release.Name }}/${THEME_PARK_THEME}.css"></head>';
     sub_filter_once on;
   SVC_POSTGRES_ADDR: "10.0.150.13"
   SVC_VPN_ADDR: "10.0.150.14"
