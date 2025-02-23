@@ -9,4 +9,5 @@ resources:
   - ./cifs-pvcs/ks.yaml
   - ./overseerr/ks.yaml
   - ./pingvin/ks.yaml
+  - ./plex/ks.yaml
   - ./tautulli/ks.yaml
