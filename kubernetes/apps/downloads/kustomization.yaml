@@ -4,7 +4,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./namespace.yaml
-  - ./ks.yaml
+  # - ./ks.yaml
   # - ./flaresolverr/ks.yaml
   # - ./flood/ks.yaml
   # - ./lidarr/ks.yaml
@@ -14,10 +14,10 @@ resources:
   # - ./sabnzbd/ks.yaml
   # - ./sonarr/ks.yaml
 #  - ./unpackerr/ks.yaml
-configMapGenerator:
-  - name: authelia-ingress-hv
-    namespace: downloads
-    files:
-      - values.yaml=../security/authelia/app/resources/authelia-ingress-hv.yaml
-generatorOptions:
-  disableNameSuffixHash: true
+# configMapGenerator:
+#   - name: authelia-ingress-hv
+#     namespace: downloads
+#     files:
+#       - values.yaml=../security/authelia/app/resources/authelia-ingress-hv.yaml
+# generatorOptions:
+#   disableNameSuffixHash: true
