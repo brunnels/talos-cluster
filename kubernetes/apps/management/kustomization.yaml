@@ -9,10 +9,10 @@ resources:
   # - ./pgbackweb/ks.yaml
   # - ./rustdesk/ks.yaml
   # - ./sshwifty/ks.yaml
-configMapGenerator:
-  - name: authelia-ingress-hv
-    namespace: management
-    files:
-      - values.yaml=../security/authelia/app/resources/authelia-ingress-hv.yaml
-generatorOptions:
-  disableNameSuffixHash: true
+# configMapGenerator:
+#   - name: authelia-ingress-hv
+#     namespace: management
+#     files:
+#       - values.yaml=../security/authelia/app/resources/authelia-ingress-hv.yaml
+# generatorOptions:
+#   disableNameSuffixHash: true
