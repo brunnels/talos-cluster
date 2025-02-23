@@ -31,16 +31,3 @@ configMapGenerator:
       - ./runbooks/provisionerd.md
 generatorOptions:
   disableNameSuffixHash: true
-patches:
-  - target:
-      version: v1
-      kind: Service
-      name: coder
-    patch: |
-      - op: add
-        path: /spec/ports/-
-        value:
-          - name: prom-http
-            port: 2112
-            protocol: TCP
-            targetPort: 2112
