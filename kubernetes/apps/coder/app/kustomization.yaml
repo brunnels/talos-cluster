@@ -15,11 +15,11 @@ configMapGenerator:
       annotations:
         grafana_folder: "Coder"
     files:
-      - coderd.json=./dashboards/coderd.json
-      - provisionerd.json=./dashboards/provisionerd.json
-      - status.json=./dashboards/status.json
-      - workspace_detail.json=./dashboards/workspace_detail.json
-      - workspaces.json=./dashboards/workspaces.json
+      - ./dashboards/coderd.json
+      - ./dashboards/provisionerd.json
+      - ./dashboards/status.json
+      - ./dashboards/workspace_detail.json
+      - ./dashboards/workspaces.json
   - name: coder-runbooks
     options:
       labels:
@@ -27,7 +27,20 @@ configMapGenerator:
       annotations:
         runbook_folder: "coder"
     files:
-      - coderd.md=./runbooks/coderd.md
-      - provisionerd.md=./runbooks/provisionerd.md
+      - ./runbooks/coderd.md
+      - ./runbooks/provisionerd.md
 generatorOptions:
   disableNameSuffixHash: true
+patches:
+  - target:
+      version: v1
+      kind: Service
+      name: coder
+    patch: |
+      - op: add
+        path: /spec/ports/-
+        value:
+          - name: prom-http
+            port: 2112
+            protocol: TCP
+            targetPort: 2112

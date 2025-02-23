@@ -29,16 +29,3 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: true
-  patches:
-    - target:
-        version: v1
-        kind: Service
-        name: *app
-      patch: |
-        - op: add
-          path: /spec/ports/-
-          value:
-            - name: prom-http
-              port: 2112
-              protocol: TCP
-              targetPort: 2112
