@@ -10,9 +10,9 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../flux/components/gatus/guarded
-    - ../../../../flux/components/volsync
-    - ../../../../flux/components/ingress/secure
+    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync
+    - ../../../../components/ingress/secure
   interval: 30m
   path: ./kubernetes/apps/automation/esphome/app
   postBuild:

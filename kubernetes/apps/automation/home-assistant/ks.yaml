@@ -10,9 +10,9 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../flux/components/gatus/guarded
-    - ../../../../flux/components/volsync
-    - ../../../../flux/components/ingress/secure
+    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync
+    - ../../../../components/ingress/secure
   dependsOn:
     - name: crunchy-postgres-cluster
       namespace: database

@@ -10,9 +10,9 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../flux/components/gatus/guarded
-    - ../../../../flux/components/ingress/secure
-    - ../../../../flux/components/volsync
+    - ../../../../components/gatus/guarded
+    - ../../../../components/ingress/secure
+    - ../../../../components/volsync
   dependsOn:
     - name: cifs-pvcs-downloads
       namespace: downloads
