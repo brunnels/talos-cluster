@@ -11,8 +11,11 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/guarded
-    - ../../../../components/volsync
     - ../../../../components/ingress/secure
+    - ../../../../components/volsync
+  dependsOn:
+    - name: volsync
+      namespace: storage
   interval: 30m
   path: ./kubernetes/apps/automation/esphome/app
   postBuild:

@@ -6,7 +6,7 @@ tasks:
 
   talos:
     desc: Bootstrap the Talos cluster
-    dir: '{{.TALHELPER_DIR}}'
+    dir: '{{.TALOS_DIR}}'
     cmds:
       - '[ -f talsecret.sops.yaml ] || talhelper gensecret | sops --filename-override talos/talsecret.sops.yaml --encrypt /dev/stdin > talsecret.sops.yaml'
       - talhelper genconfig
@@ -16,36 +16,16 @@ tasks:
     preconditions:
       - test -f {{.ROOT_DIR}}/.sops.yaml
       - test -f {{.SOPS_AGE_KEY_FILE}}
-      - test -f {{.TALHELPER_DIR}}/talconfig.yaml
-      - which talhelper sops
+      - test -f {{.TALOS_DIR}}/talconfig.yaml
+      - which talhelper talosctl sops
 
   apps:
     desc: Bootstrap apps into the Talos cluster
-    cmds:
-      - until kubectl wait --for=condition=Ready=False nodes --all --timeout=600s; do sleep 10; done
-      - for: { var: APPLY_NAMESPACES }
-        cmd: kubectl create namespace {{base .ITEM}} --dry-run=client --output=yaml | kubectl apply --server-side --filename -
-      - for: { var: APPLY_SECRETS }
-        cmd: sops exec-file {{.ITEM}} "kubectl --namespace flux-system apply --server-side --filename {}"
-      - for: { var: APPLY_CERTS }
-        cmd: sops exec-file {{.ITEM}} "kubectl --namespace cert-manager apply --server-side --filename {}"
-      - kubectl --namespace flux-system apply --server-side --filename {{.KUBERNETES_DIR}}/flux/components/common/cluster-settings.yaml
-      - helmfile --file {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
-      - kubectl apply --server-side --filename {{.KUBERNETES_DIR}}/bootstrap/apps/ds-debug-tools.yaml
-      - helmfile --quiet --file {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml destroy --selector name=wipe-rook
-    env:
-      NODE_COUNT:
-        sh: talosctl config info --output json | jq --raw-output '.nodes | length'
-    vars:
-      APPLY_NAMESPACES:
-        sh: ls -d {{.KUBERNETES_DIR}}/apps/*
-      APPLY_SECRETS:
-        sh: find {{.KUBERNETES_DIR}}/{bootstrap/apps,flux/components/common} -type f -name '*.sops.yaml'
-      APPLY_CERTS:
-        sh: find {{.KUBERNETES_DIR}}/bootstrap/certs -type f -name '*.sops.yaml'
+    cmd: bash {{.SCRIPTS_DIR}}/bootstrap-apps.sh
     preconditions:
+      - msg: Unsupported bash version, run `brew install bash` to upgrade
+        sh: '{{if eq OS "darwin"}}test -f /opt/homebrew/bin/bash{{end}}'
       - test -f {{.KUBECONFIG}}
-      - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/helmfile.yaml
-      - test -f {{.KUBERNETES_DIR}}/bootstrap/apps/templates/wipe-rook.yaml.gotmpl
+      - test -f {{.ROOT_DIR}}/.sops.yaml
+      - test -f {{.SCRIPTS_DIR}}/bootstrap-apps.sh
       - test -f {{.SOPS_AGE_KEY_FILE}}
-      - which helmfile kubectl sops

@@ -32,6 +32,8 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
+    - name: crunchy-postgres-userinit
+      namespace: database
   interval: 30m
   path: ./kubernetes/apps/external-secrets/stores
   prune: true
