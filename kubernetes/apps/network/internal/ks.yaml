@@ -43,3 +43,28 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: false
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app lan-services
+  namespace: &namespace network
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: cert-manager-tls
+      namespace: cert-manager
+    - name: internal-ingress-nginx
+      namespace: network
+  interval: 30m
+  path: ./kubernetes/apps/network/internal/lan-services
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 5m
+  wait: false
