@@ -1,0 +1,6 @@
+---
+machine:
+  time:
+    disabled: false
+    servers:
+      - 10.0.200.1
