@@ -1,5 +1,5 @@
 title: Dashboard
-favicon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/goaccess-light.png"
+favicon: goaccess-light
 theme: dark
 background:
   image: https://images.unsplash.com/photo-1502790671504-542ad42d5189?auto=format&fit=crop&w=2560&q=80
@@ -9,35 +9,7 @@ background:
   opacity: 50
 color: slate
 headerStyle: clean
-providers:
-  longhorn:
-    url: http://longhorn-frontend.longhorn-system
 layout:
-#  Automation:
-#    style: column
-#  Infrastructure:
-#    icon: mdi-server
-#    style: column
-#  Git:
-#    icon: mdi-desktop-tower
-#    style: column
-#  Storage:
-#    icon: mdi-desktop-tower
-#    style: column
-#  Tools:
-#    style: column
-#  Observability:
-#    icon: mdi-chart-line
-#    style: row
-#    columns: 4
-#  Media:
-#    icon: mdi-play-circle
-#    style: row
-#    columns: 4
-#  Downloads:
-#    icon: mdi-download-circle
-#    style: row
-#    columns: 4
   Home:
     style: column
     icon: mdi-home-analytics
