@@ -5,6 +5,6 @@ kind: Kustomization
 resources:
   - ./dockge.yaml
   - ./pbs.yaml
-  - ./pve.yaml
-  - ./pve2.yaml
+#  - ./pve.yaml
+#  - ./pve2.yaml
   - ./registry.yaml
