@@ -143,35 +143,35 @@ spec:
       dockerenv:
         data:
           dockerenv: ""
-      haas-code-gatus-ep:
-        labels:
-          gatus.io/enabled: "true"
-        data:
-          config.yaml: |
-            ---
-            endpoints:
-              - name: "haas-code"
-                group: guarded
-                url: 1.1.1.1
-                interval: 1m
-                ui:
-                  hide-hostname: true
-                  hide-url: true
-                dns:
-                  query-name: "haas-code.kraven.org"
-                  query-type: A
-                conditions:
-                  - "len([BODY]) == 0"
-                alerts:
-                  - type: pushover
-              - name: "haas-code"
-                group: internal
-                url: "https://haas-code.kraven.org/"
-                interval: 1m
-                conditions:
-                  - "[STATUS] == 200"
-                alerts:
-                  - type: pushover
+#      haas-code-gatus-ep:
+#        labels:
+#          gatus.io/enabled: "true"
+#        data:
+#          config.yaml: |
+#            ---
+#            endpoints:
+#              - name: "haas-code"
+#                group: guarded
+#                url: 1.1.1.1
+#                interval: 1m
+#                ui:
+#                  hide-hostname: true
+#                  hide-url: true
+#                dns:
+#                  query-name: "haas-code.kraven.org"
+#                  query-type: A
+#                conditions:
+#                  - "len([BODY]) == 0"
+#                alerts:
+#                  - type: pushover
+#              - name: "haas-code"
+#                group: internal
+#                url: "https://haas-code.kraven.org/"
+#                interval: 1m
+#                conditions:
+#                  - "[STATUS] == 200"
+#                alerts:
+#                  - type: pushover
     persistence:
       default-configuraton:
         type: configMap
