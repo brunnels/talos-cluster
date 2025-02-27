@@ -80,7 +80,7 @@ spec:
           gethomepage.dev/description: UPS Monitor
           gethomepage.dev/widget.type: peanut
           gethomepage.dev/widget.url: http://peanut.observability
-          gethomepage.dev/widget.key: '{{`{{HOMEPAGE_VAR_PEANUT_TOKEN}}`}}'
+#          gethomepage.dev/widget.key: '{{`{{HOMEPAGE_VAR_PEANUT_TOKEN}}`}}'
         hosts:
           - host: "ups.${SECRET_DOMAIN}"
             paths:
