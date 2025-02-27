@@ -34,9 +34,6 @@ spec:
               NUT_HOST: nut-upsd.kube-system.svc.cluster.local
               NUT_PORT: 3493
               WEB_PORT: &port 8080
-            envFrom:
-              - secretRef:
-                  name: *app
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
