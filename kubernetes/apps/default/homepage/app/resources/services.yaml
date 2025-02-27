@@ -8,15 +8,15 @@
           url: https://opnsense.lan.${SECRET_DOMAIN}
           username: {{ .OPNSENSE_USER }}
           password: {{ .OPNSENSE_PASS }}
-    - Proxmox VE:
-        icon: proxmox
-        href: https://pve.lan.${SECRET_DOMAIN}:8006
-        description: Proxmox Virtual Environment
-        widget:
-          type: proxmox
-          url: https://pve.lan.${SECRET_DOMAIN}:8006
-          username: {{ .PROXMOX_API_TOKEN_ID }}
-          password: {{ .PROXMOX_API_TOKEN_SECRET }}
+#    - Proxmox VE:
+#        icon: proxmox
+#        href: https://pve.lan.${SECRET_DOMAIN}:8006
+#        description: Proxmox Virtual Environment
+#        widget:
+#          type: proxmox
+#          url: https://pve.lan.${SECRET_DOMAIN}:8006
+#          username: {{ .PROXMOX_API_TOKEN_ID }}
+#          password: {{ .PROXMOX_API_TOKEN_SECRET }}
     - {{ .QNAP_NAME}}:
         icon: qnap
         href: {{ .QNAP_URL }}
