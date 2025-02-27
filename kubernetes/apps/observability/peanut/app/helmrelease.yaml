@@ -79,7 +79,7 @@ spec:
           gethomepage.dev/group: Observability
           gethomepage.dev/description: UPS Monitor
           gethomepage.dev/widget.type: peanut
-          gethomepage.dev/widget.url: http://peanut.observability
+          gethomepage.dev/widget.url: http://peanut.observability:8080
           gethomepage.dev/widget.key: SMART3000RMXL2U
         hosts:
           - host: "ups.${SECRET_DOMAIN}"
