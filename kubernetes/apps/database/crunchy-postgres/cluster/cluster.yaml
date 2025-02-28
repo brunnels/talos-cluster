@@ -49,94 +49,69 @@ spec:
               postgres-operator.crunchydata.com/data: postgres
   users:
     # Superuser
-    - name: postgres
-      databases:
-        - postgres
+    - name: &db postgres
+      databases: [*db]
       options: "SUPERUSER"
-      password:
+      password: &pw
         type: AlphaNumeric
 
     # Applications
-    - name: atuin
-      databases:
-        - atuin
-      password:
-        type: AlphaNumeric
+    - name: &db atuin
+      databases: [*db]
+      password: *pw
 
-    - name: authelia
-      databases:
-        - authelia
-      password:
-        type: AlphaNumeric
+    - name: &db authelia
+      databases: [*db]
+      password: *pw
 
-    - name: coder
-      databases:
-        - coder
-      password:
-        type: AlphaNumeric
+    - name: &db coder
+      databases: [*db]
+      password: *pw
 
-    - name: grafana
-      databases:
-        - grafana
-      password:
-        type: AlphaNumeric
+    - name: &db grafana
+      databases: [*db]
+      password: *pw
 
-    - name: hass
-      databases:
-        - hass
-      password:
-        type: AlphaNumeric
+    - name: &db hass
+      databases: [*db]
+      password: *pw
 
     - name: lidarr
-      databases:
-        - lidarr_main
-        - lidarr_log
-      password:
-        type: AlphaNumeric
+      databases: [lidarr_main, lidarr_log]
+      password: *pw
 
-    - name: pgadmin
-      databases:
-        - pgadmin
-      password:
-        type: AlphaNumeric
+    - name: &db pgadmin
+      databases: [*db]
+      password: *pw
 
-    - name: piped
-      databases:
-        - piped
-      password:
-        type: AlphaNumeric
+    - name: &db piped
+      databases: [*db]
+      password: *pw
 
-    - name: pgbackweb
-      databases:
-        - pgbackweb
-      password:
-        type: AlphaNumeric
+    - name: &db pgbackweb
+      databases: [*db]
+      password: *pw
 
     - name: prowlarr
-      databases:
-        - prowlarr_main
-      password:
-        type: AlphaNumeric
+      databases: [prowlarr_main]
+      password: *pw
 
     - name: radarr
-      databases:
-        - radarr_main
-      password:
-        type: AlphaNumeric
+      databases: [radarr_main]
+      password: *pw
 
     - name: readarr
-      databases:
-        - readarr_main
-        - readarr_cache
-        - readarr_log
-      password:
-        type: AlphaNumeric
+      databases: [readarr_main, readarr_cache, readarr_log]
+      password: *pw
+
+    - name: &db romm
+      databases: [*db]
+      password: *pw
 
     - name: sonarr
-      databases:
-        - sonarr_main
-      password:
-        type: AlphaNumeric
+      databases: [sonarr_main]
+      password: *pw
+
   backups:
     pgbackrest:
       configuration: &backupConfig

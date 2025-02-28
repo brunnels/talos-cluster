@@ -3,26 +3,32 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app plex
+  name: &app romm
   namespace: &namespace media
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   components:
+    - ../../../../components/gatus/guarded
     - ../../../../components/volsync
   dependsOn:
     - name: cifs-pvcs-media
       namespace: media
+    - name: crunchy-postgres-cluster
+      namespace: database
+    - name: dragonfly-cluster
+      namespace: database
+    - name: external-secrets-stores
+      namespace: external-secrets
     - name: volsync
       namespace: storage
   interval: 30m
-  path: ./kubernetes/apps/media/plex/app
+  path: ./kubernetes/apps/media/romm/app
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 40Gi
-      VOLSYNC_CACHE_CAPACITY: 4Gi
+      VOLSYNC_CAPACITY: 5Gi
   prune: true
   sourceRef:
     kind: GitRepository
