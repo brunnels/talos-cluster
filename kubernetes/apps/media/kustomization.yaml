@@ -10,4 +10,5 @@ resources:
   - ./overseerr/ks.yaml
   - ./pingvin/ks.yaml
   - ./plex/ks.yaml
+  - ./romm/ks.yaml
   - ./tautulli/ks.yaml
