@@ -35,6 +35,7 @@ spec:
             env:
               TZ: "${TIMEZONE}"
               DISABLE_DOWNLOAD_ENDPOINT_AUTH: true
+              DISABLE_USERPASS_LOGIN: true # only set to true after first run and admin has been created
               ENABLE_SCHEDULED_RESCAN: true
               SCHEDULED_RESCAN_CRON: "0 3 * * *"
               ROMM_DB_DRIVER: postgresql
