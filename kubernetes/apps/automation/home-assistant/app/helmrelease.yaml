@@ -201,12 +201,12 @@ spec:
             app:
               - path: /.dockerenv
                 subPath: dockerenv
-      logs:
-        type: emptyDir
-        advancedMounts:
-          home-assistant:
-            app:
-              - path: /config/logs
+#      logs:
+#        type: emptyDir
+#        advancedMounts:
+#          home-assistant:
+#            app:
+#              - path: /config/logs
       tts:
         type: emptyDir
         advancedMounts:
