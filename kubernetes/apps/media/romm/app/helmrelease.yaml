@@ -100,3 +100,4 @@ spec:
         existingClaim: cifs-games
         globalMounts:
           - path: /romm/library
+            subPath: romm
