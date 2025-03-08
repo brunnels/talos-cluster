@@ -10,7 +10,7 @@ spec:
     - username: "${SECRET_ACME_EMAIL}"
       role: Administrator
       passwordRef:
-        name: *name
+        name: pgadmin-settings
         key: CLUSTER_POSTGRES_PGADMIN_PASSWORD
   dataVolumeClaimSpec:
     accessModes:
@@ -21,14 +21,14 @@ spec:
   serverGroups:
     - name: supply
       postgresClusterSelector: {}
-  serviceName: pgadmin
+  serviceName: *name
   config:
     configDatabaseURI:
       name: postgres-pguser-postgres
       key: uri
     files:
       - secret:
-          name: *name
+          name: pgadmin-settings
           items:
-            - key: oidc_config.json
-              path: ~postgres-operator/oidc_config.json
+            - key: pgadmin-settings.json
+              path: ~postgres-operator/pgadmin-settings.json

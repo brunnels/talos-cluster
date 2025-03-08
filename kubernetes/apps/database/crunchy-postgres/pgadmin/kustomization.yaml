@@ -7,8 +7,8 @@ resources:
   - ./ingress.yaml
   - ./pgadmin.yaml
 configMapGenerator:
-  - name: pgadmin-oidc-config
+  - name: pgadmin-settings
     files:
-      - ./resources/oidc_config.json
+      - ./resources/pgadmin-settings.json
 generatorOptions:
   disableNameSuffixHash: true
