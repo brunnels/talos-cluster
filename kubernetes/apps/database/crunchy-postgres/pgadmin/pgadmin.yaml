@@ -29,3 +29,6 @@ spec:
     files:
       - secret:
           name: *name
+          items:
+            - key: oidc_config.json
+              path: oidc_config.json
