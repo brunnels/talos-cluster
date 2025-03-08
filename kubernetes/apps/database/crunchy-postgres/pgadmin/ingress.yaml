@@ -1,0 +1,27 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: &name pgadmin
+  annotations:
+    gethomepage.dev/description: Postgres Database Manager
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Management
+    gethomepage.dev/icon: si-postgresql
+    gethomepage.dev/name: pgAdmin
+  labels:
+    postgres-operator.crunchydata.com/pgadmin: pgadmin
+    postgres-operator.crunchydata.com/role: pgadmin
+spec:
+  ingressClassName: internal
+  rules:
+    - host: "pgadmin.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - backend:
+              service:
+                name: *name
+                port:
+                  number: 5050
+            path: /
+            pathType: Prefix

@@ -7,5 +7,5 @@ components:
   - ../../components/common
 resources:
   - ./atuin/ks.yaml
-  - ./pgadmin/ks.yaml
+#  - ./pgadmin/ks.yaml
   - ./pgbackweb/ks.yaml
