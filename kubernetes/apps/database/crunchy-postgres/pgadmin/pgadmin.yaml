@@ -11,7 +11,7 @@ spec:
       role: Administrator
       passwordRef:
         name: *name
-        key: CLUSTER_POSTGRES_PGADMIN_PASSWORD
+        key: CPGO_PGADMIN_PASSWORD
   dataVolumeClaimSpec:
     accessModes:
       - "ReadWriteOnce"
