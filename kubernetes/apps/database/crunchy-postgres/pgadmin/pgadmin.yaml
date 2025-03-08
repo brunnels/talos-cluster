@@ -30,6 +30,7 @@ spec:
       AUTHENTICATION_SOURCES: ['internal', 'oauth2']
       OAUTH2_AUTO_CREATE_USER: true
       ALLOW_SAVE_PASSWORD: true
+      MASTER_PASSWORD_REQUIRED: false
       ENABLE_PSQL: true
       OAUTH2_CONFIG:
         - OAUTH2_NAME: authelia
