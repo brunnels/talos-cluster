@@ -4,7 +4,6 @@
   "OAUTH2_AUTO_CREATE_USER": "True",
   "MASTER_PASSWORD_REQUIRED": "False",
   "ALLOW_SAVE_PASSWORD": "True",
-  "CONFIG_DATABASE_URI": "{{ index . 'uri' }}",
   "ENHANCED_COOKIE_PROTECTION": "False",
   "ENABLE_PSQL": "True",
   "OAUTH2_CONFIG": [{

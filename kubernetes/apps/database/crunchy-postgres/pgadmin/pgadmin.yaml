@@ -21,7 +21,11 @@ spec:
   serverGroups:
     - name: supply
       postgresClusterSelector: {}
+  serviceName: pgadmin
   config:
+    configDatabaseURI:
+      name: postgres-pguser-pgadmin
+      key: uri
     files:
       - secret:
           name: *name
