@@ -10,7 +10,7 @@ spec:
     - username: "${SECRET_ACME_EMAIL}"
       role: Administrator
       passwordRef:
-        name: pgadmin
+        name: *name
         key: CLUSTER_POSTGRES_PGADMIN_PASSWORD
   dataVolumeClaimSpec:
     accessModes:
