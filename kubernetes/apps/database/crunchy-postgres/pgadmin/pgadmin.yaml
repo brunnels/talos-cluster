@@ -24,7 +24,7 @@ spec:
   serviceName: pgadmin
   config:
     configDatabaseURI:
-      name: postgres-pguser-pgadmin
+      name: postgres-pguser-postgres
       key: uri
     files:
       - secret:
