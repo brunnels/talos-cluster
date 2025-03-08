@@ -87,7 +87,7 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
   interval: 30m
-  path: ./kubernetes/apps/database/pgadmin
+  path: ./kubernetes/apps/database/crunchy-postgres/pgadmin
   postBuild:
     substitute:
       APP: *app
