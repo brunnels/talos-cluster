@@ -1,0 +1,27 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/postgres-operator.crunchydata.com/pgadmin_v1beta1.json
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PGAdmin
+metadata:
+  name: &name pgadmin
+  namespace: postgres-operator
+spec:
+  users:
+    - username: "${SECRET_ACME_EMAIL}"
+      role: Administrator
+      passwordRef:
+        name: *name
+        key: CLUSTER_POSTGRES_PGADMIN_PASSWORD
+  dataVolumeClaimSpec:
+    accessModes:
+      - "ReadWriteOnce"
+    resources:
+      requests:
+        storage: 1Gi
+  serverGroups:
+    - name: supply
+      postgresClusterSelector: {}
+  config:
+    files:
+      - secret:
+          name: *name
