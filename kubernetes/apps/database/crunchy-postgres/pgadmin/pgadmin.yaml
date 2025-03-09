@@ -13,7 +13,7 @@ spec:
         name: *name
         key: CPGO_PGADMIN_PASSWORD
   dataVolumeClaimSpec:
-    storageClassName: openebs-hostpath
+#    storageClassName: openebs-hostpath
     accessModes:
       - "ReadWriteOnce"
     resources:
@@ -23,10 +23,10 @@ spec:
     - name: Crunchy Postgres
       postgresClusterSelector: {}
   serviceName: *name
-#  config:
-#    configDatabaseURI:
-#      name: postgres-pguser-pgadmin
-#      key: uri
+  config:
+    configDatabaseURI:
+      name: postgres-pguser-pgadmin
+      key: uri
 #    files:
 #      - secret:
 #          name: *name
