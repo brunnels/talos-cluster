@@ -3,6 +3,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  - ./externalsecret.yaml
   - ./ingress.yaml
   - ./pgadmin.yaml
   - ./secret.sops.yaml
+configMapGenerator:
+  - name: pgadmin-config-system
+    files:
+      - /resources/config_system.py
+  - name: pgadmin-oauth-settings
+    files:
+      - /resources/pgadmin-oidc-settings.json
+generatorOptions:
+  disableNameSuffixHash: true

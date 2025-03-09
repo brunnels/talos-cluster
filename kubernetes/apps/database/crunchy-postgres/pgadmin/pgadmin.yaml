@@ -22,7 +22,18 @@ spec:
     - name: Crunchy Postgres
       postgresClusterSelector: {}
   serviceName: *name
-#  config:
+  config:
+    files:
+      - configMap:
+          name: pgadmin-config-system
+          items:
+            - key: config_system.py
+              path: /etc/pgadmin/config_system.py
+      - secret:
+          name: *name
+          items:
+            - key: pgadmin-oidc-settings.json
+              path: ~postgres-operator/pgadmin-oidc-settings.json
 #    configDatabaseURI:
 #      name: postgres-pguser-pgadmin
 #      key: uri
