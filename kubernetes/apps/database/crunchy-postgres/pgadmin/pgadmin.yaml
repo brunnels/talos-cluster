@@ -32,7 +32,7 @@ spec:
           name: *name
           items:
             - key: pgadmin-settings.json
-              path: ~postgres-operator/pgadmin-settings.json
+              path: ~postgres-operator/pgadmin-settings.js
       - configMap:
           name: *name
           items:
