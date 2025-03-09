@@ -6,12 +6,6 @@ metadata:
   name: &name pgadmin
   namespace: postgres-operator
 spec:
-  users:
-    - username: "${SECRET_ACME_EMAIL}"
-      role: Administrator
-      passwordRef:
-        name: *name
-        key: CPGO_PGADMIN_PASSWORD
   dataVolumeClaimSpec:
     accessModes:
       - "ReadWriteOnce"
@@ -28,7 +22,6 @@ spec:
       key: uri
     settings:
       AUTHENTICATION_SOURCES:
-        - internal
         - oauth2
       OAUTH2_AUTO_CREATE_USER: true
       ENABLE_PSQL: true
