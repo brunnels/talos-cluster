@@ -7,11 +7,12 @@ metadata:
   namespace: postgres-operator
 spec:
   dataVolumeClaimSpec:
+    storageClassName: openebs-hostpath
     accessModes:
       - "ReadWriteOnce"
     resources:
       requests:
-        storage: 1Gi
+        storage: 500Mi
   serverGroups:
     - name: Crunchy Postgres
       postgresClusterSelector: {}
