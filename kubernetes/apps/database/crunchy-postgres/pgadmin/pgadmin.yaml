@@ -23,21 +23,21 @@ spec:
     - name: Crunchy Postgres
       postgresClusterSelector: {}
   serviceName: *name
-  config:
+#  config:
 #    configDatabaseURI:
 #      name: postgres-pguser-pgadmin
 #      key: uri
-    files:
-      - secret:
-          name: *name
-          items:
-            - key: pgadmin-settings.json
-              path: ~postgres-operator/pgadmin-settings.js
-      - configMap:
-          name: *name
-          items:
-            - key: pgadmin-settings.json
-              path: pgadmin-settings.json
+#    files:
+#      - secret:
+#          name: *name
+#          items:
+#            - key: pgadmin-settings.json
+#              path: ~postgres-operator/pgadmin-settings.js
+#      - configMap:
+#          name: *name
+#          items:
+#            - key: pgadmin-settings.json
+#              path: pgadmin-settings.json
 #    settings:
 #      AUTHENTICATION_SOURCES:
 #        - internal
