@@ -10,9 +10,9 @@ resources:
 configMapGenerator:
   - name: pgadmin-config-system
     files:
-      - /resources/config_system.py
+      - ./resources/config_system.py
   - name: pgadmin-oauth-settings
     files:
-      - /resources/pgadmin-oidc-settings.json
+      - ./resources/pgadmin-oidc-settings.json
 generatorOptions:
   disableNameSuffixHash: true
