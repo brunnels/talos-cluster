@@ -27,7 +27,7 @@ spec:
 #      name: postgres-pguser-pgadmin
 #      key: uri
     settings:
-      AUTHENTICATION_SOURCES: ['oauth2']
+      AUTHENTICATION_SOURCES: ['internal', 'oauth2']
       OAUTH2_AUTO_CREATE_USER: true
       ENABLE_PSQL: true
       OAUTH2_CONFIG:
