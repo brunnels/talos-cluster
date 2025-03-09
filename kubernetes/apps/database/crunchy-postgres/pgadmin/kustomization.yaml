@@ -6,13 +6,9 @@ resources:
   - ./externalsecret.yaml
   - ./ingress.yaml
   - ./pgadmin.yaml
-  - ./secret.sops.yaml
 configMapGenerator:
-  - name: pgadmin-config-system
+  - name: pgadmin-settings
     files:
-      - ./resources/config_system.py
-  - name: pgadmin-oauth-settings
-    files:
-      - ./resources/pgadmin-oidc-settings.json
+      - ./resources/pgadmin-settings.json
 generatorOptions:
   disableNameSuffixHash: true

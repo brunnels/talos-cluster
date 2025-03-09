@@ -13,6 +13,7 @@ spec:
         name: *name
         key: CPGO_PGADMIN_PASSWORD
   dataVolumeClaimSpec:
+    storageClassName: openebs-hostpath
     accessModes:
       - "ReadWriteOnce"
     resources:
@@ -23,29 +24,28 @@ spec:
       postgresClusterSelector: {}
   serviceName: *name
   config:
-    files:
-      - configMap:
-          name: pgadmin-config-system
-          items:
-            - key: config_system.py
-              path: /etc/pgadmin/config_system.py
-      - secret:
-          name: *name
-          items:
-            - key: pgadmin-oidc-settings.json
-              path: ~postgres-operator/pgadmin-oidc-settings.json
 #    configDatabaseURI:
 #      name: postgres-pguser-pgadmin
 #      key: uri
+    files:
+      - secret:
+          name: *name
+          items:
+            - key: pgadmin-settings.json
+              path: ~postgres-operator/pgadmin-settings.json
+      - configMap:
+          name: *name
+          items:
+            - key: pgadmin-settings.json
+              path: pgadmin-settings.json
 #    settings:
-#      AUTHENTICATION_SOURCES: ['internal', 'oauth2']
+#      AUTHENTICATION_SOURCES:
+#        - internal
 #      OAUTH2_AUTO_CREATE_USER: true
 #      ENABLE_PSQL: true
 #      OAUTH2_CONFIG:
 #        - OAUTH2_NAME: authelia
 #          OAUTH2_DISPLAY_NAME: Login with Authelia
-#          OAUTH2_CLIENT_ID: ${PGADMIN_OIDC_CLIENT_ID}
-#          OAUTH2_CLIENT_SECRET: ${PGADMIN_OIDC_CLIENT_SECRET}
 #          OAUTH2_TOKEN_URL: https://auth.${SECRET_DOMAIN}/api/oidc/token
 #          OAUTH2_AUTHORIZATION_URL: https://auth.${SECRET_DOMAIN}/api/oidc/authorization
 #          OAUTH2_API_BASE_URL: https://auth.${SECRET_DOMAIN}/
