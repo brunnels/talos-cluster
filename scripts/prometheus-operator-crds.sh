@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
-PROMETHEUS_OPERATOR_VERSION=v0.80.1
+PROMETHEUS_OPERATOR_VERSION=v0.81.0
 
 function apply_crds() {
     local -r crds=(
