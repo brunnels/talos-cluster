@@ -152,3 +152,4 @@ identity_providers:
         client_secret: '{{ secret "/app/secrets/WEAVE_OIDC_CLIENT_SECRET" }}'
         pre_configured_consent_duration: 1y
         redirect_uris: ["https://gitops.${SECRET_DOMAIN}/oauth2/callback"]
+        claims_policy: "default"
