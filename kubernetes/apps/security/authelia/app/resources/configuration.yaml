@@ -86,6 +86,9 @@ identity_providers:
     jwks:
       - key: |
           {{ secret "/app/secrets/OIDC_JWKS_KEY_PEM" | mindent 10 "|" | msquote }}
+    claims_policies:
+      default:
+        id_token: ['groups', 'email', 'email_verified', 'alt_emails', 'preferred_username', 'name']
     cors:
       endpoints: ["authorization", "pushed-authorization-request", "token", "revocation", "introspection", "userinfo"]
       allowed_origins_from_client_redirect_uris: true
