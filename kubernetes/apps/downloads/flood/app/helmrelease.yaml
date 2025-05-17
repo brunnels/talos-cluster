@@ -52,7 +52,7 @@ spec:
           transmission:
             image:
               repository: ghcr.io/brunnels/transmission
-              tag: 4.0.6@sha256:95009d4043d3da0084fdfdc1ab4b24a320193c5ca2fd2248153a51d677d6bf8d
+              tag: 4.0.6@sha256:9d903326427dbc5d6e8d85afcf88e5a2d3f0a6bc78b335aa4e3c81a87ac2dcf0
             env:
               TZ: "${TIMEZONE}"
               TRANSMISSION__INCOMPLETE_DIR: /incomplete
