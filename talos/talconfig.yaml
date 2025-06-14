@@ -1,0 +1,100 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
+---
+clusterName: kubernetes
+
+talosVersion: "${talosVersion}"
+kubernetesVersion: "${kubernetesVersion}"
+
+endpoint: https://10.0.150.100:6443
+additionalApiServerCertSans: &sans
+  - "127.0.0.1"
+  - "10.0.150.100"
+  - "korg.lan.kraven.org"
+  - "korg-n1.lan.kraven.org"
+  - "korg-n2.lan.kraven.org"
+  - "korg-n3.lan.kraven.org"
+additionalMachineCertSans: *sans
+
+clusterPodNets: ["10.69.0.0/16"]
+clusterSvcNets: ["10.96.0.0/16"]
+
+# Disable built-in CNI to use Cilium
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: "korg-n1"
+    ipAddress: "10.0.150.99"
+    installDisk: "/dev/disk/by-id/nvme-FIKWOT_FX991_1TB_AA251140625"
+    machineSpec:
+      secureboot: true
+    talosImageURL: factory.talos.dev/installer-secureboot/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "58:47:ca:7a:e7:62"
+        vlans:
+          - vlanId: 150
+            addresses:
+              - "10.0.150.99/24"
+            mtu: 9000
+            routes:
+              - network: "0.0.0.0/0"
+                gateway: "10.0.150.1"
+            vip:
+              ip: "10.0.150.100"
+  - hostname: "korg-n2"
+    ipAddress: "10.0.150.98"
+    installDisk: "/dev/disk/by-id/nvme-INTEL_SSDPEKKW256G7_BTPY64940M9C256D"
+    machineSpec:
+      secureboot: true
+    talosImageURL: factory.talos.dev/installer-secureboot/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "58:47:ca:7a:ec:46"
+        vlans:
+          - vlanId: 150
+            addresses:
+              - "10.0.150.98/24"
+            mtu: 9000
+            routes:
+              - network: "0.0.0.0/0"
+                gateway: "10.0.150.1"
+            vip:
+              ip: "10.0.150.100"
+  - hostname: "korg-n3"
+    ipAddress: "10.0.150.97"
+    installDisk: "/dev/disk/by-id/nvme-Samsung_SSD_950_PRO_256GB_S2GLNCAGB26901M"
+    machineSpec:
+      secureboot: true
+    talosImageURL: factory.talos.dev/installer-secureboot/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "58:47:ca:7c:6c:16"
+        vlans:
+          - vlanId: 150
+            addresses:
+              - "10.0.150.97/24"
+            mtu: 9000
+            routes:
+              - network: "0.0.0.0/0"
+                gateway: "10.0.150.1"
+            vip:
+              ip: "10.0.150.100"
+
+# Global patches
+patches:
+  - "@./patches/global/machine-files.yaml"
+  - "@./patches/global/machine-kubelet.yaml"
+  - "@./patches/global/machine-network.yaml"
+  - "@./patches/global/machine-sysctls.yaml"
+  - "@./patches/global/machine-time.yaml"
+
+# Controller patches
+controlPlane:
+  patches:
+    - "@./patches/controller/admission-controller-patch.yaml"
+    - "@./patches/controller/cluster.yaml"
+
