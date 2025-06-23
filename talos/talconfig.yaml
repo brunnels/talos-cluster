@@ -5,96 +5,215 @@ clusterName: kubernetes
 talosVersion: "${talosVersion}"
 kubernetesVersion: "${kubernetesVersion}"
 
-endpoint: https://10.0.150.100:6443
+endpoint: https://10.0.150.200:6443
 additionalApiServerCertSans: &sans
   - "127.0.0.1"
-  - "10.0.150.100"
-  - "korg.lan.kraven.org"
-  - "korg-n1.lan.kraven.org"
-  - "korg-n2.lan.kraven.org"
-  - "korg-n3.lan.kraven.org"
+  - "10.0.150.200"
+  - "kdev.lan.kraven.org"
+  - "kdev-n1.lan.kraven.org"
+  - "kdev-n2.lan.kraven.org"
+  - "kdev-n3.lan.kraven.org"
 additionalMachineCertSans: *sans
-
-clusterPodNets: ["10.69.0.0/16"]
-clusterSvcNets: ["10.96.0.0/16"]
+clusterPodNets: ["10.42.0.0/16"]
+clusterSvcNets: ["10.43.0.0/16"]
 
 # Disable built-in CNI to use Cilium
 cniConfig:
   name: none
 
 nodes:
-  - hostname: "korg-n1"
-    ipAddress: "10.0.150.99"
+  - hostname: "kdev-n1"
+    ipAddress: "10.0.150.254"
     installDisk: "/dev/disk/by-id/nvme-FIKWOT_FX991_1TB_AA251140625"
     machineSpec:
-      secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+      secureboot: false
+    schematic: &schematic
+      customization:
+        extraKernelArgs:
+          - -init_on_alloc # Less security, faster puter
+          - -selinux # Less security, faster puter
+          - apparmor=0 # Less security, faster puter
+          - init_on_alloc=0 # Less security, faster puter
+          - init_on_free=0 # Less security, faster puter
+          - intel_iommu=on # PCI Passthrough
+          - iommu=pt # PCI Passthrough
+          - mitigations=off # Less security, faster puter
+          - security=none # Less security, faster puter
+          - talos.auditd.disabled=1 # Less security, faster puter
+          - net.ifnames=0
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/crun
+            - siderolabs/ctr
+            - siderolabs/fuse3
+            - siderolabs/i915
+            - siderolabs/intel-ucode
+            - siderolabs/iscsi-tools
+            - siderolabs/lldpd
+            - siderolabs/mdadm
+            - siderolabs/mei
+            - siderolabs/nonfree-kmod-nvidia-production
+            - siderolabs/nut-client
+            - siderolabs/nvidia-container-toolkit-production
+            - siderolabs/nvme-cli
+            - siderolabs/thunderbolt
+            - siderolabs/uinput
+            - siderolabs/util-linux-tools
+    talosImageURL: "factory.talos.dev/metal-installer/f8f0bf4f2d1603b5d2f9a371307fc029932f7f843c5934602846972b88250c00"
     controlPlane: true
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "58:47:ca:7a:e7:62"
+      - interface: "bond0"
+        mtu: 9000
+        bond: &bond
+          mode: "802.3ad"
+          lacpRate: "fast"
+          xmitHashPolicy: "layer3+4"
+          miimon: 1000
+          deviceSelectors: [{ hardwareAddr: "58:47:ca:*", driver: i40e }]
         vlans:
           - vlanId: 150
+            dhcp: false
             addresses:
-              - "10.0.150.99/24"
-            mtu: 9000
+              - "10.0.150.254/24"
             routes:
               - network: "0.0.0.0/0"
                 gateway: "10.0.150.1"
+            mtu: 9000
             vip:
-              ip: "10.0.150.100"
-  - hostname: "korg-n2"
-    ipAddress: "10.0.150.98"
+              ip: "10.0.150.200"
+      - deviceSelector:
+          busPath: 0-1.0 # kdev-n2
+        dhcp: false
+        mtu: 65520
+        addresses:
+          - 169.254.255.101/32
+        routes:
+          - network: 169.254.255.102/32
+            metric: 2048
+      - deviceSelector:
+          busPath: 1-1.0 # kdev-n3
+        dhcp: false
+        mtu: 65520
+        addresses:
+          - 169.254.255.101/32
+        routes:
+          - network: 169.254.255.103/32
+            metric: 2048
+    extensionServices: &extensionServices
+      - name: nut-client
+        configFiles:
+          - content: MONITOR ${upsmonHost} 1 monuser secret slave
+            mountPath: /usr/local/etc/nut/upsmon.conf
+          - content: MODE=netclient
+            mountPath: /usr/local/etc/nut/nut.conf
+      - name: lldpd
+        configFiles:
+          - mountPath: /usr/local/etc/lldpd/lldpd.conf
+            content: |
+              configure lldpd portidsubtype ifname
+              configure system description "Talos Node"
+    extraManifests: &extraManifests
+      - "@./manifests/ethernetconfig.yaml"
+  - hostname: "kdev-n2"
+    ipAddress: "10.0.150.253"
     installDisk: "/dev/disk/by-id/nvme-INTEL_SSDPEKKW256G7_BTPY64940M9C256D"
     machineSpec:
-      secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+      secureboot: false
+    schematic: *schematic
+    talosImageURL: "factory.talos.dev/metal-installer/f8f0bf4f2d1603b5d2f9a371307fc029932f7f843c5934602846972b88250c00"
     controlPlane: true
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "58:47:ca:7a:ec:46"
+      - interface: "bond0"
+        mtu: 9000
+        bond: *bond
         vlans:
           - vlanId: 150
+            dhcp: false
             addresses:
-              - "10.0.150.98/24"
-            mtu: 9000
+              - "10.0.150.253/24"
             routes:
               - network: "0.0.0.0/0"
                 gateway: "10.0.150.1"
+            mtu: 9000
             vip:
-              ip: "10.0.150.100"
-  - hostname: "korg-n3"
-    ipAddress: "10.0.150.97"
+              ip: "10.0.150.200"
+      - deviceSelector:
+          busPath: 0-1.0 # kdev-n1
+        dhcp: false
+        mtu: 65520
+        addresses:
+          - 169.254.255.102/32
+        routes:
+          - network: 169.254.255.101/32
+            metric: 2048
+      - deviceSelector:
+          busPath: 1-1.0 # kdev-n3
+        dhcp: false
+        mtu: 65520
+        addresses:
+          - 169.254.255.102/32
+        routes:
+          - network: 169.254.255.103/32
+            metric: 2048
+    extensionServices: *extensionServices
+    extraManifests: *extraManifests
+  - hostname: "kdev-n3"
+    ipAddress: "10.0.150.252"
     installDisk: "/dev/disk/by-id/nvme-Samsung_SSD_950_PRO_256GB_S2GLNCAGB26901M"
     machineSpec:
-      secureboot: true
-    talosImageURL: factory.talos.dev/installer-secureboot/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+      secureboot: false
+    schematic: *schematic
+    talosImageURL: "factory.talos.dev/metal-installer/f8f0bf4f2d1603b5d2f9a371307fc029932f7f843c5934602846972b88250c00"
     controlPlane: true
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "58:47:ca:7c:6c:16"
+      - interface: "bond0"
+        mtu: 9000
+        bond: *bond
         vlans:
           - vlanId: 150
+            dhcp: false
             addresses:
-              - "10.0.150.97/24"
-            mtu: 9000
+              - "10.0.150.252/24"
             routes:
               - network: "0.0.0.0/0"
                 gateway: "10.0.150.1"
+            mtu: 9000
             vip:
-              ip: "10.0.150.100"
-
+              ip: "10.0.150.200"
+      - deviceSelector:
+          busPath: 0-1.0 # kdev-n1
+        dhcp: false
+        mtu: 65520
+        addresses:
+          - 169.254.255.103/32
+        routes:
+          - network: 169.254.255.101/32
+            metric: 2048
+      - deviceSelector:
+          busPath: 1-1.0 # kdev-n2
+        dhcp: false
+        mtu: 65520
+        addresses:
+          - 169.254.255.103/32
+        routes:
+          - network: 169.254.255.102/32
+            metric: 2048
+    extensionServices: *extensionServices
+    extraManifests: *extraManifests
 # Global patches
 patches:
   - "@./patches/global/machine-files.yaml"
   - "@./patches/global/machine-kubelet.yaml"
+  - "@./patches/global/machine-kubelet-extraMounts.yaml"
+  - "@./patches/global/machine-modules.yaml"
   - "@./patches/global/machine-network.yaml"
   - "@./patches/global/machine-sysctls.yaml"
+  - "@./patches/global/machine-sysfs.yaml"
   - "@./patches/global/machine-time.yaml"
+  - "@./patches/global/machine-udev.yaml"
 
 # Controller patches
 controlPlane:
   patches:
     - "@./patches/controller/admission-controller-patch.yaml"
     - "@./patches/controller/cluster.yaml"
-
