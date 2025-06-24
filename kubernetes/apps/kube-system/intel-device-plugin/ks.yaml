@@ -15,7 +15,7 @@ spec:
       name: *app
       namespace: *namespace
   interval: 1h
-  path: ./kubernetes/apps/kube-system/intel-device-plugin/app
+  path: ./kubernetes/apps/kube-system/intel-device-plugin/operator
   prune: true
   retryInterval: 2m
   sourceRef:
