@@ -8,14 +8,14 @@ data:
   TIMEZONE: "US/Central"
   CLUSTER_CIDR: "10.69.0.0/16"
   SERVICE_CIDR: "10.96.0.0/16"
-  LAN_CIDR: "10.0.150.0/24"
-  GIT_REPO: "github.com/brunnels/talos-cluster"
+  LAN_CIDR: "10.0.150.128/25"
+  GIT_REPO: "github.com/brunnels/ms01"
 
   VOLSYNC_PVC_STORAGECLASS: "ceph-block"
   VOLSYNC_SNAPSHOTCLASS: "csi-ceph-blockpool"
   VOLSYNC_CACHE_SNAPSHOTCLASS: "ceph-block"
   VOLSYNC_STORAGECLASS: "ceph-block"
-  VOLSYNC_S3_BUCKET: "korg_volsync"
+  VOLSYNC_S3_BUCKET: "kdev_volsync"
 
   THEME_PARK_SNIPPET: >
     proxy_set_header Accept-Encoding "";
