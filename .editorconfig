@@ -20,3 +20,8 @@ trim_trailing_whitespace = false
 
 [*.sh]
 indent_size = 4
+
+[*.py]
+indent_size = 4
+
+
