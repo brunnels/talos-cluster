@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.32.1-standalone-strict/configmap-v1.json
+# yaml-language-server: $schema=https://kubernetesjsonschema.dev/v1.18.1-standalone-strict/configmap-v1.json
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -14,6 +14,7 @@ data:
   CLUSTER_GATEWAY_ADDR: "10.0.150.131"
   CLUSTER_DNS_GATEWAY_ADDR: "10.0.150.132"
   GIT_REPO: "github.com/brunnels/ms01"
+  INGRESS_SECURE_PATH: "spec/values/ingress/app/annotations"
 
   VOLSYNC_PVC_STORAGECLASS: "ceph-block"
   VOLSYNC_SNAPSHOTCLASS: "csi-ceph-blockpool"
@@ -25,19 +26,8 @@ data:
     proxy_set_header Accept-Encoding "";
     sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/{{ .Release.Name }}/${THEME_PARK_THEME}.css"></head>';
     sub_filter_once on;
-  SVC_POSTGRES_ADDR: "10.0.150.13"
-  SVC_VPN_ADDR: "10.0.150.14"
-  SVC_CODER_ADDR: "10.0.150.15"
-  SVC_HOME_ASSISTANT_ADDR: "10.0.150.16"
-  SVC_PLEX_ADDR: "10.0.150.17"
-
-  LAN_SVC_DOCKGE_IP: "10.0.140.6"
-  LAN_SVC_DOCKGE_PORT: "5001"
-  LAN_SVC_PBS_IP: "10.0.140.4"
-  LAN_SVC_PBS_PORT: "8007"
-  LAN_SVC_PVE_IP: "10.0.140.2"
-  LAN_SVC_PVE_PORT: "8006"
-  LAN_SVC_PVE2_IP: "10.0.140.3"
-  LAN_SVC_PVE2_PORT: "8006"
-  LAN_SVC_REGISTRY_IP: "10.0.140.6"
-  LAN_SVC_REGISTRY_PORT: "80"
+  SVC_POSTGRES_ADDR: "10.0.150.129"
+  SVC_VPN_ADDR: "10.0.150.130"
+  SVC_CODER_ADDR: "10.0.150.131"
+  SVC_HOME_ASSISTANT_ADDR: "10.0.150.132"
+  SVC_PLEX_ADDR: "10.0.150.133"
