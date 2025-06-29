@@ -83,7 +83,7 @@ spec:
       repos:
         - name: repo1 # QNAP
           s3: &qnap
-            bucket: "crunchy-postgres"
+            bucket: "${SECRET_PREFIX}-crunchy-postgres"
             endpoint: "${SECRET_QNAP_HOSTNAME}:8010"
             region: "us-east-1"
           schedules:
