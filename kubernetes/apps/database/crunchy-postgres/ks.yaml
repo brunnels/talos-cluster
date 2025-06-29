@@ -35,8 +35,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../../components/postgres
-    # - ../../../../components/gatus/guarded
+    - ../../../../components/postgres
+    #- ../../../../components/gatus/guarded
   dependsOn:
     - name: crunchy-postgres-operator
       namespace: database
