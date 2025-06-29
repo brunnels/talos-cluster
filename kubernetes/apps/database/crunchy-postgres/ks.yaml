@@ -47,6 +47,12 @@ spec:
       current: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'True')
   interval: 1h
   path: ./kubernetes/apps/database/crunchy-postgres/pgadmin
+  patches:
+    - patch: |-
+        - op: remove
+          path: /spec/dataSource
+      target:
+        kind: PostgresCluster
   postBuild:
     substituteFrom:
       - name: cluster-secrets
