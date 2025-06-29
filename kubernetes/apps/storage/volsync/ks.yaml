@@ -21,6 +21,9 @@ spec:
       namespace: *namespace
   interval: 1h
   path: ./kubernetes/apps/storage/volsync/app
+  postBuild:
+    substitute:
+      REPLICAS: "2"
   prune: true
   retryInterval: 2m
   sourceRef:

@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://kube-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
@@ -17,12 +16,12 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: snapshot-controller
+  name: &app snapshot-controller
 spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: snapshot-controller
+    name: *app
   maxHistory: 2
   install:
     crds: CreateReplace

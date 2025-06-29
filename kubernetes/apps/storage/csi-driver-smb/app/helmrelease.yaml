@@ -16,12 +16,12 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: csi-driver-smb
+  name: &app csi-driver-smb
 spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: csi-driver-smb
+    name: *app
   install:
     remediation:
       retries: -1
@@ -29,3 +29,6 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+  values:
+    controller:
+      replicas: ${REPLICAS:=1}
