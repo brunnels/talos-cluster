@@ -16,9 +16,9 @@ spec:
       postgresClusterSelector: {}
   serviceName: *name
   config:
-    configDatabaseURI:
-      name: pgadmin-pguser-pgadmin
-      key: uri
+#    configDatabaseURI:
+#      name: pgadmin-pguser-pgadmin
+#      key: uri
     settings:
       AUTHENTICATION_SOURCES:
         - oauth2
