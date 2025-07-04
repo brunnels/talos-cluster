@@ -28,7 +28,7 @@ spec:
       metadata:
         labels:
           app.kubernetes.io/name: ${APP}-crunchy-postgres
-      replicas: &replicas 4 # One per node
+      replicas: &replicas 3 # One per node
       dataVolumeClaimSpec:
         storageClassName: openebs-hostpath
         accessModes: ["ReadWriteOnce"]
@@ -63,7 +63,7 @@ spec:
         # Global
         compress-type: "bz2"
         compress-level: "9"
-        backup-standby: "y"
+        # backup-standby: "y"
         # QNAP
         repo1-block: "y"
         repo1-bundle: "y"
@@ -100,12 +100,12 @@ spec:
         s3: *qnap
   proxy:
     pgBouncer:
-      service:
-        metadata:
-          annotations:
-            external-dns.alpha.kubernetes.io/hostname: postgres.${SECRET_DOMAIN}
-            lbipam.cilium.io/ips: ${SVC_POSTGRES_ADDR}
-        type: LoadBalancer
+      #service:
+      #  metadata:
+      #    annotations:
+      #      external-dns.alpha.kubernetes.io/hostname: postgres.${SECRET_DOMAIN}
+      #      lbipam.cilium.io/ips: ${SVC_POSTGRES_ADDR}
+      #  type: LoadBalancer
       port: 5432
       # replicas: *replicas
       config:
