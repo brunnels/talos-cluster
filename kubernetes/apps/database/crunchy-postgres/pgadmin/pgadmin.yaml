@@ -17,7 +17,7 @@ spec:
   serviceName: *name
   config:
     configDatabaseURI:
-      name: postgres-pguser-pgadmin
+      name: pgadmin-pguser-pgadmin
       key: uri
     settings:
       AUTHENTICATION_SOURCES:
