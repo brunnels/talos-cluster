@@ -48,6 +48,8 @@ spec:
   dependsOn:
     - name: rook-ceph-operator
       namespace: *namespace
+    - name: volsync
+      namespace: *namespace
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
