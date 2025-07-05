@@ -12,7 +12,7 @@ spec:
   components:
     - ../../../../components/dragonfly
 #    - ../../../../components/gatus/external
-#    - ../../../../components/postgres
+    - ../../../../components/postgres
   decryption:
     provider: sops
     secretRef:
