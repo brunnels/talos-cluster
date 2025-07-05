@@ -46,7 +46,7 @@ spec:
 #  components:
 #    - ../../../../components/gatus/guarded
   dependsOn:
-    - name: rook-ceph
+    - name: rook-ceph-operator
       namespace: *namespace
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
