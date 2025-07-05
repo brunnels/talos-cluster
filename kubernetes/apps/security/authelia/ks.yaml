@@ -12,14 +12,14 @@ spec:
   components:
     - ../../../../components/dragonfly
 #    - ../../../../components/gatus/external
-    - ../../../../components/postgres
+#    - ../../../../components/postgres
   decryption:
     provider: sops
     secretRef:
       name: sops-age
   dependsOn:
-    - name: crunchy-postgres-operator
-      namespace: database
+#    - name: crunchy-postgres-operator
+#      namespace: database
     - name: dragonfly-operator
       namespace: database
     - name: external-secrets-stores
@@ -29,18 +29,18 @@ spec:
       kind: Dragonfly
       failed: status.phase != 'ready'
       current: status.phase == 'ready'
-    - apiVersion: postgres-operator.crunchydata.com/v1beta1
-      kind: PostgresCluster
-      failed: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'False')
-      current: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'True')
+#    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+#      kind: PostgresCluster
+#      failed: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'False')
+#      current: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'True')
   interval: 1h
   path: ./kubernetes/apps/security/authelia/app
-  patches:
-    - patch: |-
-        - op: remove
-          path: /spec/dataSource
-      target:
-        kind: PostgresCluster
+#  patches:
+#    - patch: |-
+#        - op: remove
+#          path: /spec/dataSource
+#      target:
+#        kind: PostgresCluster
   postBuild:
     substituteFrom:
       - name: cluster-secrets
