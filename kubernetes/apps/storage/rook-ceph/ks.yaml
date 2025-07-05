@@ -70,9 +70,9 @@ spec:
         kind: Secret
       - name: cluster-settings
         kind: ConfigMap
-    substitute:
-      APP: "rook-dashboard"
-      GATUS_SUBDOMAIN: rook
+#    substitute:
+#      APP: "rook-dashboard"
+#      GATUS_SUBDOMAIN: rook
   prune: true
   retryInterval: 2m
   sourceRef:
