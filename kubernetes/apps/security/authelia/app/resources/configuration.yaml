@@ -107,13 +107,13 @@ identity_providers:
 #        pre_configured_consent_duration: 1y
 #        redirect_uris: ["https://grafana.${SECRET_DOMAIN}/login/generic_oauth"]
 
-      - client_name: Headlamp
-        client_id: '{{ env "HEADLAMP_OIDC_CLIENT_ID" }}'
-        client_secret: '{{ secret "/app/secrets/HEADLAMP_OIDC_CLIENT_SECRET" }}'
-        pre_configured_consent_duration: 1y
-        redirect_uris: ["https://headlamp.${SECRET_DOMAIN}/oidc-callback"]
-        scopes: ["openid", "profile", "groups", "email"]
-        response_types: ["code", "token", "id_token"]
+#      - client_name: Headlamp
+#        client_id: '{{ env "HEADLAMP_OIDC_CLIENT_ID" }}'
+#        client_secret: '{{ secret "/app/secrets/HEADLAMP_OIDC_CLIENT_SECRET" }}'
+#        pre_configured_consent_duration: 1y
+#        redirect_uris: ["https://headlamp.${SECRET_DOMAIN}/oidc-callback"]
+#        scopes: ["openid", "profile", "groups", "email"]
+#        response_types: ["code", "token", "id_token"]
 
 #      - client_name: Open Webui
 #        client_id: '{{ env "OPEN_WEBUI_OIDC_CLIENT_ID" }}'
