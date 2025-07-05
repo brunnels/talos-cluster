@@ -50,7 +50,6 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: auth
-      POOL_MODE: transaction
   prune: true
   retryInterval: 2m
   sourceRef:
