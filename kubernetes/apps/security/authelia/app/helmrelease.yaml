@@ -1,0 +1,178 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app authelia
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      authelia:
+        replicas: 2
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/authelia/authelia
+              tag: 4.39.0@sha256:45cb4ea9a5fc2f04bdcd760d17da50d95015c6c6e4079d5ff97c00c3d23a8752
+            env:
+              TZ: "${TIMEZONE}"
+              AUTHELIA_SERVER_ADDRESS: tcp://0.0.0.0:80
+              AUTHELIA_SERVER_DISABLE_HEALTHCHECK: "true"
+              AUTHELIA_TELEMETRY_METRICS_ADDRESS: tcp://0.0.0.0:8080
+              AUTHELIA_TELEMETRY_METRICS_ENABLED: "true"
+              AUTHELIA_THEME: dark
+              AUTHELIA_CERTIFICATES_DIRECTORY: /trusted_certs
+              X_AUTHELIA_CONFIG: /config/configuration.yaml
+              X_AUTHELIA_CONFIG_FILTERS: template
+
+              AUTHELIA_STORAGE_POSTGRES_ADDRESS:
+                valueFrom:
+                  secretKeyRef:
+                    name: &dbsecret authelia-pguser-authelia
+                    key: host
+              AUTHELIA_STORAGE_POSTGRES_DATABASE:
+                valueFrom:
+                  secretKeyRef:
+                    name: *dbsecret
+                    key: dbname
+              AUTHELIA_STORAGE_POSTGRES_USERNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: *dbsecret
+                    key: user
+
+              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE: /app/secrets/AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD
+              AUTHELIA_DUO_API_INTEGRATION_KEY_FILE: /app/secrets/AUTHELIA_DUO_API_INTEGRATION_KEY
+              AUTHELIA_DUO_API_SECRET_KEY_FILE: /app/secrets/AUTHELIA_DUO_API_SECRET_KEY
+              AUTHELIA_IDENTITY_PROVIDERS_OIDC_HMAC_SECRET_FILE: /app/secrets/AUTHELIA_IDENTITY_PROVIDERS_OIDC_HMAC_SECRET
+              AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE: /app/secrets/AUTHELIA_NOTIFIER_SMTP_PASSWORD
+              AUTHELIA_SESSION_SECRET_FILE: /app/secrets/AUTHELIA_SESSION_SECRET
+              AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: /app/secrets/AUTHELIA_STORAGE_ENCRYPTION_KEY
+              AUTHELIA_STORAGE_POSTGRES_PASSWORD_FILE: /app/secrets/AUTHELIA_STORAGE_POSTGRES_PASSWORD
+
+            envFrom:
+              - secretRef:
+                  name: authelia
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: &port 80
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 52Mi
+              limits:
+                memory: 128Mi
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+          metrics:
+            port: 8080
+    serviceMonitor:
+      app:
+        serviceName: *app
+        endpoints:
+          - port: metrics
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
+    ingress:
+      app:
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            add_header Cache-Control "no-store";
+            add_header Pragma "no-cache";
+            add_header X-Frame-Options "SAMEORIGIN";
+            add_header X-XSS-Protection "1; mode=block";
+        hosts:
+          - host: "auth.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        type: configMap
+        name: *app
+        advancedMounts:
+          authelia:
+            app:
+              - path: /config/configuration.yaml
+                subPath: configuration.yaml
+                readOnly: true
+      secret-files:
+        enabled: true
+        type: secret
+        name: authelia-files
+        advancedMounts:
+          authelia:
+            app:
+              - path: /app/secrets
+      db-secret-file:
+        enabled: true
+        type: secret
+        name: *dbsecret
+        advancedMounts:
+          authelia:
+            app:
+              - path: /app/secrets/AUTHELIA_STORAGE_POSTGRES_PASSWORD
+                readOnly: true
+                subPath: password
+      trusted-certs:
+        type: configMap
+        name: letsencrypt-certs
+        advancedMounts:
+          authelia:
+            app:
+              - subPath: letsencrypt-certs.pem
+                path: /trusted_certs/letsencrypt-certs.pem
+                readOnly: true
