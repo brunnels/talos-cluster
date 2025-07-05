@@ -17,9 +17,29 @@ spec:
     remediation:
       retries: 3
   values:
+    serviceAccount:
+      default: {}
+    rbac:
+      roles:
+        secret-reader:
+          type: Role
+          rules:
+            - apiGroups: [""]
+              resources: ["secrets"]
+              verbs: ["get", "list", "watch"]
+            - apiGroups: ["authorization.k8s.io"]
+              resources: ["selfsubjectrulesreviews"]
+              verbs: ["create"]
+      bindings:
+        secret-reader-binding:
+          type: RoleBinding
+          roleRef:
+            identifier: secret-reader
+          subjects:
+            - identifier: default
     controllers:
       authelia:
-        replicas: 0
+        replicas: 2
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -38,22 +58,6 @@ spec:
               AUTHELIA_CERTIFICATES_DIRECTORY: /trusted_certs
               X_AUTHELIA_CONFIG: /config/configuration.yaml
               X_AUTHELIA_CONFIG_FILTERS: template
-
-              AUTHELIA_STORAGE_POSTGRES_ADDRESS:
-                valueFrom:
-                  secretKeyRef:
-                    name: &dbsecret authelia-pguser-authelia
-                    key: host
-              AUTHELIA_STORAGE_POSTGRES_DATABASE:
-                valueFrom:
-                  secretKeyRef:
-                    name: *dbsecret
-                    key: dbname
-              AUTHELIA_STORAGE_POSTGRES_USERNAME:
-                valueFrom:
-                  secretKeyRef:
-                    name: *dbsecret
-                    key: user
 
               AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE: /app/secrets/AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD
               AUTHELIA_DUO_API_INTEGRATION_KEY_FILE: /app/secrets/AUTHELIA_DUO_API_INTEGRATION_KEY
@@ -157,16 +161,6 @@ spec:
           authelia:
             app:
               - path: /app/secrets
-      db-secret-file:
-        enabled: true
-        type: secret
-        name: *dbsecret
-        advancedMounts:
-          authelia:
-            app:
-              - path: /app/secrets/AUTHELIA_STORAGE_POSTGRES_PASSWORD
-                readOnly: true
-                subPath: password
       trusted-certs:
         type: configMap
         name: letsencrypt-certs

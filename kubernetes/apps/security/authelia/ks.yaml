@@ -29,18 +29,18 @@ spec:
       kind: Dragonfly
       failed: status.phase != 'ready'
       current: status.phase == 'ready'
-#    - apiVersion: postgres-operator.crunchydata.com/v1beta1
-#      kind: PostgresCluster
-#      failed: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'False')
-#      current: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'True')
+    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+      kind: PostgresCluster
+      failed: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'False')
+      current: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'True')
   interval: 1h
   path: ./kubernetes/apps/security/authelia/app
-  patches:
-    - patch: |-
-        - op: remove
-          path: /spec/dataSource
-      target:
-        kind: PostgresCluster
+#  patches:
+#    - patch: |-
+#        - op: remove
+#          path: /spec/dataSource
+#      target:
+#        kind: PostgresCluster
   postBuild:
     substituteFrom:
       - name: cluster-secrets
