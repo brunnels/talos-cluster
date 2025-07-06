@@ -5,6 +5,5 @@ kind: Component
 resources:
   - ./namespace.yaml
 #  - ./alerts
-  - ./cluster-settings.yaml
   - ./repos
   - ./settings
