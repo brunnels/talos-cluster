@@ -9,11 +9,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
   dependsOn:
+    - name: external-secrets
+      namespace: external-secrets
     - name: flux-operator
       namespace: *namespace
   interval: 1h
