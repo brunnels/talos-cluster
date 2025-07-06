@@ -6,8 +6,6 @@ metadata:
   name: cluster-meta
   namespace: &namespace flux-system
 spec:
-  components:
-    - ../../components/common/settings
   healthCheckExprs:
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret
