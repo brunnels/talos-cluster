@@ -7,4 +7,4 @@ resources:
 #  - ./alerts
   - ./cluster-settings.yaml
   - ./repos
-  - ./sops
+  - ./settings
