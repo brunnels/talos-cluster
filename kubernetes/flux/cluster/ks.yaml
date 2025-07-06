@@ -67,9 +67,6 @@ spec:
       - name: cluster-secrets
         kind: Secret
         optional: false
-      - name: cluster-secrets-kdev
-        kind: Secret
-        optional: false
   retryInterval: 2m
   sourceRef:
     kind: GitRepository
