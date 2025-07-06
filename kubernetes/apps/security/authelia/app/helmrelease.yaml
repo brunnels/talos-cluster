@@ -128,7 +128,7 @@ spec:
             scrapeTimeout: 10s
     route:
       app:
-        hostnames: ["auth.${SECRET_DOMAIN}"]
+        hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.${SECRET_DOMAIN}"]
         parentRefs:
           - name: external
             namespace: kube-system

@@ -37,19 +37,6 @@ spec:
     monitoring:
       enabled: true
       createPrometheusRules: true
-    ingress:
-      dashboard:
-        ingressClassName: internal
-        annotations:
-          nginx.ingress.kubernetes.io/rewrite-target: "/"
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Management
-          gethomepage.dev/name: Rook Dashboard
-          gethomepage.dev/icon: rook
-          gethomepage.dev/pod-selector: app.kubernetes.io/name=ceph-mgr
-        host:
-          name: "rook.${SECRET_DOMAIN}"
-          path: /
     toolbox:
       enabled: true
     cephClusterSpec:

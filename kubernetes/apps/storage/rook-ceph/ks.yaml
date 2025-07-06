@@ -81,7 +81,7 @@ spec:
       - name: cluster-settings
         kind: ConfigMap
     substitute:
-      APP: "rook-dashboard"
+      APP: *app
       GATUS_SUBDOMAIN: rook
   prune: true
   retryInterval: 2m
