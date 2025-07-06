@@ -13,10 +13,6 @@ spec:
     - ../../../../components/dragonfly
 #    - ../../../../components/gatus/external
     - ../../../../components/postgres
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
   dependsOn:
     - name: crunchy-postgres-operator
       namespace: database
