@@ -8,6 +8,6 @@ components:
 resources:
   - ./csi-driver-smb/ks.yaml
   - ./openebs-hostpath/ks.yaml
-  - ./rook-ceph/ks.yaml
+#  - ./rook-ceph/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./volsync/ks.yaml
