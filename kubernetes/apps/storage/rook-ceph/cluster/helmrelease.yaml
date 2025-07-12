@@ -100,7 +100,7 @@ spec:
             memory: 256Mi
       storage:
         useAllNodes: true
-        useAllDevices: true
+        useAllDevices: false
         config:
           osdsPerDevice: "1"
         nodes:
@@ -111,7 +111,7 @@ spec:
           - name: kdev-n2
             devices:
               - name: /dev/disk/by-id/nvme-FIKWOT_FX991_1TB_AA251130643
-              - name: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_2022100700766
+#              - name: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_2022100700766
           - name: kdev-n3
             devices:
               - name: /dev/disk/by-id/nvme-FIKWOT_FX991_1TB_AA251140630
