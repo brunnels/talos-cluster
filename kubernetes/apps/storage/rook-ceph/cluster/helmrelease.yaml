@@ -18,8 +18,6 @@ kind: HelmRelease
 metadata:
   name: rook-ceph-cluster
 spec:
-  # driftDetection:
-  #   mode: enabled
   interval: 1h
   timeout: 15m
   chartRef:
@@ -35,7 +33,7 @@ spec:
   values:
     operatorNamespace: storage
     monitoring:
-      enabled: false
+      enabled: true
       createPrometheusRules: true
     toolbox:
       enabled: true
@@ -55,7 +53,7 @@ spec:
         urlPrefix: /
         port: 7000
         ssl: false
-#        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
+        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
       mgr:
         modules:
           - name: diskprediction_local
@@ -100,23 +98,10 @@ spec:
             memory: 256Mi
       storage:
         useAllNodes: true
-        useAllDevices: true
-        devicePathFilter: /dev/nvme1*
+        useAllDevices: false
+        devicePathFilter: /dev/disk/by-id/nvme-FIKWOT_FX991_1TB.*
         config:
           osdsPerDevice: "1"
-#        nodes:
-#          - name: kdev-n1
-#            devices:
-#              - name: /dev/disk/by-id/nvme-FIKWOT_FX991_1TB_AA251140625
-#              - name: /dev/disk/by-id/nvme-BIWIN_CE980Y28900-1TB_2332001702513
-#          - name: kdev-n2
-#            devices:
-#              - name: /dev/disk/by-id/nvme-FIKWOT_FX991_1TB_AA251130643
-#              - name: /dev/disk/by-id/nvme-SPCC_M.2_PCIe_SSD_2022100700766
-#          - name: kdev-n3
-#            devices:
-#              - name: /dev/disk/by-id/nvme-FIKWOT_FX991_1TB_AA251140630
-#              - name: /dev/disk/by-id/nvme-CT1000P3PSSD8_2317E6D01AB0
       placement:
         mgr: &placement
           nodeAffinity:
