@@ -40,6 +40,9 @@ spec:
       - name: cluster-secrets
         kind: Secret
         optional: false
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: false
   retryInterval: 2m
   sourceRef:
     kind: GitRepository
