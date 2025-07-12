@@ -24,7 +24,8 @@ cniConfig:
 nodes:
   - hostname: kdev-n1
     ipAddress: 10.0.150.254
-    installDisk: /dev/disk/by-id/nvme-FIKWOT_FX991_1TB_AA251140625
+    installDisk: /dev/disk/by-id/nvme-SK_hynix_BC511_HFM256GDJTNI-82A0A_NJ02N76261100320B
+    talosImageURL: &installImageURL factory.talos.dev/metal-installer/f8f0bf4f2d1603b5d2f9a371307fc029932f7f843c5934602846972b88250c00
     controlPlane: true
     schematic: &schematic
       customization:
@@ -135,6 +136,7 @@ nodes:
     ipAddress: 10.0.150.253
     installDisk: /dev/disk/by-id/nvme-INTEL_SSDPEKKW256G7_BTPY64940M9C256D
     controlPlane: true
+    talosImageURL: *installImageURL
     schematic: *schematic
     networkInterfaces: *networkInterfaces
     extensionServices: *extensionServices
@@ -167,6 +169,7 @@ nodes:
     ipAddress: 10.0.150.252
     installDisk: /dev/disk/by-id/nvme-Samsung_SSD_950_PRO_256GB_S2GLNCAGB26901M
     controlPlane: true
+    talosImageURL: *installImageURL
     schematic: *schematic
     networkInterfaces: *networkInterfaces
     extensionServices: *extensionServices
