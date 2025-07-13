@@ -12,8 +12,8 @@ instance:
     - notification-controller
   sync:
     kind: GitRepository
-    url: "https://github.com/brunnels/talos-cluster.git"
-    ref: "refs/heads/ms01"
+    url: "https://${GIT_REPO}.git"
+    ref: "${GIT_REPO_REF}"
     path: kubernetes/flux/cluster
   commonMetadata:
     labels:

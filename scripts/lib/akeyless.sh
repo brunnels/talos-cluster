@@ -54,7 +54,7 @@ while IFS= read -r line || [[ -n "$line" ]]; do
       exit 1
     fi
 
-    secret_value=$(echo "$secret_json" | jq -r ".$json_key")
+    secret_value=$(echo "$secret_json" | jq -r ".\"$json_key\"")
 
     line="${line/"$token"/"$secret_value"}"
   done

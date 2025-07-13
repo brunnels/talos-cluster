@@ -15,7 +15,8 @@ data:
   CLUSTER_DNS_GATEWAY_ADDR: "10.0.150.132"
   CEPH_CLUSTER_CIDR: "169.254.255.0/24"
 
-  GIT_REPO: "github.com/brunnels/ms01"
+  GIT_REPO: "github.com/brunnels/talos-cluster"
+  GIT_REPO_REF: "refs/heads/ms01"
   INGRESS_SECURE_PATH: "spec/values/ingress/app/annotations"
 
   VOLSYNC_PVC_STORAGECLASS: "ceph-block"
