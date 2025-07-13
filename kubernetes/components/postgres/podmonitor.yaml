@@ -3,7 +3,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
-  name: &name ${APP}-postgres
+  name: &name ${DBNAME:=${APP}}-postgres
 spec:
   jobLabel: *name
   podMetricsEndpoints:
@@ -23,5 +23,5 @@ spec:
           targetLabel: instance
   selector:
     matchLabels:
-      postgres-operator.crunchydata.com/cluster: ${APP}
+      postgres-operator.crunchydata.com/cluster: "${DBNAME:=${APP}}"
       postgres-operator.crunchydata.com/crunchy-postgres-exporter: "true"

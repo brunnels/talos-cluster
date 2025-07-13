@@ -3,7 +3,7 @@
 apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PostgresCluster
 metadata:
-  name: &name ${APP}
+  name: &name ${DBNAME:=${APP}}
 spec:
   postgresVersion: 17
   monitoring:
@@ -27,7 +27,7 @@ spec:
     - name: postgres
       metadata:
         labels:
-          app.kubernetes.io/name: ${APP}-crunchy-postgres
+          app.kubernetes.io/name: ${DBNAME:=${APP}}-crunchy-postgres
       replicas: &replicas 3 # One per node
       dataVolumeClaimSpec:
         storageClassName: openebs-hostpath
@@ -50,15 +50,15 @@ spec:
       password:
         type: AlphaNumeric
     # Applications
-    - name: "${USERNAME:=${APP}}"
-      databases: ${DATABASES:=["${APP}"]}
+    - name: "${USERNAME:=${DBNAME:=${APP}}}"
+      databases: ${DATABASES:=["${DBNAME:=${APP}}"]}
       password:
         type: AlphaNumeric
   backups:
     pgbackrest:
       configuration: &backupConfig
         - secret:
-            name: "${APP}-crunchy-postgres"
+            name: "${DBNAME:=${APP}}-crunchy-postgres"
       global: &backupFlag
         # Global
         compress-type: "bz2"
@@ -67,7 +67,7 @@ spec:
         # QNAP
         repo1-block: "y"
         repo1-bundle: "y"
-        repo1-path: /${APP}
+        repo1-path: /${DBNAME:=${APP}}
         repo1-retention-full: "30" # days
         repo1-retention-full-type: "time"
         repo1-s3-uri-style: path
@@ -79,7 +79,7 @@ spec:
           - --type=full
       metadata:
         labels:
-          app.kubernetes.io/name: ${APP}-crunchy-postgres-backup
+          app.kubernetes.io/name: ${DBNAME:=${APP}}-crunchy-postgres-backup
       repos:
         - name: repo1 # QNAP
           s3: &qnap
@@ -121,4 +121,4 @@ spec:
           labelSelector:
             matchLabels:
               postgres-operator.crunchydata.com/cluster: *name
-              postgres-operator.crunchydata.com/role: "${APP}-pgbouncer"
+              postgres-operator.crunchydata.com/role: "${DBNAME:=${APP}}-pgbouncer"
