@@ -22,15 +22,15 @@ endpointRoutes:
 envoy:
   rollOutPods: true
   prometheus:
-     serviceMonitor:
-       enabled: true
+    serviceMonitor:
+    enabled: true
 gatewayAPI:
   enabled: true
 hubble:
   enabled: false
 ipam:
   mode: kubernetes
-ipv4NativeRoutingCIDR: "${CLUSTER_CIDR}"
+ipv4NativeRoutingCIDR: 10.42.0.0/16
 k8sServiceHost: 127.0.0.1
 k8sServicePort: 7445
 kubeProxyReplacement: true
