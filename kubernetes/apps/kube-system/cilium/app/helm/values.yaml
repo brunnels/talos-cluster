@@ -23,7 +23,7 @@ envoy:
   rollOutPods: true
   prometheus:
     serviceMonitor:
-    enabled: true
+      enabled: true
 gatewayAPI:
   enabled: true
 hubble:
