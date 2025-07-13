@@ -31,12 +31,12 @@ spec:
       current: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'True')
   interval: 1h
   path: ./kubernetes/apps/security/authelia/app
-  patches:
-    - patch: |-
-        - op: remove
-          path: /spec/dataSource
-      target:
-        kind: PostgresCluster
+#  patches:
+#    - patch: |-
+#        - op: remove
+#          path: /spec/dataSource
+#      target:
+#        kind: PostgresCluster
   postBuild:
     substitute:
       APP: *app
