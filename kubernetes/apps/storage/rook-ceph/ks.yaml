@@ -19,12 +19,6 @@ spec:
       namespace: *namespace
   interval: 1h
   path: ./kubernetes/apps/storage/rook-ceph/operator
-  postBuild:
-    substituteFrom:
-      - name: cluster-secrets
-        kind: Secret
-      - name: cluster-settings
-        kind: ConfigMap
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -67,11 +61,6 @@ spec:
   interval: 1h
   path: ./kubernetes/apps/storage/rook-ceph/cluster
   postBuild:
-    substituteFrom:
-      - name: cluster-secrets
-        kind: Secret
-      - name: cluster-settings
-        kind: ConfigMap
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: rook
