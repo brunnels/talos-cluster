@@ -39,7 +39,7 @@ spec:
 #        kind: PostgresCluster
   postBuild:
     substitute:
-      DBNAME: authelia
+      APP: authelia
   prune: true
   retryInterval: 2m
   sourceRef:
