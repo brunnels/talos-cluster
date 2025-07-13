@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -17,26 +17,6 @@ spec:
     remediation:
       retries: 3
   values:
-    serviceAccount:
-      default: {}
-    rbac:
-      roles:
-        secret-reader:
-          type: Role
-          rules:
-            - apiGroups: [""]
-              resources: ["secrets"]
-              verbs: ["get", "list", "watch"]
-            - apiGroups: ["authorization.k8s.io"]
-              resources: ["selfsubjectrulesreviews"]
-              verbs: ["create"]
-      bindings:
-        secret-reader-binding:
-          type: RoleBinding
-          roleRef:
-            identifier: secret-reader
-          subjects:
-            - identifier: default
     controllers:
       authelia:
         replicas: 2
