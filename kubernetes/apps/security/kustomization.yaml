@@ -6,4 +6,4 @@ namespace: security
 components:
   - ../../components/common
 resources:
-#  - ./authelia/ks.yaml
+  - ./authelia/ks.yaml
