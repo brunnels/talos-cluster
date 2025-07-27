@@ -1,0 +1,79 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: nvidia-device-plugin
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 0.17.3
+  url: oci://ghcr.io/home-operations/charts-mirror/nvidia-device-plugin
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nvidia-device-plugin
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: nvidia-device-plugin
+  install:
+    crds: CreateReplace
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  # https://github.com/NVIDIA/k8s-device-plugin/blob/main/deployments/helm/nvidia-device-plugin/values.yaml
+  values:
+    config:
+      map:
+        default: |-
+          version: v1
+          flags:
+            migStrategy: none
+          sharing:
+            timeSlicing:
+              resources:
+              - name: nvidia.com/gpu
+                replicas: 3
+        mig-single: |-
+          version: v1
+          flags:
+            migStrategy: single
+            sharing:
+              timeSlicing:
+                resources:
+                - name: nvidia.com/gpu
+                  replicas: 3
+        mig-mixed: |-
+          version: v1
+          flags:
+            migStrategy: mixed
+          sharing:
+              timeSlicing:
+                resources:
+                - name: nvidia.com/gpu
+                  replicas: 3
+
+      # Default config name within the ConfigMap
+      default: "default"
+      # List of fallback strategies to attempt if no config is selected and no default is provided
+      fallbackStrategies: ["named", "single"]
+
+    runtimeClassName: nvidia
+    # all nodes hava a nvidia GPU
+    nodeSelector:
+      kubernetes.io/os: linux
+    # Subcharts
+    # disable feature discovery
+    nfd: {}
+    gfd:
+      enabled: false
