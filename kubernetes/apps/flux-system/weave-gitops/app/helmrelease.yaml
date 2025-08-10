@@ -21,7 +21,7 @@ spec:
   interval: 30m
   chartRef:
     kind: OCIRepository
-    name: weave-gitops
+    name: *app
   install:
     remediation:
       retries: 3
