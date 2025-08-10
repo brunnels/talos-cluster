@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/authelia/authelia
-              tag: 4.39.0@sha256:45cb4ea9a5fc2f04bdcd760d17da50d95015c6c6e4079d5ff97c00c3d23a8752
+              tag: 4.39.6@sha256:08776367d54d4482c54ac8ca75b18f7db3287b751106e19736780c5f6811374d
             env:
               TZ: "${TIMEZONE}"
               AUTHELIA_SERVER_ADDRESS: tcp://0.0.0.0:80
