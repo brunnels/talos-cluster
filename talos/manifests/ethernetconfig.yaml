@@ -1,14 +1,14 @@
 ---
 apiVersion: v1alpha1
 kind: EthernetConfig
-name: enp3s0f0np0
+name: eth2
 rings:
     rx: 4096
     tx: 4096
 ---
 apiVersion: v1alpha1
 kind: EthernetConfig
-name: enp3s0f1np1
+name: eth3
 rings:
     rx: 4096
     tx: 4096

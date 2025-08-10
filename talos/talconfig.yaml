@@ -25,7 +25,7 @@ nodes:
   - hostname: kdev-n1
     ipAddress: 10.0.150.254
     installDisk: /dev/disk/by-id/nvme-SK_hynix_BC511_HFM256GDJTNI-82A0A_NJ02N76261100320B
-#    talosImageURL: &installImageURL factory.talos.dev/metal-installer/f8f0bf4f2d1603b5d2f9a371307fc029932f7f843c5934602846972b88250c00
+#    talosImageURL: factory.talos.dev/metal-installer/1a514d48384d9a2c3ea843ef810210751f748aa8bd29eaa083b7644affe91294
     controlPlane: true
     schematic: &schematic
       customization:
@@ -95,6 +95,10 @@ nodes:
         routes:
           - network: 0.0.0.0/32
             metric: 2048
+      - interface: eth0
+        dhcp: false
+      - interface: eth1
+        dhcp: false
     extensionServices: &extensionServices
       - name: nut-client
         configFiles:
@@ -138,7 +142,7 @@ nodes:
     ipAddress: 10.0.150.253
     installDisk: /dev/disk/by-id/nvme-INTEL_SSDPEKKW256G7_BTPY64940M9C256D
     controlPlane: true
-#    talosImageURL: *installImageURL
+#    talosImageURL: factory.talos.dev/metal-installer/1a514d48384d9a2c3ea843ef810210751f748aa8bd29eaa083b7644affe91294
     schematic: *schematic
     networkInterfaces: *networkInterfaces
     extensionServices: *extensionServices
@@ -171,7 +175,7 @@ nodes:
     ipAddress: 10.0.150.252
     installDisk: /dev/disk/by-id/nvme-Samsung_SSD_950_PRO_256GB_S2GLNCAGB26901M
     controlPlane: true
-#    talosImageURL: *installImageURL
+#    talosImageURL: factory.talos.dev/metal-installer/1a514d48384d9a2c3ea843ef810210751f748aa8bd29eaa083b7644affe91294
     schematic: *schematic
     networkInterfaces: *networkInterfaces
     extensionServices: *extensionServices

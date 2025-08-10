@@ -27,8 +27,3 @@ TALOSCONFIG = "{{config_root}}/talos/clusterconfig/talosconfig"
 "aqua:yannh/kubeconform" = "0.7.0"
 "ubi:mitsuhiko/minijinja" = "2.10.2"
 "aqua:envsubst" = "1.4.3"
-
-
-#            - 10.0.150.159
-#            - 10.0.150.161
-#            - 10.0.150.163

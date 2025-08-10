@@ -1,0 +1,70 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: weave-gitops
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 4.0.36
+  url: oci://ghcr.io/weaveworks/weave-gitops
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app weave-gitops
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: weave-gitops
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    additionalArgs:
+      - --auth-methods=oidc
+      - --oidc-secret-name=weave-gitops-oidc-auth
+    adminUser:
+      create: true
+      createSecret: false
+      username: admin
+    ingress:
+      enabled: true
+      className: internal
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/group: Infrastructure
+        gethomepage.dev/name: Weave-gitops
+        gethomepage.dev/icon: flux-cd
+        gethomepage.dev/description: Flux Dashboard
+      hosts:
+        - host: "gitops.${SECRET_DOMAIN}"
+          paths:
+            - path: /
+              pathType: Prefix
+    networkPolicy:
+      create: false
+    metrics:
+      enabled: true
+    rbac:
+      create: true
+      viewSecretsResourceNames:
+        - weave-gitops-oidc-auth
+    podAnnotations:
+      secret.reloader.stakater.com/reload: cluster-user-auth,weave-gitops-oidc-auth
+    resources:
+      requests:
+        cpu: 30m
+        memory: 70Mi
+      limits:
+        memory: 210Mi
