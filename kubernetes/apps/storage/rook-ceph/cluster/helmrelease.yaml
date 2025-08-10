@@ -68,7 +68,6 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
-        port: 7000
 #        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
       mgr:
         modules:
@@ -114,7 +113,7 @@ spec:
             memory: 256Mi
       storage:
         useAllNodes: true
-        useAllDevices: false
+        useAllDevices: true
         devicePathFilter: /dev/disk/by-id/nvme-FIKWOT_FX991_1TB*
         config:
           osdsPerDevice: "1"
