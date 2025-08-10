@@ -21,10 +21,10 @@ spec:
       namespace: *namespace
   interval: 1h
   path: ./kubernetes/apps/flux-system/weave-gitops/app
-#  postBuild:
-#    substitute:
-#      APP: *app
-#      GATUS_SUBDOMAIN: gitops
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: gitops
   prune: true
   retryInterval: 2m
   sourceRef:

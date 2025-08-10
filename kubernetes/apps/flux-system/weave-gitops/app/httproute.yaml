@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: "${APP}"
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Infrastructure
+    gethomepage.dev/name: Weave-gitops
+    gethomepage.dev/icon: flux-cd
+    gethomepage.dev/description: Flux Dashboard
+spec:
+  hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.${SECRET_DOMAIN}"]
+  parentRefs:
+    - name: internal
+      namespace: kube-system
+      sectionName: https
+  rules:
+    - backendRefs:
+        - name: "${APP}"
+          port: 9001
