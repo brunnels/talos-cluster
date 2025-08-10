@@ -33,8 +33,8 @@ spec:
   values:
     operatorNamespace: storage
     monitoring:
-      enabled: true
-      createPrometheusRules: true
+      enabled: false
+      createPrometheusRules: false
     toolbox:
       enabled: true
     route:
@@ -67,8 +67,7 @@ spec:
       dashboard:
         enabled: true
         urlPrefix: /
-        ssl: false
-        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
+#        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
       mgr:
         modules:
           - name: diskprediction_local
