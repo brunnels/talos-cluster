@@ -14,7 +14,7 @@ cluster:
           kind: PodSecurityConfiguration
           exemptions:
             namespaces:
-              - rook-ceph
+              - storage
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0
