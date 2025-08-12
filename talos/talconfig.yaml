@@ -82,14 +82,14 @@ nodes:
             vip:
               ip: 10.0.150.200
       - deviceSelector:
-          busPath: 0-1.0
+          busPath: 1-1.0
         dhcp: false
         mtu: 65520
         routes:
           - network: 0.0.0.0/32
             metric: 2048
       - deviceSelector:
-          busPath: 1-1.0
+          busPath: 0-1.0
         dhcp: false
         mtu: 65520
         routes:
