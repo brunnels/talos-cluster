@@ -6,4 +6,4 @@ metadata:
   name: spdk-csi
 spec:
   interval: 1h
-  url: https://github.com/simplyblock-io/simplyblock-csi
+  url: https://raw.githubusercontent.com/simplyblock-io/spdk-csi/master/charts/spdk-csi
