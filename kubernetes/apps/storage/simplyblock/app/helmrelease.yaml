@@ -25,3 +25,13 @@ spec:
   values:
     externallyManagedSecret:
       create: false
+    storagenode:
+      create: true
+      ifname: bond0
+      dataNics:
+        - thunderbolt0
+        - thunderbolt1
+    csiConfig:
+      simplybk:
+        uuid: 4b1f091e-cba7-4691-ab12-91e2634e161f
+        ip: https://10.0.150.200
