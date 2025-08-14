@@ -33,5 +33,8 @@ spec:
         - thunderbolt1
     csiConfig:
       simplybk:
-        uuid: 4b1f091e-cba7-4691-ab12-91e2634e161f
-        ip: https://10.0.150.200
+        uuid: "${SB_CLUSTER_UUID}"
+        ip: "http://${CLUSTER_API_ADDR}"
+    logicalVolume:
+      pool_name: spdk-pool
+      compression: "True"

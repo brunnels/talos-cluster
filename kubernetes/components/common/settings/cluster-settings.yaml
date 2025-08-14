@@ -15,6 +15,8 @@ data:
   CLUSTER_DNS_GATEWAY_ADDR: "10.0.150.132"
   CEPH_CLUSTER_CIDR: "169.254.255.0/24"
 
+  SB_CLUSTER_UUID: "4b1f091e-cba7-4691-ab12-91e2634e161f"
+
   GIT_REPO: "github.com/brunnels/talos-cluster"
   GIT_REPO_REF: "refs/heads/ms01"
   INGRESS_SECURE_PATH: "spec/values/ingress/app/annotations"
