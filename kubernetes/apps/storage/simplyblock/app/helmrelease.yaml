@@ -33,9 +33,11 @@ spec:
     storagenode:
       create: true
       ifname: bond0
-      dataNics:
-        - thunderbolt0
-        - thunderbolt1
+      pciAllowed:
+        - "0000:02:00.0"
+#      dataNics:
+#        - thunderbolt0
+#        - thunderbolt1
     csiConfig:
       simplybk:
         uuid: "${SB_CLUSTER_UUID}"
