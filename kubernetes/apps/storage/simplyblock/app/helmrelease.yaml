@@ -23,6 +23,11 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    image:
+      simplyblock:
+        repository: simplyblock/simplyblock
+        tag: "fix-578-6ef8569a"
+        pullPolicy: Always
     externallyManagedSecret:
       create: false
     storagenode:
@@ -34,7 +39,7 @@ spec:
     csiConfig:
       simplybk:
         uuid: "${SB_CLUSTER_UUID}"
-        ip: "http://${CLUSTER_API_ADDR}/"
+        ip: "http://${CLUSTER_API_ADDR}"
     logicalVolume:
       pool_name: spdk-pool
       compression: "True"
