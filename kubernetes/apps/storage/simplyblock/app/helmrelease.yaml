@@ -43,3 +43,4 @@ spec:
     logicalVolume:
       pool_name: spdk-pool
       compression: "True"
+    autoClusterActivate: true
