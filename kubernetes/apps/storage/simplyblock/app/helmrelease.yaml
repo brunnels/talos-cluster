@@ -41,7 +41,7 @@ spec:
     csiConfig:
       simplybk:
         uuid: "${SB_CLUSTER_UUID}"
-        ip: "http://${CLUSTER_API_ADDR}"
+        ip: "http://${SVC_SB_MGMT_ADDR}"
     logicalVolume:
       pool_name: spdk-pool
       compression: "True"

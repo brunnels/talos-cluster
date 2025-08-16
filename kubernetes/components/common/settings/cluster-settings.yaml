@@ -15,7 +15,7 @@ data:
   CLUSTER_DNS_GATEWAY_ADDR: "10.0.150.132"
   CEPH_CLUSTER_CIDR: "169.254.255.0/24"
 
-  SB_CLUSTER_UUID: "4b1f091e-cba7-4691-ab12-91e2634e161f"
+  SB_CLUSTER_UUID: "1af0cf2e-2292-4db5-9b67-ab6fe5b8920f"
 
   GIT_REPO: "github.com/brunnels/talos-cluster"
   GIT_REPO_REF: "refs/heads/ms01"
@@ -31,8 +31,9 @@ data:
     proxy_set_header Accept-Encoding "";
     sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/{{ .Release.Name }}/${THEME_PARK_THEME}.css"></head>';
     sub_filter_once on;
-  SVC_POSTGRES_ADDR: "10.0.150.129"
-  SVC_VPN_ADDR: "10.0.150.130"
-  SVC_CODER_ADDR: "10.0.150.131"
-  SVC_HOME_ASSISTANT_ADDR: "10.0.150.132"
-  SVC_PLEX_ADDR: "10.0.150.133"
+  SVC_VPN_ADDR: "10.0.150.133"
+  SVC_POSTGRES_ADDR: "10.0.150.134"
+  SVC_SB_MGMT_ADDR: "10.0.150.135"
+  SVC_CODER_ADDR: "10.0.150.136"
+  SVC_HOME_ASSISTANT_ADDR: "10.0.150.137"
+  SVC_PLEX_ADDR: "10.0.150.138"
