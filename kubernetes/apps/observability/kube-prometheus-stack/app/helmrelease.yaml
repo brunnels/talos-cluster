@@ -16,7 +16,7 @@ spec:
     crds: CreateReplace
   dependsOn:
     - name: rook-ceph-cluster
-      namespace: rook-ceph
+      namespace: storage
   values:
     crds:
       enabled: true
