@@ -5,11 +5,17 @@ kind: HelmRelease
 metadata:
   name: &app grafana
 spec:
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: *app
-  interval: 30m
-  timeout: 20m
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
   values:
     admin:
       existingSecret: grafana-admin-secret
