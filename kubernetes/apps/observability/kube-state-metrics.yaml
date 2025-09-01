@@ -3,22 +3,24 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &appname kube-prometheus-stack
-  namespace: &namespace observability
+  name: &app kube-state-metrics
 spec:
-  targetNamespace: *namespace
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *appname
-  interval: 30m
-  timeout: 5m
-  path: ./kubernetes/apps/observability/kube-prometheus-stack/app
+      app.kubernetes.io/name: *app
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: *app
+      namespace: &namespace observability
+  interval: 1h
+  path: ./kubernetes/base/kube-state-metrics
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 5m
   wait: false
-  dependsOn:
-    - name: external-secrets-stores
-      namespace: external-secrets

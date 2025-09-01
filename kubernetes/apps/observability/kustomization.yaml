@@ -6,12 +6,13 @@ namespace: observability
 components:
   - ../../components/common
 resources:
-#  - ./alertmanager-silencer/ks.yaml
-  - ./exporters
-#  - ./gatus/ks.yaml
-#  - ./grafana/ks.yaml
-  - ./kube-prometheus-stack/ks.yaml
-  - ./loki/ks.yaml
-#  - ./peanut/ks.yaml
-#  - ./promtail/ks.yaml
-#  - ./runbook-viewer/ks.yaml
+#  - ./alloy.yaml
+  - ./gatus.yaml
+  - ./grafana.yaml
+#  - ./kromgo.yaml
+  - ./kube-prometheus-stack.yaml
+  - ./kube-state-metrics.yaml
+  - ./loki.yaml
+  - ./node-exporter.yaml
+  - ./silence-operator.yaml
+  - ./smartctl-exporter.yaml
