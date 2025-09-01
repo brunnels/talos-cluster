@@ -18,11 +18,11 @@ spec:
       retries: 3
   values:
     admin:
-      existingSecret: grafana-admin-secret
+      existingSecret: *app
 
     annotations:
       configmap.reloader.stakater.com/reload: grafana
-      secret.reloader.stakater.com/reload: grafana-admin-secret
+      secret.reloader.stakater.com/reload: grafana
 
     replicas: 1
 
@@ -235,6 +235,9 @@ spec:
       GF_SECURITY_ANGULAR_SUPPORT_ENABLED: true
       GF_SERVER_ROOT_URL: "https://grafana.${SECRET_DOMAIN}"
 
+    envFromSecrets:
+      - name: *app
+
     grafana.ini:
       auth:
         signout_redirect_url: "https://auth.${SECRET_DOMAIN}/logout"
@@ -242,7 +245,7 @@ spec:
       auth.anonymous:
         enabled: true
         org_id: 1
-        org_name: Main Org.
+        org_name: ${SECRET_DOMAIN}
         org_role: Viewer
         hide_version: true
       auth.generic_oauth:
