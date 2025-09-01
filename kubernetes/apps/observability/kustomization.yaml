@@ -8,7 +8,7 @@ components:
 resources:
 #  - ./alloy.yaml
   - ./gatus.yaml
-  - ./grafana.yaml
+#  - ./grafana.yaml
 #  - ./kromgo.yaml
   - ./kube-prometheus-stack.yaml
   - ./kube-state-metrics.yaml
