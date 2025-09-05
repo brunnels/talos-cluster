@@ -28,7 +28,7 @@ spec:
           app:
             image:
               repository: brandawg93/peanut
-              tag: 5.6.0@sha256:19f64afa84e79c9ca3ae2b7d244fad22fba693024661129d21a1b30c186690fd
+              tag: 5.14.2@sha256:cf03c765cc30a5a84133287226d897bc275cb60b811c64b870d073104dd9d418
             env:
               TZ: "${TIMEZONE}"
               NUT_HOST: nut-upsd.kube-system.svc.cluster.local
