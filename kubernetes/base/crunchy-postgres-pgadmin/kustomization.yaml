@@ -6,6 +6,8 @@ configMapGenerator:
   - name: pgadmin-servers
     files:
       - ./resources/clusters.json
+generatorOptions:
+  disableNameSuffixHash: true
 resources:
   - ./externalsecret.yaml
   - ./httproute.yaml
