@@ -19,7 +19,6 @@ spec:
     - apiVersion: postgres-operator.crunchydata.com/v1beta1
       kind: PGAdmin
       name: *app
-      namespace: &namespace $NAMESPACE
   healthCheckExprs:
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret
@@ -40,5 +39,5 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
+  targetNamespace: dummmy
   timeout: 5m

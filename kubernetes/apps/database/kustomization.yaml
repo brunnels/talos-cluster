@@ -1,14 +1,19 @@
 ---
-# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization.json
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: database
+namespace: &namespace database
 components:
   - ../../components/common
 resources:
   - ./dragonfly/ks.yaml
   - ./crunchy-postgres/ks.yaml
   - ./crunchy-postgres-pgadmin.yaml
-postBuild:
-  substitute:
-    NAMESPACE: database
+patches:
+  - patch: |-
+      - op: update
+        path: /spec/targetNamespace
+        value: *namespace
+    target:
+      kind: Kustomization
+      version: kustomize.toolkit.fluxcd.io/v1
