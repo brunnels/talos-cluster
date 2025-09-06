@@ -12,9 +12,9 @@ spec:
     resources:
       requests:
         storage: 500Mi
-  serverGroups:
-    - name: Servers
-      postgresClusterSelector: {}
+#  serverGroups:
+#    - name: Servers
+#      postgresClusterSelector: {}
   serviceName: ${APP}-pgadmin
   config:
     oauthConfigurations:
