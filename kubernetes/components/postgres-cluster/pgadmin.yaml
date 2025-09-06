@@ -8,6 +8,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: ${APP}-pgadmin
+  components:
+    - ../gatus/guarded
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
@@ -28,6 +30,7 @@ spec:
   postBuild:
     substitute:
       APP: ${APP}
+      GATUS_SUBDOMAIN: ${APP}-pgadmin
       SECRET_DOMAIN: ${SECRET_DOMAIN}
       VAULT_PREFIX: ${VAULT_PREFIX}
   prune: true

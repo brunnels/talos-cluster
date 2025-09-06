@@ -1,5 +1,5 @@
 endpoints:
-  - name: "${APP}"
+  - name: "${GATUS_SUBDOMAIN:=${APP}}"
     group: guarded
     url: 1.1.1.1
     interval: 1m
@@ -13,7 +13,7 @@ endpoints:
       - "len([BODY]) == 0"
     alerts:
       - type: pushover
-  - name: "${APP}"
+  - name: "${GATUS_SUBDOMAIN:=${APP}}"
     group: internal
     url: "https://${GATUS_SUBDOMAIN:=${APP}}.${SECRET_DOMAIN}${GATUS_PATH:=/}"
     interval: 1m
