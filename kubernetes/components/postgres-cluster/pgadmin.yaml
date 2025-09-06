@@ -13,11 +13,11 @@ spec:
       namespace: external-secrets
     - name: crunchy-postgres-operator
       namespace: database
-#  healthChecks:
-#    - apiVersion: postgres-operator.crunchydata.com/v1beta1
-#      kind: PGAdmin
-#      name: ${APP}-pgadmin
-#      namespace: ${NAMESPACE}
+  healthChecks:
+    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+      kind: PGAdmin
+      name: ${APP}-pgadmin
+      namespace: ${NAMESPACE}
   healthCheckExprs:
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret
