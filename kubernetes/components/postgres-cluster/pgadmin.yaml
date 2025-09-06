@@ -29,6 +29,7 @@ spec:
     substitute:
       APP: ${APP}-pgadmin
       SECRET_DOMAIN: ${SECRET_DOMAIN}
+      VAULT_PREFIX: ${VAULT_PREFIX}
   prune: true
   retryInterval: 2m
   sourceRef:
