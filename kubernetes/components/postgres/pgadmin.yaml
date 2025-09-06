@@ -13,9 +13,9 @@ spec:
         storage: 500Mi
   serviceName: ${APP}-pgadmin
   config:
-    serverGroups:
-      - name: Servers
-        postgresClusterSelector: {}
+#    serverGroups:
+#      - name: Servers
+#        postgresClusterSelector: {}
     oauthConfigurations:
       - name: &authname authelia
         secret:
