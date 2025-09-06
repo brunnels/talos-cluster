@@ -1,5 +1,5 @@
 ---
-apiVersion: postgres-operator.crunchydata.com/v1beta1
+apiVersion: postgres-operator.crunchydata.com/v1
 kind: PGAdmin
 metadata:
   name: &name pgadmin
@@ -12,8 +12,10 @@ spec:
       requests:
         storage: 500Mi
   serverGroups:
-    - name: Crunchy Postgres
-      postgresClusterSelector: {}
+    - name: "PGO Clusters"
+      postgresClusterSelector:
+        matchLabels:
+          postgres-operator.crunchydata.com/pgadmin: enabled
   serviceName: *name
   config:
     oauthConfigurations:
