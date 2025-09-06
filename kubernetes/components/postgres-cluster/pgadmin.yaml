@@ -9,7 +9,7 @@ spec:
     labels:
       app.kubernetes.io/name: ${APP}-pgadmin
   components:
-    - /kubernetes/components/gatus/guarded
+    - ./kubernetes/components/gatus/guarded
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
