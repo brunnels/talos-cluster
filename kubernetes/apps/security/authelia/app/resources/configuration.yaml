@@ -104,7 +104,11 @@ identity_providers:
         client_id: '{{ env "PGADMIN_OIDC_CLIENT_ID" }}'
         client_secret: '{{ secret "/app/secrets/PGADMIN_OIDC_CLIENT_SECRET" }}'
         pre_configured_consent_duration: 1y
-        redirect_uris: ["https://*-pgadmin.${SECRET_DOMAIN}/oauth2/authorize"]
+        redirect_uris:
+          - "https://authelia-pgadmin.${SECRET_DOMAIN}/oauth2/authorize"
+          - "https://security-pgadmin.${SECRET_DOMAIN}/oauth2/authorize"
+          - "https://downloads-pgadmin.${SECRET_DOMAIN}/oauth2/authorize"
+          - "https://media-pgadmin.${SECRET_DOMAIN}/oauth2/authorize"
         scopes: ["openid", "profile", "email"]
         response_types: ["code"]
 
