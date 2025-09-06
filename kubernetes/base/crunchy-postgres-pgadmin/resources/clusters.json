@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Group": "Servers",
+      "Host": "authelia-primary.security.svc",
+      "MaintenanceDB": "postgres",
+      "Name": "authelia",
+      "Port": 5432,
+      "SSLMode": "prefer",
+      "Shared": true,
+      "Username": "postgres"
+    }
+  }
+}

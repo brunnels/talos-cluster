@@ -7,4 +7,3 @@ components:
   - ../../components/common
 resources:
   - ./authelia/ks.yaml
-  - ./crunchy-postgres-pgadmin.yaml

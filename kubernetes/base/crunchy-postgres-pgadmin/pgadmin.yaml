@@ -12,11 +12,13 @@ spec:
     resources:
       requests:
         storage: 500Mi
-  serverGroups:
-    - name: "PGO Clusters"
-      postgresClusterSelector: {}
   serviceName: *name
   config:
+    files:
+      - configMap:
+          name: pgadmin-servers
+          items:
+            - key: clusters.json
     oauthConfigurations:
       - name: &authname authelia
         secret:
