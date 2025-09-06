@@ -10,9 +10,9 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/dragonfly
-#    - ../../../../components/gatus/internal
-    - ../../../../components/postgres
+    - ../../../../components/dragonfly-cluster
+    - ../../../../components/gatus/internal
+    - ../../../../components/postgres-cluster
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
@@ -44,6 +44,7 @@ spec:
   postBuild:
     substitute:
       APP: authelia
+      NAMESPACE: *namespace
   prune: true
   retryInterval: 2m
   sourceRef:
