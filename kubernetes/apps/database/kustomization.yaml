@@ -7,5 +7,4 @@ components:
   - ../../components/common
 resources:
   - ./dragonfly/ks.yaml
-  - ./crunchy-postgres/ks.yaml
   - ./crunchy-postgres-operator.yaml
