@@ -5,13 +5,13 @@ kind: HTTPRoute
 metadata:
   name: ${APP}-pgadmin
   annotations:
-    gethomepage.dev/description: Postgres Database Manager (${APP})
+    gethomepage.dev/description: Postgres Database Manager
     gethomepage.dev/enabled: "true"
     gethomepage.dev/group: Management
     gethomepage.dev/icon: si-postgresql
-    gethomepage.dev/name: pgAdmin (${APP})
+    gethomepage.dev/name: pgAdmin
 spec:
-  hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.${SECRET_DOMAIN}"]
+  hostnames: ["${GATUS_SUBDOMAIN:=${APP}}-pgadmin.${SECRET_DOMAIN}"]
   parentRefs:
     - name: internal
       namespace: kube-system
