@@ -1,22 +1,21 @@
 ---
-# yaml-language-server: https://kube-schemas.pages.dev/postgres-operator.crunchydata.com/pgadmin_v1beta1.json
 apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PGAdmin
 metadata:
-  name: &name pgadmin
+  name: ${APP}-pgadmin
 spec:
   dataVolumeClaimSpec:
-    storageClassName: openebs-hostpath
+    storageClassName: ceph-block
     accessModes:
       - "ReadWriteOnce"
     resources:
       requests:
         storage: 500Mi
-  serverGroups:
-    - name: "PGO Clusters"
-      postgresClusterSelector: {}
-  serviceName: *name
+  serviceName: ${APP}-pgadmin
   config:
+    serverGroups:
+      - name: Servers
+        postgresClusterSelector: {}
     oauthConfigurations:
       - name: &authname authelia
         secret:

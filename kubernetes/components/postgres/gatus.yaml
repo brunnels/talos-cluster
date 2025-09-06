@@ -3,13 +3,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: postgres-gatus-ep
+  name: ${APP}-postgres-gatus-ep
   labels:
     gatus.io/enabled: "true"
 data:
   config.yaml: |
     endpoints:
-      - name: crunchy-pgo
+      - name: ${APP}-crunchy-pgo
         group: infrastructure
         url: tcp://${APP}-pgbouncer.database.svc.cluster.local:5432
         interval: 1m

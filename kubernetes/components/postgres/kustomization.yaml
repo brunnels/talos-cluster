@@ -5,4 +5,5 @@ kind: Component
 resources:
   - ./cluster.yaml
   - ./externalsecret.yaml
+  - ./pgadmin.yaml
   - ./podmonitor.yaml

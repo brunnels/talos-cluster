@@ -1,12 +1,11 @@
 ---
-# yaml-language-server: https://kube-schemas.pages.dev/postgres-operator.crunchydata.com/pgadmin_v1beta1.json
 apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PGAdmin
 metadata:
   name: &name pgadmin
 spec:
   dataVolumeClaimSpec:
-    storageClassName: openebs-hostpath
+    storageClassName: ceph-block
     accessModes:
       - "ReadWriteOnce"
     resources:
@@ -14,13 +13,9 @@ spec:
         storage: 500Mi
   serviceName: *name
   config:
-    files:
-      - configMap:
-          name: pgadmin-servers
-          items:
-            - key: clusters.json
-              path: "~postgres-operator/pgadmin-clusters.json"
-
+    serverGroups:
+      - name: Servers
+        postgresClusterSelector: {}
     oauthConfigurations:
       - name: &authname authelia
         secret:
