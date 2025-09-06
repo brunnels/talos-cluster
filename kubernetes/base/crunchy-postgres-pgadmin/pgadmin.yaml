@@ -19,7 +19,8 @@ spec:
           name: pgadmin-servers
           items:
             - key: clusters.json
-              path: "~postgres-operator/pgadmin-shared-clusters.json"
+              path: "~postgres-operator/pgadmin-clusters.json"
+
     oauthConfigurations:
       - name: &authname authelia
         secret:
