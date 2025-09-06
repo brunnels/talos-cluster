@@ -17,7 +17,6 @@ spec:
       postgresClusterSelector: {}
   serviceName: ${APP}-pgadmin
   config:
-
     oauthConfigurations:
       - name: &authname authelia
         secret:

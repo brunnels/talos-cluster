@@ -27,7 +27,7 @@ spec:
   path: ./kubernetes/components/postgres-cluster/pgadmin
   postBuild:
     substitute:
-      APP: ${APP}-pgadmin
+      APP: ${APP}
       SECRET_DOMAIN: ${SECRET_DOMAIN}
       VAULT_PREFIX: ${VAULT_PREFIX}
   prune: true
