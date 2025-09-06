@@ -14,11 +14,11 @@ spec:
         storage: 500Mi
   serviceName: *name
   config:
-    files:
-      - configMap:
-          name: pgadmin-servers
-          items:
-            - key: clusters.json
+#    files:
+#      - configMap:
+#          name: pgadmin-servers
+#          items:
+#            - key: clusters.json
     oauthConfigurations:
       - name: &authname authelia
         secret:
