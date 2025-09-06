@@ -28,6 +28,7 @@ spec:
   postBuild:
     substitute:
       APP: ${APP}-pgadmin
+      SECRET_DOMAIN: ${SECRET_DOMAIN}
   prune: true
   retryInterval: 2m
   sourceRef:
