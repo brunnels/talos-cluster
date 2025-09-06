@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/postgres-operator.crunchydata.com/pgadmin_v1beta1.json
 apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PGAdmin
 metadata:
@@ -11,11 +12,12 @@ spec:
     resources:
       requests:
         storage: 500Mi
+  serverGroups:
+    - name: Servers
+      postgresClusterSelector: {}
   serviceName: ${APP}-pgadmin
   config:
-#    serverGroups:
-#      - name: Servers
-#        postgresClusterSelector: {}
+
     oauthConfigurations:
       - name: &authname authelia
         secret:

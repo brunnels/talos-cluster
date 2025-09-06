@@ -6,5 +6,5 @@ namespace: database
 components:
   - ../../components/common
 resources:
-  - ./dragonfly/ks.yaml
+  - ./dragonfly-operator.yaml
   - ./crunchy-postgres-operator.yaml
