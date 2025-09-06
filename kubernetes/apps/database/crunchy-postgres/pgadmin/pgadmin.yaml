@@ -1,5 +1,6 @@
 ---
-apiVersion: postgres-operator.crunchydata.com/v1
+# yaml-language-server: https://kube-schemas.pages.dev/postgres-operator.crunchydata.com/pgadmin_v1beta1.json
+apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PGAdmin
 metadata:
   name: &name pgadmin
