@@ -55,9 +55,6 @@ spec:
   interval: 1h
   path: ./kubernetes/apps/database/crunchy-postgres/pgadmin
   postBuild:
-    substituteFrom:
-      - name: *app
-        kind: Secret
     substitute:
       APP: *app
   prune: true

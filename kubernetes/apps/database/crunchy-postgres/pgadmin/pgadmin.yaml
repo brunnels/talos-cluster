@@ -16,16 +16,19 @@ spec:
       postgresClusterSelector: {}
   serviceName: *name
   config:
+    oauthConfigurations:
+      - name: &authname pgadmin-authelia
+        secret:
+          name: *authname
+          key: *authname
     settings:
       AUTHENTICATION_SOURCES:
         - oauth2
       OAUTH2_AUTO_CREATE_USER: true
       ENABLE_PSQL: true
       OAUTH2_CONFIG:
-        - OAUTH2_NAME: authelia
+        - OAUTH2_NAME: *authname
           OAUTH2_DISPLAY_NAME: Login with Authelia
-          OAUTH2_CLIENT_ID: ${PGADMIN_OIDC_CLIENT_ID}
-          OAUTH2_CLIENT_SECRET: ${PGADMIN_OIDC_CLIENT_SECRET}
           OAUTH2_TOKEN_URL: https://auth.${SECRET_DOMAIN}/api/oidc/token
           OAUTH2_AUTHORIZATION_URL: https://auth.${SECRET_DOMAIN}/api/oidc/authorization
           OAUTH2_API_BASE_URL: https://auth.${SECRET_DOMAIN}/
