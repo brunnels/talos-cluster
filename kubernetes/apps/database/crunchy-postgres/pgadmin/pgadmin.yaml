@@ -17,9 +17,9 @@ spec:
   serviceName: *name
   config:
     oauthConfigurations:
-      - name: &authname pgadmin-authelia
+      - name: &authname authelia
         secret:
-          name: *authname
+          name: pgadmin-oauth2
           key: *authname
     settings:
       AUTHENTICATION_SOURCES:
