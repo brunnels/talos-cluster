@@ -18,5 +18,5 @@ spec:
       sectionName: https
   rules:
     - backendRefs:
-        - name: "${APP}"
+        - name: "${APP}-pgadmin"
           port: 5050
