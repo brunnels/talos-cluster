@@ -23,3 +23,21 @@ spec:
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
+  patches:
+    - patch: |-
+        apiVersion: postgres-operator.crunchydata.com/v1beta1
+        kind: PostgresCluster
+        metadata:
+          name: downloads
+          namespace: downloads
+        spec:
+          users:
+            - databases: [postgres]
+              name: postgres
+              options: SUPERUSER
+              password:
+                type: AlphaNumeric
+            - databases: [prowlarr_main]
+              name: prowlarr
+              password:
+                type: AlphaNumeric
