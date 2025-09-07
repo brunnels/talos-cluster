@@ -8,6 +8,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: ${NAMESPACE}-pgadmin
+  components:
+    - ../../components/gatus/guarded
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
@@ -17,7 +19,9 @@ spec:
     - apiVersion: postgres-operator.crunchydata.com/v1beta1
       kind: PGAdmin
       name: ${NAMESPACE}-pgadmin
-      namespace: ${NAMESPACE}
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      name: pgadmin-oauth2
   healthCheckExprs:
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret

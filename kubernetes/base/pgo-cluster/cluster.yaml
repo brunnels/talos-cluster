@@ -17,8 +17,17 @@ spec:
     - apiVersion: postgres-operator.crunchydata.com/v1beta1
       kind: PostgresCluster
       name: ${NAMESPACE}
-      namespace: ${NAMESPACE}
+    - apiVersion: external-secrets.io/v1
+      kind: SecretStore
+      name: ${NAMESPACE}-pgo-secrets
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      name: ${NAMESPACE}-pgo
   healthCheckExprs:
+    - apiVersion: external-secrets.io/v1
+      kind: ClusterSecretStore
+      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
+      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret
       failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
@@ -28,9 +37,8 @@ spec:
   postBuild:
     substitute:
       NAMESPACE: ${NAMESPACE}
-#      SVC_LB_IP:
-#      SECRET_DOMAIN: ${SECRET_DOMAIN}
-#      VAULT_PREFIX: ${VAULT_PREFIX}
+      SECRET_DOMAIN: ${SECRET_DOMAIN}
+      VAULT_PREFIX: ${VAULT_PREFIX}
   prune: true
   retryInterval: 2m
   sourceRef:
