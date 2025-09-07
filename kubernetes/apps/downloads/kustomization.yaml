@@ -6,5 +6,4 @@ namespace: downloads
 components:
   - ../../components/common
 resources:
-  - ./databases.yaml
-  - ./pgo-cluster.yaml
+  - ../../base/pgo-cluster/cluster.yaml
