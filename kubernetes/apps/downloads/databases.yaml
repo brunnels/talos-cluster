@@ -15,7 +15,24 @@ spec:
       namespace: &namespace downloads
   interval: 1h
   path: ./kubernetes/base/pgo-databases
-
+  patches:
+    - patch: |-
+        apiVersion: postgres-operator.crunchydata.com/v1beta1
+        kind: PostgresCluster
+        metadata:
+          name: downloads
+          namespace: downloads
+        spec:
+          users:
+            - databases: [postgres]
+              name: postgres
+              options: SUPERUSER
+              password:
+                type: AlphaNumeric
+            - databases: [prowlarr_main]
+              name: prowlarr
+              password:
+                type: AlphaNumeric
   prune: true
   retryInterval: 2m
   sourceRef:
