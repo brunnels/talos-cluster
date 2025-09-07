@@ -21,6 +21,7 @@ spec:
         kind: PostgresCluster
         metadata:
           name: downloads
+          namespace: downloads
         spec:
           users:
             - databases: [postgres]
