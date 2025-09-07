@@ -27,6 +27,7 @@ spec:
   path: ./kubernetes/base/pgo-cluster/pgadmin
   postBuild:
     substitute:
+      NAMESPACE: ${NAMESPACE}
       GATUS_SUBDOMAIN: ${NAMESPACE}-pgadmin
       SECRET_DOMAIN: ${SECRET_DOMAIN}
       VAULT_PREFIX: ${VAULT_PREFIX}
