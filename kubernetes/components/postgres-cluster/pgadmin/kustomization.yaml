@@ -6,4 +6,4 @@ resources:
   - ./externalsecret.yaml
   - ./httproute.yaml
   - ./pgadmin.yaml
-  - ../../gatus/guarded
+  - ../../gatus/guarded/config.yaml
