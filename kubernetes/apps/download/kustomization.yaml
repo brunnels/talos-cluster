@@ -5,5 +5,5 @@ kind: Kustomization
 namespace: database
 components:
   - ../../components/common
-resources:
-  - ./pgo-cluster.yaml
+resources: []
+#  - ./pgo-cluster.yaml
