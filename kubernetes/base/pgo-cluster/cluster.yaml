@@ -37,7 +37,7 @@ spec:
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
     - apiVersion: postgres-operator.crunchydata.com/v1beta1
       kind: PostgresCluster
-      failed: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < ${PGO_REPLICAS:-3})
+      inProgress: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < ${PGO_REPLICAS:-3})
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.readyReplicas == ${PGO_REPLICAS:-3})
   interval: 1h
   path: ./kubernetes/base/pgo-cluster/cluster
