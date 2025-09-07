@@ -5,5 +5,4 @@ kind: Kustomization
 namespace: downloads
 components:
   - ../../components/common
-resources:
-  - ./pgo-cluster.yaml
+resources: []
