@@ -1,0 +1,41 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: ${NAMESPACE}-pgo
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: ${NAMESPACE}-pgo
+  dependsOn:
+    - name: external-secrets-stores
+      namespace: external-secrets
+    - name: crunchy-postgres-operator
+      namespace: database
+  healthChecks:
+    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+      kind: PostgresCluster
+      name: ${NAMESPACE}
+      namespace: ${NAMESPACE}
+  healthCheckExprs:
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
+      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
+  interval: 1h
+  path: ./kubernetes/base/pgo-cluster/cluster
+  postBuild:
+    substitute:
+      NAMESPACE: ${NAMESPACE}
+#      SVC_LB_IP:
+#      SECRET_DOMAIN: ${SECRET_DOMAIN}
+#      VAULT_PREFIX: ${VAULT_PREFIX}
+  prune: true
+  retryInterval: 2m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: ${NAMESPACE}
+  timeout: 5m

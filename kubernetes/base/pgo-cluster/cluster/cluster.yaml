@@ -94,12 +94,12 @@ spec:
         s3: *qnap
   proxy:
     pgBouncer:
-      service:
-        metadata:
-          annotations:
-            external-dns.alpha.kubernetes.io/hostname: ${NAMESPACE}-pgo.${SECRET_DOMAIN}
-            lbipam.cilium.io/ips: ${SVC_LB_IP}
-        type: LoadBalancer
+#      service:
+#        metadata:
+#          annotations:
+#            external-dns.alpha.kubernetes.io/hostname: ${NAMESPACE}-pgo.${SECRET_DOMAIN}
+#            lbipam.cilium.io/ips: ${SVC_LB_IP}
+#        type: LoadBalancer
       port: 5432
       config:
         global:
