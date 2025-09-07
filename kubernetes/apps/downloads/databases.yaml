@@ -15,6 +15,18 @@ spec:
       namespace: &namespace downloads
   interval: 1h
   path: ./kubernetes/base/pgo-databases
+  patches:
+    - patch: |-
+        - op: add
+          path: /spec/users
+          value:
+            - name: prowlarr
+              databases: [prowlarr_main]
+              password:
+                type: AlphaNumeric
+      target:
+        kind: PostgresCluster
+        name: downloads
   prune: true
   retryInterval: 2m
   sourceRef:
