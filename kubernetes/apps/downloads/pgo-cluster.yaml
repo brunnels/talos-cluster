@@ -9,11 +9,12 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../components/pgo-cluster
+    - ../../components/common
   postBuild:
     substitute:
       NAMESPACE: &namespace downloads
   interval: 1h
+  path: ./kubernetes/base/pgo-cluster
   prune: true
   retryInterval: 2m
   sourceRef:
