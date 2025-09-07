@@ -20,8 +20,8 @@ spec:
         apiVersion: postgres-operator.crunchydata.com/v1beta1
         kind: PostgresCluster
         metadata:
-          name: downloads
-          namespace: downloads
+          labels:
+            app.kubernetes.io/name: downloads-pgo
         spec:
           users:
             - databases: [postgres]
