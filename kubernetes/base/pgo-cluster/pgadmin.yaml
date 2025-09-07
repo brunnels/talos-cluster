@@ -13,6 +13,8 @@ spec:
       namespace: external-secrets
     - name: crunchy-postgres-operator
       namespace: database
+    - name: ${NAMESPACE}-pgo
+      namespace: ${NAMESPACE}
   healthChecks:
     - apiVersion: postgres-operator.crunchydata.com/v1beta1
       kind: PGAdmin

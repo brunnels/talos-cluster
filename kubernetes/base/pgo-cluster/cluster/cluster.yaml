@@ -24,7 +24,8 @@ spec:
         parameters:
           max_connections: 500
   instances:
-    - metadata:
+    - name: pgo-cluster
+      metadata:
         labels:
           app.kubernetes.io/name: ${NAMESPACE}-pgo
       replicas: 3 # One per node
