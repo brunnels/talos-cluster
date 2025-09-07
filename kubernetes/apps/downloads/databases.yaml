@@ -17,16 +17,21 @@ spec:
   path: ./kubernetes/base/pgo-databases
   patches:
     - patch: |-
-        - op: add
-          path: /spec/users
-          value:
-            - name: prowlarr
-              databases: [prowlarr_main]
+        apiVersion: postgres-operator.crunchydata.com/v1beta1
+        kind: PostgresCluster
+        metadata:
+          name: downloads
+        spec:
+          users:
+            - databases: [postgres]
+              name: postgres
+              options: SUPERUSER
               password:
                 type: AlphaNumeric
-      target:
-        kind: PostgresCluster
-        name: downloads
+            - databases: [prowlarr_main]
+              name: prowlarr
+              password:
+                type: AlphaNumeric
   prune: true
   retryInterval: 2m
   sourceRef:
