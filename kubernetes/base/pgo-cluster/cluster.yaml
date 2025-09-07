@@ -65,5 +65,7 @@ spec:
               password:
                 type: AlphaNumeric
       target:
+        version: postgres-operator.crunchydata.com/v1beta1
         kind: PostgresCluster
         name: ${NAMESPACE}
+        namespace: ${NAMESPACE}
