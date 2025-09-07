@@ -8,13 +8,13 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-#  components:
-#    - ../../components/common
+  components:
+    - ../../components/common
   dependsOn:
     - name: downloads-pgo-cluster
       namespace: &namespace downloads
   interval: 1h
-  path: ./kubernetes
+  path: ./kubernetes/base/pgo-databases
   prune: true
   retryInterval: 2m
   sourceRef:
