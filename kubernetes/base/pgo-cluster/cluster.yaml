@@ -14,10 +14,10 @@ spec:
     - name: crunchy-postgres-operator
       namespace: database
   healthChecks:
-    - apiVersion: postgres-operator.crunchydata.com/v1beta1
-      kind: PostgresCluster
-      name: ${NAMESPACE}
-      namespace: ${NAMESPACE}
+#    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+#      kind: PostgresCluster
+#      name: ${NAMESPACE}
+#      namespace: ${NAMESPACE}
     - apiVersion: external-secrets.io/v1
       kind: SecretStore
       name: ${NAMESPACE}-pgo-secrets
