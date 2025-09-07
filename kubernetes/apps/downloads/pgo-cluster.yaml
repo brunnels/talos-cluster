@@ -15,15 +15,6 @@ spec:
       NAMESPACE: &namespace downloads
   interval: 1h
   path: ./kubernetes/base/pgo-cluster
-  # comment out after first commit and cluster creation completed
-  patches:
-    - patch: |-
-        - op: remove
-          path: /spec/dataSource
-      target:
-        kind: PostgresCluster
-        name: downloads
-        namespace: *namespace
   prune: true
   retryInterval: 2m
   sourceRef:
