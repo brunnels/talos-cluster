@@ -14,10 +14,6 @@ spec:
     - name: crunchy-postgres-operator
       namespace: database
   healthChecks:
-#    - apiVersion: postgres-operator.crunchydata.com/v1beta1
-#      kind: PostgresCluster
-#      name: ${NAMESPACE}
-#      namespace: ${NAMESPACE}
     - apiVersion: external-secrets.io/v1
       kind: SecretStore
       name: ${NAMESPACE}-pgo-secrets
@@ -47,6 +43,7 @@ spec:
       SECRET_DOMAIN: ${SECRET_DOMAIN}
       VAULT_PREFIX: ${VAULT_PREFIX}
       QNAP_HOSTNAME: ${QNAP_HOSTNAME}
+  ${PATCHES-}
   prune: true
   retryInterval: 2m
   sourceRef:
