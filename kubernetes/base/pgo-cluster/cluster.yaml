@@ -55,12 +55,12 @@ spec:
     namespace: flux-system
   targetNamespace: ${NAMESPACE}
   timeout: 5m
-#  patches:
-#    - patch: |-
-#        - op: remove
-#          path: /spec/dataSource
-#      target:
-#        kind: PostgresCluster
+  patches:
+    - patch: |-
+        - op: remove
+          path: /spec/dataSource
+      target:
+        kind: PostgresCluster
 #  patches:
 #    - patch: |-
 #        - op: add
