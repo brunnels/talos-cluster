@@ -1,0 +1,9 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+namespace: database
+components:
+  - ../../components/common
+resources:
+  - ./echo.yaml
