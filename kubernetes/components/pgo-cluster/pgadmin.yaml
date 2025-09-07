@@ -24,7 +24,7 @@ spec:
       failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   interval: 1h
-  path: ./kubernetes/components/postgres-cluster/pgadmin
+  path: ./kubernetes/components/pgo-cluster/pgadmin
   postBuild:
     substitute:
       GATUS_SUBDOMAIN: ${NAMESPACE}-pgadmin

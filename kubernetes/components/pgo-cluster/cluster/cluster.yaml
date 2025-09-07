@@ -3,7 +3,7 @@
 apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PostgresCluster
 metadata:
-  name: &name ${NAMESPACE}
+  name: ${NAMESPACE}
 spec:
   postgresVersion: 17
   monitoring:
@@ -27,7 +27,7 @@ spec:
     - name: ${NAMESPACE}
       metadata:
         labels:
-          app.kubernetes.io/name: ${NAMESPACE}-crunchy-postgres
+          app.kubernetes.io/name: ${NAMESPACE}-pgo
       replicas: 3 # One per node
       dataVolumeClaimSpec:
         storageClassName: openebs-hostpath
@@ -41,7 +41,7 @@ spec:
           whenUnsatisfiable: "DoNotSchedule"
           labelSelector:
             matchLabels:
-              postgres-operator.crunchydata.com/cluster: *name
+              postgres-operator.crunchydata.com/cluster: ${NAMESPACE}
   users:
     - name: &db postgres
       databases: [*db]
@@ -52,7 +52,7 @@ spec:
     pgbackrest:
       configuration: &backupConfig
         - secret:
-            name: "${NAMESPACE}-crunchy-postgres"
+            name: ${NAMESPACE}-pgo
       global: &backupFlag
         # Global
         compress-type: "bz2"
@@ -73,11 +73,11 @@ spec:
           - --type=full
       metadata:
         labels:
-          app.kubernetes.io/name: ${NAMESPACE}-crunchy-postgres-backup
+          app.kubernetes.io/name: ${NAMESPACE}-backup
       repos:
         - name: repo1 # QNAP
           s3: &qnap
-            bucket: "${VAULT_PREFIX}-crunchy-postgres"
+            bucket: "${VAULT_PREFIX}-pgo"
             endpoint: "${QNAP_HOSTNAME}:8010"
             region: "us-east-1"
           schedules:
@@ -97,7 +97,7 @@ spec:
       service:
         metadata:
           annotations:
-            external-dns.alpha.kubernetes.io/hostname: ${NAMESPACE}.${SECRET_DOMAIN}
+            external-dns.alpha.kubernetes.io/hostname: ${NAMESPACE}-pgo.${SECRET_DOMAIN}
             lbipam.cilium.io/ips: ${SVC_LB_IP}
         type: LoadBalancer
       port: 5432
@@ -113,5 +113,5 @@ spec:
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              postgres-operator.crunchydata.com/cluster: *name
+              postgres-operator.crunchydata.com/cluster: ${NAMESPACE}
               postgres-operator.crunchydata.com/role: "${NAMESPACE}-pgbouncer"
