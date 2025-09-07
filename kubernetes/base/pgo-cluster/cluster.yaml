@@ -43,7 +43,8 @@ spec:
       SECRET_DOMAIN: ${SECRET_DOMAIN}
       VAULT_PREFIX: ${VAULT_PREFIX}
       QNAP_HOSTNAME: ${QNAP_HOSTNAME}
-  ${PATCHES-}
+  patches:
+    ${PATCHES}
   prune: true
   retryInterval: 2m
   sourceRef:

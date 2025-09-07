@@ -14,26 +14,23 @@ spec:
     substitute:
       NAMESPACE: &namespace downloads
       PATCHES: |-
-        patches:
-          # Remove this patch after the first backup has completed successfully
-          - patch: |-
-              - op: remove
-                path: /spec/dataSource
-            target:
-              kind: PostgresCluster
-              name: downloads
-          # Add all databases for the downloads cluster here
-          - patch: |-
-              - op: add
-                path: /spec/users
-                value:
-                  - name: prowlarr
-                    databases: [prowlarr_main]
-                    password:
-                      type: AlphaNumeric
-            target:
-              kind: PostgresCluster
-              name: downloads
+        - patch: |-
+            - op: remove
+              path: /spec/dataSource
+          target:
+            kind: PostgresCluster
+            name: downloads
+        - patch: |-
+            - op: add
+              path: /spec/users
+              value:
+                - name: prowlarr
+                  databases: [prowlarr_main]
+                  password:
+                    type: AlphaNumeric
+          target:
+            kind: PostgresCluster
+            name: downloads
   interval: 1h
   path: ./kubernetes/base/pgo-cluster
   prune: true
