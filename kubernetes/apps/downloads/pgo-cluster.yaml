@@ -23,21 +23,30 @@ spec:
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
-#  patches:
-#    - patch: |-
-#        apiVersion: postgres-operator.crunchydata.com/v1beta1
-#        kind: PostgresCluster
-#        metadata:
-#          name: downloads
-#          namespace: downloads
-#        spec:
-#          users:
-#            - databases: [postgres]
-#              name: postgres
-#              options: SUPERUSER
-#              password:
-#                type: AlphaNumeric
-#            - databases: [prowlarr_main]
-#              name: prowlarr
-#              password:
-#                type: AlphaNumeric
+  patches:
+    - patch: |-
+        - op: add
+          path: /spec/patches
+          value:
+            # Remove this patch after the first backup has completed successfully
+            - patch: |-
+                - op: remove
+                  path: /spec/dataSource
+              target:
+                kind: PostgresCluster
+                name: downloads
+            # Add all databases for the downloads cluster here
+            - patch: |-
+                - op: add
+                  path: /spec/users
+                  value:
+                    - name: prowlarr
+                      databases: [prowlarr_main]
+                      password:
+                        type: AlphaNumeric
+              target:
+                kind: PostgresCluster
+                name: downloads
+      target:
+        kind: Kustomization
+        name: downloads-pgo
