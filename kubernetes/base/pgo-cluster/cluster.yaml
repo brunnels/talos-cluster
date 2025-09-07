@@ -57,15 +57,21 @@ spec:
   timeout: 5m
   patches:
     - patch: |-
-        - op: add
-          path: /spec/users
-          value:
-            - name: prowlarr
-              databases: [prowlarr_main]
-              password:
-                type: AlphaNumeric
+        - op: remove
+          path: /spec/dataSource
       target:
-        version: postgres-operator.crunchydata.com/v1beta1
         kind: PostgresCluster
-        name: ${NAMESPACE}
-        namespace: ${NAMESPACE}
+#  patches:
+#    - patch: |-
+#        - op: add
+#          path: /spec/users
+#          value:
+#            - name: prowlarr
+#              databases: [prowlarr_main]
+#              password:
+#                type: AlphaNumeric
+#      target:
+#        version: postgres-operator.crunchydata.com/v1beta1
+#        kind: PostgresCluster
+#        name: ${NAMESPACE}
+#        namespace: ${NAMESPACE}
