@@ -12,7 +12,7 @@ spec:
     - ../../components/common
   postBuild:
     substitute:
-      NAMESPACE: &namespace downloads
+      NAMESPACE: downloads
       PATCHES: |-
         - patch: |-
             - op: remove
@@ -39,5 +39,5 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
+  targetNamespace: downloads
   timeout: 5m
