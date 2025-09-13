@@ -14,7 +14,7 @@ spec:
     - name: downloads-pgo-cluster
       namespace: &namespace downloads
   interval: 1h
-  path: ./kubernetes/base/pgo-database
+  path: ./kubernetes/base/pgo-databases
   patches:
     - # Add initial users and databases to pgo-cluster
       patch: |-
