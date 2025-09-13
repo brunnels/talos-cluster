@@ -5,9 +5,9 @@ kind: Kustomization
 resources:
   - ./cluster.yaml
   - ./externalsecret.yaml
-  - ./gatus.yaml
+#  - ./gatus.yaml
   - ./podmonitor.yaml
-  - ./role.yaml
-  - ./rolebinding.yaml
-  - ./secretstore.yaml
-  - ./serviceaccount.yaml
+#  - ./role.yaml
+#  - ./rolebinding.yaml
+#  - ./secretstore.yaml
+#  - ./serviceaccount.yaml
