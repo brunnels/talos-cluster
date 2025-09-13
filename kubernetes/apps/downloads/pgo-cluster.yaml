@@ -18,6 +18,18 @@ spec:
       target:
         group: postgres-operator.crunchydata.com
         kind: PostgresCluster
+    # Add prowlarr user to PostgresCluster
+    - patch: |-
+        - op: add
+          path: /spec/users/-
+          value:
+            name: prowlarr
+            databases: [prowlarr_main]
+            password:
+              type: AlphaNumeric
+      target:
+        group: postgres-operator.crunchydata.com
+        kind: PostgresCluster
   postBuild:
     substitute:
       NAMESPACE: downloads
