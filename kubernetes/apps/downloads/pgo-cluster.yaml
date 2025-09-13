@@ -20,18 +20,14 @@ spec:
 #        version: kustomize.toolkit.fluxcd.io/v1
 #        name: downloads-pgo
   patches:
-#    - # Add initial users and databases to pgo-cluster
-#      patch: |-
-#        apiVersion: postgres-operator.crunchydata.com/v1beta1
-#        kind: PostgresCluster
-#        metadata:
-#          name: downloads
-#        spec:
-#          dataSource: []
-#    # Remove this patch after the first backup has completed successfully
-    - patch: |-
-        - op: remove
-          path: /spec/dataSource
+    - # Add initial users and databases to pgo-cluster
+      patch: |-
+        apiVersion: postgres-operator.crunchydata.com/v1beta1
+        kind: PostgresCluster
+        metadata:
+          name: downloads
+        spec:
+          dataSource: []
       target:
         kind: PostgresCluster
         name: downloads
