@@ -102,11 +102,9 @@ spec:
               - path: /tmp
                 subPath: tmp
     rawResources:
-      external-secret:
+      prowlarr:
         apiVersion: external-secrets.io/v1
         kind: ExternalSecret
-        metadata:
-          name: *app
         spec:
           secretStoreRef:
             kind: ClusterSecretStore
