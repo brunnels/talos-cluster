@@ -37,20 +37,9 @@ spec:
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.readyReplicas == ${PGO_REPLICAS:-3})
   interval: 1h
   path: ./kubernetes/base/pgo-cluster/cluster
-  patches:
-    # Remove this patch after the first backup has completed successfully
-    - patch: |-
-        - op: remove
-          path: /spec/dataSource
-      target:
-        kind: PostgresCluster
-        name: downloads
   postBuild:
     substitute:
       NAMESPACE: ${NAMESPACE}
-      SECRET_DOMAIN: ${SECRET_DOMAIN}
-      VAULT_PREFIX: ${VAULT_PREFIX}
-      QNAP_HOSTNAME: ${QNAP_HOSTNAME}
   prune: true
   retryInterval: 2m
   sourceRef:
