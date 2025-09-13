@@ -7,7 +7,7 @@ components:
   - ../../components/common
 resources:
   - ./pgo-cluster.yaml
-patches:
+#patches:
 #  - patch: |-
 #      - op: add
 #        path: /spec/patches
@@ -31,11 +31,11 @@ patches:
 #            target:
 #              kind: PostgresCluster
 #              name: downloads
-  - patch: |
-      - op: add
-        path: /spec/commonMetadata/labels/app.kubernetes.io~1managed-by
-        value: patch
-    target:
-      kind: Kustomization
-      version: kustomize.toolkit.fluxcd.io/v1
-      name: downloads-pgo
+#  - patch: |
+#      - op: add
+#        path: /spec/commonMetadata/labels/app.kubernetes.io~1managed-by
+#        value: patch
+#    target:
+#      kind: Kustomization
+#      version: kustomize.toolkit.fluxcd.io/v1
+#      name: downloads-pgo

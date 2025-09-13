@@ -10,6 +10,15 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../components/common
+  patches:
+    - patch: |
+        - op: add
+          path: /spec/commonMetadata/labels/app.kubernetes.io~1managed-by
+          value: patch
+      target:
+        kind: Kustomization
+        version: kustomize.toolkit.fluxcd.io/v1
+        name: downloads-pgo
   postBuild:
     substitute:
       NAMESPACE: downloads
