@@ -10,6 +10,28 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../components/common
+  healthChecks:
+    - apiVersion: external-secrets.io/v1
+      kind: SecretStore
+      name: downloads-pgo-secrets
+      namespace: downloads
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      name: downloads-pgo
+      namespace: downloads
+  healthCheckExprs:
+    - apiVersion: external-secrets.io/v1
+      kind: ClusterSecretStore
+      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
+      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
+      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
+    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+      kind: PostgresCluster
+      inProgress: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < 3)
+      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.readyReplicas == 3)
   patches:
     # Remove this patch after the first backup has completed successfully
     - patch: |-
