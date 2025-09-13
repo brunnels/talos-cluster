@@ -24,6 +24,7 @@ spec:
       prowlarr:
         annotations:
           reloader.stakater.com/auto: "true"
+        type: deployment
         containers:
           app:
             image:
