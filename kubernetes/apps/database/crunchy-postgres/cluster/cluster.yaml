@@ -121,7 +121,7 @@ spec:
         # Global
         compress-type: "bz2"
         compress-level: "9"
-        backup-standby: "y"
+        backup-standby: "n"
         # QNAP
         repo1-block: "y"
         repo1-bundle: "y"
