@@ -21,10 +21,10 @@ spec:
     - name: dragonfly-operator
       namespace: database
   healthCheckExprs:
-#    - apiVersion: external-secrets.io/v1
-#      kind: ExternalSecret
-#      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
-#      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
+      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
     - apiVersion: dragonflydb.io/v1alpha1
       kind: Dragonfly
       failed: status.phase != 'ready'
@@ -64,7 +64,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
+#  components:
 #    - ../../../../components/gatus/external
   dependsOn:
     - name: authelia-db
