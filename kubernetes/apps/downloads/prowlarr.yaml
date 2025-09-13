@@ -49,4 +49,5 @@ spec:
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
-  wait: false
+  # need to wait because we patch PostgresCluster added by dependency Kustomization
+  wait: true
