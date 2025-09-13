@@ -10,27 +10,36 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../components/common
+  patches:
+    - patch: |-
+        - op: add
+          path: /spec/patches
+          value:
+            # Remove this patch after the first backup has completed successfully
+            - patch: |-
+                - op: remove
+                  path: /spec/dataSource
+              target:
+                kind: PostgresCluster
+                name: downloads
+            # Add all databases for the downloads cluster here
+            - patch: |-
+                - op: add
+                  path: /spec/users
+                  value:
+                    - name: prowlarr
+                      databases: [prowlarr_main]
+                      password:
+                        type: AlphaNumeric
+              target:
+                kind: PostgresCluster
+                name: downloads
+      target:
+        kind: Kustomization
+        name: downloads-pgo
   postBuild:
     substitute:
       NAMESPACE: downloads
-      PATCHES: |-
-        - patch: |-
-            - op: remove
-              path: /spec/dataSource
-          target:
-            kind: PostgresCluster
-            name: downloads
-        - patch: |-
-            - op: add
-              path: /spec/users
-              value:
-                - name: prowlarr
-                  databases: [prowlarr_main]
-                  password:
-                    type: AlphaNumeric
-          target:
-            kind: PostgresCluster
-            name: downloads
   interval: 1h
   path: ./kubernetes/base/pgo-cluster
   prune: true
