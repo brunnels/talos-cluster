@@ -18,10 +18,10 @@ spec:
       kind: HelmRelease
       name: *app
       namespace: *namespace
-    - apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
-      name: *app
-      namespace: *namespace
+#    - apiVersion: external-secrets.io/v1
+#      kind: ExternalSecret
+#      name: *app
+#      namespace: *namespace
   healthCheckExprs:
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret
