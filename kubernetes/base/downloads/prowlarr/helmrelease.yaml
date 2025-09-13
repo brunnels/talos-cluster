@@ -101,24 +101,3 @@ spec:
                 subPath: config
               - path: /tmp
                 subPath: tmp
-    rawResources:
-      prowlarr:
-        apiVersion: external-secrets.io/v1
-        kind: ExternalSecret
-        spec:
-          secretStoreRef:
-            kind: ClusterSecretStore
-            name: akeyless-secret-store
-          dataFrom:
-            - extract:
-                key: kdev/prowlarr
-          target:
-            name: *app
-            labels:
-              postgres-operator.crunchydata.com/cluster: "{{ .Release.NameSpace }}"
-              postgres-operator.crunchydata.com/pguser: *app
-            template:
-              data:
-                PROWLARR__AUTH__APIKEY: "{{`{{ .PROWLARR_API_KEY }}`}}"
-                PROWLARR__POSTGRES__PASSWORD: "{{`{{ .PROWLARR_POSTGRES_PASSWORD }}`}}"
-                password: "{{`{{ .PROWLARR_POSTGRES_PASSWORD }}`}}"
