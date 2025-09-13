@@ -14,25 +14,38 @@ spec:
     - name: downloads-pgo-cluster
       namespace: &namespace downloads
   interval: 1h
-  path: ./kubernetes/base/pgo-databases
+  path: ./kubernetes/base/pgo-database
   patches:
-    - patch: |-
+    - # Add initial users and databases to pgo-cluster
+      patch: |-
         apiVersion: postgres-operator.crunchydata.com/v1beta1
         kind: PostgresCluster
         metadata:
           name: downloads
-          namespace: downloads
         spec:
-          users:
-            - databases: [postgres]
-              name: postgres
-              options: SUPERUSER
-              password:
-                type: AlphaNumeric
-            - databases: [prowlarr_main]
-              name: prowlarr
-              password:
-                type: AlphaNumeric
+          dataSource: []
+      target:
+        kind: PostgresCluster
+        name: downloads
+    - # Add postBuild substitutions to child Kustomizations
+      patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: not-used
+        spec:
+          postBuild:
+            substituteFrom:
+              - name: cluster-settings
+                kind: ConfigMap
+                optional: false
+              - name: cluster-secrets
+                kind: Secret
+                optional: false
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        kind: Kustomization
+        labelSelector: substitution.flux.home.arpa/disabled notin (true)
   prune: true
   retryInterval: 2m
   sourceRef:
