@@ -17,12 +17,12 @@ spec:
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.readyReplicas == 3) # replace 3 with PGO_REPLICAS number if set in postBuild
   patches:
     # Remove this patch after the first backup has completed successfully
-    - patch: |-
-        - op: remove
-          path: /spec/dataSource
-      target:
-        group: postgres-operator.crunchydata.com
-        kind: PostgresCluster
+#    - patch: |-
+#        - op: remove
+#          path: /spec/dataSource
+#      target:
+#        group: postgres-operator.crunchydata.com
+#        kind: PostgresCluster
     # Add all databases for the downloads cluster here
     - patch: |-
         - op: add
