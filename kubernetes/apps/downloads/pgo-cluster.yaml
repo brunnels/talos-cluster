@@ -47,7 +47,7 @@ spec:
                 kind: Secret
                 optional: false
       target:
-#        group: kustomize.toolkit.fluxcd.io
+        group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
         name: downloads-pgo
 #        labelSelector: substitution.flux.home.arpa/disabled notin (true)
