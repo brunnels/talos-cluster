@@ -109,6 +109,9 @@ spec:
           secretStoreRef:
             kind: ClusterSecretStore
             name: akeyless-secret-store
+          dataFrom:
+            - extract:
+                key: kdev/prowlarr
           target:
             name: *app
             labels:
@@ -119,6 +122,3 @@ spec:
                 PROWLARR__AUTH__APIKEY: "{{`{{ .PROWLARR_API_KEY }}`}}"
                 PROWLARR__POSTGRES__PASSWORD: "{{`{{ .PROWLARR_POSTGRES_PASSWORD }}`}}"
                 password: "{{`{{ .PROWLARR_POSTGRES_PASSWORD }}`}}"
-          dataFrom:
-            - extract:
-                key: "${VAULT_PREFIX}/prowlarr"
