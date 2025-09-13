@@ -88,7 +88,7 @@ spec:
               - /bin/bash
               - -c
             args:
-              - psql "$${DB_URI%/postgres}/prowlarr_main" "GRANT ALL ON SCHEMA public TO \"${APP}\";"
+              - psql "$${DB_URI%/postgres}/prowlarr" "GRANT ALL ON SCHEMA public TO \"${APP}\";"
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true

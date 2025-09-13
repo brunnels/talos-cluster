@@ -24,7 +24,7 @@ spec:
           path: /spec/users/-
           value:
             name: prowlarr
-            databases: [prowlarr_main]
+            databases: [prowlarr]
             password:
               type: AlphaNumeric
       target:
