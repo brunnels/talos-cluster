@@ -11,13 +11,16 @@ spec:
   components:
     - ../../components/common
   patches:
-    # Remove this patch after the first backup has completed successfully
     - patch: |-
-        - op: remove
-          path: /spec/dataSource
-      target:
+        apiVersion: postgres-operator.crunchydata.com/v1beta1
         kind: PostgresCluster
-        name: downloads
+        metadata:
+          name: not-used
+        spec:
+          dataSource: []
+      target:
+        group: postgres-operator.crunchydata.com
+        kind: PostgresCluster
 #    - # Add postBuild substitutions to child Kustomizations
 #      patch: |-
 #        apiVersion: kustomize.toolkit.fluxcd.io/v1
