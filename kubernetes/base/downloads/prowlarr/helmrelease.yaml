@@ -11,7 +11,7 @@ spec:
     name: app-template
   dependsOn:
     - name: rook-ceph-cluster
-      namespace: rook-ceph
+      namespace: storage
   install:
     remediation:
       retries: -1
