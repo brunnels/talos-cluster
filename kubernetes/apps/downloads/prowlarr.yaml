@@ -11,7 +11,7 @@ spec:
   components:
     - ../../components/gatus/guarded
   dependsOn:
-    - name: downloads-pgo
+    - name: downloads-pgo-cluster
       namespace: &namespace database
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
