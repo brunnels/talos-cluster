@@ -82,7 +82,7 @@ spec:
               DB_URI:
                 valueFrom:
                   secretKeyRef:
-                    name: "downloads-pguser-postgres"
+                    name: "${NAMESPACE}-pguser-postgres"
                     key: uri
             command:
               - /bin/bash
