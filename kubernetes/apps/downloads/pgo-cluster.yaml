@@ -10,7 +10,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../components/common
-  patches:
+#  patches:
 #    - patch: |
 #        - op: add
 #          path: /spec/commonMetadata/labels/app.kubernetes.io~1managed-by
@@ -31,26 +31,25 @@ spec:
 #      target:
 #        kind: PostgresCluster
 #        name: downloads
-    - # Add postBuild substitutions to child Kustomizations
-      patch: |-
-        apiVersion: kustomize.toolkit.fluxcd.io/v1
-        kind: Kustomization
-        metadata:
-          name: not-used
-        spec:
-          postBuild:
-            substituteFrom:
-              - name: cluster-settings
-                kind: ConfigMap
-                optional: false
-              - name: cluster-secrets
-                kind: Secret
-                optional: false
-      target:
-        group: kustomize.toolkit.fluxcd.io
-        kind: Kustomization
-#        name: downloads-pgo
-        labelSelector: substitution.flux.home.arpa/disabled notin (true)
+#    - # Add postBuild substitutions to child Kustomizations
+#      patch: |-
+#        apiVersion: kustomize.toolkit.fluxcd.io/v1
+#        kind: Kustomization
+#        metadata:
+#          name: not-used
+#        spec:
+#          postBuild:
+#            substituteFrom:
+#              - name: cluster-settings
+#                kind: ConfigMap
+#                optional: false
+#              - name: cluster-secrets
+#                kind: Secret
+#                optional: false
+#      target:
+#        group: kustomize.toolkit.fluxcd.io
+#        kind: Kustomization
+#        labelSelector: substitution.flux.home.arpa/disabled notin (true)
   postBuild:
     substitute:
       NAMESPACE: downloads
