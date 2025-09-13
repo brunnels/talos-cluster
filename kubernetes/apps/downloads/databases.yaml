@@ -11,7 +11,7 @@ spec:
   components:
     - ../../components/common
   dependsOn:
-    - name: downloads-pgo-cluster
+    - name: downloads-pgo
       namespace: &namespace downloads
   interval: 1h
   path: ./kubernetes/base/pgo-databases
