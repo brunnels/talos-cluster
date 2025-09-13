@@ -12,6 +12,12 @@ spec:
     - ../../components/common
   patches:
     - patch: |-
+        - op: remove
+          path: /spec/dataSource
+      target:
+        group: postgres-operator.crunchydata.com
+        kind: PostgresCluster
+    - patch: |-
         apiVersion: postgres-operator.crunchydata.com/v1beta1
         kind: PostgresCluster
         metadata:
