@@ -118,9 +118,9 @@ spec:
               postgres-operator.crunchydata.com/pguser: *app
             template:
               data:
-                PROWLARR__AUTH__APIKEY: "{{ .PROWLARR_API_KEY }}"
-                PROWLARR__POSTGRES__PASSWORD: "{{ .PROWLARR_API_KEY }}"
-                password: "{{ .PROWLARR_API_KEY }}"
+                PROWLARR__AUTH__APIKEY: "{{`{{ .PROWLARR_API_KEY }}`}}"
+                PROWLARR__POSTGRES__PASSWORD: "{{`{{ .PROWLARR_POSTGRES_PASSWORD }}`}}"
+                password: "{{`{{ .PROWLARR_POSTGRES_PASSWORD }}`}}"
           dataFrom:
             - extract:
                 key: "${VAULT_PREFIX}/prowlarr"
