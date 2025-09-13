@@ -11,50 +11,25 @@ spec:
   components:
     - ../../components/common
   patches:
+    # Remove this patch after the first backup has completed successfully
     - patch: |-
         - op: remove
           path: /spec/dataSource
       target:
         group: postgres-operator.crunchydata.com
         kind: PostgresCluster
+    # Add all databases for the downloads cluster here
     - patch: |-
-        apiVersion: postgres-operator.crunchydata.com/v1beta1
-        kind: PostgresCluster
-        metadata:
-          name: not-used
-        spec:
-          users:
-            - databases: [postgres]
-              name: postgres
-              options: SUPERUSER
-              password:
-                type: AlphaNumeric
-            - databases: [prowlarr_main]
-              name: prowlarr
+        - op: add
+          path: /spec/users
+          value:
+            - name: prowlarr
+              databases: [prowlarr_main]
               password:
                 type: AlphaNumeric
       target:
         group: postgres-operator.crunchydata.com
         kind: PostgresCluster
-#    - # Add postBuild substitutions to child Kustomizations
-#      patch: |-
-#        apiVersion: kustomize.toolkit.fluxcd.io/v1
-#        kind: Kustomization
-#        metadata:
-#          name: not-used
-#        spec:
-#          postBuild:
-#            substituteFrom:
-#              - name: cluster-settings
-#                kind: ConfigMap
-#                optional: false
-#              - name: cluster-secrets
-#                kind: Secret
-#                optional: false
-#      target:
-#        group: kustomize.toolkit.fluxcd.io
-#        kind: Kustomization
-#        labelSelector: substitution.flux.home.arpa/disabled notin (true)
   postBuild:
     substitute:
       NAMESPACE: downloads

@@ -35,8 +35,13 @@ spec:
     substitute:
       NAMESPACE: ${NAMESPACE}
       GATUS_SUBDOMAIN: ${NAMESPACE}-pgadmin
-      SECRET_DOMAIN: ${SECRET_DOMAIN}
-      VAULT_PREFIX: ${VAULT_PREFIX}
+    substituteFrom:
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: false
+      - name: cluster-secrets
+        kind: Secret
+        optional: false
   prune: true
   retryInterval: 2m
   sourceRef:
