@@ -36,6 +36,7 @@ spec:
                 name: downloads
       target:
         kind: Kustomization
+        version: kustomize.toolkit.fluxcd.io/v1
         name: downloads-pgo
   postBuild:
     substitute:
