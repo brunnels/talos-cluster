@@ -17,7 +17,16 @@ spec:
         metadata:
           name: not-used
         spec:
-          dataSource: []
+          users:
+            - databases: [postgres]
+              name: postgres
+              options: SUPERUSER
+              password:
+                type: AlphaNumeric
+            - databases: [prowlarr_main]
+              name: prowlarr
+              password:
+                type: AlphaNumeric
       target:
         group: postgres-operator.crunchydata.com
         kind: PostgresCluster
