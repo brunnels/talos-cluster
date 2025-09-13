@@ -48,8 +48,8 @@ spec:
                 kind: PostgresCluster
                 name: downloads
       target:
+        group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
-        version: kustomize.toolkit.fluxcd.io/v1
         name: downloads-pgo
     - # Add postBuild substitutions to child Kustomizations
       patch: |-
