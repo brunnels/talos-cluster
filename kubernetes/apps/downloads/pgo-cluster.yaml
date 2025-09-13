@@ -15,7 +15,7 @@ spec:
       kind: PostgresCluster
       inProgress: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < 3) # replace 3 with PGO_REPLICAS number if set in postBuild
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.readyReplicas == 3) # replace 3 with PGO_REPLICAS number if set in postBuild
-  patches:
+#  patches:
     # Remove this patch after the first backup has completed successfully
 #    - patch: |-
 #        - op: remove
@@ -24,17 +24,17 @@ spec:
 #        group: postgres-operator.crunchydata.com
 #        kind: PostgresCluster
     # Add all databases for the downloads cluster here
-    - patch: |-
-        - op: add
-          path: /spec/users/-
-          value:
-            name: prowlarr
-            databases: [prowlarr_main]
-            password:
-              type: AlphaNumeric
-      target:
-        group: postgres-operator.crunchydata.com
-        kind: PostgresCluster
+#    - patch: |-
+#        - op: add
+#          path: /spec/users/-
+#          value:
+#            name: prowlarr
+#            databases: [prowlarr_main]
+#            password:
+#              type: AlphaNumeric
+#      target:
+#        group: postgres-operator.crunchydata.com
+#        kind: PostgresCluster
   postBuild:
     substitute:
       NAMESPACE: downloads
