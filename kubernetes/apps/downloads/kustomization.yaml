@@ -5,8 +5,8 @@ kind: Kustomization
 namespace: downloads
 components:
   - ../../components/common
-resources:
-  - ./pgo-cluster.yaml
+resources: []
+#  - ./pgo-cluster.yaml
 #  - ./databases.yaml
 #patches:
   # Remove this patch after the first backup has completed successfully
