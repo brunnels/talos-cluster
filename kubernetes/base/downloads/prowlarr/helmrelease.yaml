@@ -38,7 +38,7 @@ spec:
               PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
               PROWLARR__LOG__DBENABLED: "False"
               PROWLARR__LOG__LEVEL: info
-              PROWLARR__POSTGRES__HOST: "{{ .Release.NameSpace }}-pgbouncer.{{ .Release.NameSpace }}.svc"
+              PROWLARR__POSTGRES__HOST: "{{ .Release.NameSpace }}-pgbouncer.${NAMESPACE}.svc"
               PROWLARR__POSTGRES__MAINDB: *app
               PROWLARR__POSTGRES__PORT: 5432
               PROWLARR__POSTGRES__USER: *app
