@@ -19,7 +19,7 @@ spec:
       name: *app
       namespace: &namespace observability
   interval: 1h
-  path: ./kubernetes/base/grafana
+  path: ./kubernetes/base/observability/grafana
   postBuild:
     substitute:
       APP: *app

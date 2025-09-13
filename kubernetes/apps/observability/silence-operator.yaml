@@ -14,7 +14,7 @@ spec:
       name: *app
       namespace: &namespace observability
   interval: 1h
-  path: ./kubernetes/base/silence-operator
+  path: ./kubernetes/base/observability/silence-operator
   prune: true
   retryInterval: 2m
   sourceRef:

@@ -14,7 +14,7 @@ spec:
       name: *app
       namespace: &namespace database
   interval: 1h
-  path: ./kubernetes/base/crunchy-postgres-operator
+  path: ./kubernetes/base/database/crunchy-postgres-operator
   prune: true
   retryInterval: 2m
   sourceRef:

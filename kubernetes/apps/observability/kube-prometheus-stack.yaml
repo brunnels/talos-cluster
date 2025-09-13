@@ -17,7 +17,7 @@ spec:
       name: *app
       namespace: &namespace observability
   interval: 1h
-  path: ./kubernetes/base/kube-prometheus-stack
+  path: ./kubernetes/base/observability/kube-prometheus-stack
   prune: true
   retryInterval: 2m
   sourceRef:

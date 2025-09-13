@@ -14,7 +14,7 @@ spec:
       name: *app
       namespace: &namespace observability
   interval: 1h
-  path: ./kubernetes/base/loki
+  path: ./kubernetes/base/observability/loki
   prune: true
   retryInterval: 2m
   sourceRef:

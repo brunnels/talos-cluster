@@ -14,7 +14,7 @@ spec:
       name: *app
       namespace: &namespace observability
   interval: 1h
-  path: ./kubernetes/base/node-exporter
+  path: ./kubernetes/base/observability/node-exporter
   prune: true
   retryInterval: 2m
   sourceRef:

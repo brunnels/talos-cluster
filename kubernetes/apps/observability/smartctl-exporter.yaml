@@ -14,7 +14,7 @@ spec:
       name: *app
       namespace: &namespace observability
   interval: 1h
-  path: ./kubernetes/base/smartctl-exporter
+  path: ./kubernetes/base/observability/smartctl-exporter
   prune: true
   retryInterval: 2m
   sourceRef:

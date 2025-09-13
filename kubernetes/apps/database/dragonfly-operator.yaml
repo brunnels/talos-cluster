@@ -14,7 +14,7 @@ spec:
       name: *app
       namespace: &namespace database
   interval: 1h
-  path: ./kubernetes/base/dragonfly-operator
+  path: ./kubernetes/base/database/dragonfly-operator
   prune: true
   retryInterval: 2m
   sourceRef:
