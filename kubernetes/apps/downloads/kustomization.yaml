@@ -8,14 +8,14 @@ components:
 resources:
   - ./pgo-cluster.yaml
 #  - ./databases.yaml
-patches:
+#patches:
   # Remove this patch after the first backup has completed successfully
-  - patch: |-
-      - op: remove
-        path: /spec/dataSource
-    target:
-      kind: PostgresCluster
-      name: downloads
+#  - patch: |-
+#      - op: remove
+#        path: /spec/dataSource
+#    target:
+#      kind: PostgresCluster
+#      name: downloads
 #- # Add postBuild substitutions to child Kustomizations
 #    patch: |-
 #      apiVersion: kustomize.toolkit.fluxcd.io/v1
