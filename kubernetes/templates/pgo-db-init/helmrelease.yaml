@@ -41,11 +41,51 @@ spec:
                 #!/usr/bin/env bash
                 set -euo pipefail
 
-                for DB in $DB_NAMES; do
+                USER_NAME="${DB_USER:-${APP}}"
+                DB_NAMES_ARRAY=($DB_NAMES)
+
+                # Get current users and databases for USER_NAME
+                USERS_JSON=$(kubectl get postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
+                  --namespace ${NAMESPACE} -o json)
+                USER_INDEX=$(echo "$USERS_JSON" | jq -r ".spec.users | map(.name == \"$USER_NAME\") | index(true)")
+
+                # Convert DB_NAMES to sorted JSON array
+                DB_ARRAY=$(printf '%s\n' "${DB_NAMES_ARRAY[@]}" | jq -R . | jq -s 'sort')
+
+                if [ -z "$DB_NAMES" ]; then
+                  # If DB_NAMES is empty and user exists, remove user
+                  if [ "$USER_INDEX" != "null" ]; then
+                    echo "DB_NAMES is empty, removing user $USER_NAME."
+                    kubectl patch postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
+                      --namespace ${NAMESPACE} --type='json' \
+                      -p "[{\"op\": \"remove\", \"path\": \"/spec/users/$USER_INDEX\"}]"
+                  else
+                    echo "DB_NAMES is empty and user $USER_NAME does not exist, nothing to do."
+                  fi
+                  exit 0
+                fi
+
+                if [ "$USER_INDEX" = "null" ]; then
+                  # User does not exist, add user
+                  echo "User $USER_NAME does not exist, adding with databases: $DB_ARRAY."
                   kubectl patch postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
                     --namespace ${NAMESPACE} --type='json' \
-                    -p "[{\"op\": \"add\", \"path\": \"/spec/users/-\", \"value\": {\"name\": \"${DB_USER:-${APP}}\", \"databases\": [\"$DB\"], \"password\": {\"type\":\"AlphaNumeric\"}}}]"
-                done
+                    -p "[{\"op\": \"add\", \"path\": \"/spec/users/-\", \"value\": {\"name\": \"$USER_NAME\", \"databases\": $DB_ARRAY, \"password\": {\"type\":\"AlphaNumeric\"}}}]"
+                  exit 0
+                fi
+
+                # User exists, get current databases and compare
+                CURRENT_DB_ARRAY=$(echo "$USERS_JSON" | jq ".spec.users[$USER_INDEX].databases | sort")
+                if [ "$CURRENT_DB_ARRAY" = "$DB_ARRAY" ]; then
+                  echo "User $USER_NAME already exists with correct databases, skipping patch."
+                  exit 0
+                fi
+
+                # Update databases array for user
+                echo "Updating databases for user $USER_NAME to $DB_ARRAY."
+                kubectl patch postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
+                  --namespace ${NAMESPACE} --type='json' \
+                  -p "[{\"op\": \"replace\", \"path\": \"/spec/users/$USER_INDEX/databases\", \"value\": $DB_ARRAY}]"
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
