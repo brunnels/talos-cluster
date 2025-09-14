@@ -8,6 +8,18 @@ spec:
   ttlSecondsAfterFinished: 300
   template:
     spec:
+      initContainers:
+        - name: patch-pgo-users
+          image: bitnami/kubectl:latest
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - |
+              kubectl patch postgresclusters.postgres-operator.crunchydata.com downloads \
+                --namespace downloads \
+                --type='json' \
+                -p '[{"op": "add", "path": "/spec/users/-", "value": {"name": "prowlarr", "databases": ["prowlarr"]}}]'
       containers:
         - name: psql
           image: postgres:17
@@ -25,8 +37,18 @@ spec:
           args:
             - |
               for DB in $DB_NAMES; do
-                echo "Setting grant on public schema in database $DB for user ${DB_USER:-${APP}}";
-                psql "$${DB_URI%/postgres}/$DB" -c "GRANT ALL ON SCHEMA public TO \"${DB_USER:-${APP}}\";";
+                echo "Waiting for database $DB to exist..."
+                ATTEMPTS=0
+                until psql "$${DB_URI%/postgres}/$DB" -tAc "SELECT 1 FROM pg_database WHERE datname='$DB'" | grep -q 1; do
+                  ATTEMPTS=$((ATTEMPTS+1))
+                  if [ "$ATTEMPTS" -ge 6 ]; then
+                    echo "Database $DB does not exist after waiting 60s. Exiting."
+                    exit 1
+                  fi
+                  sleep 5
+                done
+                echo "Database $DB exists. Setting grant on public schema for user ${DB_USER:-${APP}}."
+                psql "$${DB_URI%/postgres}/$DB" -c "GRANT ALL ON SCHEMA public TO \"${DB_USER:-${APP}}\";"
               done
       restartPolicy: OnFailure
       activeDeadlineSeconds: 20
