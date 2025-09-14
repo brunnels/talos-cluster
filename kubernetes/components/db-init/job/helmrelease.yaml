@@ -1,0 +1,124 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app ${NAMESPACE}-pgo-${DB_NAME:-${APP}}-init
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    serviceAccount:
+      db-init:
+        forceRename: *app
+    rbac:
+      roles:
+        db-init:
+          forceRename: *app
+          type: Role
+          rules:
+            - apiGroups: ["postgres-operator.crunchydata.com"]
+              resources: ["postgresclusters"]
+              verbs: ["get", "patch"]
+      bindings:
+        db-init:
+          forceRename: *app
+          type: RoleBinding
+          roleRef:
+            identifier: db-init
+          subjects:
+            - identifier: db-init
+    controllers:
+      db-init:
+        type: job
+        serviceAccount:
+          identifier: db-init
+        initContainers:
+          patch-postgres-cluster:
+            image:
+              repository: docker.io/bitnami/kubectl
+              tag: 1.33.4@sha256:ed0b31a0508da84ee655c5c6e01bd3897fc56ad6cf69debb27fa1893a06d2246
+              pullPolicy: IfNotPresent
+            env:
+              DB_NAMES: "${DB_NAMES:-${APP}}"
+            command:
+              - /bin/bash
+              - -c
+            args:
+              - |
+                #!/usr/bin/env bash
+                set -euo pipefail
+
+                for DB in $DB_NAMES; do
+                  kubectl patch postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
+                    --namespace ${NAMESPACE} --type='json' \
+                    -p "[{\"op\": \"add\", \"path\": \"/spec/users/-\", \"value\": {\"name\": \"${DB_USER:-${APP}}\", \"databases\": [\"$DB\"], \"password\": {\"type\":\"AlphaNumeric\"}}}]"
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 52Mi
+              limits:
+                memory: 128Mi
+        containers:
+          app:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 17.6.0@sha256:86a1992d46273c58fd4ad95b626081dfaabfe16bd56944675169e406d1a660dd
+              pullPolicy: IfNotPresent
+            env:
+              DB_NAMES: "${DB_NAMES:-${APP}}"
+              DB_URI:
+                valueFrom:
+                  secretKeyRef:
+                    name: "${NAMESPACE}-pguser-postgres"
+                    key: uri
+            command:
+              - /bin/bash
+              - -c
+            args:
+              - |
+                #!/usr/bin/env bash
+                set -euo pipefail
+
+                for DB in $DB_NAMES; do
+                  echo "Waiting for database $DB to exist..."
+                  ATTEMPTS=0
+                  until psql "$${DB_URI%/postgres}/$DB" -tAc "SELECT 1 FROM pg_database WHERE datname='$DB'" | grep -q 1; do
+                    ATTEMPTS=$((ATTEMPTS+1))
+                    if [ "$ATTEMPTS" -ge 6 ]; then
+                      echo "Database $DB does not exist after waiting 60s. Exiting."
+                      exit 1
+                    fi
+                    sleep 5
+                  done
+                  echo "Database $DB exists. Setting grant on public schema for user ${DB_USER:-${APP}}."
+                  psql "$${DB_URI%/postgres}/$DB" -c "GRANT ALL ON SCHEMA public TO \"${DB_USER:-${APP}}\";"
+                done
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 52Mi
+              limits:
+                memory: 128Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
