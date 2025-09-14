@@ -22,6 +22,8 @@ spec:
         type: job
         serviceAccount:
           name: ${NAMESPACE}-pgo-db-init
+        job:
+          ttlSecondsAfterFinished: 300
         initContainers:
           patch-postgres-cluster:
             image:
