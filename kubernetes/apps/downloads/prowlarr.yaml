@@ -26,19 +26,6 @@ spec:
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   interval: 1h
   path: ./kubernetes/base/downloads/prowlarr
-  patches:
-    # Add dbs and users
-    - patch: |-
-        - op: add
-          path: /spec/users/-
-          value:
-            name: prowlarr
-            databases: [prowlarr]
-            password:
-              type: AlphaNumeric
-      target:
-        group: postgres-operator.crunchydata.com
-        kind: PostgresCluster
   postBuild:
     substitute:
       APP: *app

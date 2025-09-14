@@ -5,7 +5,6 @@ kind: Job
 metadata:
   name: ${NAMESPACE}-pgo-${DB_NAME:-${APP}}-init
 spec:
-  backoffLimit: 5
   ttlSecondsAfterFinished: 300
   template:
     spec:
@@ -26,7 +25,8 @@ spec:
           args:
             - |
               for DB in $DB_NAMES; do
-                echo "Setting grant on public schema in database $DB for user ${DB_USER:-${APP}}"
-                psql "$${DB_URI%/postgres}/$DB" -c "GRANT ALL ON SCHEMA public TO \"${DB_USER:-${APP}}\";"
+                echo "Setting grant on public schema in database $DB for user ${DB_USER:-${APP}}";
+                psql "$${DB_URI%/postgres}/$DB" -c "GRANT ALL ON SCHEMA public TO \"${DB_USER:-${APP}}\";";
               done
       restartPolicy: OnFailure
+      activeDeadlineSeconds: 20
