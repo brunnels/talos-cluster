@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: ${NAMESPACE}-pgo-${DB_USER}-init
+  name: "${NAMESPACE}-pgo-${DB_USER}-init"
 spec:
   interval: 1h
   chartRef:
