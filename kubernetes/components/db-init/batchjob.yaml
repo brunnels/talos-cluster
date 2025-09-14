@@ -27,6 +27,6 @@ spec:
             - |
               for DB in $DB_NAMES; do
                 echo "Setting grant on public schema in database $DB for user ${DB_USER:-${APP}}";
-                psql "$${DB_URI%/postgres}/$DB" -c "GRANT ALL ON SCHEMA public TO \"${DB_USER:-${APP}}\";";
+                psql "$${DB_URI%/postgres}/$DB" -c GRANT ALL ON SCHEMA public TO "${DB_USER:-${APP}}";
               done
       restartPolicy: OnFailure
