@@ -24,6 +24,7 @@ spec:
           name: ${NAMESPACE}-pgo-db-init
         job:
           ttlSecondsAfterFinished: 300
+          activeDeadlineSeconds: 30
         initContainers:
           patch-postgres-cluster:
             image:
@@ -81,11 +82,11 @@ spec:
                   ATTEMPTS=0
                   until psql "$${DB_URI%/postgres}/$DB" -tAc "SELECT 1 FROM pg_database WHERE datname='$DB'" | grep -q 1; do
                     ATTEMPTS=$((ATTEMPTS+1))
-                    if [ "$ATTEMPTS" -ge 6 ]; then
+                    if [ "$ATTEMPTS" -ge 15 ]; then
                       echo "Database $DB does not exist after waiting 60s. Exiting."
                       exit 1
                     fi
-                    sleep 5
+                    sleep 2
                   done
                   echo "Database $DB exists. Setting grant on public schema for user ${DB_USER:-${APP}}."
                   psql "$${DB_URI%/postgres}/$DB" -c "GRANT ALL ON SCHEMA public TO \"${DB_USER:-${APP}}\";"
