@@ -13,11 +13,11 @@ spec:
       namespace: external-secrets
     - name: crunchy-postgres-operator
       namespace: database
-  healthChecks:
-    - apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
-      name: ${NAMESPACE}-pgo
-      namespace: ${NAMESPACE}
+#  healthChecks:
+#    - apiVersion: external-secrets.io/v1
+#      kind: ExternalSecret
+#      name: ${NAMESPACE}-pgo
+#      namespace: ${NAMESPACE}
   healthCheckExprs:
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret
