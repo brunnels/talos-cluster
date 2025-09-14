@@ -22,15 +22,15 @@ spec:
 #      kind: PostgresCluster
 #      name: ${NAMESPACE}-pgo
 #      namespace: ${NAMESPACE}
-  healthCheckExprs:
+#  healthCheckExprs:
 #    - apiVersion: external-secrets.io/v1
 #      kind: ExternalSecret
 #      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
 #      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
-    - apiVersion: postgres-operator.crunchydata.com/v1beta1
-      kind: PostgresCluster
-      inProgress: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < ${PGO_REPLICAS:-3})
-      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.readyReplicas == ${PGO_REPLICAS:-3})
+#    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+#      kind: PostgresCluster
+#      inProgress: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < ${PGO_REPLICAS:-3})
+#      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.readyReplicas == ${PGO_REPLICAS:-3})
   interval: 1h
   path: ./kubernetes/base/pgo-cluster/cluster
   postBuild:
