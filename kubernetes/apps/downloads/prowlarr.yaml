@@ -3,6 +3,34 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: &app downloads-pgo-prowlarr-init
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: downloads-pgo-cluster
+      namespace: &namespace downloads
+  interval: 1h
+  path: ./kubernetes/templates/pgo-db-init
+  postBuild:
+    substitute:
+      DB_NAMES: prowlarr
+      DB_USER: prowlarr
+      NAMESPACE: *namespace
+  prune: true
+  retryInterval: 2m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 5m
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: &app prowlarr
 spec:
   commonMetadata:
