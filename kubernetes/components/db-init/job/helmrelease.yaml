@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app ${NAMESPACE}-pgo-${DB_NAME:-${APP}}-init
+  name: ${NAMESPACE}-pgo-${DB_USER:-${APP}}-init
 spec:
   interval: 1h
   chartRef:
@@ -17,31 +17,11 @@ spec:
     remediation:
       retries: 3
   values:
-    serviceAccount:
-      db-init:
-        forceRename: *app
-    rbac:
-      roles:
-        db-init:
-          forceRename: *app
-          type: Role
-          rules:
-            - apiGroups: ["postgres-operator.crunchydata.com"]
-              resources: ["postgresclusters"]
-              verbs: ["get", "patch"]
-      bindings:
-        db-init:
-          forceRename: *app
-          type: RoleBinding
-          roleRef:
-            identifier: db-init
-          subjects:
-            - identifier: db-init
     controllers:
       db-init:
         type: job
         serviceAccount:
-          identifier: db-init
+          name: ${NAMESPACE}-pgo-db-init
         initContainers:
           patch-postgres-cluster:
             image:
