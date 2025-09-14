@@ -38,7 +38,6 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../components/gatus/guarded
-    - ../../../components/db-init
   dependsOn:
     - name: downloads-pgo-prowlarr-init
       namespace: &namespace downloads
