@@ -8,8 +8,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-#  components:
-#    - ../../components/gatus/guarded
+  components:
+    - ../../../components/gatus/guarded
   dependsOn:
     - name: downloads-pgo-cluster
       namespace: &namespace downloads

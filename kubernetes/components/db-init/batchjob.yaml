@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.32.1-standalone-strict/job-batch-v1.json
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ${NAMESPACE}-pgo-${DB_NAME:-$APP}-init
+spec:
+  backoffLimit: 5
+  ttlSecondsAfterFinished: 300
+  template:
+    spec:
+      containers:
+        - name: psql
+          image: postgres:17
+          env:
+            - name: DB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: "${NAMESPACE}-pguser-postgres"
+                  key: uri
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - echo "Setting grant on public schema in database ${DB_NAME:-$APP} for user ${DB_USER:-$APP}";
+            - psql "$${DB_URI%/postgres}/${DB_NAME:-$APP}"
+            - "-c"
+            - GRANT ALL ON SCHEMA public TO "${DB_USER:-$APP}";
+      restartPolicy: OnFailure
