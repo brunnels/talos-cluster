@@ -5,6 +5,6 @@ kind: Kustomization
 namespace: downloads
 components:
   - ../../components/common
-resources:
+resources: []
 #  - ./pgo-cluster.yaml
-  - ./prowlarr.yaml
+#  - ./prowlarr.yaml
