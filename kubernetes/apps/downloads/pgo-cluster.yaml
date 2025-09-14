@@ -19,17 +19,17 @@ spec:
         group: postgres-operator.crunchydata.com
         kind: PostgresCluster
     # Add all your users and db's here
-    - patch: |-
-        - op: add
-          path: /spec/users/-
-          value:
-            name: prowlarr
-            databases: [prowlarr]
-            password:
-              type: AlphaNumeric
-      target:
-        group: postgres-operator.crunchydata.com
-        kind: PostgresCluster
+#    - patch: |-
+#        - op: add
+#          path: /spec/users/-
+#          value:
+#            name: prowlarr
+#            databases: [prowlarr]
+#            password:
+#              type: AlphaNumeric
+#      target:
+#        group: postgres-operator.crunchydata.com
+#        kind: PostgresCluster
   postBuild:
     substitute:
       NAMESPACE: downloads
