@@ -16,8 +16,8 @@ spec:
   path: ./kubernetes/templates/pgo-db-init
   postBuild:
     substitute:
-      DB_NAMES: "prowlarr"
-      DB_USER: "prowlarr"
+      DB_NAMES: prowlarr
+      DB_USER: prowlarr
       NAMESPACE: *namespace
   prune: true
   retryInterval: 2m
