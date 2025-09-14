@@ -18,12 +18,15 @@ spec:
                 secretKeyRef:
                   name: "${NAMESPACE}-pguser-postgres"
                   key: uri
+            - name: DB_NAMES
+              value: "${DB_NAMES:-${APP}}"
           command:
             - /bin/sh
             - -c
           args:
-            - echo "Setting grant on public schema in database ${DB_NAME:-${APP}} for user ${DB_USER:-${APP}}";
-            - psql "$${DB_URI%/postgres}/${DB_NAME:-${APP}}"
-            - "-c"
-            - GRANT ALL ON SCHEMA public TO "${DB_USER:-${APP}}";
+            - |
+              for DB in $DB_NAMES; do
+                echo "Setting grant on public schema in database $DB for user ${DB_USER:-${APP}}";
+                psql "$${DB_URI%/postgres}/$DB" -c "GRANT ALL ON SCHEMA public TO '${DB_USER:-${APP}}';";
+              done
       restartPolicy: OnFailure
