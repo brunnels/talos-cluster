@@ -1,0 +1,45 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.32.1-standalone-strict/job-batch-v1.json
+apiVersion: v1
+kind: Job
+metadata:
+  name: ${NAMESPACE}-pgo-public-schema-grant
+spec:
+  backoffLimit: 5
+  ttlSecondsAfterFinished: 300
+  template:
+    spec:
+      containers:
+        - name: psql
+          image: postgres:17
+          env:
+            - name: DB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: "${NAMESPACE}-pguser-postgres"
+                  key: uri
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - echo "Setting grants on public schema in all databases for all non-superuser roles";
+            - psql "$DB_URI"
+            - "-c"
+            - |
+              DO $$
+              DECLARE
+                  r RECORD;
+              BEGIN
+                  FOR r IN
+                      SELECT rolname
+                      FROM pg_roles
+                      WHERE rolname <> 'postgres'
+                        AND rolcanlogin
+                        AND NOT rolsuper
+                  LOOP
+                      IF EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'public') THEN
+                          EXECUTE format('GRANT ALL ON SCHEMA public TO %I;', r.rolname);
+                      END IF;
+                  END LOOP;
+              END $$;
+      restartPolicy: OnFailure

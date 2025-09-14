@@ -24,7 +24,6 @@ spec:
       prowlarr:
         annotations:
           reloader.stakater.com/auto: "true"
-        type: deployment
         containers:
           app:
             image:
@@ -70,35 +69,6 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-      db-init:
-        type: job
-        containers:
-          job:
-            image:
-              repository: ghcr.io/home-operations/postgres-init
-              tag: 17.5.0@sha256:e0c87ce7df39d06b93f27cf2cc6a056611f13faaa88cc07ab4dc8bf7a85d0b11
-              pullPolicy: IfNotPresent
-            env:
-              DB_URI:
-                valueFrom:
-                  secretKeyRef:
-                    name: "${NAMESPACE}-pguser-postgres"
-                    key: uri
-            command:
-              - /bin/bash
-              - -c
-            args:
-              - psql "$${DB_URI%/postgres}/prowlarr" "GRANT ALL ON SCHEMA public TO \"${APP}\";"
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
-            resources:
-              requests:
-                cpu: 10m
-                memory: 52Mi
-              limits:
-                memory: 128Mi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -106,7 +76,6 @@ spec:
         runAsGroup: 100
     service:
       app:
-        controller: *app
         ports:
           http:
             port: *port

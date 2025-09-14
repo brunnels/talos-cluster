@@ -1,0 +1,33 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: ${NAMESPACE}-pgo-public-schema-grant
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: ${NAMESPACE}-pgo-public-schema-grant
+  dependsOn:
+    - name: ${NAMESPACE}-pgo
+      namespace: ${NAMESPACE}
+  force: true
+  healthChecks:
+    - apiVersion: batch/v1
+      kind: Job
+      name: ${NAMESPACE}-pgo-public-schema-grant
+      namespace: ${NAMESPACE}
+  interval: 1h
+  path: ./kubernetes/base/pgo-cluster/public-schema-grant
+  postBuild:
+    substitute:
+      NAMESPACE: ${NAMESPACE}
+  prune: true
+  retryInterval: 2m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: ${NAMESPACE}
+  timeout: 5m
+  wait: true
