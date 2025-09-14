@@ -42,6 +42,7 @@ spec:
                   kubectl patch postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
                     --namespace ${NAMESPACE} --type='json' \
                     -p "[{\"op\": \"add\", \"path\": \"/spec/users/-\", \"value\": {\"name\": \"${DB_USER:-${APP}}\", \"databases\": [\"$DB\"], \"password\": {\"type\":\"AlphaNumeric\"}}}]"
+                done
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
