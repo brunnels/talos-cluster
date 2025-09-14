@@ -3,7 +3,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: ${NAMESPACE}-pgo-${DB_NAME:-$APP}-init
+  name: ${NAMESPACE}-pgo-${DB_NAME:-${APP}}-init
 spec:
   backoffLimit: 5
   ttlSecondsAfterFinished: 300
@@ -22,8 +22,8 @@ spec:
             - /bin/sh
             - -c
           args:
-            - echo "Setting grant on public schema in database ${DB_NAME:-$APP} for user ${DB_USER:-$APP}";
-            - psql "$${DB_URI%/postgres}/${DB_NAME:-$APP}"
+            - echo "Setting grant on public schema in database ${DB_NAME:-${APP}} for user ${DB_USER:-${APP}}";
+            - psql "$${DB_URI%/postgres}/${DB_NAME:-${APP}}"
             - "-c"
-            - GRANT ALL ON SCHEMA public TO "${DB_USER:-$APP}";
+            - GRANT ALL ON SCHEMA public TO "${DB_USER:-${APP}}";
       restartPolicy: OnFailure
