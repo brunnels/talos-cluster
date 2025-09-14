@@ -18,10 +18,10 @@ spec:
       kind: ExternalSecret
       name: ${NAMESPACE}-pgo
       namespace: ${NAMESPACE}
-#    - apiVersion: postgres-operator.crunchydata.com/v1beta1
-#      kind: PostgresCluster
-#      name: ${NAMESPACE}-pgo
-#      namespace: ${NAMESPACE}
+    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+      kind: PostgresCluster
+      name: ${NAMESPACE}-pgo
+      namespace: ${NAMESPACE}
   healthCheckExprs:
 #    - apiVersion: external-secrets.io/v1
 #      kind: ExternalSecret
