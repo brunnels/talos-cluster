@@ -11,6 +11,7 @@ spec:
   dependsOn:
     - name: downloads-pgo-cluster
       namespace: &namespace downloads
+  force: true
   interval: 1h
   path: ./kubernetes/templates/pgo-db-init
   postBuild:
