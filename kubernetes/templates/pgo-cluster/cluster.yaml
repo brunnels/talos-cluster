@@ -29,8 +29,8 @@ spec:
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
     - apiVersion: postgres-operator.crunchydata.com/v1beta1
       kind: PostgresCluster
-      inProgress: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < e.replicas)
-      current: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas == e.replicas)
+      inProgress: status.conditions.filter(e, e.reason == 'MinimumReplicasAvailable').all(e, e.status != 'True')
+      current: status.conditions.filter(e, e.reason == 'MinimumReplicasAvailable').all(e, e.status == 'True')
   interval: 1h
   path: ./kubernetes/templates/pgo-cluster/cluster
   postBuild:
