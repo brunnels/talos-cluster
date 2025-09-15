@@ -33,6 +33,7 @@ spec:
               pullPolicy: IfNotPresent
             env:
               DB_NAMES: "${DB_NAMES}"
+            restartPolicy: Always
             command:
               - /bin/bash
               - -c
