@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app csi-driver-smb
-  namespace: &namespace storage
 spec:
   commonMetadata:
     labels:
@@ -13,7 +12,7 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: *app
-      namespace: *namespace
+      namespace: &namespace storage
   interval: 1h
   path: ./kubernetes/apps/storage/csi-driver-smb/app
   postBuild:
@@ -27,63 +26,62 @@ spec:
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
-#---
-#apiVersion: kustomize.toolkit.fluxcd.io/v1
-#kind: Kustomization
-#metadata:
-#  name: &app csi-driver-smb-storage-classes
-#  namespace: &namespace storage
-#spec:
-#  commonMetadata:
-#    labels:
-#      app.kubernetes.io/name: *app
-#  dependsOn:
-#    - name: external-secrets-stores
-#      namespace: external-secrets
-#    - name: csi-driver-smb
-#      namespace: storage
-#  force: true
-#  interval: 30m
-#  path: ./kubernetes/apps/storage/csi-driver-smb/storage-classes
-#  prune: true
-#  sourceRef:
-#    kind: GitRepository
-#    name: flux-system
-#    namespace: flux-system
-#  targetNamespace: *namespace
-#  timeout: 5m
-#  wait: false
-#  patches:
-#    - target:
-#        kind: StorageClass
-#      patch: |
-#        - op: add
-#          path: /volumeBindingMode
-#          value: Immediate
-#        - op: add
-#          path: /allowVolumeExpansion
-#          value: true
-#        - op: add
-#          path: /reclaimPolicy
-#          value: Delete
-#        - op: add
-#          path: /parameters/onDelete
-#          value: retain
-#        - op: add
-#          path: /parameters/csi.storage.k8s.io~1node-stage-secret-name
-#          value: csi-driver-smb
-#        - op: add
-#          path: /parameters/csi.storage.k8s.io~1node-stage-secret-namespace
-#          value: storage
-#        - op: add
-#          path: /mountOptions
-#          value:
-#            - "dir_mode=0775"
-#            - "file_mode=0664"
-#            - "uid=1000"
-#            - "gid=100"
-#            - noperm
-#            - mfsymlinks
-#            - noserverino
-##            - multichannel
-##            - max_channels=4
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app csi-driver-smb-storage-classes
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
+      namespace: external-secrets
+    - name: csi-driver-smb
+      namespace: storage
+  force: true
+  interval: 1h
+  path: ./kubernetes/apps/storage/csi-driver-smb/storage-classes
+  patches:
+    - target:
+        kind: StorageClass
+      patch: |
+        - op: add
+          path: /volumeBindingMode
+          value: Immediate
+        - op: add
+          path: /allowVolumeExpansion
+          value: true
+        - op: add
+          path: /reclaimPolicy
+          value: Delete
+        - op: add
+          path: /parameters/onDelete
+          value: retain
+        - op: add
+          path: /parameters/csi.storage.k8s.io~1node-stage-secret-name
+          value: csi-driver-smb
+        - op: add
+          path: /parameters/csi.storage.k8s.io~1node-stage-secret-namespace
+          value: storage
+        - op: add
+          path: /mountOptions
+          value:
+            - "dir_mode=0775"
+            - "file_mode=0664"
+            - "uid=1000"
+            - "gid=100"
+            - noperm
+            - mfsymlinks
+            - noserverino
+#            - multichannel
+#            - max_channels=4
+  prune: true
+  retryInterval: 2m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: storage
+  timeout: 5m

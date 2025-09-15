@@ -9,7 +9,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: csi-driver-smb
+    - name: csi-driver-smb-storage-classes
       namespace: storage
 #  healthCheckExprs:
 #    - apiVersion: v1
