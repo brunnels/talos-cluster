@@ -13,14 +13,10 @@ spec:
       namespace: downloads
   force: true
   healthChecks:
-    - apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
-      name: downloads-pguser-prowlarr
-      namespace: &namespace downloads
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: *app
-      namespace: *namespace
+      namespace: &namespace downloads
   healthCheckExprs:
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret
@@ -40,7 +36,7 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
-  timeout: 6m
+  timeout: 5m
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -56,14 +52,10 @@ spec:
     - name: downloads-pgo-prowlarr-init
       namespace: downloads
   healthChecks:
-    - apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
-      name: *app
-      namespace: &namespace downloads
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: *app
-      namespace: *namespace
+      namespace: &namespace downloads
   healthCheckExprs:
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret

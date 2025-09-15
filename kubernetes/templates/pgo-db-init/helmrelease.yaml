@@ -47,17 +47,17 @@ spec:
                   local waited=0
                   while true; do
                     CLUSTER_JSON=$(kubectl get postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} --namespace ${NAMESPACE} -o json)
-                    NOT_READY=$(echo "$CLUSTER_JSON" | jq '[.status.conditions[] | select(.name=="MinimumReplicasAvailable") | select(.status!="True")] | length')
+                    NOT_READY=$(echo "$CLUSTER_JSON" | jq '[.status.instances[] | select(.name=="pgo-cluster") | select(.readyReplicas!=.replicas)] | length')
                     if [ "$NOT_READY" -eq 0 ]; then
-                      echo "PostgresCluster MinimumReplicasAvailable."
+                      echo "All PostgresCluster replicas are ready."
                       break
                     fi
                     waited=$((waited+interval))
                     if [ "$waited" -ge "$timeout" ]; then
-                      echo "Timed out waiting for all PostgresCluster MinimumReplicasAvailable." >&2
+                      echo "Timed out waiting for all PostgresCluster replicas to be ready." >&2
                       exit 1
                     fi
-                    echo "Waiting for PostgresCluster MinimumReplicasAvailable... ($waited/$timeout s)"
+                    echo "Waiting for PostgresCluster replicas to be ready... ($waited/$timeout s)"
                     sleep $interval
                   done
                 }
