@@ -25,6 +25,7 @@ spec:
         job:
           ttlSecondsAfterFinished: 300
           activeDeadlineSeconds: 60
+          terminationGracePeriodSeconds: 5
         initContainers:
           patch-postgres-cluster:
             image:
