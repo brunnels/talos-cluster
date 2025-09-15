@@ -13,8 +13,8 @@ spec:
   healthChecks:
     - apiVersion: postgres-operator.crunchydata.com/v1beta1
       kind: PostgresCluster
-      name: ${NAMESPACE}-pgo
-      namespace: ${NAMESPACE}
+      name: downloads-pgo
+      namespace: &namespace downloads
   patches:
     # Remove this patch after the first backup has completed successfully
     - patch: |-
@@ -25,7 +25,7 @@ spec:
         kind: PostgresCluster
   postBuild:
     substitute:
-      NAMESPACE: downloads
+      NAMESPACE: *namespace
   interval: 1h
   path: ./kubernetes/templates/pgo-cluster
   prune: true
@@ -34,5 +34,5 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: downloads
+  targetNamespace: *namespace
   timeout: 5m
