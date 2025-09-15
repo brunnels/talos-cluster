@@ -34,7 +34,6 @@ spec:
             env:
               DB_NAMES: "${DB_NAMES}"
             restartPolicy: OnFailure
-            terminationGracePeriodSeconds: 10
             command:
               - /bin/bash
               - -c
