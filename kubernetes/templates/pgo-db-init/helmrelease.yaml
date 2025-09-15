@@ -60,6 +60,7 @@ spec:
                     echo "Waiting for PostgresCluster replicas to be ready... ($waited/$timeout s)"
                     sleep $interval
                   done
+                  sleep 30s
                 }
 
                 USER_NAME="${DB_USER}"
@@ -68,7 +69,7 @@ spec:
                 # Get current users and databases for USER_NAME
                 USERS_JSON=$(kubectl get postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
                   --namespace ${NAMESPACE} -o json)
-                printf "Current PostgresCluster users:\n%s" "$(echo "$USERS_JSON" | jq '.spec.users[].name')"
+                printf "Current PostgresCluster users:\n%s\n" "$(echo "$USERS_JSON" | jq '.spec.users[].name')"
                 USER_INDEX=$(echo "$USERS_JSON" | jq -r ".spec.users | map(.name == \"$USER_NAME\") | index(true)")
                 [ "$USER_INDEX" != "null" ] && echo "User $USER_NAME index: $USER_INDEX" || echo "User $USER_NAME is not defined"
 
