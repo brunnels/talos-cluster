@@ -1,0 +1,9 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.32.1/storageclass.json
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: "cifs-isos"
+provisioner: smb.csi.k8s.io
+parameters:
+  source: "//${QNAP_HOSTNAME}/isos"

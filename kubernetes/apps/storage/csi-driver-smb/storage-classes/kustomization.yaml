@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization.json
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./cifs-appdata.yaml
+  - ./cifs-applications.yaml
+  - ./cifs-backup.yaml
+  - ./cifs-books.yaml
+  - ./cifs-downloads.yaml
+  - ./cifs-dynamic.yaml
+  - ./cifs-games.yaml
+  - ./cifs-isos.yaml
+  - ./cifs-misc.yaml
+  - ./cifs-movies.yaml
+  - ./cifs-music.yaml
+  - ./cifs-pictures.yaml
+  - ./cifs-tv.yaml
+  - ./cifs-videos.yaml
