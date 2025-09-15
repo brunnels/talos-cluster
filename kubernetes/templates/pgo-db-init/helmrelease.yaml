@@ -24,7 +24,7 @@ spec:
           name: ${NAMESPACE}-pgo-db-init
         job:
           ttlSecondsAfterFinished: 300
-          activeDeadlineSeconds: 30
+          activeDeadlineSeconds: 60
         initContainers:
           patch-postgres-cluster:
             image:
@@ -38,7 +38,6 @@ spec:
               - -c
             args:
               - |
-                #!/usr/bin/env bash
                 set -euo pipefail
 
                 USER_NAME="${DB_USER}"
@@ -118,9 +117,6 @@ spec:
               - -c
             args:
               - |
-                #!/usr/bin/env bash
-                set -euo pipefail
-
                 for DB in $DB_NAMES; do
                   echo "Waiting for database $DB to exist..."
                   ATTEMPTS=0
