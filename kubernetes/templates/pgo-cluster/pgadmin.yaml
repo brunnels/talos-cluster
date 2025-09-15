@@ -23,6 +23,10 @@ spec:
       name: pgadmin-oauth2
       namespace: ${NAMESPACE}
   healthCheckExprs:
+    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+      kind: PostgresCluster
+      inProgress: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < 3)
+      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.readyReplicas >= 3)
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret
       failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
