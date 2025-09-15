@@ -7,4 +7,4 @@ components:
   - ../../components/common
 resources:
   - ./pgo-cluster.yaml
-#  - ./prowlarr.yaml
+  - ./prowlarr.yaml
