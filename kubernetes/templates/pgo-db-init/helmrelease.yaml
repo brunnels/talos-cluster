@@ -22,9 +22,9 @@ spec:
         type: job
         serviceAccount:
           name: ${NAMESPACE}-pgo-db-init
-        job:
-          ttlSecondsAfterFinished: 300
-          activeDeadlineSeconds: 120
+#        job:
+#          ttlSecondsAfterFinished: 300
+#          activeDeadlineSeconds: 120
         initContainers:
           patch-postgres-cluster:
             image:
@@ -89,7 +89,6 @@ spec:
                     fi
                     sleep $interval
                   done
-                  sleep 30s
                 }
 
                 USER_NAME="${DB_USER}"
