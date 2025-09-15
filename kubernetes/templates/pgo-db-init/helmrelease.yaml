@@ -24,7 +24,7 @@ spec:
           name: ${NAMESPACE}-pgo-db-init
         job:
           ttlSecondsAfterFinished: 300
-          activeDeadlineSeconds: 300
+          activeDeadlineSeconds: 120
         initContainers:
           patch-postgres-cluster:
             image:
@@ -41,40 +41,58 @@ spec:
               - |
                 set -euo pipefail
 
+                wait_for_cluster() {
+                  local timeout=30
+                  local interval=2
+                  local waited=0
+                  while true; do
+                    CLUSTER_JSON=$(kubectl get postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} --namespace ${NAMESPACE} -o json)
+                    NOT_READY=$(echo "$CLUSTER_JSON" | jq '[.status.instances[] | select(.name=="pgo-cluster") | select(.readyReplicas!=.replicas)] | length')
+                    if [ "$NOT_READY" -eq 0 ]; then
+                      echo "All PostgresCluster instances are ready."
+                      break
+                    fi
+                    waited=$((waited+interval))
+                    if [ "$waited" -ge "$timeout" ]; then
+                      echo "Timed out waiting for all PostgresCluster instances to be ready." >&2
+                      exit 1
+                    fi
+                    echo "Waiting for PostgresCluster instances to be ready... ($waited/$timeout s)"
+                    sleep $interval
+                  done
+                }
+
                 USER_NAME="${DB_USER}"
                 DB_NAMES_ARRAY=($DB_NAMES)
 
                 # Get current users and databases for USER_NAME
                 USERS_JSON=$(kubectl get postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
                   --namespace ${NAMESPACE} -o json)
-                echo "Current PostgresCluster users: $(echo "$USERS_JSON" | jq -r '.spec.users')"
+                printf "Current PostgresCluster users:\n%s" "$(echo "$USERS_JSON" | jq '.spec.users[].name')"
                 USER_INDEX=$(echo "$USERS_JSON" | jq -r ".spec.users | map(.name == \"$USER_NAME\") | index(true)")
-                echo "User $USER_NAME index: $USER_INDEX"
+                [ "$USER_INDEX" != "null" ] && echo "User $USER_NAME index: $USER_INDEX" || echo "User $USER_NAME does is not defined"
 
                 # Convert DB_NAMES to sorted JSON array
-                DB_ARRAY=$(printf '%s ' "$${DB_NAMES_ARRAY[@]}" | jq -R . | jq -s 'sort')
+                DB_ARRAY=$(printf '%s\n' "$${DB_NAMES_ARRAY[@]}" | jq -R . | jq -s 'sort')
 
                 if [ -z "$DB_NAMES" ]; then
                   # If DB_NAMES is empty and user exists, remove user
                   if [ "$USER_INDEX" != "null" ]; then
-                    echo "DB_NAMES is empty, removing user $USER_NAME."
+                    echo "DB_NAMES is empty, removing user $USER_NAME." 2>&1
                     kubectl patch postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
                       --namespace ${NAMESPACE} --type='json' \
                       -p "[{\"op\": \"remove\", \"path\": \"/spec/users/$USER_INDEX\"}]"
-                  else
-                    echo "DB_NAMES is empty and user $USER_NAME does not exist, nothing to do."
                   fi
-                  sleep 30s # wait for PGO to process the user change
-                  exit 0
+                  echo "DB_NAMES is empty, configuration error!" 2>&1
+                  exit 1
                 fi
 
                 if [ "$USER_INDEX" = "null" ]; then
-                  # User does not exist, add user
-                  echo "User $USER_NAME does not exist, adding with databases: $DB_ARRAY."
+                  echo "User $USER_NAME is not defined, adding user with databases: $DB_NAMES to the PostgresCluster."
                   kubectl patch postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
                     --namespace ${NAMESPACE} --type='json' \
                     -p "[{\"op\": \"add\", \"path\": \"/spec/users/-\", \"value\": {\"name\": \"$USER_NAME\", \"databases\": $DB_ARRAY, \"password\": {\"type\":\"AlphaNumeric\"}}}]"
-                  sleep 30s # wait for PGO to process the user change
+                  wait_for_cluster
                   exit 0
                 fi
 
@@ -82,16 +100,17 @@ spec:
                 CURRENT_DB_ARRAY=$(echo "$USERS_JSON" | jq ".spec.users[$USER_INDEX].databases | sort")
                 if [ "$CURRENT_DB_ARRAY" = "$DB_ARRAY" ]; then
                   echo "User $USER_NAME already exists with correct databases, skipping patch."
+                  wait_for_cluster
                   exit 0
                 fi
 
                 # Update databases array for user
-                echo "Updating databases for user $USER_NAME to $DB_ARRAY."
+                echo "Updating databases for user $USER_NAME to $DB_NAMES."
                 kubectl patch postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
                   --namespace ${NAMESPACE} --type='json' \
                   -p "[{\"op\": \"replace\", \"path\": \"/spec/users/$USER_INDEX/databases\", \"value\": $DB_ARRAY}]"
-
-                sleep 30s # wait for PGO to process the user change
+                wait_for_cluster
+                exit 0
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -140,7 +159,6 @@ spec:
                   psql "$${DB_URI%/postgres}/$DB" -c "GRANT ALL ON SCHEMA public TO \"${DB_USER}\";"
                   psql "$${DB_URI%/postgres}/$DB" -c "ALTER USER \"${DB_USER}\" WITH PASSWORD '${DB_PW}';"
                 done
-                sleep 10 # wait for PGO to process the user changes
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true

@@ -27,6 +27,10 @@ spec:
       kind: ExternalSecret
       failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
+    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+      kind: PostgresCluster
+      inProgress: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < e.replicas)
+      current: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas == e.replicas)
   interval: 1h
   path: ./kubernetes/templates/pgo-cluster/cluster
   postBuild:
@@ -47,4 +51,3 @@ spec:
     namespace: flux-system
   targetNamespace: ${NAMESPACE}
   timeout: 5m
-  wait: true
