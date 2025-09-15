@@ -70,7 +70,7 @@ spec:
                   --namespace ${NAMESPACE} -o json)
                 printf "Current PostgresCluster users:\n%s" "$(echo "$USERS_JSON" | jq '.spec.users[].name')"
                 USER_INDEX=$(echo "$USERS_JSON" | jq -r ".spec.users | map(.name == \"$USER_NAME\") | index(true)")
-                [ "$USER_INDEX" != "null" ] && echo "User $USER_NAME index: $USER_INDEX" || echo "User $USER_NAME does is not defined"
+                [ "$USER_INDEX" != "null" ] && echo "User $USER_NAME index: $USER_INDEX" || echo "User $USER_NAME is not defined"
 
                 # Convert DB_NAMES to sorted JSON array
                 DB_ARRAY=$(printf '%s\n' "$${DB_NAMES_ARRAY[@]}" | jq -R . | jq -s 'sort')
@@ -96,7 +96,6 @@ spec:
                   exit 0
                 fi
 
-                # User exists, get current databases and compare
                 CURRENT_DB_ARRAY=$(echo "$USERS_JSON" | jq ".spec.users[$USER_INDEX].databases | sort")
                 if [ "$CURRENT_DB_ARRAY" = "$DB_ARRAY" ]; then
                   echo "User $USER_NAME already exists with correct databases, skipping patch."
@@ -104,7 +103,6 @@ spec:
                   exit 0
                 fi
 
-                # Update databases array for user
                 echo "Updating databases for user $USER_NAME to $DB_NAMES."
                 kubectl patch postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
                   --namespace ${NAMESPACE} --type='json' \
