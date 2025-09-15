@@ -60,13 +60,13 @@ spec:
       kind: HelmRelease
       name: *app
       namespace: &namespace downloads
-    - apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
+    - apiVersion: external-secrets.io/v1alpha1
+      kind: PushSecret
       name: *app
       namespace: *namespace
   healthCheckExprs:
-    - apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
+    - apiVersion: external-secrets.io/v1alpha1
+      kind: PushSecret
       failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   interval: 1h

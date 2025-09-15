@@ -41,23 +41,52 @@ spec:
               - |
                 set -euo pipefail
 
-                wait_for_cluster() {
+                wait_for_secret() {
+                  local secret_name="${NAMESPACE}-pguser-${DB_USER}"
                   local timeout=55
                   local interval=2
                   local waited=0
+                  echo "Waiting for secret $secret_name to be created..."
                   while true; do
-                    CLUSTER_JSON=$(kubectl get postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} --namespace ${NAMESPACE} -o json)
-                    NOT_READY=$(echo "$CLUSTER_JSON" | jq '[.status.instances[] | select(.name=="pgo-cluster") | select(.readyReplicas!=.replicas)] | length')
-                    if [ "$NOT_READY" -eq 0 ]; then
-                      echo "All PostgresCluster replicas are ready."
+                    if kubectl get secret "$secret_name" --namespace "${NAMESPACE}" >/dev/null 2>&1; then
+                      echo "Secret $secret_name found."
                       break
                     fi
                     waited=$((waited+interval))
                     if [ "$waited" -ge "$timeout" ]; then
-                      echo "Timed out waiting for all PostgresCluster replicas to be ready." >&2
+                      echo "Timed out waiting for secret $secret_name to be created." >&2
                       exit 1
                     fi
-                    echo "Waiting for PostgresCluster replicas to be ready... ($waited/$timeout s)"
+                    sleep $interval
+                  done
+                  waited=0
+                  echo "Waiting for pushsecrets.external-secrets.io/$secret_name to exist..."
+                  while true; do
+                    if kubectl get pushsecrets.external-secrets.io "$secret_name" --namespace "${NAMESPACE}" >/dev/null 2>&1; then
+                      echo "pushsecrets.external-secrets.io/$secret_name found."
+                      break
+                    fi
+                    waited=$((waited+interval))
+                    if [ "$waited" -ge "$timeout" ]; then
+                      echo "Timed out waiting for pushsecrets.external-secrets.io/$secret_name to exist." >&2
+                      exit 1
+                    fi
+                    sleep $interval
+                  done
+                  waited=0
+                  echo "Waiting for all status.conditions to be Ready on pushsecrets.external-secrets.io/$secret_name..."
+                  while true; do
+                    CONDITIONS_READY=$(kubectl get pushsecrets.external-secrets.io "$secret_name" --namespace "${NAMESPACE}" -o json | jq '[.status.conditions[] | select(.status=="Ready")] | length')
+                    CONDITIONS_TOTAL=$(kubectl get pushsecrets.external-secrets.io "$secret_name" --namespace "${NAMESPACE}" -o json | jq '.status.conditions | length')
+                    if [ "$CONDITIONS_TOTAL" -gt 0 ] && [ "$CONDITIONS_READY" -eq "$CONDITIONS_TOTAL" ]; then
+                      echo "All status.conditions are Ready for $secret_name."
+                      break
+                    fi
+                    waited=$((waited+interval))
+                    if [ "$waited" -ge "$timeout" ]; then
+                      echo "Timed out waiting for all status.conditions to be Ready on pushsecrets.external-secrets.io/$secret_name." >&2
+                      exit 1
+                    fi
                     sleep $interval
                   done
                   sleep 30s
@@ -93,14 +122,14 @@ spec:
                   kubectl patch postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
                     --namespace ${NAMESPACE} --type='json' \
                     -p "[{\"op\": \"add\", \"path\": \"/spec/users/-\", \"value\": {\"name\": \"$USER_NAME\", \"databases\": $DB_ARRAY, \"password\": {\"type\":\"AlphaNumeric\"}}}]"
-                  wait_for_cluster
+                  wait_for_secret
                   exit 0
                 fi
 
                 CURRENT_DB_ARRAY=$(echo "$USERS_JSON" | jq ".spec.users[$USER_INDEX].databases | sort")
                 if [ "$CURRENT_DB_ARRAY" = "$DB_ARRAY" ]; then
                   echo "User $USER_NAME already exists with correct databases, skipping patch."
-                  wait_for_cluster
+                  wait_for_secret
                   exit 0
                 fi
 
@@ -108,7 +137,7 @@ spec:
                 kubectl patch postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
                   --namespace ${NAMESPACE} --type='json' \
                   -p "[{\"op\": \"replace\", \"path\": \"/spec/users/$USER_INDEX/databases\", \"value\": $DB_ARRAY}]"
-                wait_for_cluster
+                wait_for_secret
                 exit 0
             securityContext:
               allowPrivilegeEscalation: false
