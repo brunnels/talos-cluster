@@ -10,6 +10,11 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../components/common
+  healthChecks:
+    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+      kind: PostgresCluster
+      name: downloads
+      namespace: &namespace downloads
   patches:
     # Remove this patch after the first backup has completed successfully
     - patch: |-
@@ -20,7 +25,7 @@ spec:
         kind: PostgresCluster
   postBuild:
     substitute:
-      NAMESPACE: &namespace downloads
+      NAMESPACE: *namespace
   interval: 1h
   path: ./kubernetes/templates/pgo-cluster
   prune: true
