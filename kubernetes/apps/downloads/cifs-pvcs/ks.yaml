@@ -11,11 +11,11 @@ spec:
   dependsOn:
     - name: csi-driver-smb-storage-classes
       namespace: storage
-#  healthCheckExprs:
-#    - apiVersion: v1
-#      kind: PersistentVolumeClaim
-#      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
-#      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
+  healthCheckExprs:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      inProgress: status.phase == 'Pending'
+      current: status.phase == 'Bound'
   interval: 1h
   path: ./kubernetes/apps/downloads/cifs-pvcs/claims
   prune: true
