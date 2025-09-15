@@ -47,7 +47,9 @@ spec:
                 # Get current users and databases for USER_NAME
                 USERS_JSON=$(kubectl get postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
                   --namespace ${NAMESPACE} -o json)
+                echo "Current PostgresCluster users: $(echo "$USERS_JSON" | jq -r '.spec.users')"
                 USER_INDEX=$(echo "$USERS_JSON" | jq -r ".spec.users | map(.name == \"$USER_NAME\") | index(true)")
+                echo "User $USER_NAME index: $USER_INDEX"
 
                 # Convert DB_NAMES to sorted JSON array
                 DB_ARRAY=$(printf '%s\n' "$${DB_NAMES_ARRAY[@]}" | jq -R . | jq -s 'sort')

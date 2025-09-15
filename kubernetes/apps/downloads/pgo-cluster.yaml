@@ -13,8 +13,8 @@ spec:
   healthCheckExprs:
     - apiVersion: postgres-operator.crunchydata.com/v1beta1
       kind: PostgresCluster
-      inProgress: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < 3) # replace 3 with PGO_REPLICAS number if set in postBuild
-      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.readyReplicas == 3) # replace 3 with PGO_REPLICAS number if set in postBuild
+      inProgress: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < 3)
+      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.readyReplicas >= 3)
   patches:
     # Remove this patch after the first backup has completed successfully
     - patch: |-
