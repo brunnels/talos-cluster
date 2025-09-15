@@ -17,3 +17,4 @@ resources:
   - ./cifs-pictures.yaml
   - ./cifs-tv.yaml
   - ./cifs-videos.yaml
+  - ./externalsecret.yaml

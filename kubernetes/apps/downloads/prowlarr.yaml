@@ -41,8 +41,12 @@ spec:
     - ../../../components/gatus/guarded
   dependsOn:
     - name: downloads-pgo-prowlarr-init
-      namespace: &namespace downloads
+      namespace: downloads
   healthChecks:
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      name: *app
+      namespace: &namespace downloads
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: *app

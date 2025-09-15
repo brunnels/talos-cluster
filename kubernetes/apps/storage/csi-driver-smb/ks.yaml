@@ -41,6 +41,16 @@ spec:
     - name: csi-driver-smb
       namespace: storage
   force: true
+  healthChecks:
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      name: *app
+      namespace: &namespace storage
+  healthCheckExprs:
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
+      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   interval: 1h
   path: ./kubernetes/apps/storage/csi-driver-smb/storage-classes
   patches:
@@ -61,7 +71,7 @@ spec:
           value: retain
         - op: add
           path: /parameters/csi.storage.k8s.io~1node-stage-secret-name
-          value: csi-driver-smb
+          value: csi-driver-smb-storage-classes
         - op: add
           path: /parameters/csi.storage.k8s.io~1node-stage-secret-namespace
           value: storage
@@ -83,5 +93,5 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: storage
+  targetNamespace: *namespace
   timeout: 5m
