@@ -3,10 +3,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../../../shared/claims/cifs-books.yaml
-  - ../../../../shared/claims/cifs-games.yaml
-  - ../../../../shared/claims/cifs-movies.yaml
-  - ../../../../shared/claims/cifs-music.yaml
-  - ../../../../shared/claims/cifs-pictures.yaml
-  - ../../../../shared/claims/cifs-tv.yaml
-  - ../../../../shared/claims/cifs-videos.yaml
+  - ../../../../templates/cifs-claims/cifs-books.yaml
+  - ../../../../templates/cifs-claims/cifs-games.yaml
+  - ../../../../templates/cifs-claims/cifs-movies.yaml
+  - ../../../../templates/cifs-claims/cifs-music.yaml
+  - ../../../../templates/cifs-claims/cifs-pictures.yaml
+  - ../../../../templates/cifs-claims/cifs-tv.yaml
+  - ../../../../templates/cifs-claims/cifs-videos.yaml
