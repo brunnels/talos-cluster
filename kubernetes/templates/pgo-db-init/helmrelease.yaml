@@ -24,7 +24,7 @@ spec:
           name: ${NAMESPACE}-pgo-db-init
         job:
           ttlSecondsAfterFinished: 300
-          activeDeadlineSeconds: 60
+          activeDeadlineSeconds: 300
         initContainers:
           patch-postgres-cluster:
             image:
@@ -52,7 +52,7 @@ spec:
                 echo "User $USER_NAME index: $USER_INDEX"
 
                 # Convert DB_NAMES to sorted JSON array
-                DB_ARRAY=$(printf '%s\n' "$${DB_NAMES_ARRAY[@]}" | jq -R . | jq -s 'sort')
+                DB_ARRAY=$(printf '%s ' "$${DB_NAMES_ARRAY[@]}" | jq -R . | jq -s 'sort')
 
                 if [ -z "$DB_NAMES" ]; then
                   # If DB_NAMES is empty and user exists, remove user
@@ -64,7 +64,7 @@ spec:
                   else
                     echo "DB_NAMES is empty and user $USER_NAME does not exist, nothing to do."
                   fi
-                  sleep 10 # wait for PGO to process the user change
+                  sleep 30s # wait for PGO to process the user change
                   exit 0
                 fi
 
@@ -74,7 +74,7 @@ spec:
                   kubectl patch postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
                     --namespace ${NAMESPACE} --type='json' \
                     -p "[{\"op\": \"add\", \"path\": \"/spec/users/-\", \"value\": {\"name\": \"$USER_NAME\", \"databases\": $DB_ARRAY, \"password\": {\"type\":\"AlphaNumeric\"}}}]"
-                  sleep 10 # wait for PGO to process the user change
+                  sleep 30s # wait for PGO to process the user change
                   exit 0
                 fi
 
@@ -91,7 +91,7 @@ spec:
                   --namespace ${NAMESPACE} --type='json' \
                   -p "[{\"op\": \"replace\", \"path\": \"/spec/users/$USER_INDEX/databases\", \"value\": $DB_ARRAY}]"
 
-                sleep 10 # wait for PGO to process the user change
+                sleep 30s # wait for PGO to process the user change
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
