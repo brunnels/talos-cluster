@@ -70,7 +70,7 @@ spec:
                   echo "User $USER_NAME does not exist, adding with databases: $DB_ARRAY."
                   kubectl patch postgresclusters.postgres-operator.crunchydata.com ${NAMESPACE} \
                     --namespace ${NAMESPACE} --type='json' \
-                    -p "[{\"op\": \"add\", \"path\": \"/spec/users/-\", \"value\": {\"name\": \"$USER_NAME\", \"databases\": $DB_ARRAY}}]"
+                    -p "[{\"op\": \"add\", \"path\": \"/spec/users/-\", \"value\": {\"name\": \"$USER_NAME\", \"databases\": $DB_ARRAY, \"password\": {\"type\":\"AlphaNumeric\"}}}]"
                   sleep 10 # wait for PGO to process the user change
                   exit 0
                 fi
@@ -112,6 +112,11 @@ spec:
                   secretKeyRef:
                     name: "${NAMESPACE}-pguser-postgres"
                     key: uri
+              DB_PW:
+                valueFrom:
+                  secretKeyRef:
+                    name: "${NAMESPACE}-pguser-${DB_USER}"
+                    key: "${DB_PW_KEY:-password}"
             command:
               - /bin/bash
               - -c
@@ -130,6 +135,7 @@ spec:
                   done
                   echo "Database $DB exists. Setting grant on public schema for user ${DB_USER}."
                   psql "$${DB_URI%/postgres}/$DB" -c "GRANT ALL ON SCHEMA public TO \"${DB_USER}\";"
+                  psql "$${DB_URI%/postgres}/$DB" -c "ALTER USER \"${DB_USER}\" WITH PASSWORD '${DB_PW}';"
                 done
                 sleep 10 # wait for PGO to process the user changes
             securityContext:
