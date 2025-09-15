@@ -113,11 +113,6 @@ spec:
                   secretKeyRef:
                     name: "${NAMESPACE}-pguser-postgres"
                     key: uri
-              DB_PW:
-                valueFrom:
-                  secretKeyRef:
-                    name: "${DB_PW_SECRET:-${DB_USER}}"
-                    key: "${DB_PW_KEY:-password}"
             command:
               - /bin/bash
               - -c
@@ -139,8 +134,8 @@ spec:
                   done
                   echo "Database $DB exists. Setting grant on public schema for user ${DB_USER}."
                   psql "$${DB_URI%/postgres}/$DB" -c "GRANT ALL ON SCHEMA public TO \"${DB_USER}\";"
-                  psql "$${DB_URI%/postgres}/$DB" -c "ALTER USER \"${DB_USER}\" WITH PASSWORD '${DB_PW}';"
                 done
+                sleep 10 # wait for PGO to process the user changes
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
