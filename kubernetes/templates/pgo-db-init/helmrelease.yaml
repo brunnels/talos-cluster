@@ -25,7 +25,6 @@ spec:
         job:
           ttlSecondsAfterFinished: 300
           activeDeadlineSeconds: 60
-          terminationGracePeriodSeconds: 5
         initContainers:
           patch-postgres-cluster:
             image:
@@ -34,6 +33,8 @@ spec:
               pullPolicy: IfNotPresent
             env:
               DB_NAMES: "${DB_NAMES}"
+            restartPolicy: OnFailure
+            terminationGracePeriodSeconds: 10
             command:
               - /bin/bash
               - -c
