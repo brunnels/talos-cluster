@@ -30,7 +30,6 @@ spec:
   postBuild:
     substitute:
       NAMESPACE: *namespace
-      # USERS should be a valid JSON array representing PostgresCluster spec.users
       USERS: |
         [
           {"name": "postgres", "databases": ["postgres"], "password": {"type": "AlphaNumeric"}, "options": "SUPERUSER"},
