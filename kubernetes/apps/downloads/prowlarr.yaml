@@ -3,44 +3,6 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app downloads-pgo-prowlarr-init
-spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  dependsOn:
-    - name: downloads-pgo-cluster
-      namespace: downloads
-  force: true
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2
-      kind: HelmRelease
-      name: *app
-      namespace: &namespace downloads
-  healthCheckExprs:
-    - apiVersion: external-secrets.io/v1alpha1
-      kind: PushSecret
-      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
-      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
-  interval: 1h
-  path: ./kubernetes/templates/pgo-db-init
-  postBuild:
-    substitute:
-      DB_NAMES: prowlarr
-      DB_USER: prowlarr
-      NAMESPACE: *namespace
-  prune: true
-  retryInterval: 2m
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
   name: &app prowlarr
 spec:
   commonMetadata:
@@ -49,20 +11,20 @@ spec:
   components:
     - ../../../components/gatus/guarded
   dependsOn:
-    - name: downloads-pgo-prowlarr-init
+    - name: downloads-pgo-cluster
       namespace: downloads
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: *app
       namespace: &namespace downloads
-    - apiVersion: external-secrets.io/v1alpha1
-      kind: PushSecret
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
       name: *app
       namespace: *namespace
   healthCheckExprs:
-    - apiVersion: external-secrets.io/v1alpha1
-      kind: PushSecret
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
       failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   interval: 1h
