@@ -32,6 +32,8 @@ spec:
   postBuild:
     substitute:
       NAMESPACE: ${NAMESPACE}
+      USERS: |
+        ${USERS}
     substituteFrom:
       - name: cluster-settings
         kind: ConfigMap

@@ -31,7 +31,7 @@ spec:
     substitute:
       NAMESPACE: *namespace
       USERS: |
-        "users":[
+        [
           {"name": "postgres", "databases": ["postgres"], "options": "SUPERUSER", "password": {"type": "AlphaNumeric"}},
           {"name": "prowlarr", "databases": ["prowlarr"], "password": {"type": "AlphaNumeric"}}
         ]
