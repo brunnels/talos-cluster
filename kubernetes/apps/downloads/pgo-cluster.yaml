@@ -15,14 +15,14 @@ spec:
       kind: PostgresCluster
       name: downloads
       namespace: &namespace downloads
-  patches:
-    # Remove this patch after the first backup has completed successfully
-    - patch: |-
-        - op: remove
-          path: /spec/dataSource
-      target:
-        group: postgres-operator.crunchydata.com
-        kind: PostgresCluster
+#  patches:
+#    # Remove this patch after the first backup has completed successfully
+#    - patch: |-
+#        - op: remove
+#          path: /spec/dataSource
+#      target:
+#        group: postgres-operator.crunchydata.com
+#        kind: PostgresCluster
   postBuild:
     substitute:
       NAMESPACE: *namespace
