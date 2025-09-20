@@ -33,6 +33,7 @@ spec:
             env:
               # space separated list of databases
               DB_NAMES: *app
+              DB_USER: *app
               DB_URI:
                 valueFrom:
                   secretKeyRef:
