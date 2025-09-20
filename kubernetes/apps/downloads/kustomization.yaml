@@ -8,4 +8,4 @@ components:
 resources:
   - ./cifs-pvcs/ks.yaml
   - ./pgo-cluster.yaml
-  - ./prowlarr.yaml
+#  - ./prowlarr.yaml
