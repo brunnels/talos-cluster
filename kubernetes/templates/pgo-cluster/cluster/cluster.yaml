@@ -42,12 +42,7 @@ spec:
           labelSelector:
             matchLabels:
               postgres-operator.crunchydata.com/cluster: ${NAMESPACE}
-  users:
-    - name: &db postgres
-      databases: [*db]
-      options: "SUPERUSER"
-      password:
-        type: AlphaNumeric
+  users: ${USERS[@]}
   backups:
     pgbackrest:
       configuration: &backupConfig

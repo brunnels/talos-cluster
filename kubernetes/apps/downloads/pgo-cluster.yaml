@@ -30,6 +30,11 @@ spec:
   postBuild:
     substitute:
       NAMESPACE: *namespace
+      USERS: |
+        [
+          {"name": "postgres", "databases": ["postgres"], "options": "SUPERUSER", "password": {"type": "AlphaNumeric"}},
+          {"name": "prowlarr", "databases": ["prowlarr"], "password": {"type": "AlphaNumeric"}}
+        ]
   interval: 1h
   path: ./kubernetes/templates/pgo-cluster
   prune: true
