@@ -31,7 +31,10 @@ spec:
     substitute:
       NAMESPACE: *namespace
       USERS: |
-         ["user1","user2"]
+        "users":[
+          {"name": "postgres", "databases": ["postgres"], "options": "SUPERUSER", "password": {"type": "AlphaNumeric"}},
+          {"name": "prowlarr", "databases": ["prowlarr"], "password": {"type": "AlphaNumeric"}}
+        ]
   interval: 1h
   path: ./kubernetes/templates/pgo-cluster
   prune: true
