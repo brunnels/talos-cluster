@@ -30,7 +30,6 @@ spec:
   postBuild:
     substitute:
       NAMESPACE: *namespace
-      # USERS should be a valid JSON array of user objects
       USERS: |
         [
           {"name": "postgres", "databases": ["postgres"], "options": "SUPERUSER", "password": {"type": "AlphaNumeric"}},
