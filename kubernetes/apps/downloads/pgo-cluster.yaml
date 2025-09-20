@@ -16,7 +16,11 @@ spec:
       name: downloads
       namespace: &namespace downloads
 #  patches:
-#    # Remove this patch after the first backup has completed successfully
+#    # Remove this patch after the first backup has completed successfully.
+#    # You may have one replica that refuses to start after installing while this patch is in place.
+#    # If this happens, force a backup or wait until the backup completes successfully, then remove this patch
+#    # and comment out pgo-cluster.yaml in the namespace's kustomization.yaml.  After the cluster has been removed,
+#    # uncomment pgo-cluster.yaml in the namespace's kustomization.yaml to recreate the cluster without this patch.
 #    - patch: |-
 #        - op: remove
 #          path: /spec/dataSource
