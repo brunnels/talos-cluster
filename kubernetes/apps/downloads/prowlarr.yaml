@@ -17,10 +17,6 @@ spec:
       kind: HelmRelease
       name: *app
       namespace: &namespace downloads
-    - apiVersion: external-secrets.io/v1alpha1
-      kind: PushSecret
-      name: downloads-pguser-prowlarr
-      namespace: *namespace
   healthCheckExprs:
     - apiVersion: external-secrets.io/v1alpha1
       kind: PushSecret
