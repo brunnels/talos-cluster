@@ -42,7 +42,8 @@ spec:
           labelSelector:
             matchLabels:
               postgres-operator.crunchydata.com/cluster: ${NAMESPACE}
-  users: ${USERS:-[]}
+  users: |
+    ${USERS}
   backups:
     pgbackrest:
       configuration: &backupConfig
