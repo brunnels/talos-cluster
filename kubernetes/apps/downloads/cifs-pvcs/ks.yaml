@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app storage-cifs-pvcs
+  name: &app downloads-cifs-pvcs
 spec:
   commonMetadata:
     labels:
