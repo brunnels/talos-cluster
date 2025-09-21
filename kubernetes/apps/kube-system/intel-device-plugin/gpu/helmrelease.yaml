@@ -30,6 +30,6 @@ spec:
     remediation:
       retries: 3
   values:
-    name: i915
+    name: intel-device-plugin-gpu
     nodeFeatureRule: false
     sharedDevNum: 99
