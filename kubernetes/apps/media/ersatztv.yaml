@@ -11,6 +11,14 @@ spec:
   components:
     - ../../../components/gatus/guarded
     - ../../../components/volsync
+  dependsOn:
+    - name: cifs-pvcs-media
+      namespace: &namespace media
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: *app
+      namespace: *namespace
   interval: 1h
   path: ./kubernetes/base/media/ersatztv
   postBuild:
@@ -23,6 +31,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: media
+  targetNamespace: *namespace
   timeout: 5m
   wait: false
