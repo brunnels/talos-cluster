@@ -12,7 +12,7 @@ spec:
     - ../../../components/gatus/guarded
     - ../../../components/volsync
   dependsOn:
-    - name: cifs-pvcs-media
+    - name: media-cifs-pvcs
       namespace: &namespace media
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
