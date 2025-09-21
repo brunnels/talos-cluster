@@ -7,4 +7,4 @@ components:
   - ../../components/common
 resources:
   - ./cifs-pvcs/ks.yaml
-#  - ./ersatztv.yaml
+  - ./ersatztv.yaml
