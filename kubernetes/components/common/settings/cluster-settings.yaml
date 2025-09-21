@@ -25,7 +25,7 @@ data:
   VOLSYNC_SNAPSHOTCLASS: "csi-ceph-blockpool"
   VOLSYNC_CACHE_SNAPSHOTCLASS: "ceph-block"
   VOLSYNC_STORAGECLASS: "ceph-block"
-  VOLSYNC_S3_BUCKET: "kdev_volsync"
+  VOLSYNC_S3_BUCKET: "kdev-volsync"
 
   THEME_PARK_SNIPPET: >
     proxy_set_header Accept-Encoding "";
