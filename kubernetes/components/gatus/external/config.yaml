@@ -1,6 +1,6 @@
 ---
 endpoints:
-  - name: "${APP}"
+  - name: "${GATUS_NAME:=${APP:=${GATUS_SUBDOMAIN}}}"
     group: external
     url: "https://${GATUS_SUBDOMAIN:=${APP}}.${SECRET_DOMAIN}${GATUS_PATH:=/}"
     interval: 1m
