@@ -21,6 +21,7 @@ ui:
   title: Status | Gatus
   header: Status
   link: https://github.com/brunnels
+  default_sort_by: Group
   buttons:
     - name: Github
       link: https://github.com/brunnels
