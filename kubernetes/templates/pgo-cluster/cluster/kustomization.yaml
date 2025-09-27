@@ -9,4 +9,5 @@ resources:
   - ./podmonitor.yaml
   - ./role.yaml
   - ./rolebinding.yaml
+  - ./secretstore.yaml
   - ./serviceaccount.yaml
