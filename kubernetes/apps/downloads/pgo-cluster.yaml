@@ -8,8 +8,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../components/common
   healthChecks:
     - apiVersion: postgres-operator.crunchydata.com/v1beta1
       kind: PostgresCluster
