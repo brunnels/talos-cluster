@@ -30,6 +30,7 @@ spec:
   postBuild:
     substitute:
       APP: flux-webhook
+      GATUS_STATUS: 404
   prune: true
   retryInterval: 2m
   sourceRef:
