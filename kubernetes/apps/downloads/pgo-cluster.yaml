@@ -13,7 +13,10 @@ spec:
       kind: PostgresCluster
       name: downloads
       namespace: &namespace downloads
-# Remove this patch after the cluster has been created successfully.
+#
+# If you are adding a new cluster to a namespace make sure to update authelia configuration
+# identity_providers.oidc.clients pgAdmin client redirect_uris to include the new authorize endpoint
+# e.g. "https://<NAMESPACE>-pgadmin.${SECRET_DOMAIN}/oauth2/authorize"
 #
 # You may occasionally have one replica that refuses to start if you're modifying the cluster or testing
 # If this happens, delete the pvc and then the statefulset associated with stuck replica pod
@@ -26,6 +29,8 @@ spec:
 #      target:
 #        group: postgres-operator.crunchydata.com
 #        kind: PostgresCluster
+#
+# Remove this patch after the cluster has been created successfully.
   postBuild:
     substitute:
       NAMESPACE: *namespace
