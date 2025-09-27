@@ -11,6 +11,7 @@ spec:
   components:
     - ../../../components/dragonfly-cluster
     - ../../../components/gatus/external
+    - ../../../components/pgo-db-init
   dependsOn:
     - name: security-pgo-cluster
       namespace: &namespace security
