@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app flux-instance
-  namespace: &namespace flux-system
 spec:
   commonMetadata:
     labels:
@@ -15,6 +14,11 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
     - name: flux-operator
+      namespace: &namespace flux-system
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: *app
       namespace: *namespace
   interval: 1h
   path: ./kubernetes/apps/flux-system/flux-instance/app
@@ -25,8 +29,8 @@ spec:
   retryInterval: 2m
   sourceRef:
     kind: GitRepository
-    name: flux-system
-    namespace: flux-system
+    name: *namespace
+    namespace: *namespace
   targetNamespace: *namespace
   timeout: 5m
   wait: false
