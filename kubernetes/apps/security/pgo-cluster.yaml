@@ -1,0 +1,43 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app security-pgo-cluster
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  healthChecks:
+    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+      kind: PostgresCluster
+      name: security
+      namespace: &namespace security
+  patches:
+    # Remove this patch after the first backup has completed successfully.
+    - patch: |-
+        - op: remove
+          path: /spec/dataSource
+      target:
+        group: postgres-operator.crunchydata.com
+        kind: PostgresCluster
+  postBuild:
+    substitute:
+      NAMESPACE: *namespace
+      # USERS should be a valid JSON array representing PostgresCluster spec.users
+      USERS: |
+        [
+          {"name": "postgres", "databases": ["postgres"], "password": {"type": "AlphaNumeric"}, "options": "SUPERUSER"},
+          {"name": "authelia", "databases": ["authelia"], "password": {"type": "AlphaNumeric"}}
+        ]
+  interval: 1h
+  path: ./kubernetes/templates/pgo-cluster
+  prune: true
+  retryInterval: 2m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 5m
+  wait: true

@@ -6,4 +6,5 @@ namespace: security
 components:
   - ../../components/common
 resources:
-  - ./authelia/ks.yaml
+  - ./authelia.yaml
+  - ./pgo-cluster.yaml
