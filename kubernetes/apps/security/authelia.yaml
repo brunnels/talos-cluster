@@ -37,7 +37,7 @@ spec:
       failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   interval: 1h
-  path: ./kubernetes/app/security/authelia
+  path: ./kubernetes/apps/security/authelia
   postBuild:
     substitute:
       APP: *app
