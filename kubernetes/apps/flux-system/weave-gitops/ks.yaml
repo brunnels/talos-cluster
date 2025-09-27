@@ -9,16 +9,25 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-#  components:
-#    - ../../../../components/gatus/guarded
+  components:
+    - ../../../../components/gatus/guarded
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
   healthChecks:
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      name: weave-gitops-oidc-auth
+      namespace: *namespace
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: *app
       namespace: *namespace
+  healthCheckExprs:
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
+      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   interval: 1h
   path: ./kubernetes/apps/flux-system/weave-gitops/app
   postBuild:

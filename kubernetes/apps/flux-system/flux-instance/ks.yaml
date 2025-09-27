@@ -16,10 +16,19 @@ spec:
     - name: flux-operator
       namespace: &namespace flux-system
   healthChecks:
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      name: github-webhook-token
+      namespace: *namespace
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: *app
       namespace: *namespace
+  healthCheckExprs:
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
+      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   interval: 1h
   path: ./kubernetes/apps/flux-system/flux-instance/app
   postBuild:
