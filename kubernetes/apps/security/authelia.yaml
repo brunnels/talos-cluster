@@ -13,17 +13,13 @@ spec:
     - ../../../components/gatus/external
     - ../../../components/pgo-db-init
   dependsOn:
-    - name: security-pgo-cluster
-      namespace: &namespace security
     - name: external-secrets-stores
       namespace: external-secrets
     - name: dragonfly-operator
       namespace: database
+    - name: security-pgo-cluster
+      namespace: &namespace security
   healthChecks:
-    - apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
-      name: *app
-      namespace: *namespace
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: *app

@@ -69,4 +69,3 @@ spec:
         kind: Kustomization
         labelSelector: substitution.flux.home.arpa/disabled notin (true)
   timeout: 5m
-  wait: false

@@ -6,4 +6,5 @@ namespace: external-secrets
 components:
   - ../../components/common
 resources:
-  - ./ks.yaml
+  - ./external-secrets.yaml
+  - ./external-secrets-stores.yaml
