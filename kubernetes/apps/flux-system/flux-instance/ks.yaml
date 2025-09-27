@@ -9,6 +9,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../components/gatus/external
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
@@ -16,6 +18,9 @@ spec:
       namespace: *namespace
   interval: 1h
   path: ./kubernetes/apps/flux-system/flux-instance/app
+  postBuild:
+    substitute:
+      GATUS_SUBDOMAIN: flux-webhook
   prune: true
   retryInterval: 2m
   sourceRef:
