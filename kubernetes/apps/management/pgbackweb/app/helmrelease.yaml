@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: docker.io/eduardolat/pgbackweb
-              tag: 0.4.2@sha256:e568691203b92e37c5a0977c9979006960f3de5e66530743fdd1805e1cbcaa23
+              tag: 0.5.0@sha256:78112d94d212a8714cb97dc82ca86d14e2f3e763484e66a335f0fe60be084b05
             env:
               TZ: "${TIMEZONE}"
             envFrom:
