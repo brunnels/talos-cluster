@@ -25,6 +25,8 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: tv
+      VOLSYNC_CAPACITY: 10Gi
+      VOLSYNC_CACHE_CAPACITY: 10Gi
   prune: true
   retryInterval: 2m
   sourceRef:
