@@ -22,6 +22,7 @@ spec:
 # If this happens, delete the pvc and then the statefulset associated with stuck replica pod
 # The replica statefulset and pvc will be recreated automatically
 #
+# Remove this patch after the cluster has been created successfully.
 #  patches:
 #    - patch: |-
 #        - op: remove
@@ -29,8 +30,6 @@ spec:
 #      target:
 #        group: postgres-operator.crunchydata.com
 #        kind: PostgresCluster
-#
-# Remove this patch after the cluster has been created successfully.
   postBuild:
     substitute:
       NAMESPACE: *namespace
