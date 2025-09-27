@@ -13,14 +13,19 @@ spec:
       kind: PostgresCluster
       name: security
       namespace: &namespace security
-  patches:
-    # Remove this patch after the first backup has completed successfully.
-    - patch: |-
-        - op: remove
-          path: /spec/dataSource
-      target:
-        group: postgres-operator.crunchydata.com
-        kind: PostgresCluster
+# Remove this patch after the cluster has been created successfully.
+#
+# You may occasionally have one replica that refuses to start if you're modifying the cluster or testing
+# If this happens, delete the pvc and then the statefulset associated with stuck replica pod
+# The replica statefulset and pvc will be recreated automatically
+#
+#  patches:
+#    - patch: |-
+#        - op: remove
+#          path: /spec/dataSource
+#      target:
+#        group: postgres-operator.crunchydata.com
+#        kind: PostgresCluster
   postBuild:
     substitute:
       NAMESPACE: *namespace
