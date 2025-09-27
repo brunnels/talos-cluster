@@ -33,6 +33,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      NAMESPACE: *namespace
   prune: true
   retryInterval: 2m
   sourceRef:
