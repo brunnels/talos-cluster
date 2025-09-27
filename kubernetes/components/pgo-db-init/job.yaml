@@ -19,14 +19,6 @@ spec:
       containers:
         - name: add-public-schema-grants
           image: ghcr.io/home-operations/postgres-init:17.6.0@sha256:86a1992d46273c58fd4ad95b626081dfaabfe16bd56944675169e406d1a660dd
-          command:
-            - /bin/bash
-            - -c
-          args:
-            - |
-              for DB in $DB_NAMES; do
-                psql "$${DB_URI%/postgres}/$DB" -c "GRANT ALL ON SCHEMA public TO \"$DB_USER\";"
-              done
           env:
             - name: DB_NAMES
               value: "${DB_NAMES:-${APP}}"
@@ -37,6 +29,14 @@ spec:
                   name: "${NAMESPACE}-pguser-postgres"
             - name: DB_USER
               value: "${DB_USER:-${APP}}"
+          command:
+            - /bin/bash
+            - -c
+          args:
+            - |
+              for DB in $DB_NAMES; do
+                psql "$${DB_URI%/postgres}/$DB" -c "GRANT ALL ON SCHEMA public TO \"$DB_USER\";"
+              done
           resources:
             limits:
               memory: 128Mi
