@@ -77,6 +77,11 @@ spec:
         globalMounts:
           - path: /data/movies
             readOnly: true
+      music:
+        existingClaim: cifs-music
+        globalMounts:
+          - path: /data/music
+            readOnly: true
       tv:
         existingClaim: cifs-tv
         globalMounts:
