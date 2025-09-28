@@ -6,8 +6,10 @@ namespace: storage
 components:
   - ../../components/common
 resources:
-  - ./csi-driver-smb/ks.yaml
-  - ./openebs-hostpath/ks.yaml
-  - ./rook-ceph/ks.yaml
-  - ./snapshot-controller/ks.yaml
-  - ./volsync/ks.yaml
+  - ./csi-driver-smb.yaml
+  - ./openebs-hostpath.yaml
+  - ./rook-ceph-cluster.yaml
+  - ./rook-ceph-operator.yaml
+  - ./smb-storage-classes.yaml
+  - ./snapshot-controller.yaml
+  - ./volsync.yaml
