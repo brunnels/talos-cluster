@@ -3,12 +3,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: nvidia-device-plugin
+  name: &app nvidia-device-plugin
 spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: nvidia-device-plugin
+    name: *app
   install:
     crds: CreateReplace
     remediation:

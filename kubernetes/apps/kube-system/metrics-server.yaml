@@ -3,14 +3,18 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app spegel
-  namespace: &namespace kube-system
+  name: &app metrics-server
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: *app
+      namespace: &namespace kube-system
   interval: 1h
-  path: ./kubernetes/apps/kube-system/spegel/app
+  path: ./kubernetes/base/kube-system/metrics-server
   prune: true
   retryInterval: 2m
   sourceRef:
