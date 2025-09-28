@@ -9,9 +9,10 @@ resources:
   - ./cilium/ks.yaml
   - ./coredns/ks.yaml
   - ./descheduler/ks.yaml
-  - ./intel-device-plugin/ks.yaml
+  - ./intel-device-plugin-gpu.yaml
+  - ./intel-device-plugin-operator.yaml
   - ./irqbalance/ks.yaml
   - ./metrics-server/ks.yaml
-  - ./nvidia-device-plugin/ks.yaml
+  - ./nvidia-device-plugin.yaml
   - ./reloader/ks.yaml
   - ./spegel/ks.yaml
