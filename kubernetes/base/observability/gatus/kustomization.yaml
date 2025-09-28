@@ -9,7 +9,7 @@ resources:
 configMapGenerator:
   - name: gatus
     files:
-      - config.yaml=./resources/config.yaml
+      - ./resources/config.yaml
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
