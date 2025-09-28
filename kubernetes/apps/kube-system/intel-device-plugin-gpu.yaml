@@ -19,8 +19,8 @@ spec:
   healthCheckExprs:
     - apiVersion: deviceplugin.intel.com/v1
       kind: GpuDevicePlugin
-      failed: status.desiredNumberScheduled != status.numberReady
-      current: status.desiredNumberScheduled == status.numberReady
+      inProgress: items.all(i, i.status.desiredNumberScheduled != status.numberReady)
+      current: items.all(i, i.status.desiredNumberScheduled == status.numberReady)
   interval: 1h
   path: ./kubernetes/base/kube-system/intel-device-plugin-gpu
   prune: true
