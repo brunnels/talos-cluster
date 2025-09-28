@@ -3,26 +3,18 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app intel-device-plugin-gpu
+  name: &app cilium
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: intel-device-plugin-operator
-      namespace: &namespace kube-system
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: *app
-      namespace: *namespace
-  healthCheckExprs:
-    - apiVersion: deviceplugin.intel.com/v1
-      kind: GpuDevicePlugin
-      inProgress: status.desiredNumberScheduled != status.numberReady
-      current: status.desiredNumberScheduled == status.numberReady
+      namespace: &namespace kube-system
   interval: 1h
-  path: ./kubernetes/base/kube-system/intel-device-plugin-gpu
+  path: ./kubernetes/base/kube-system/cilium
   prune: true
   retryInterval: 2m
   sourceRef:
