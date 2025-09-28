@@ -3,12 +3,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: external-secrets
+  name: &app external-secrets
 spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: external-secrets
+    name: *app
   install:
     remediation:
       retries: -1
@@ -16,6 +16,25 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  valuesFrom:
-    - kind: ConfigMap
-      name: external-secrets-values
+  values:
+    installCRDs: true
+    leaderElect: true
+    image:
+      repository: &repo ghcr.io/external-secrets/external-secrets
+    webhook:
+      image:
+        repository: *repo
+      serviceMonitor:
+        enabled: true
+        interval: 1m
+    certController:
+      image:
+        repository: *repo
+      serviceMonitor:
+        enabled: true
+        interval: 1m
+    serviceMonitor:
+      enabled: true
+      interval: 1m
+    grafanaDashboard:
+      enabled: true
