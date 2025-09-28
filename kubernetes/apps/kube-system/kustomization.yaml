@@ -16,4 +16,4 @@ resources:
   - ./metrics-server.yaml
   - ./nvidia-device-plugin.yaml
   - ./reloader.yaml
-  - ./spegel.yaml
+#  - ./spegel.yaml
