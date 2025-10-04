@@ -135,12 +135,30 @@ spec:
           authelia:
             app:
               - path: /app/secrets
-      trusted-certs:
-        type: configMap
-        name: letsencrypt-certs
+      etc-ssl:
+        type: hostPath
+        hostPath: /etc/ssl
+        hostPathType: DirectoryOrCreate
         advancedMounts:
           authelia:
             app:
-              - subPath: letsencrypt-certs.pem
-                path: /trusted_certs/letsencrypt-certs.pem
+              - path: /etc/ssl
+                readOnly: true
+      etc-pki:
+        type: hostPath
+        hostPath: /etc/pki
+        hostPathType: DirectoryOrCreate
+        advancedMounts:
+          authelia:
+            app:
+              - path: /etc/pki
+                readOnly: true
+      etc-ca-certificates:
+        type: hostPath
+        hostPath: /etc/ca-certificates
+        hostPathType: DirectoryOrCreate
+        advancedMounts:
+          authelia:
+            app:
+              - path: /etc/ca-certificates
                 readOnly: true
