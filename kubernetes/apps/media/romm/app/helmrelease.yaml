@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/rommapp/romm
-              tag: 3.8.1@sha256:9a732c9efb4ea70d6cc5818c7d732a4a990fd06b3e1e90600023459942270463
+              tag: 4.3.1@sha256:f9a66d759f255ddbc5cd635bf6b66efe17f75babda5863aad318ade1845d7d68
             env:
               TZ: "${TIMEZONE}"
               DISABLE_DOWNLOAD_ENDPOINT_AUTH: true
