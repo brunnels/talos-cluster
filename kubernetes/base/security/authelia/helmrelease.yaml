@@ -36,7 +36,7 @@ spec:
               AUTHELIA_TELEMETRY_METRICS_ADDRESS: tcp://0.0.0.0:8080
               AUTHELIA_TELEMETRY_METRICS_ENABLED: "true"
               AUTHELIA_THEME: dark
-#              AUTHELIA_CERTIFICATES_DIRECTORY: /trusted_certs
+              AUTHELIA_CERTIFICATES_DIRECTORY: /trusted_certs
               X_AUTHELIA_CONFIG: /config/configuration.yaml
               X_AUTHELIA_CONFIG_FILTERS: template
 
@@ -135,30 +135,12 @@ spec:
           authelia:
             app:
               - path: /app/secrets
-      etc-ssl:
-        type: hostPath
-        hostPath: /etc/ssl
-        hostPathType: DirectoryOrCreate
+      trusted-certs:
+        type: configMap
+        name: letsencrypt-certs
         advancedMounts:
           authelia:
             app:
-              - path: /etc/ssl
-                readOnly: true
-      etc-pki:
-        type: hostPath
-        hostPath: /etc/pki
-        hostPathType: DirectoryOrCreate
-        advancedMounts:
-          authelia:
-            app:
-              - path: /etc/pki
-                readOnly: true
-      etc-ca-certificates:
-        type: hostPath
-        hostPath: /etc/ca-certificates
-        hostPathType: DirectoryOrCreate
-        advancedMounts:
-          authelia:
-            app:
-              - path: /etc/ca-certificates
+              - subPath: letsencrypt-certs.pem
+                path: /trusted_certs/letsencrypt-certs.pem
                 readOnly: true
