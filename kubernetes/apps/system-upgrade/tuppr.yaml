@@ -9,7 +9,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 1h
-  path: ./kubernetes/base/kube-system/tuppr
+  path: ./kubernetes/base/system-upgrade/tuppr
   prune: true
   sourceRef:
     kind: GitRepository
