@@ -1,0 +1,39 @@
+---
+# Apply targetNamespace to all Flux Kustomizations
+- source:
+    kind: Namespace
+    fieldPath: metadata.name
+  targets:
+    - select:
+        kind: Kustomization
+        group: kustomize.toolkit.fluxcd.io
+      fieldPaths:
+        - spec.targetNamespace
+      options:
+        create: true
+# Apply retryInterval to all Flux Kustomizations
+- source:
+    kind: ConfigMap
+    name: cluster-settings
+    fieldPath: data.KS_RETRY_INTERVAL
+  targets:
+    - select:
+        kind: Kustomization
+        group: kustomize.toolkit.fluxcd.io
+      fieldPaths:
+        - spec.retryInterval
+      options:
+        create: true
+# Apply timeout to all Flux Kustomizations
+- source:
+    kind: ConfigMap
+    name: cluster-settings
+    fieldPath: data.KS_TIMEOUT
+  targets:
+    - select:
+        kind: Kustomization
+        group: kustomize.toolkit.fluxcd.io
+      fieldPaths:
+        - spec.timeout
+      options:
+        create: true

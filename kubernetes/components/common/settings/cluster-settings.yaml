@@ -5,6 +5,9 @@ kind: ConfigMap
 metadata:
   name: cluster-settings
 data:
+  KS_RETRY_INTERVAL: "2m"
+  KS_TIMEOUT: "5m"
+
   TIMEZONE: "US/Central"
   CLUSTER_CIDR: "10.42.0.0/16"
   SERVICE_CIDR: "10.43.0.0/16"

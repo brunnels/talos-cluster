@@ -17,5 +17,3 @@ resources:
   - ./nvidia-device-plugin.yaml
   - ./reloader.yaml
   - ./spegel.yaml
-  - ./tuppr.yaml
-  - ./tuppr-upgrades.yaml
