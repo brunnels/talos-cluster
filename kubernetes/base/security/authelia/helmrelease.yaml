@@ -36,7 +36,7 @@ spec:
               AUTHELIA_TELEMETRY_METRICS_ADDRESS: tcp://0.0.0.0:8080
               AUTHELIA_TELEMETRY_METRICS_ENABLED: "true"
               AUTHELIA_THEME: dark
-              AUTHELIA_CERTIFICATES_DIRECTORY: /trusted_certs
+#              AUTHELIA_CERTIFICATES_DIRECTORY: /trusted_certs
               X_AUTHELIA_CONFIG: /config/configuration.yaml
               X_AUTHELIA_CONFIG_FILTERS: template
 
