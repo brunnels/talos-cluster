@@ -62,7 +62,7 @@ spec:
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.98.2@sha256:9ed588a05d4e81aa464e753a409bc3b2b93267323d1c3975fbddf6f9aef84c26
+              tag: 4.104.3@sha256:8a4f9ec985bcb022de1ae70fab74e3a2c3199b2bc44665df6da203c3ada1643a
             env:
               TZ: "${TIMEZONE}"
               HASS_SERVER: "http://localhost:8123"
