@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/flaresolverr/flaresolverr
-              tag: v3.3.21@sha256:f104ee51e5124d83cf3be9b37480649355d223f7d8f9e453d0d5ef06c6e3b31b
+              tag: v3.4.2@sha256:42ffb1cc56088899e91a7382bc611b00fa7cbd016accfed12c0695275ca18451
             resources:
               requests:
                 cpu: 100m
