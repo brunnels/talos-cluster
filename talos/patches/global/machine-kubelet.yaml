@@ -2,15 +2,17 @@
 machine:
   kubelet:
     extraConfig:
+      featureGates:
+        ImageVolume: true
       serializeImagePulls: false
     nodeIP:
       validSubnets:
         - 10.0.150.128/24
-    extraMounts:
-      - destination: /var/openebs/local
-        type: bind
-        source: /var/openebs/local
-        options:
-          - bind
-          - rshared
-          - rw
+#    extraMounts:
+#      - destination: /var/openebs/local
+#        type: bind
+#        source: /var/openebs/local
+#        options:
+#          - bind
+#          - rshared
+#          - rw

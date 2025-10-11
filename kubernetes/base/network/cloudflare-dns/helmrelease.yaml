@@ -5,26 +5,14 @@ kind: HelmRelease
 metadata:
   name: &app cloudflare-dns
 spec:
+  chartRef:
+    kind: OCIRepository
+    name: cloudflare-dns
   interval: 1h
-  chart:
-    spec:
-      chart: external-dns
-      version: 1.17.0
-      sourceRef:
-        kind: HelmRepository
-        name: external-dns
-        namespace: flux-system
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
   values:
     fullnameOverride: *app
-    provider: cloudflare
+    provider:
+      name: cloudflare
     env:
       - name: &name CF_API_TOKEN
         valueFrom:
@@ -45,10 +33,13 @@ spec:
       - --zone-id-filter=$(CF_ZONE_ID)
     triggerLoopOnEvent: true
     policy: sync
-    sources: ["crd", "gateway-httproute"]
-    txtPrefix: k8s.
+    sources:
+      - crd
+      - gateway-httproute
     txtOwnerId: default
-    domainFilters: ["${SECRET_DOMAIN}"]
+    txtPrefix: k8s.
+    domainFilters:
+      - "${SECRET_DOMAIN}"
     serviceMonitor:
       enabled: true
     podAnnotations:

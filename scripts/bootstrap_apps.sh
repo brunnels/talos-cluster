@@ -43,26 +43,6 @@ function get_namespaces() {
     export NAMESPACES=$(IFS=, ; echo "${namespaces[*]}")
 }
 
-# Add cluster settings to the environment
-add_cluster_settings_to_env() {
-    log debug "Add cluster settings to the environment"
-
-    local -r settings_file="${ROOT_DIR}/kubernetes/components/common/settings/cluster-settings.yaml"
-
-    if [[ ! -f "${settings_file}" ]]; then
-        log error "cluster-settings.yaml file does not exist" "settings_file=${settings_file}"
-        return
-    fi
-
-    local data_keys
-    data_keys=$(yq e '.data | keys | .[]' "${settings_file}")
-    for key in ${data_keys}; do
-        local value
-        value=$(yq e ".data.\"${key}\"" "${settings_file}")
-        export "${key}"="${value}"
-    done
-}
-
 # CRDs to be applied before the helmfile charts are installed
 function apply_crds() {
     log debug "Applying CRDs"
@@ -114,6 +94,8 @@ function sync_helm_releases() {
         log error "File does not exist" "file=${helmfile_file}"
     fi
 
+#    helmfile --file "${helmfile_file}" template > helm-releases-subst.yaml
+
     if ! helmfile --file "${helmfile_file}" sync --hide-notes; then
         log error "Failed to sync Helm releases"
     fi
@@ -133,7 +115,6 @@ function main() {
     apply_crds
     apply_resources
     sync_helm_releases
-
     log info "Congrats! The cluster is bootstrapped and Flux is syncing the Git repository"
 }
 

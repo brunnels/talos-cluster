@@ -1,0 +1,1 @@
+{{ exec "sh" (list "-c" (printf "yq 'select(.kind == \"HelmRelease\").spec.values' %s | envsubst" (printf "../../../kubernetes/base/%s/helmrelease.yaml" .Release.Name))) }}

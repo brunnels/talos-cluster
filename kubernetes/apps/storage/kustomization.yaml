@@ -5,9 +5,11 @@ kind: Kustomization
 namespace: storage
 components:
   - ../../components/common
+replacements:
+  - path: ../../components/replacements/ks.yaml  -
 resources:
   - ./csi-driver-smb.yaml
-  - ./openebs-hostpath.yaml
+#  - ./openebs-hostpath.yaml
   - ./rook-ceph-cluster.yaml
   - ./rook-ceph-operator.yaml
   - ./smb-storage-classes.yaml

@@ -22,13 +22,12 @@ releases:
           - postsync
         showlogs: true
       - # Apply Cilium Resources
-        command: kubectl
+        command: bash
         args:
-          - apply
-          - --namespace=kube-system
-          - --server-side
-          - --field-manager=kustomize-controller
-          - --filename=../../kubernetes/base/kube-system/cilium/networks.yaml
+          - -c
+          - |
+            cat ../../kubernetes/base/kube-system/cilium/networks.yaml | envsubst | kubectl apply \
+            --namespace=kube-system --server-side --field-manager=kustomize-controller --filename -
         events:
           - postsync
         showlogs: true
@@ -36,7 +35,7 @@ releases:
   - name: coredns
     namespace: kube-system
     chart: oci://ghcr.io/coredns/charts/coredns
-    version: 1.43.3
+    version: 1.44.3
     values: ['./templates/values.yaml.gotmpl']
     needs: ['kube-system/cilium']
 
@@ -47,32 +46,29 @@ releases:
     values: ['./templates/values.yaml.gotmpl']
     needs: ['kube-system/coredns']
 
-  - name: cert-manager
-    namespace: cert-manager
-    chart: oci://quay.io/jetstack/charts/cert-manager
-    version: v1.18.2
-    values: ['./templates/values.yaml.gotmpl']
-    needs: ['kube-system/spegel']
-
   - name: external-secrets
     namespace: external-secrets
     chart: oci://ghcr.io/external-secrets/charts/external-secrets
     version: 0.20.1
-    values: ['./templates/values.yaml.gotmpl']
+    values: ['./templates/values-collapsed.yaml.gotmpl']
     hooks:
       - # Apply cluster secret store
         events: ['postsync']
-        command: kubectl
+        command: bash
         args:
-          - apply
-          - --namespace=external-secrets
-          - --server-side
-          - --field-manager=kustomize-controller
-          - --filename
-          - ../kubernetes/apps/external-secrets/stores/akeyless/clustersecretstore.yaml
-          - --wait=true
+          - -c
+          - |
+            cat ../../kubernetes/base/external-secrets-stores/akeyless/clustersecretstore.yaml | envsubst | kubectl apply \
+            --namespace=kube-system --server-side --field-manager=kustomize-controller --filename -
         showlogs: true
-    needs: ['cert-manager/cert-manager']
+    needs: ['kube-system/spegel']
+
+  - name: cert-manager
+    namespace: cert-manager
+    chart: oci://quay.io/jetstack/charts/cert-manager
+    version: v1.18.2
+    values: ['./templates/values-collapsed.yaml.gotmpl']
+    needs: ['external-secrets/external-secrets']
 
   - name: flux-operator
     namespace: flux-system

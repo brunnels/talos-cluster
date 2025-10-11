@@ -25,21 +25,48 @@ nodes:
   - hostname: kdev-n1
     ipAddress: 10.0.150.254
     installDisk: /dev/disk/by-id/nvme-SK_hynix_BC511_HFM256GDJTNI-82A0A_NJ02N76261100320B
-#    talosImageURL: factory.talos.dev/metal-installer/1a514d48384d9a2c3ea843ef810210751f748aa8bd29eaa083b7644affe91294
     controlPlane: true
+    nodeLabels: &nodeLabels
+      intel.feature.node.kubernetes.io/gpu: "true"
+      nvidia.com/gpu.present: "true"
+    volumes: &volumes
+      # don't let talos use whole disk
+      - name: EPHEMERAL
+        provisioning:
+          diskSelector:
+            match: system_disk
+          minSize: 64GiB
+          maxSize: 64GiB
+          grow: false
+    userVolumes: &userVolumes
+      # non-ceph
+      - name: lpp-0
+        provisioning:
+          diskSelector:
+            match: disk.model != "FIKWOT FX991 1TB"
+          minSize: 900GiB
+      # remaining space on system disk
+      - name: lpp-1
+        provisioning:
+          diskSelector:
+            match: system_disk
+          minSize: 64GiB
     schematic: &schematic
       customization:
         extraKernelArgs:
-          - -init_on_alloc # Less security, faster puter
-          - -selinux # Less security, faster puter
-          - apparmor=0 # Less security, faster puter
-          - init_on_alloc=0 # Less security, faster puter
-          - init_on_free=0 # Less security, faster puter
-          - intel_iommu=on # PCI Passthrough
-          - iommu=pt # PCI Passthrough
-          - mitigations=off # Less security, faster puter
-          - security=none # Less security, faster puter
-          - talos.auditd.disabled=1 # Less security, faster puter
+          - -init_on_alloc
+          - -init_on_free
+          - -selinux
+          - apparmor=0
+          - i915.enable_guc=3
+          - init_on_alloc=0
+          - init_on_free=0
+          - intel_iommu=on
+          - iommu=pt
+          - mitigations=off
+          - security=none
+          - sysctl.kernel.kexec_load_disabled=1
+          - talos.auditd.disabled=1
           - net.ifnames=0
         systemExtensions:
           officialExtensions:
@@ -60,7 +87,6 @@ nodes:
             - siderolabs/thunderbolt
             - siderolabs/uinput
             - siderolabs/util-linux-tools
-            - siderolabs/v4l-uvc-drivers
     networkInterfaces: &networkInterfaces
       - interface: bond0
         mtu: 9000
@@ -114,6 +140,7 @@ nodes:
               configure system description "Talos Node"
     extraManifests: &extraManifests
       - "@./manifests/ethernetconfig.yaml"
+      - "@./manifests/watchdogtimerconfig.yaml"
     patches:
       - |-
         # bond0
@@ -140,9 +167,11 @@ nodes:
 
   - hostname: kdev-n2
     ipAddress: 10.0.150.253
-    installDisk: /dev/disk/by-id/nvme-INTEL_SSDPEKKW256G7_BTPY64940M9C256D
+    installDisk: /dev/disk/by-id/nvme-BPX_8B71077C060891075911
     controlPlane: true
-#    talosImageURL: factory.talos.dev/metal-installer/1a514d48384d9a2c3ea843ef810210751f748aa8bd29eaa083b7644affe91294
+    nodeLabels: *nodeLabels
+    volumes: *volumes
+    userVolumes: *userVolumes
     schematic: *schematic
     networkInterfaces: *networkInterfaces
     extensionServices: *extensionServices
@@ -175,7 +204,9 @@ nodes:
     ipAddress: 10.0.150.252
     installDisk: /dev/disk/by-id/nvme-Samsung_SSD_950_PRO_256GB_S2GLNCAGB26901M
     controlPlane: true
-#    talosImageURL: factory.talos.dev/metal-installer/1a514d48384d9a2c3ea843ef810210751f748aa8bd29eaa083b7644affe91294
+    nodeLabels: *nodeLabels
+    volumes: *volumes
+    userVolumes: *userVolumes
     schematic: *schematic
     networkInterfaces: *networkInterfaces
     extensionServices: *extensionServices

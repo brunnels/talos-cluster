@@ -7,7 +7,7 @@ _.python.venv = { path = "{{config_root}}/.venv", create = true }
 
 [tools]
 "aqua:FiloSottile/age" = "1.2.1"
-"aqua:budimanjojo/talhelper" = "3.0.31"
+"aqua:budimanjojo/talhelper" = "3.0.36"
 "aqua:cilium/cilium-cli" = "0.18.4"
 "aqua:cli/cli" = "2.74.2"
 "aqua:cloudflare/cloudflared" = "2025.6.1"
