@@ -5,6 +5,6 @@ kind: Kustomization
 namespace: security
 components:
   - ../../components/common
-resources:
-  - ./authelia.yaml
-  - ./pgo-cluster.yaml
+resources: []
+#  - ./authelia.yaml
+#  - ./pgo-cluster.yaml
