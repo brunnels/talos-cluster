@@ -13,15 +13,6 @@ spec:
   dependsOn:
     - name: rook-ceph-operator
     - name: volsync
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2
-      kind: HelmRelease
-      name: rook-ceph-cluster
-      namespace: rook-ceph
-    - apiVersion: ceph.rook.io/v1
-      kind: CephCluster
-      namespace: rook-ceph
-      name: rook-ceph
   healthCheckExprs:
     - apiVersion: ceph.rook.io/v1
       kind: CephCluster
@@ -42,3 +33,4 @@ spec:
     namespace: flux-system
   targetNamespace: storage
   timeout: 5m
+  wait: true
