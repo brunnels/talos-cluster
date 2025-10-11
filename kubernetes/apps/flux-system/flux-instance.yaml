@@ -15,16 +15,6 @@ spec:
       namespace: external-secrets
     - name: flux-operator
       namespace: &namespace flux-system
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2
-      kind: HelmRelease
-      name: *app
-      namespace: *namespace
-  healthCheckExprs:
-    - apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
-      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
-      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   interval: 1h
   path: ./kubernetes/base/flux-system/flux-instance
   postBuild:
