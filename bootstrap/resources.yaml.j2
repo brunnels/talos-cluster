@@ -1,5 +1,5 @@
-{% set secret_domain = "ak://kdev-cluster/SECRET_DOMAIN" -%}
-{% set tunnel_id = "ak://kdev-cluster/CLOUDFLARE_TUNNEL_ID" -%}
+{% set secret_domain = "ak://${VAULT_PREFIX}-cluster/SECRET_DOMAIN" -%}
+{% set tunnel_id = "ak://${VAULT_PREFIX}-cluster/CLOUDFLARE_TUNNEL_ID" -%}
 {% set cert_name = secret_domain|replace('.', '-') -%}
 {% for namespace in [${NAMESPACES}] -%}
 ---
@@ -23,6 +23,7 @@ metadata:
   name: cluster-settings
   namespace: {{ namespace }}
 data:
+  VAULT_PREFIX: "${VAULT_PREFIX}"
   TIMEZONE: "${TIMEZONE}"
   GIT_REPO: "${GIT_REPO}"
   GIT_REPO_REF: "${GIT_REPO_REF}"
@@ -63,5 +64,5 @@ metadata:
     controller.cert-manager.io/fao: "true"
 type: kubernetes.io/tls
 data:
-  tls.key: ak://kdev/production-tls/tls.key
-  tls.crt: ak://kdev/production-tls/tls.crt
+  tls.key: "ak://${VAULT_PREFIX}/production-tls/tls.key"
+  tls.crt: "ak://${VAULT_PREFIX}/production-tls/tls.crt"

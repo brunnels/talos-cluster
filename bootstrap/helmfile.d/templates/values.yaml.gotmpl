@@ -1,1 +1,1 @@
-{{ exec "sh" (list "-c" (printf "yq 'select(.kind == \"HelmRelease\").spec.values' %s | envsubst | tee after-values.yaml" (printf "../../../kubernetes/base/%s/%s/helmrelease.yaml" .Release.Namespace .Release.Name))) }}
+{{ exec "sh" (list "-c" (printf "yq 'select(.kind == \"HelmRelease\").spec.values' %s | envsubst" (printf "../../../kubernetes/base/%s/%s/helmrelease.yaml" .Release.Namespace .Release.Name))) }}

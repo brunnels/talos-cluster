@@ -17,7 +17,7 @@ spec:
     remediation:
       retries: 3
   values:
-    installCRDs: false
+    installCRDs: true
     leaderElect: true
     image:
       repository: &repo ghcr.io/external-secrets/external-secrets

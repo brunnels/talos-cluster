@@ -116,7 +116,7 @@ function render_template() {
     fi
 
     AK="$(dirname "${0}")/lib/akeyless.sh"
-    if ! output=$("${AK}" < "${file}" 2>/dev/null | envsubst | minijinja) || [[ -z "${output}" ]]; then
+    if ! output=$(envsubst < "${file}" | "${AK}" 2>/dev/null | envsubst | minijinja) || [[ -z "${output}" ]]; then
         log error "Failed to render config" "file=${file}"
     fi
 

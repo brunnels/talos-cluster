@@ -10,6 +10,7 @@ replacements:
 resources:
   - ./csi-driver-smb.yaml
 #  - ./openebs-hostpath.yaml
+  - ./local-path-provisioner.yaml
   - ./rook-ceph-cluster.yaml
   - ./rook-ceph-operator.yaml
   - ./smb-storage-classes.yaml
