@@ -7,7 +7,30 @@ metadata:
   namespace: &namespace flux-system
 spec:
   interval: 1h
-  path: ./kubernetes/components/common/settings
+  path: ./kubernetes/components/common/cluster-settings
+  prune: true
+  retryInterval: 2m
+  sourceRef:
+    kind: GitRepository
+    name: *namespace
+    namespace: *namespace
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-secrets
+  namespace: &namespace flux-system
+spec:
+  dependsOn:
+    - name: cluster-settings
+  interval: 1h
+  path: ./kubernetes/components/common/cluster-secrets
+  postBuild:
+    substituteFrom:
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: false
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -25,7 +48,7 @@ spec:
   deletionPolicy: WaitForTermination
   dependsOn:
     - name: cluster-settings
-      namespace: *namespace
+    - name: cluster-secrets
   interval: 1h
   patches:
     # Add postBuild substitutions to child Kustomizations
