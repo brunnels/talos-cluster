@@ -6,7 +6,7 @@ namespace: storage
 components:
   - ../../components/common
 replacements:
-  - path: ../../components/replacements/ks.yaml  -
+  - path: ../../components/replacements/ks.yaml
 resources:
   - ./csi-driver-smb.yaml
 #  - ./openebs-hostpath.yaml
