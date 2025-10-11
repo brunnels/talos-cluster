@@ -14,6 +14,7 @@ spec:
     kind: GitRepository
     name: *namespace
     namespace: *namespace
+  targetNamespace: *namespace
   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -37,6 +38,7 @@ spec:
     kind: GitRepository
     name: *namespace
     namespace: *namespace
+  targetNamespace: *namespace
   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
