@@ -56,8 +56,6 @@ spec:
         metadata:
           name: _
         spec:
-          decryption:
-            provider: sops
           deletionPolicy: WaitForTermination
           patches:
             - patch: |-
