@@ -9,7 +9,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: openebs-hostpath
+    - name: local-path-provisioner
     - name: snapshot-controller
   interval: 1h
   path: ./kubernetes/base/storage/volsync
