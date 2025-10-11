@@ -13,10 +13,7 @@ spec:
   interval: 1h
   path: ./kubernetes/base/system-upgrade/tuppr-upgrades
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: storage
-  timeout: 5m
