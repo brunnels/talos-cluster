@@ -35,7 +35,10 @@ spec:
       GATUS_NAME: rook-admin
       GATUS_SUBDOMAIN: rook
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  targetNamespace: storage
+  timeout: 5m

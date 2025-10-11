@@ -14,8 +14,6 @@ spec:
     kind: GitRepository
     name: *namespace
     namespace: *namespace
-  # Flux repositories under this need flux-system hardcoded as namespace for Renovate lookups
-  targetNamespace: *namespace
   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -100,5 +98,4 @@ spec:
     name: *namespace
     namespace: *namespace
   timeout: 5m
-  targetNamespace: *namespace
   wait: false
