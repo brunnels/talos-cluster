@@ -8,5 +8,5 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-#  - ./authelia.yaml
+  - ./authelia.yaml
   - ./pgo-cluster.yaml
