@@ -43,7 +43,6 @@ spec:
 #        kind: PostgresCluster
   postBuild:
     substitute:
-      NAMESPACE: downloads
       # USERS should be a valid JSON array representing PostgresCluster spec.users
       USERS: |
         [

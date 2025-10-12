@@ -32,7 +32,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      NAMESPACE: security
       GATUS_SUBDOMAIN: auth
   prune: true
   sourceRef:
