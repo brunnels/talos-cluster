@@ -9,5 +9,5 @@ replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
   - ./cifs-pvcs/ks.yaml
-  - ./pgo-cluster.yaml
-  - ./prowlarr.yaml
+#  - ./pgo-cluster.yaml
+#  - ./prowlarr.yaml
