@@ -11,10 +11,6 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-  healthChecks:
-    - apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
-      name: *app
   healthCheckExprs:
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret
