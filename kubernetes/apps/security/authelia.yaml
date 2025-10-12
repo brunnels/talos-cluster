@@ -21,7 +21,7 @@ spec:
   healthCheckExprs:
     - apiVersion: dragonflydb.io/v1alpha1
       kind: Dragonfly
-      failed: status.phase != 'ready'
+      inProgress: status.phase != 'ready'
       current: status.phase == 'ready'
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret
