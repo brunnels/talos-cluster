@@ -18,11 +18,6 @@ spec:
     - name: dragonfly-operator
       namespace: database
     - name: security-pgo-cluster
-      namespace: &namespace security
-  healthChecks:
-    - apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
-      name: *app
   healthCheckExprs:
     - apiVersion: dragonflydb.io/v1alpha1
       kind: Dragonfly
@@ -37,10 +32,11 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      NAMESPACE: *namespace
+      NAMESPACE: security
       GATUS_SUBDOMAIN: auth
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  wait: true
