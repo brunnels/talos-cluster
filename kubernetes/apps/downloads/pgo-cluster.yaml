@@ -8,11 +8,11 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  healthCheckExprs:
+  healthChecks:
     - apiVersion: postgres-operator.crunchydata.com/v1beta1
       kind: PostgresCluster
-      inProgress: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < e.replicas)
-      current: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas == e.replicas)
+      name: security
+      namespace: &namespace security
 #
 # If you are adding a new cluster to a namespace make sure to update authelia configuration
 # identity_providers.oidc.clients pgAdmin client redirect_uris to include the new authorize endpoint
@@ -32,7 +32,7 @@ spec:
 #        kind: PostgresCluster
   postBuild:
     substitute:
-      NAMESPACE: downloads
+      NAMESPACE: *namespace
       # USERS should be a valid JSON array representing PostgresCluster spec.users
       USERS: |
         [

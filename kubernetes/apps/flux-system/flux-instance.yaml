@@ -22,10 +22,7 @@ spec:
       APP: flux-webhook
       GATUS_STATUS: "404"
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: *namespace
     namespace: *namespace
-  targetNamespace: *namespace
-  timeout: 5m
