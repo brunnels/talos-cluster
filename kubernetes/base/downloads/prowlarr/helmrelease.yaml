@@ -42,7 +42,7 @@ spec:
               PROWLARR__POSTGRES__PASSWORD:
                 valueFrom:
                   secretKeyRef:
-                    name: "downloads-pguser-{{ .Release.Name }}"
+                    name: "{{ .Release.Namespace }}-pguser-{{ .Release.Name }}"
                     key: password
               PROWLARR__POSTGRES__PORT: 5432
               PROWLARR__POSTGRES__USER: *app

@@ -37,3 +37,15 @@
         - spec.timeout
       options:
         create: true
+# Add postBuild.substitute.NAMESPACE to all Flux Kustomizations
+- source:
+    kind: Namespace
+    fieldPath: metadata.name
+  targets:
+    - select:
+        kind: Kustomization
+        group: kustomize.toolkit.fluxcd.io
+      fieldPaths:
+        - spec.postBuild.substitute.NAMESPACE
+      options:
+        create: true
