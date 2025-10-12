@@ -11,11 +11,8 @@ spec:
   interval: 1h
   path: ./kubernetes/base/storage/openebs-hostpath
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: storage
-  timeout: 5m
   wait: true
