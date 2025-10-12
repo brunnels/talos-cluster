@@ -7,6 +7,6 @@ components:
   - ../../components/common
 replacements:
   - path: ../../components/replacements/ks.yaml
-resources: []
+resources:
 #  - ./authelia.yaml
-#  - ./pgo-cluster.yaml
+  - ./pgo-cluster.yaml
