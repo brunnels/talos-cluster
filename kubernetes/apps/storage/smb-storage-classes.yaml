@@ -13,10 +13,6 @@ spec:
       namespace: external-secrets
     - name: csi-driver-smb
   force: true
-  healthChecks:
-    - apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
-      name: *app
   healthCheckExprs:
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret
