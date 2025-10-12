@@ -13,12 +13,6 @@ spec:
     - ../../../components/volsync
   dependsOn:
     - name: media-cifs-pvcs
-      namespace: &namespace media
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2
-      kind: HelmRelease
-      name: *app
-      namespace: *namespace
   interval: 1h
   path: ./kubernetes/base/media/ersatztv
   postBuild:
@@ -28,10 +22,7 @@ spec:
       VOLSYNC_CAPACITY: 20Gi
       VOLSYNC_CACHE_CAPACITY: 20Gi
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m

@@ -13,11 +13,6 @@ spec:
       namespace: external-secrets
     - name: crunchy-postgres-operator
       namespace: database
-  healthChecks:
-    - apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
-      name: ${NAMESPACE}-pgo
-      namespace: ${NAMESPACE}
   healthCheckExprs:
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret
@@ -42,10 +37,8 @@ spec:
         kind: Secret
         optional: false
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: ${NAMESPACE}
-  timeout: 5m
+  wait: true

@@ -8,11 +8,11 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  healthChecks:
+  healthCheckExprs:
     - apiVersion: postgres-operator.crunchydata.com/v1beta1
       kind: PostgresCluster
-      name: downloads
-      namespace: &namespace downloads
+      inProgress: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < e.replicas)
+      current: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas == e.replicas)
 #
 # If you are adding a new cluster to a namespace make sure to update authelia configuration
 # identity_providers.oidc.clients pgAdmin client redirect_uris to include the new authorize endpoint
@@ -32,7 +32,7 @@ spec:
 #        kind: PostgresCluster
   postBuild:
     substitute:
-      NAMESPACE: *namespace
+      NAMESPACE: downloads
       # USERS should be a valid JSON array representing PostgresCluster spec.users
       USERS: |
         [
@@ -42,11 +42,8 @@ spec:
   interval: 1h
   path: ./kubernetes/templates/pgo-cluster
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
   wait: true

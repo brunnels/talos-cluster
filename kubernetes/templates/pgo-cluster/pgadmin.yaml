@@ -18,15 +18,6 @@ spec:
       kind: PGAdmin
       name: ${NAMESPACE}-pgadmin
       namespace: ${NAMESPACE}
-    - apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
-      name: pgadmin-oauth2
-      namespace: ${NAMESPACE}
-  healthCheckExprs:
-    - apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
-      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
-      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   interval: 1h
   path: ./kubernetes/templates/pgo-cluster/pgadmin
   postBuild:
@@ -41,10 +32,7 @@ spec:
         kind: Secret
         optional: false
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: ${NAMESPACE}
-  timeout: 5m
