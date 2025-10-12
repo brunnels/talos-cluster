@@ -22,9 +22,6 @@ spec:
       kind: PostgresCluster
       inProgress: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < e.replicas)
       current: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas == e.replicas)
-    - apiVersion: postgres-operator.crunchydata.com/v1beta1
-      kind: PGAdmin
-      current: status.observedGeneration >= 1
   interval: 1h
   path: ./kubernetes/base/pgo-cluster
 #
