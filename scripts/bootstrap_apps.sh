@@ -11,13 +11,13 @@ function wait_for_nodes() {
     log debug "Waiting for nodes to be available"
 
     # Skip waiting if all nodes are 'Ready=True'
-    if kubectl wait nodes --for=condition=Ready=True --all --timeout=10s &>/dev/null; then
+    if kubectl --context "$CLUSTER" wait nodes --for=condition=Ready=True --all --timeout=10s &>/dev/null; then
         log info "Nodes are available and ready, skipping wait for nodes"
         return
     fi
 
     # Wait for all nodes to be 'Ready=False'
-    until kubectl wait nodes --for=condition=Ready=False --all --timeout=10s &>/dev/null; do
+    until kubectl --context "$CLUSTER" wait nodes --for=condition=Ready=False --all --timeout=10s &>/dev/null; do
         log info "Nodes are not available, waiting for nodes to be available. Retrying in 10 seconds..."
         sleep 10
     done
@@ -27,7 +27,7 @@ function wait_for_nodes() {
 function get_namespaces() {
     log debug "Getting namespaces"
 
-    local -r apps_dir="${ROOT_DIR}/kubernetes/apps"
+    local -r apps_dir="${ROOT_DIR}/kubernetes/common"
     local namespaces=()
 
     if [[ ! -d "${apps_dir}" ]]; then
@@ -53,7 +53,7 @@ function apply_crds() {
         log error "File does not exist" "file=${crds_file}"
     fi
 
-    if ! helmfile --file "${crds_file}" template  | kubectl apply --server-side --filename -; then
+    if ! helmfile --kube-context "$CLUSTER" --file "${crds_file}" template  | kubectl --context "$CLUSTER" apply --server-side --filename -; then
         log error "Failed to apply CRDs"
     fi
 
@@ -72,12 +72,12 @@ function apply_resources() {
 
 #    echo "${output}" > "${ROOT_DIR}/bootstrap/resources.yaml"
 
-    if echo "${output}" | kubectl diff --filename - &>/dev/null; then
+    if echo "${output}" | kubectl --context "$CLUSTER" diff --filename - &>/dev/null; then
         log info "Resources are up-to-date"
         return
     fi
 
-    if echo "${output}" | kubectl apply --server-side --filename - &>/dev/null; then
+    if echo "${output}" | kubectl --context "$CLUSTER" apply --server-side --filename - &>/dev/null; then
         log info "Resources applied"
     else
         log error "Failed to apply resources"
@@ -94,9 +94,9 @@ function sync_helm_releases() {
         log error "File does not exist" "file=${helmfile_file}"
     fi
 
-#    helmfile --file "${helmfile_file}" template > helm-releases-subst.yaml
+#    helmfile --kube-context "$CLUSTER" --file "${helmfile_file}" template > helm-releases-subst.yaml
 
-    if ! helmfile --file "${helmfile_file}" sync --hide-notes; then
+    if ! helmfile --kube-context "$CLUSTER" --file "${helmfile_file}" sync --hide-notes; then
         log error "Failed to sync Helm releases"
     fi
 
@@ -104,7 +104,7 @@ function sync_helm_releases() {
 }
 
 function main() {
-    check_env KUBECONFIG TALOSCONFIG
+    check_env KUBECONFIG TALOSCONFIG CLUSTER
     check_cli helmfile kubectl kustomize talhelper yq minijinja envsubst akeyless
 
     get_namespaces

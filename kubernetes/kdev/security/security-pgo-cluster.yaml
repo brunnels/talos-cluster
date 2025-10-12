@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app downloads-pgo-cluster
+  name: &app security-pgo-cluster
 spec:
   commonMetadata:
     labels:
@@ -23,7 +23,7 @@ spec:
       inProgress: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < e.replicas)
       current: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas == e.replicas)
   interval: 1h
-  path: ./kubernetes/base/pgo-cluster
+  path: ./kubernetes/base/database/pgo-cluster
 #
 # If you are adding a new cluster to a namespace make sure to update authelia configuration
 # identity_providers.oidc.clients pgAdmin client redirect_uris to include the new authorize endpoint
@@ -47,7 +47,7 @@ spec:
       USERS: |
         [
           {"name": "postgres", "databases": ["postgres"], "password": {"type": "AlphaNumeric"}, "options": "SUPERUSER"},
-          {"name": "prowlarr", "databases": ["prowlarr"], "password": {"type": "AlphaNumeric"}}
+          {"name": "authelia", "databases": ["authelia"], "password": {"type": "AlphaNumeric"}}
         ]
   prune: true
   sourceRef:

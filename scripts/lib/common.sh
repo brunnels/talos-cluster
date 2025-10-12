@@ -127,7 +127,7 @@ function render_template() {
 add_cluster_settings_to_env() {
     log debug "Add cluster settings to the environment"
 
-    local -r settings_file="${ROOT_DIR}/kubernetes/components/common/settings/cluster-settings.yaml"
+    local -r settings_file="${ROOT_DIR}/kubernetes/clusters/${CLUSTER}/cluster-settings/cluster-settings.yaml"
 
     if [[ ! -f "${settings_file}" ]]; then
         log error "cluster-settings.yaml file does not exist" "settings_file=${settings_file}"

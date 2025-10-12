@@ -36,7 +36,7 @@ spec:
         kind: GitRepository
         url: "https://${GIT_REPO}.git"
         ref: "${GIT_REPO_REF}"
-        path: kubernetes/flux/cluster
+        path: "kubernetes/clusters/${VAULT_PREFIX}"
         interval: 1h
       commonMetadata:
         labels:

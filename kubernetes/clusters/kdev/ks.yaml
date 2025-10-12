@@ -7,7 +7,7 @@ metadata:
   namespace: &namespace flux-system
 spec:
   interval: 1h
-  path: ./kubernetes/components/common/cluster-settings
+  path: ./kubernetes/clusters/kdev/cluster-settings
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -44,7 +44,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps
+  name: cluster-common-apps
   namespace: &namespace flux-system
 spec:
   deletionPolicy: WaitForTermination
@@ -60,6 +60,8 @@ spec:
         metadata:
           name: not-used
         spec:
+          components:
+            - ../../flux/clusters/common/cluster-settings
           postBuild:
             substituteFrom:
               - name: cluster-settings
@@ -72,43 +74,56 @@ spec:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
         labelSelector: substitution.flux.home.arpa/disabled notin (true)
-    # Add Kustomization defaults for all child Kustomizations
-#    - patch: |-
-#        apiVersion: kustomize.toolkit.fluxcd.io/v1
-#        kind: Kustomization
-#        metadata:
-#          name: _
-#        spec:
-#          deletionPolicy: WaitForTermination
-#          patches:
-#            - patch: |-
-#                apiVersion: helm.toolkit.fluxcd.io/v2
-#                kind: HelmRelease
-#                metadata:
-#                  name: _
-#                spec:
-#                  install:
-#                    crds: CreateReplace
-#                    strategy:
-#                      name: RetryOnFailure
-#                  rollback:
-#                    cleanupOnFail: true
-#                    recreate: true
-#                  upgrade:
-#                    cleanupOnFail: true
-#                    crds: CreateReplace
-#                    strategy:
-#                      name: RemediateOnFailure
-#                    remediation:
-#                      remediateLastFailure: true
-#                      retries: 2
-#              target:
-#                group: helm.toolkit.fluxcd.io
-#                kind: HelmRelease
-#      target:
-#        group: kustomize.toolkit.fluxcd.io
-#        kind: Kustomization
-  path: ./kubernetes/apps
+  path: ./kubernetes/common
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+        optional: false
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: false
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: *namespace
+    namespace: *namespace
+  timeout: 5m
+  wait: false
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps
+  namespace: &namespace flux-system
+spec:
+  deletionPolicy: WaitForTermination
+  dependsOn:
+    - name: cluster-common-apps
+  interval: 1h
+  patches:
+    # Add postBuild substitutions to child Kustomizations
+    - patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: not-used
+        spec:
+          components:
+            - ../../flux/clusters/kdev/cluster-settings
+          postBuild:
+            substituteFrom:
+              - name: cluster-settings
+                kind: ConfigMap
+                optional: false
+              - name: cluster-secrets
+                kind: Secret
+                optional: false
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        kind: Kustomization
+        labelSelector: substitution.flux.home.arpa/disabled notin (true)
+  path: ./kubernetes/kdev
   postBuild:
     substituteFrom:
       - name: cluster-secrets
