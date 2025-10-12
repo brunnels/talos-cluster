@@ -18,11 +18,6 @@ spec:
     - name: dragonfly-operator
       namespace: database
     - name: security-pgo-cluster
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2
-      kind: HelmRelease
-      name: *app
-      namespace: security
   healthCheckExprs:
     - apiVersion: dragonflydb.io/v1alpha1
       kind: Dragonfly
@@ -44,3 +39,4 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  wait: true
