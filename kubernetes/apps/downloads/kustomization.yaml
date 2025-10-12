@@ -8,6 +8,6 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-  - ./cifs-pvcs/ks.yaml
-#  - ./pgo-cluster.yaml
-#  - ./prowlarr.yaml
+  - ./downloads-cifs-pvcs.yaml
+  - ./downloads-pgo-cluster.yaml
+  - ./prowlarr.yaml

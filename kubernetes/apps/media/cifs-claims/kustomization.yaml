@@ -1,0 +1,12 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization.json
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../base/storage/cifs-claims/cifs-books.yaml
+  - ../../../base/storage/cifs-claims/cifs-games.yaml
+  - ../../../base/storage/cifs-claims/cifs-movies.yaml
+  - ../../../base/storage/cifs-claims/cifs-music.yaml
+  - ../../../base/storage/cifs-claims/cifs-pictures.yaml
+  - ../../../base/storage/cifs-claims/cifs-tv.yaml
+  - ../../../base/storage/cifs-claims/cifs-videos.yaml
