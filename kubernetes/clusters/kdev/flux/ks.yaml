@@ -71,7 +71,7 @@ spec:
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
-        labelSelector: substitution.flux.home.arpa/disabled notin
+        labelSelector: substitution.flux.home.arpa/disabled notin (true)
     # Add cluster specific components to namespace Kustomizations
     - patch: |-
         apiVersion: kustomize.config.k8s.io/v1beta1
@@ -145,7 +145,7 @@ spec:
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
-        labelSelector: substitution.flux.home.arpa/disabled notin
+        labelSelector: substitution.flux.home.arpa/disabled notin (true)
     # Add cluster specific components to namespace Kustomizations
     - patch: |-
         apiVersion: kustomize.config.k8s.io/v1beta1
