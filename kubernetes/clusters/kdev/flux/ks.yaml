@@ -89,7 +89,7 @@ spec:
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
-        labelSelector: "substitution.flux.home.arpa/namespace=true,replacements.flux.home.arpa/disabled notin"
+        labelSelector: substitution.flux.home.arpa/namespace notin (false), replacements.flux.home.arpa/disabled notin (true)
   path: ./kubernetes/common
   postBuild:
     substituteFrom:
@@ -156,7 +156,7 @@ spec:
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
-        labelSelector: "substitution.flux.home.arpa/namespace=true,replacements.flux.home.arpa/disabled notin"
+        labelSelector: substitution.flux.home.arpa/namespace notin (false), replacements.flux.home.arpa/disabled notin (true)
   path: ./kubernetes/kdev
   postBuild:
     substituteFrom:
