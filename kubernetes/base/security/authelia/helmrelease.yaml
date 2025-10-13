@@ -5,24 +5,17 @@ kind: HelmRelease
 metadata:
   name: &app authelia
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
+  interval: 1h
   values:
     controllers:
       authelia:
         replicas: 2
         strategy: RollingUpdate
         annotations:
-          configmap.reloader.stakater.com/reload: authelia
+          configmap.reloader.stakater.com/reload: *app
           secret.reloader.stakater.com/reload: authelia,authelia-files
         containers:
           app:

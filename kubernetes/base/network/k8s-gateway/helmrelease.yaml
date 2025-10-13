@@ -3,21 +3,14 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: k8s-gateway
+  name: &app k8s-gateway
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
-    name: k8s-gateway
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
+    name: *app
+  interval: 1h
   values:
-    fullnameOverride: k8s-gateway
+    fullnameOverride: *app
     domain: "${SECRET_DOMAIN}"
     ttl: 1
     service:

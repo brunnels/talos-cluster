@@ -5,22 +5,10 @@ kind: HelmRelease
 metadata:
   name: &app crunchy-postgres-operator
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: *app
-  maxHistory: 2
-  install:
-    crds: CreateReplace
-    remediation:
-      retries: -1
-  upgrade:
-    crds: CreateReplace
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
+  interval: 1h
   values:
     monitoring: true
     install:

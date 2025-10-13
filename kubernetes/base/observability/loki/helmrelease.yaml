@@ -5,14 +5,13 @@ kind: HelmRelease
 metadata:
   name: &app loki
 spec:
-  interval: 30m
-  timeout: 15m
   chartRef:
     kind: OCIRepository
     name: *app
   dependsOn:
     - name: rook-ceph-cluster
       namespace: storage
+  interval: 1h
   values:
     deploymentMode: SingleBinary
     loki:

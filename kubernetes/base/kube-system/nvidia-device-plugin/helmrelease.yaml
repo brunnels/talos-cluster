@@ -5,19 +5,10 @@ kind: HelmRelease
 metadata:
   name: &app nvidia-device-plugin
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: *app
-  install:
-    crds: CreateReplace
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    crds: CreateReplace
-    remediation:
-      retries: 3
+  interval: 1h
   # https://github.com/NVIDIA/k8s-device-plugin/blob/main/deployments/helm/nvidia-device-plugin/values.yaml
   values:
     config:

@@ -5,18 +5,10 @@ kind: HelmRelease
 metadata:
   name: &app spegel
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: *app
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    force: true
-    remediation:
-      retries: 3
+  interval: 1h
   values:
     spegel:
       containerdSock: /run/containerd/containerd.sock

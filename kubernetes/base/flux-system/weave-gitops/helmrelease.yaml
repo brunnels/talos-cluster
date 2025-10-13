@@ -5,18 +5,10 @@ kind: HelmRelease
 metadata:
   name: &app weave-gitops
 spec:
-  interval: 30m
   chartRef:
     kind: OCIRepository
     name: *app
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
+  interval: 1h
   values:
     additionalArgs:
       - --auth-methods=oidc
