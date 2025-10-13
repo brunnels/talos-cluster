@@ -44,92 +44,6 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-common-apps
-  namespace: &namespace flux-system
-spec:
-  deletionPolicy: WaitForTermination
-  dependsOn:
-    - name: cluster-settings
-    - name: cluster-secrets
-  interval: 1h
-  patches:
-    # Add postBuild substitutions to child Kustomizations
-    - patch: |-
-        apiVersion: kustomize.toolkit.fluxcd.io/v1
-        kind: Kustomization
-        metadata:
-          name: not-used
-        spec:
-          postBuild:
-            substituteFrom:
-              - name: cluster-settings
-                kind: ConfigMap
-                optional: false
-              - name: cluster-secrets
-                kind: Secret
-                optional: false
-      target:
-        group: kustomize.toolkit.fluxcd.io
-        kind: Kustomization
-        labelSelector: substitution.flux.home.arpa/disabled notin (true)
-#    - patch: |
-#        - op: add
-#          path: /spec/components/-
-#          value: "../../clusters/kdev"
-#        - op: add
-#          path: /spec/components/-
-#          value: "../../components/common"
-#      target:
-#        group: kustomize.config.k8s.io/v1beta1
-#        kind: Kustomization
-#        labelSelector: "substitution.flux.home.arpa/namespace=true"
-    # Add cluster specific components to namespace Kustomizations
-#    - patch: |-
-#        apiVersion: kustomize.config.k8s.io/v1beta1
-#        kind: Kustomization
-#        metadata:
-#          name: not-used
-#        spec:
-#          components:
-#            - ../../clusters/kdev
-#            - ../../components/common
-#      target:
-#        group: kustomize.config.k8s.io
-#        kind: Kustomization
-#        labelSelector: "substitution.flux.home.arpa/namespace=true"
-    # Add replacements to namespace Kustomizations
-#    - patch: |-
-#        apiVersion: kustomize.config.k8s.io/v1beta1
-#        kind: Kustomization
-#        metadata:
-#          name: not-used
-#        spec:
-#          replacements:
-#            - ../../components/replacements/ks.yaml
-#      target:
-#        group: kustomize.config.k8s.io/v1beta1
-#        kind: Kustomization
-#        labelSelector: substitution.flux.home.arpa/namespace notin (false), replacements.flux.home.arpa/disabled notin (true)
-  path: ./kubernetes/common
-  postBuild:
-    substituteFrom:
-      - name: cluster-secrets
-        kind: Secret
-        optional: false
-      - name: cluster-settings
-        kind: ConfigMap
-        optional: false
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: *namespace
-    namespace: *namespace
-  timeout: 5m
-  wait: false
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
   name: cluster-apps
   namespace: &namespace flux-system
 spec:
@@ -157,35 +71,6 @@ spec:
         group: kustomize.toolkit.fluxcd.io/v1
         kind: Kustomization
         labelSelector: substitution.flux.home.arpa/disabled notin (true)
-    # Add cluster specific components to namespace Kustomizations
-    - patch: |-
-        apiVersion: kustomize.config.k8s.io/v1beta1
-        kind: Kustomization
-        metadata:
-          name: not-used
-        spec:
-          replacements:
-            - ../../components/replacements/ks.yaml
-          components:
-            - ../../clusters/kdev
-            - ../../components/common
-      target:
-        group: kustomize.config.k8s.io/v1beta1
-        kind: Kustomization
-        labelSelector: "substitution.flux.home.arpa/namespace=true"
-#    # Add replacements to namespace Kustomizations
-#    - patch: |-
-#        apiVersion: kustomize.config.k8s.io/v1beta1
-#        kind: Kustomization
-#        metadata:
-#          name: not-used
-#        spec:
-#          replacements:
-#            - ../../components/replacements/ks.yaml
-#      target:
-#        group: kustomize.config.k8s.io/v1beta1
-#        kind: Kustomization
-#        labelSelector: substitution.flux.home.arpa/namespace notin (false), replacements.flux.home.arpa/disabled notin (true)
   path: ./kubernetes/kdev
   postBuild:
     substituteFrom:

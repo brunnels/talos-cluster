@@ -2,15 +2,11 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization.json
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-metadata:
-  labels:
-    substitution.flux.home.arpa/namespace: "true"
-namespace: external-secrets
+namespace: default
 components:
   - ../../clusters/kdev
   - ../../components/common
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-  - ./external-secrets.yaml
-  - ./external-secrets-stores.yaml
+  - ./echo.yaml
