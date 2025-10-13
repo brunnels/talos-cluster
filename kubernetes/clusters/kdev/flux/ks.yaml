@@ -60,6 +60,9 @@ spec:
         metadata:
           name: not-used
         spec:
+          components:
+            - ../../components/common
+          replacements: []
           postBuild:
             substituteFrom:
               - name: cluster-settings
@@ -127,6 +130,7 @@ spec:
         spec:
           components:
             - ../../components/common
+          replacements: []
           postBuild:
             substituteFrom:
               - name: cluster-settings
