@@ -7,7 +7,7 @@ metadata:
   namespace: &namespace flux-system
 spec:
   interval: 1h
-  path: ./kubernetes/clusters/kdev
+  path: ./kubernetes/clusters/kdev/cluster-settings
   prune: true
   retryInterval: 2m
   sourceRef:
