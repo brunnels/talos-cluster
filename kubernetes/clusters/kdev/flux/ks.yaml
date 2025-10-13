@@ -60,9 +60,6 @@ spec:
         metadata:
           name: not-used
         spec:
-          components:
-            - ../../clusters/kdev
-            - ../../components/common/cluster-secrets
           postBuild:
             substituteFrom:
               - name: cluster-settings
@@ -75,6 +72,19 @@ spec:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
         labelSelector: substitution.flux.home.arpa/disabled notin (true)
+    # Add cluster specific components to namespace Kustomizations
+    - patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: not-used
+        spec:
+          components:
+            - ../../clusters/kdev
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        kind: Kustomization
+        labelSelector: "substitution.flux.home.arpa/namespace=true"
   path: ./kubernetes/common
   postBuild:
     substituteFrom:
@@ -110,9 +120,6 @@ spec:
         metadata:
           name: not-used
         spec:
-          components:
-            - ../../clusters/kdev
-            - ../../components/common/cluster-secrets
           postBuild:
             substituteFrom:
               - name: cluster-settings
@@ -124,7 +131,20 @@ spec:
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
-        labelSelector: substitution.flux.home.arpa/disabled notin (true)
+        labelSelector: substitution.flux.home.arpa/disabled notin
+    # Add cluster specific components to namespace Kustomizations
+    - patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: not-used
+        spec:
+          components:
+            - ../../clusters/kdev
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        kind: Kustomization
+        labelSelector: "substitution.flux.home.arpa/namespace=true"
   path: ./kubernetes/kdev
   postBuild:
     substituteFrom:
