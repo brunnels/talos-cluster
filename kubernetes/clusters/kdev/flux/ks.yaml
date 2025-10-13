@@ -49,7 +49,7 @@ metadata:
 spec:
   deletionPolicy: WaitForTermination
   dependsOn:
-    - name: cluster-common-apps
+    - name: cluster-secrets
   interval: 1h
   patches:
     # Add postBuild substitutions to child Kustomizations
