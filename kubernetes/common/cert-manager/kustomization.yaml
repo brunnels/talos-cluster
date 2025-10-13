@@ -7,6 +7,7 @@ metadata:
     substitution.flux.home.arpa/namespace: "true"
 namespace: cert-manager
 components:
+  - ../../clusters/kdev
   - ../../components/common
 replacements:
   - path: ../../components/replacements/ks.yaml
