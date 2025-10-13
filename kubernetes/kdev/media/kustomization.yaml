@@ -8,6 +8,6 @@ components:
   - ../../components/common
 replacements:
   - path: ../../components/replacements/ks.yaml
-resources: []
-#  - ./ersatztv.yaml
-#  - ./media-cifs-pvcs.yaml
+resources:
+  - ./ersatztv.yaml
+  - ./media-cifs-pvcs.yaml
