@@ -106,6 +106,7 @@ spec:
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
+        labelSelector: hrpatch.flux.home.arpa/disabled notin (true)
   path: ./kubernetes/kdev
   postBuild:
     substituteFrom:
