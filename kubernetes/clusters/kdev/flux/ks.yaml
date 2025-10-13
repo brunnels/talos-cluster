@@ -57,7 +57,7 @@ spec:
         apiVersion: kustomize.toolkit.fluxcd.io/v1
         kind: Kustomization
         metadata:
-          name: not-used
+          name: _
         spec:
           postBuild:
             substituteFrom:
@@ -77,8 +77,6 @@ spec:
         metadata:
           name: _
         spec:
-          decryption:
-            provider: sops
           deletionPolicy: WaitForTermination
           patches:
             - patch: |-

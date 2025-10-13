@@ -12,6 +12,9 @@ spec:
     - name: cloudflare-tunnel
       namespace: network
   interval: 1h
+  install:
+    strategy:
+      name: RetryOnFailure
   values:
     controllers:
       echo:
