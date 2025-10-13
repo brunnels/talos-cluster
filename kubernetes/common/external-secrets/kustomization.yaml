@@ -6,6 +6,11 @@ metadata:
   labels:
     substitution.flux.home.arpa/namespace: "true"
 namespace: external-secrets
+components:
+  - ../../clusters/kdev
+  - ../../components/common
+replacements:
+  - path: ../../components/replacements/ks.yaml
 resources:
   - ./external-secrets.yaml
   - ./external-secrets-stores.yaml
