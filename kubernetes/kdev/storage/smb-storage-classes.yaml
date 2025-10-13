@@ -20,29 +20,29 @@ spec:
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   interval: 1h
   path: ./kubernetes/base/storage/smb-storage-classes
-#  patches:
-#    - patch: |-
-#        allowVolumeExpansion: true
-#        apiVersion: storage.k8s.io/v1
-#        kind: StorageClass
-#        metadata:
-#          name: _
-#        mountOptions:
-#          - dir_mode=0775
-#          - file_mode=0664
-#          - uid=1000
-#          - gid=100
-#          - noperm
-#          - mfsymlinks
-#          - noserverino
-#        parameters:
-#          csi.storage.k8s.io/node-stage-secret-name: smb-storage-classes
-#          csi.storage.k8s.io/node-stage-secret-namespace: storage
-#          onDelete: retain
-#          source: //nasf586af.myqnapcloud.com/movies
-#      target:
-#        group: kustomize.toolkit.fluxcd.io
-#        kind: StorageClass
+  patches:
+    - patch: |-
+        allowVolumeExpansion: true
+        apiVersion: storage.k8s.io/v1
+        kind: StorageClass
+        metadata:
+          name: _
+        mountOptions:
+          - dir_mode=0775
+          - file_mode=0664
+          - uid=1000
+          - gid=100
+          - noperm
+          - mfsymlinks
+          - noserverino
+        parameters:
+          csi.storage.k8s.io/node-stage-secret-name: smb-storage-classes
+          csi.storage.k8s.io/node-stage-secret-namespace: storage
+          onDelete: retain
+          source: //nasf586af.myqnapcloud.com/movies
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        kind: StorageClass
 #    - target:
 #        kind: StorageClass
 #      patch: |
