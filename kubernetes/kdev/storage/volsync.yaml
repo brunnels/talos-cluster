@@ -11,6 +11,7 @@ spec:
   dependsOn:
     - name: local-path-provisioner
     - name: snapshot-controller
+    - name: rook-ceph-cluster
   interval: 1h
   path: ./kubernetes/base/storage/volsync
   postBuild:

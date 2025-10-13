@@ -13,6 +13,8 @@ spec:
     - ../../../components/volsync
   dependsOn:
     - name: media-cifs-pvcs
+    - name: volsync
+      namespace: storage
   interval: 1h
   path: ./kubernetes/base/media/ersatztv
   postBuild:

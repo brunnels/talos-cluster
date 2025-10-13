@@ -13,6 +13,8 @@ spec:
     - ../../../components/pgo-db-init
   dependsOn:
     - name: downloads-pgo-cluster
+    - name: volsync
+      namespace: storage
   interval: 1h
   path: ./kubernetes/base/downloads/prowlarr
   postBuild:
