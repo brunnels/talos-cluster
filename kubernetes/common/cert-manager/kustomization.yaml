@@ -8,7 +8,7 @@ metadata:
 namespace: cert-manager
 components:
   - ../../components/common
-replacements:
-  - path: ../../components/replacements/ks.yaml
+#replacements:
+#  - path: ../../components/replacements/ks.yaml
 resources:
   - ./cert-manager.yaml
