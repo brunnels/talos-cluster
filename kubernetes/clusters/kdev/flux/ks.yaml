@@ -60,9 +60,6 @@ spec:
         metadata:
           name: not-used
         spec:
-          components:
-            - ../../components/common
-          replacements: []
           postBuild:
             substituteFrom:
               - name: cluster-settings
@@ -80,6 +77,9 @@ spec:
         - op: add
           path: /spec/components/-
           value: "../../clusters/kdev"
+        - op: add
+          path: /spec/components/-
+          value: "../../components/common"
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
@@ -128,9 +128,6 @@ spec:
         metadata:
           name: not-used
         spec:
-          components:
-            - ../../components/common
-          replacements: []
           postBuild:
             substituteFrom:
               - name: cluster-settings
@@ -148,6 +145,9 @@ spec:
         - op: add
           path: /spec/components/-
           value: "../../clusters/kdev"
+        - op: add
+          path: /spec/components/-
+          value: "../../components/common"
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
