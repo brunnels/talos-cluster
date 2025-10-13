@@ -79,6 +79,8 @@ spec:
         metadata:
           name: not-used
         spec:
+          replacements:
+            - ../../components/replacements/ks.yaml
           components:
             - ../../clusters/kdev
             - ../../components/common
@@ -87,18 +89,18 @@ spec:
         kind: Kustomization
         labelSelector: substitution.flux.home.arpa/namespace notin (false)
     # Add replacements to namespace Kustomizations
-    - patch: |-
-        apiVersion: kustomize.config.k8s.io/v1beta1
-        kind: Kustomization
-        metadata:
-          name: not-used
-        spec:
-          replacements:
-            - ../../components/replacements/ks.yaml
-      target:
-        group: kustomize.config.k8s.io/v1beta1
-        kind: Kustomization
-        labelSelector: substitution.flux.home.arpa/namespace notin (false), replacements.flux.home.arpa/disabled notin (true)
+#    - patch: |-
+#        apiVersion: kustomize.config.k8s.io/v1beta1
+#        kind: Kustomization
+#        metadata:
+#          name: not-used
+#        spec:
+#          replacements:
+#            - ../../components/replacements/ks.yaml
+#      target:
+#        group: kustomize.config.k8s.io/v1beta1
+#        kind: Kustomization
+#        labelSelector: substitution.flux.home.arpa/namespace notin (false), replacements.flux.home.arpa/disabled notin (true)
   path: ./kubernetes/common
   postBuild:
     substituteFrom:
@@ -153,6 +155,8 @@ spec:
         metadata:
           name: not-used
         spec:
+          replacements:
+            - ../../components/replacements/ks.yaml
           components:
             - ../../clusters/kdev
             - ../../components/common
@@ -160,19 +164,19 @@ spec:
         group: kustomize.config.k8s.io/v1beta1
         kind: Kustomization
         labelSelector: substitution.flux.home.arpa/namespace notin (false)
-    # Add replacements to namespace Kustomizations
-    - patch: |-
-        apiVersion: kustomize.config.k8s.io/v1beta1
-        kind: Kustomization
-        metadata:
-          name: not-used
-        spec:
-          replacements:
-            - ../../components/replacements/ks.yaml
-      target:
-        group: kustomize.config.k8s.io/v1beta1
-        kind: Kustomization
-        labelSelector: substitution.flux.home.arpa/namespace notin (false), replacements.flux.home.arpa/disabled notin (true)
+#    # Add replacements to namespace Kustomizations
+#    - patch: |-
+#        apiVersion: kustomize.config.k8s.io/v1beta1
+#        kind: Kustomization
+#        metadata:
+#          name: not-used
+#        spec:
+#          replacements:
+#            - ../../components/replacements/ks.yaml
+#      target:
+#        group: kustomize.config.k8s.io/v1beta1
+#        kind: Kustomization
+#        labelSelector: substitution.flux.home.arpa/namespace notin (false), replacements.flux.home.arpa/disabled notin (true)
   path: ./kubernetes/kdev
   postBuild:
     substituteFrom:
