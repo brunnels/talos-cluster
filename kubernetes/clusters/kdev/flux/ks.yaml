@@ -7,7 +7,7 @@ metadata:
   namespace: &namespace flux-system
 spec:
   interval: 1h
-  path: ./kubernetes/clusters/kdev/cluster-settings/cluster-settings.yaml
+  path: ./kubernetes/clusters/kdev
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -61,8 +61,8 @@ spec:
           name: not-used
         spec:
           components:
+            - ../../clusters/kdev
             - ../../components/common/cluster-secrets
-            - ../../clusters/kdev/cluster-settings/cluster-settings
           postBuild:
             substituteFrom:
               - name: cluster-settings
@@ -111,8 +111,8 @@ spec:
           name: not-used
         spec:
           components:
+            - ../../clusters/kdev
             - ../../components/common/cluster-secrets
-            - ../../clusters/kdev/cluster-settings/cluster-settings
           postBuild:
             substituteFrom:
               - name: cluster-settings
