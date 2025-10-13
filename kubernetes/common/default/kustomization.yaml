@@ -8,7 +8,5 @@ metadata:
 namespace: default
 components:
   - ../../components/common
-replacements:
-  - path: ../../components/replacements/ks.yaml
 resources:
   - ./echo.yaml

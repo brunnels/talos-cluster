@@ -8,8 +8,6 @@ metadata:
 namespace: flux-system
 components:
   - ../../components/common
-replacements:
-  - path: ../../components/replacements/ks.yaml
 resources:
   - ./flux-instance.yaml
   - ./flux-operator.yaml

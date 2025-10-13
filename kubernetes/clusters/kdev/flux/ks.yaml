@@ -135,18 +135,31 @@ spec:
         kind: Kustomization
         labelSelector: substitution.flux.home.arpa/disabled notin
     # Add cluster specific components to namespace Kustomizations
-#    - patch: |-
-#        apiVersion: kustomize.config.k8s.io/v1beta1
-#        kind: Kustomization
-#        metadata:
-#          name: not-used
-#        spec:
-#          components:
-#            - ../../clusters/kdev
-#      target:
-#        group: kustomize.config.k8s.io/v1beta1
-#        kind: Kustomization
-#        labelSelector: "substitution.flux.home.arpa/namespace=true"
+    - patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: not-used
+        spec:
+          components:
+            - ../../clusters/kdev
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        kind: Kustomization
+        labelSelector: "substitution.flux.home.arpa/namespace=true"
+    # Add cluster specific components to namespace Kustomizations
+    - patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: not-used
+        spec:
+          replacements:
+            - path: ../../components/replacements/ks.yaml
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        kind: Kustomization
+        labelSelector: "substitution.flux.home.arpa/namespace=true,replacements.flux.home.arpa/disabled notin"
   path: ./kubernetes/kdev
   postBuild:
     substituteFrom:
