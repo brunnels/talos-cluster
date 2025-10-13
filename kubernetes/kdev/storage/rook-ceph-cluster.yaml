@@ -12,7 +12,6 @@ spec:
     - ../../../components/gatus/guarded
   dependsOn:
     - name: rook-ceph-operator
-    - name: volsync
   healthCheckExprs:
     - apiVersion: ceph.rook.io/v1
       kind: CephCluster
