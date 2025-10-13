@@ -6,8 +6,6 @@ metadata:
   labels:
     substitution.flux.home.arpa/namespace: "true"
 namespace: external-secrets
-components:
-  - ../../components/common
 resources:
   - ./external-secrets.yaml
   - ./external-secrets-stores.yaml

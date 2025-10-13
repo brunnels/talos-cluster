@@ -6,7 +6,5 @@ metadata:
   labels:
     substitution.flux.home.arpa/namespace: "true"
 namespace: cert-manager
-components:
-  - ../../components/common
 resources:
   - ./cert-manager.yaml

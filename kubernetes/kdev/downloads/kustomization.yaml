@@ -6,8 +6,6 @@ metadata:
   labels:
     substitution.flux.home.arpa/namespace: "true"
 namespace: downloads
-components:
-  - ../../components/common
 resources:
   - ./downloads-cifs-pvcs.yaml
   - ./downloads-pgo-cluster.yaml

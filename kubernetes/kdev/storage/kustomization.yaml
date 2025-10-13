@@ -6,8 +6,6 @@ metadata:
   labels:
     substitution.flux.home.arpa/namespace: "true"
 namespace: storage
-components:
-  - ../../components/common
 resources:
   - ./csi-driver-smb.yaml
   - ./local-path-provisioner.yaml

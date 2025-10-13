@@ -6,8 +6,6 @@ namespace: system-upgrade
 metadata:
   labels:
     substitution.flux.home.arpa/namespace: "true"
-components:
-  - ../../components/common
 resources:
   - ./tuppr.yaml
   - ./tuppr-upgrades.yaml

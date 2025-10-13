@@ -6,8 +6,6 @@ metadata:
   labels:
     substitution.flux.home.arpa/namespace: "true"
 namespace: media
-components:
-  - ../../components/common
 resources:
   - ./ersatztv.yaml
   - ./media-cifs-pvcs.yaml

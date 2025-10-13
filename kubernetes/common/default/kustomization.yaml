@@ -6,7 +6,5 @@ metadata:
   labels:
     substitution.flux.home.arpa/namespace: "true"
 namespace: default
-components:
-  - ../../components/common
 resources:
   - ./echo.yaml

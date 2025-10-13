@@ -6,8 +6,6 @@ metadata:
   labels:
     substitution.flux.home.arpa/namespace: "true"
 namespace: security
-components:
-  - ../../components/common
 resources:
   - ./authelia.yaml
   - ./security-pgo-cluster.yaml

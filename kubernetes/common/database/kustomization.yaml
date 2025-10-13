@@ -6,8 +6,6 @@ metadata:
   labels:
     substitution.flux.home.arpa/namespace: "true"
 namespace: database
-components:
-  - ../../components/common
 resources:
   - ./dragonfly-operator.yaml
   - ./crunchy-postgres-operator.yaml

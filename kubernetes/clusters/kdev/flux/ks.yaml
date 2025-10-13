@@ -73,20 +73,23 @@ spec:
         kind: Kustomization
         labelSelector: substitution.flux.home.arpa/disabled notin (true)
     # Add cluster specific components to namespace Kustomizations
-    - patch: |-
-        apiVersion: kustomize.toolkit.fluxcd.io/v1
-        kind: Kustomization
-        metadata:
-          name: not-used
-        spec:
-          components:
-            - ../../clusters/kdev
-          replacements:
-            - path: ../../components/replacements/ks.yaml
+    - patch: |
+        - op: add
+          path: /spec/components/-
+          value: "../../clusters/kdev"
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
         labelSelector: "substitution.flux.home.arpa/namespace=true"
+    # Add replacements to namespace Kustomizations
+    - patch: |
+        - op: add
+          path: /spec/replacements/-
+          value: "../../components/replacements/ks.yaml"
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        kind: Kustomization
+        labelSelector: "substitution.flux.home.arpa/namespace=true,replacements.flux.home.arpa/disabled notin"
   path: ./kubernetes/common
   postBuild:
     substituteFrom:
@@ -122,6 +125,8 @@ spec:
         metadata:
           name: not-used
         spec:
+          components:
+            - ../../components/common
           postBuild:
             substituteFrom:
               - name: cluster-settings
@@ -135,27 +140,19 @@ spec:
         kind: Kustomization
         labelSelector: substitution.flux.home.arpa/disabled notin
     # Add cluster specific components to namespace Kustomizations
-    - patch: |-
-        apiVersion: kustomize.toolkit.fluxcd.io/v1
-        kind: Kustomization
-        metadata:
-          name: not-used
-        spec:
-          components:
-            - ../../clusters/kdev
+    - patch: |
+        - op: add
+          path: /spec/components/-
+          value: "../../clusters/kdev"
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
         labelSelector: "substitution.flux.home.arpa/namespace=true"
-    # Add cluster specific components to namespace Kustomizations
-    - patch: |-
-        apiVersion: kustomize.toolkit.fluxcd.io/v1
-        kind: Kustomization
-        metadata:
-          name: not-used
-        spec:
-          replacements:
-            - path: ../../components/replacements/ks.yaml
+    # Add replacements to namespace Kustomizations
+    - patch: |
+        - op: add
+          path: /spec/replacements/-
+          value: "../../components/replacements/ks.yaml"
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization

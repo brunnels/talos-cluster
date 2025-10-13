@@ -6,8 +6,6 @@ metadata:
   labels:
     substitution.flux.home.arpa/namespace: "true"
 namespace: kube-system
-components:
-  - ../../components/common
 resources:
   - ./cilium.yaml
   - ./cilium-gateway.yaml

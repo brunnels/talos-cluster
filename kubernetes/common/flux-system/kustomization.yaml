@@ -6,8 +6,6 @@ metadata:
   labels:
     substitution.flux.home.arpa/namespace: "true"
 namespace: flux-system
-components:
-  - ../../components/common
 resources:
   - ./flux-instance.yaml
   - ./flux-operator.yaml
