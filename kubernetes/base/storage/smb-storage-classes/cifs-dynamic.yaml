@@ -23,5 +23,4 @@ parameters:
   onDelete: delete
   source: "//${QNAP_HOSTNAME}/appdata/cifs-dynamic"
   subDir: "$${pvc.metadata.namespace}-$${pvc.metadata.name}"
-reclaimPolicy: Delete
-volumeBindingMode: Immediate
+provisioner: smb.csi.k8s.io
