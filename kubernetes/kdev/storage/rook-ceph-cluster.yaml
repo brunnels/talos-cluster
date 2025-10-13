@@ -12,9 +12,15 @@ spec:
     - ../../../components/gatus/guarded
   dependsOn:
     - name: rook-ceph-operator
+  healthChecks:
+    - apiVersion: ceph.rook.io/v1
+      kind: CephCluster
+      namespace: storage
+      name: rook-ceph
   healthCheckExprs:
     - apiVersion: ceph.rook.io/v1
       kind: CephCluster
+      inProgress: status.phase == 'Progressing'
       failed: status.ceph.health == 'HEALTH_ERR'
       current: status.ceph.health in ['HEALTH_OK', 'HEALTH_WARN']
   interval: 1h

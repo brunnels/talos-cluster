@@ -19,14 +19,14 @@ tasks:
       - test -f {{.TALOS_DIR}}/talconfig.yaml
       - which talhelper talosctl sops
     requires:
-      vars: [ CLUSTER ]
+      vars: [CLUSTER]
 
   apps:
     desc: Bootstrap apps into the Talos cluster
     dir: '{{.TALOS_DIR}}'
     cmds:
       - kubectl config set-cluster {{.CLUSTER}} --server https://{{.CONTROLLER}}:6443
-      - defer: talhelper gencommand kubeconfig --extra-flags="--force {{.CLUSTER_DIR}} --force-context-name {{.CLUSTER}}" | bash
+      - until talhelper gencommand kubeconfig --extra-flags="--force {{.CLUSTER_DIR}} --force-context-name {{.CLUSTER}}" | bash; do sleep 10; done
       - bash {{.SCRIPTS_DIR}}/bootstrap_apps.sh
     env:
       CLUSTER: '{{.CLUSTER}}'
@@ -37,7 +37,7 @@ tasks:
       - test -f {{.KUBECONFIG}}
       - test -f {{.SCRIPTS_DIR}}/bootstrap_apps.sh
     requires:
-      vars: [ CLUSTER ]
+      vars: [CLUSTER]
     vars:
       CONTROLLER:
         sh: yq .endpoint < {{.TALOS_DIR}}/talconfig.yaml
