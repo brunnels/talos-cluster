@@ -4,7 +4,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: cluster-settings
-  namespace: &namespace flux-system
+  namespace: flux-system
 spec:
   interval: 1h
   path: ./kubernetes/clusters/kdev/cluster-settings
@@ -12,16 +12,16 @@ spec:
   retryInterval: 2m
   sourceRef:
     kind: GitRepository
-    name: *namespace
-    namespace: *namespace
-  targetNamespace: *namespace
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: flux-system
   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: cluster-secrets
-  namespace: &namespace flux-system
+  namespace: flux-system
 spec:
   dependsOn:
     - name: cluster-settings
@@ -36,16 +36,16 @@ spec:
   retryInterval: 2m
   sourceRef:
     kind: GitRepository
-    name: *namespace
-    namespace: *namespace
-  targetNamespace: *namespace
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: flux-system
   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: cluster-apps
-  namespace: &namespace flux-system
+  namespace: flux-system
 spec:
   deletionPolicy: WaitForTermination
   dependsOn:
@@ -83,7 +83,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: *namespace
-    namespace: *namespace
+    name: flux-system
+    namespace: flux-system
   timeout: 5m
-  wait: false
