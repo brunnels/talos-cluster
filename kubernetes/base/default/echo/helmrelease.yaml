@@ -13,8 +13,8 @@ spec:
       namespace: network
   install:
     crds: CreateReplace
-#    strategy:
-#      name: RetryOnFailure
+    strategy:
+      name: RetryOnFailure
   interval: 1h
   rollback:
     cleanupOnFail: true
