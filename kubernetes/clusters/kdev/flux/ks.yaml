@@ -87,7 +87,7 @@ spec:
       target:
         group: kustomize.config.k8s.io/v1beta1
         kind: Kustomization
-        labelSelector: substitution.flux.home.arpa/namespace notin (false)
+        labelSelector: "substitution.flux.home.arpa/namespace=true"
     # Add replacements to namespace Kustomizations
 #    - patch: |-
 #        apiVersion: kustomize.config.k8s.io/v1beta1
@@ -163,7 +163,7 @@ spec:
       target:
         group: kustomize.config.k8s.io/v1beta1
         kind: Kustomization
-        labelSelector: substitution.flux.home.arpa/namespace notin (false)
+        labelSelector: "substitution.flux.home.arpa/namespace=true"
 #    # Add replacements to namespace Kustomizations
 #    - patch: |-
 #        apiVersion: kustomize.config.k8s.io/v1beta1
