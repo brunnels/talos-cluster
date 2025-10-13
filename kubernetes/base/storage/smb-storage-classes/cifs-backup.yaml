@@ -1,9 +1,23 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.32.1/storageclass.json
+allowVolumeExpansion: true
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: "cifs-backup"
-provisioner: smb.csi.k8s.io
+  name: cifs-backup
+mountOptions:
+  - dir_mode=0775
+  - file_mode=0664
+  - uid=1000
+  - gid=100
+  - noperm
+  - mfsymlinks
+  - noserverino
+  - multichannel
+  - max_channels=4
 parameters:
+  csi.storage.k8s.io/node-stage-secret-name: smb-storage-classes
+  csi.storage.k8s.io/node-stage-secret-namespace: storage
+  onDelete: retain
   source: "//${QNAP_HOSTNAME}/backup"
+provisioner: smb.csi.k8s.io
