@@ -76,13 +76,8 @@ spec:
         - op: add
           path: /spec/components/-
           value: "../../clusters/kdev"
-        - op: add
-          path: /spec/components/-
-          value: "../../components/common"
-        - op: add
-          path: /spec/replacements/-
-          value: "../../components/replacements/ks.yaml"
       target:
+        group: kustomize.config.k8s.io/v1beta1
         kind: Kustomization
         labelSelector: "substitution.flux.home.arpa/namespace=true"
     # Add cluster specific components to namespace Kustomizations
