@@ -76,6 +76,9 @@ spec:
         - op: add
           path: /spec/components/-
           value: "../../clusters/kdev"
+        - op: add
+          path: /spec/components/-
+          value: "../../components/common"
       target:
         group: kustomize.config.k8s.io/v1beta1
         kind: Kustomization
