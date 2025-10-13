@@ -11,20 +11,7 @@ spec:
   dependsOn:
     - name: cloudflare-tunnel
       namespace: network
-  install:
-    crds: CreateReplace
-    strategy:
-      name: RetryOnFailure
   interval: 1h
-  rollback:
-    cleanupOnFail: true
-    recreate: true
-  upgrade:
-    cleanupOnFail: true
-    crds: CreateReplace
-    remediation:
-      remediateLastFailure: true
-      retries: 2
   values:
     controllers:
       echo:
