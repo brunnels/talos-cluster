@@ -10,6 +10,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../components/gatus/guarded
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
@@ -46,6 +48,7 @@ spec:
 #        group: postgres-operator.crunchydata.com
 #        kind: PostgresCluster
   postBuild:
+    GATUS_SUBDOMAIN: security-pgadmin
     substitute:
       # USERS should be a valid JSON array representing PostgresCluster spec.users
       USERS: |
