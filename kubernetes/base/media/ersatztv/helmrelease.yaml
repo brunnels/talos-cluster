@@ -80,14 +80,17 @@ spec:
         globalMounts:
           - path: /data/tv
             readOnly: true
-      tmpfs:
+      transient:
+        accessMode: ReadWriteOnce
+        size: 40Gi
+        storageClassName: local-path
+        type: persistentVolumeClaim
+        globalMounts:
+          - path: /cache
+            subPath: cache
+          - path: /transcode
+            subPath: transcode
+      tmp:
         type: emptyDir
-        advancedMounts:
-          ersatztv:
-            app:
-              - path: /cache
-                subPath: cache
-              - path: /tmp
-                subPath: tmp
-              - path: /transcode
-                subPath: transcode
+        globalMounts:
+          - path: /tmp
