@@ -9,7 +9,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: smb-storage-classes
+    - name: cifs-storage-classes
       namespace: storage
   healthCheckExprs:
     - apiVersion: v1

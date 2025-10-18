@@ -1,0 +1,85 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app cifs-storage-classes
+  annotations:
+    fluxcd.io/helm-release-defaults: disabled
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
+      namespace: external-secrets
+    - name: csi-driver-smb
+  force: true
+  healthCheckExprs:
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
+      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
+  interval: 1h
+  path: ./kubernetes/base/storage/cifs-storage-classes
+  patches:
+    - patch: |-
+        allowVolumeExpansion: true
+        apiVersion: storage.k8s.io/v1
+        kind: StorageClass
+        metadata:
+          name: _
+        mountOptions:
+          - dir_mode=0775
+          - file_mode=0664
+          - uid=1000
+          - gid=100
+          - noperm
+          - mfsymlinks
+          - noserverino
+        parameters:
+          csi.storage.k8s.io/node-stage-secret-name: cifs-storage-classes
+          csi.storage.k8s.io/node-stage-secret-namespace: storage
+          onDelete: retain
+          source: //nasf586af.myqnapcloud.com/movies
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        kind: StorageClass
+#    - target:
+#        kind: StorageClass
+#      patch: |
+#        - op: add
+#          path: /volumeBindingMode
+#          value: Immediate
+#        - op: add
+#          path: /allowVolumeExpansion
+#          value: true
+#        - op: add
+#          path: /reclaimPolicy
+#          value: Delete
+#        - op: add
+#          path: /parameters/onDelete
+#          value: retain
+#        - op: add
+#          path: /parameters/csi.storage.k8s.io~1node-stage-secret-name
+#          value: cifs-storage-classes
+#        - op: add
+#          path: /parameters/csi.storage.k8s.io~1node-stage-secret-namespace
+#          value: storage
+#        - op: add
+#          path: /mountOptions
+#          value:
+#            - "dir_mode=0775"
+#            - "file_mode=0664"
+#            - "uid=1000"
+#            - "gid=100"
+#            - noperm
+#            - mfsymlinks
+#            - noserverino
+#            - multichannel
+#            - max_channels=4
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system

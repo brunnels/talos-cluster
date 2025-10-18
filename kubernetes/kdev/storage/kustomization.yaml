@@ -13,6 +13,6 @@ resources:
   - ./local-path-provisioner.yaml
   - ./rook-ceph-cluster.yaml
   - ./rook-ceph-operator.yaml
-  - ./smb-storage-classes.yaml
+  - ./cifs-storage-classes.yaml
   - ./snapshot-controller.yaml
   - ./volsync.yaml

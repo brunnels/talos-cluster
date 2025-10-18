@@ -106,7 +106,7 @@ spec:
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
-        labelSelector: hrpatch.flux.home.arpa/disabled notin (true)
+        annotationSelector: fluxcd.io/helm-release-defaults != disabled
   path: ./kubernetes/kdev
   postBuild:
     substituteFrom:
