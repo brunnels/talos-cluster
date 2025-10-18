@@ -81,7 +81,7 @@ spec:
           - path: /data/tv
             readOnly: true
       transient:
-        volumeName: transient
+        forceRename: transient
         accessMode: ReadWriteOnce
         size: 40Gi
         storageClass: local-path
