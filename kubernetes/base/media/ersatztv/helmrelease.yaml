@@ -83,7 +83,7 @@ spec:
       transient:
         accessMode: ReadWriteOnce
         size: 40Gi
-        storageClassName: local-path
+        storageClass: local-path
         type: persistentVolumeClaim
         globalMounts:
           - path: /cache
