@@ -15,6 +15,7 @@ spec:
     - name: media-cifs-pvcs
     - name: volsync
       namespace: storage
+  force: true
   interval: 1h
   path: ./kubernetes/base/media/ersatztv
   postBuild:
