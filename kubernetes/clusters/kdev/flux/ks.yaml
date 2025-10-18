@@ -85,11 +85,13 @@ spec:
                 kind: Kustomization
                 metadata:
                   name: _
-                  annotations:
-                    fluxcd.io/test: "true"
+                components:
+                  - ../../clusters/kdev
+                  - ../../components/common
               target:
                 group: kustomize.config.k8s.io
                 kind: Kustomization
+                annotationSelector: fluxcd.io/namespace == enabled
             - patch: |-
                 apiVersion: helm.toolkit.fluxcd.io/v2
                 kind: HelmRelease
@@ -119,6 +121,101 @@ spec:
         kind: Kustomization
         annotationSelector: fluxcd.io/helm-release-defaults != disabled
   path: ./kubernetes/kdev
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+        optional: false
+      - name: cluster-settings
+        kind: ConfigMap
+        optional: false
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-common-apps
+  namespace: flux-system
+spec:
+  deletionPolicy: WaitForTermination
+  dependsOn:
+    - name: cluster-secrets
+  interval: 1h
+  patches:
+    # Add settings postBuild substitutions to child Kustomizations
+    - patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: _
+        spec:
+          postBuild:
+            substituteFrom:
+              - name: cluster-settings
+                kind: ConfigMap
+                optional: false
+              - name: cluster-secrets
+                kind: Secret
+                optional: false
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        kind: Kustomization
+        annotationSelector: fluxcd.io/settings-substitutions != disabled
+    # Add Kustomization defaults for all child Kustomizations
+    - patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: _
+        spec:
+          deletionPolicy: WaitForTermination
+          patches:
+            - patch: |-
+                apiVersion: kustomize.config.k8s.io/v1beta1
+                kind: Kustomization
+                metadata:
+                  name: _
+                components:
+                  - ../../clusters/kdev
+                  - ../../components/common
+              target:
+                group: kustomize.config.k8s.io
+                kind: Kustomization
+                annotationSelector: fluxcd.io/namespace == enabled
+            - patch: |-
+                apiVersion: helm.toolkit.fluxcd.io/v2
+                kind: HelmRelease
+                metadata:
+                  name: _
+                spec:
+                  install:
+                    crds: CreateReplace
+                    strategy:
+                      name: RetryOnFailure
+                  rollback:
+                    cleanupOnFail: true
+                    recreate: true
+                  upgrade:
+                    cleanupOnFail: true
+                    crds: CreateReplace
+                    strategy:
+                      name: RemediateOnFailure
+                    remediation:
+                      remediateLastFailure: true
+                      retries: 2
+              target:
+                group: helm.toolkit.fluxcd.io
+                kind: HelmRelease
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        kind: Kustomization
+        annotationSelector: fluxcd.io/helm-release-defaults != disabled
+  path: ./kubernetes/common
   postBuild:
     substituteFrom:
       - name: cluster-secrets
