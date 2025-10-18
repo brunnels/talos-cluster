@@ -48,8 +48,8 @@ spec:
 #        group: postgres-operator.crunchydata.com
 #        kind: PostgresCluster
   postBuild:
-    GATUS_SUBDOMAIN: security-pgadmin
     substitute:
+      GATUS_SUBDOMAIN: security-pgadmin
       # USERS should be a valid JSON array representing PostgresCluster spec.users
       USERS: |
         [
