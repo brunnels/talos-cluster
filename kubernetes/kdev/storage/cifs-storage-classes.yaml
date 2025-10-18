@@ -30,6 +30,7 @@ spec:
         metadata:
           name: _
         mountOptions:
+          - vers=3
           - dir_mode=0775
           - file_mode=0664
           - uid=1000
@@ -37,8 +38,7 @@ spec:
           - noperm
           - mfsymlinks
           - noserverino
-          - multichannel
-          - max_channels=4
+          - rdma
         parameters:
           csi.storage.k8s.io/node-stage-secret-name: cifs-storage-classes
           csi.storage.k8s.io/node-stage-secret-namespace: storage
