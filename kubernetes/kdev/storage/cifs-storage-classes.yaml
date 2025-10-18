@@ -38,7 +38,6 @@ spec:
           - noperm
           - mfsymlinks
           - noserverino
-          - rdma
         parameters:
           csi.storage.k8s.io/node-stage-secret-name: cifs-storage-classes
           csi.storage.k8s.io/node-stage-secret-namespace: storage
