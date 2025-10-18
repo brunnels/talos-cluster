@@ -23,58 +23,62 @@ spec:
   interval: 1h
   path: ./kubernetes/base/storage/cifs-storage-classes
   patches:
-#    - patch: |-
-#        allowVolumeExpansion: true
-#        apiVersion: storage.k8s.io/v1
-#        kind: StorageClass
-#        metadata:
-#          name: _
-#        mountOptions:
-#          - dir_mode=0775
-#          - file_mode=0664
-#          - uid=1000
-#          - gid=100
-#          - noperm
-#          - mfsymlinks
-#          - noserverino
-#        parameters:
-#          csi.storage.k8s.io/node-stage-secret-name: cifs-storage-classes
-#          csi.storage.k8s.io/node-stage-secret-namespace: storage
-#          onDelete: retain
-#          source: //nasf586af.myqnapcloud.com/movies
-#      target:
-#        group: kustomize.toolkit.fluxcd.io
-#        kind: StorageClass
-    - target:
+    - patch: |-
+        allowVolumeExpansion: true
+        apiVersion: storage.k8s.io/v1
         kind: StorageClass
-      patch: |
-        - op: add
-          path: /volumeBindingMode
-          value: Immediate
-        - op: add
-          path: /allowVolumeExpansion
-          value: true
-        - op: add
-          path: /reclaimPolicy
-          value: Delete
-        - op: add
-          path: /parameters/csi.storage.k8s.io~1node-stage-secret-name
-          value: cifs-storage-classes
-        - op: add
-          path: /parameters/csi.storage.k8s.io~1node-stage-secret-namespace
-          value: "${NAMESPACE}"
-        - op: add
-          path: /mountOptions
-          value:
-            - "dir_mode=0775"
-            - "file_mode=0664"
-            - "uid=1000"
-            - "gid=100"
-            - noperm
-            - mfsymlinks
-            - noserverino
-            - multichannel
-            - max_channels=4
+        metadata:
+          name: _
+        mountOptions:
+          - dir_mode=0775
+          - file_mode=0664
+          - uid=1000
+          - gid=100
+          - noperm
+          - mfsymlinks
+          - noserverino
+          - multichannel
+          - max_channels=4
+        parameters:
+          csi.storage.k8s.io/provisioner-secret-name: cifs-storage-classes
+          csi.storage.k8s.io/provisioner-secret-namespace: storage
+          csi.storage.k8s.io/node-stage-secret-name: cifs-storage-classes
+          csi.storage.k8s.io/node-stage-secret-namespace: storage
+        reclaimPolicy: Delete
+        volumeBindingMode: Immediate
+      target:
+        group: storage.k8s.io
+        kind: StorageClass
+#    - target:
+#        kind: StorageClass
+#      patch: |
+#        - op: add
+#          path: /volumeBindingMode
+#          value: Immediate
+#        - op: add
+#          path: /allowVolumeExpansion
+#          value: true
+#        - op: add
+#          path: /reclaimPolicy
+#          value: Delete
+#        - op: add
+#          path: /parameters/csi.storage.k8s.io~1node-stage-secret-name
+#          value: cifs-storage-classes
+#        - op: add
+#          path: /parameters/csi.storage.k8s.io~1node-stage-secret-namespace
+#          value: "${NAMESPACE}"
+#        - op: add
+#          path: /mountOptions
+#          value:
+#            - "dir_mode=0775"
+#            - "file_mode=0664"
+#            - "uid=1000"
+#            - "gid=100"
+#            - noperm
+#            - mfsymlinks
+#            - noserverino
+#            - multichannel
+#            - max_channels=4
   prune: true
   sourceRef:
     kind: GitRepository
