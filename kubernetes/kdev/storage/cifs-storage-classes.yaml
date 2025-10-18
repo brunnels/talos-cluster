@@ -58,14 +58,11 @@ spec:
           path: /reclaimPolicy
           value: Delete
         - op: add
-          path: /parameters/onDelete
-          value: retain
-        - op: add
           path: /parameters/csi.storage.k8s.io~1node-stage-secret-name
           value: cifs-storage-classes
         - op: add
           path: /parameters/csi.storage.k8s.io~1node-stage-secret-namespace
-          value: storage
+          value: "${NAMESPACE}"
         - op: add
           path: /mountOptions
           value:
