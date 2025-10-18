@@ -168,6 +168,18 @@ spec:
         annotationSelector: fluxcd.io/settings-substitutions != disabled
     # Add Kustomization defaults for all child Kustomizations
     - patch: |-
+        apiVersion: kustomize.config.k8s.io/v1beta1
+        kind: Kustomization
+        metadata:
+          name: _
+        components:
+          - ../../clusters/kdev
+          - ../../components/common
+      target:
+        group: kustomize.config.k8s.io
+        kind: Kustomization
+        annotationSelector: fluxcd.io/namespace == enabled
+    - patch: |-
         apiVersion: kustomize.toolkit.fluxcd.io/v1
         kind: Kustomization
         metadata:
