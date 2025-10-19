@@ -22,7 +22,7 @@ spec:
       kind: Grafana
       current: status.stageStatus == success
       failed: status.stageStatus == failed
-      inProgress: status.state != complete
+      inProgress: status.stage != complete
   interval: 1h
   path: ./kubernetes/base/observability/grafana-instance
   postBuild:
