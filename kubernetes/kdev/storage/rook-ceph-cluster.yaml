@@ -30,6 +30,7 @@ spec:
       APP: *app
       GATUS_NAME: rook-admin
       GATUS_SUBDOMAIN: rook
+      DEVICE_PATH_FILTER: /dev/disk/by-path/pci-0000:02:00.0-nvme-*
   prune: true
   sourceRef:
     kind: GitRepository

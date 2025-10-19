@@ -103,7 +103,7 @@ spec:
       storage:
         useAllNodes: true
         useAllDevices: false
-        devicePathFilter: /dev/disk/by-path/pci-0000:02:00.0-nvme-*
+        devicePathFilter: ${DEVICE_PATH_FILTER}
     cephBlockPools:
       - name: ceph-blockpool
         spec:
