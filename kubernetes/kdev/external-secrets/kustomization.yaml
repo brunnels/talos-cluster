@@ -9,5 +9,5 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-  - ./external-secrets.yaml
-  - ./external-secrets-stores.yaml
+  - ../../external-secrets.yaml
+  - ../../external-secrets-stores.yaml

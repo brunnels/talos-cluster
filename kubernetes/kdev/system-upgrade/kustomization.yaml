@@ -9,5 +9,5 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-  - ./tuppr.yaml
-  - ./tuppr-upgrades.yaml
+  - ../../tuppr.yaml
+  - ../../tuppr-upgrades.yaml

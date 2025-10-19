@@ -9,4 +9,4 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-  - ./cert-manager.yaml
+  - ../../common/cert-manager.yaml
