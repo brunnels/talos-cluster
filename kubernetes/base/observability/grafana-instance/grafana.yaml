@@ -20,8 +20,7 @@ spec:
     auth.anonymous:
       enabled: "true"
       hide_version: "true"
-      org_id: "1"
-      org_name: ${SECRET_DOMAIN}
+      org_name: Main Org.
       org_role: Viewer
     auth.generic_oauth:
       api_url: https://auth.${SECRET_DOMAIN}/api/oidc/userinfo
@@ -34,7 +33,6 @@ spec:
       scopes: openid groups profile email
       token_url: https://auth.${SECRET_DOMAIN}/api/oidc/token
     auth.generic_oauth.group_mapping:
-      org_id: "1"
       role_attribute_path: |
         contains(groups[*], 'Admins') && 'Admin' || contains(groups[*], 'Domain Users') && 'Viewer'
     log:
