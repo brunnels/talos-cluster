@@ -9,10 +9,10 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-  - ./csi-driver-smb.yaml
+  - ../../common/storage/cifs-storage-classes.yaml
+  - ../../common/storage/csi-driver-smb.yaml
+  - ../../common/storage/rook-ceph-operator.yaml
+  - ../../common/storage/snapshot-controller.yaml
+  - ../../common/storage/volsync.yaml
   - ./local-path-provisioner.yaml
   - ./rook-ceph-cluster.yaml
-  - ./rook-ceph-operator.yaml
-  - ./cifs-storage-classes.yaml
-  - ./snapshot-controller.yaml
-  - ./volsync.yaml
