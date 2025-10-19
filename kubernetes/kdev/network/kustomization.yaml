@@ -9,6 +9,6 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-  - ./cloudflare-dns.yaml
-  - ./cloudflare-tunnel.yaml
-  - ./k8s-gateway.yaml
+  - ../../common/network/cloudflare-dns.yaml
+  - ../../common/network/cloudflare-tunnel.yaml
+  - ../../common/network/k8s-gateway.yaml
