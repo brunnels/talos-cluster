@@ -9,14 +9,14 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-  - ./cilium.yaml
-  - ./cilium-gateway.yaml
-  - ./coredns.yaml
-  - ./descheduler.yaml
-  - ./intel-device-plugin-gpu.yaml
-  - ./intel-device-plugin-operator.yaml
+  - ../../common/kube-system/cilium-gateway.yaml
+  - ../../common/kube-system/cilium.yaml
+  - ../../common/kube-system/coredns.yaml
+  - ../../common/kube-system/descheduler.yaml
+  - ../../common/kube-system/intel-device-plugin-gpu.yaml
+  - ../../common/kube-system/intel-device-plugin-operator.yaml
+  - ../../common/kube-system/metrics-server.yaml
+  - ../../common/kube-system/reloader.yaml
+  - ../../common/kube-system/spegel.yaml
   - ./irqbalance.yaml
-  - ./metrics-server.yaml
   - ./nvidia-device-plugin.yaml
-  - ./reloader.yaml
-  - ./spegel.yaml
