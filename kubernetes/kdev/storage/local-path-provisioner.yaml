@@ -10,6 +10,11 @@ spec:
       app.kubernetes.io/name: *app
   interval: 1h
   path: ./kubernetes/base/storage/local-path-provisioner
+  postBuild:
+    substitute:
+      # NODE_PATHS should be a valid JSON array representing spec.nodePathMap[0].paths
+      NODE_PATHS: |
+        ["/var/mnt/lpp-0", "/var/mnt/lpp-1"]
   prune: true
   sourceRef:
     kind: GitRepository
