@@ -12,6 +12,12 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
     - name: grafana-operator
+  healthCheckExprs:
+    - apiVersion: grafana.integreatly.org/v1beta1
+      kind: Grafana
+      current: status.stageStatus == success
+      failed: status.stageStatus == failed
+      inProgress: status.state != complete
   interval: 1h
   path: ./kubernetes/base/observability/grafana-instance
   postBuild:
@@ -22,3 +28,4 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  wait: true
