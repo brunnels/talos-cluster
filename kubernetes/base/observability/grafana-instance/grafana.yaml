@@ -1,0 +1,101 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/grafana.integreatly.org/grafana_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: &app grafana
+  labels:
+    grafana.internal/instance: *app
+spec:
+  config:
+    analytics:
+      check_for_plugin_updates: "false"
+      check_for_updates: "false"
+      feedback_links_enabled: "false"
+      reporting_enabled: "false"
+    auth:
+      oauth_allow_insecure_email_lookup: "true"
+      oauth_auto_login: "false"
+      signout_redirect_url: https://auth.${SECRET_DOMAIN}/logout
+    auth.anonymous:
+      enabled: "true"
+      hide_version: "true"
+      org_name: ${SECRET_DOMAIN}
+      org_role: Viewer
+    auth.generic_oauth:
+      api_url: https://auth.${SECRET_DOMAIN}/api/oidc/userinfo
+      auth_url: https://auth.${SECRET_DOMAIN}/api/oidc/authorization
+      enabled: "true"
+      groups_attribute_path: groups
+      login_attribute_path: preferred_username
+      name: Authelia
+      name_attribute_path: name
+      scopes: openid groups profile email
+      token_url: https://auth.${SECRET_DOMAIN}/api/oidc/token
+    auth.generic_oauth.group_mapping:
+      role_attribute_path: |
+        contains(groups[*], 'Admins') && 'Admin' || contains(groups[*], 'Domain Users') && 'Viewer'
+    log:
+      mode: console
+    metrics:
+      enabled: "true"
+    news:
+      news_feed_enabled: "false"
+    plugins:
+      plugin_admin_enabled: "false"
+    security:
+      angular_support_enabled: "true"
+    server:
+      enable_gzip: "true"
+      root_url: https://grafana.${SECRET_DOMAIN}
+  deployment:
+    spec:
+      strategy:
+        type: Recreate
+      template:
+        spec:
+          containers:
+            - name: *app
+              env:
+                - name: GF_SECURITY_ADMIN_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: *app
+                      key: GF_SECURITY_ADMIN_USER
+                - name: GF_SECURITY_ADMIN_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: *app
+                      key: GF_SECURITY_ADMIN_PASSWORD
+                - name: GF_AUTH_GENERIC_OAUTH_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: *app
+                      key: GF_AUTH_GENERIC_OAUTH_CLIENT_ID
+                - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: *app
+                      key: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities: {drop: ["ALL"]}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 100
+            fsGroup: 100
+            fsGroupChangePolicy: OnRootMismatch
+          volumes:
+            - name: *app
+              persistentVolumeClaim:
+                claimName: *app
+  persistentVolumeClaim:
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
+  disableDefaultSecurityContext: All

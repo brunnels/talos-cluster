@@ -1,0 +1,49 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: alertmanager
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasource:
+    access: proxy
+    jsonData:
+      implementation: prometheus
+    name: Alertmanager
+    type: alertmanager
+    url: http://alertmanager-operated.observability.svc.cluster.local:9093
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: prometheus
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasource:
+    access: proxy
+    isDefault: true
+    name: Prometheus
+    type: prometheus
+    url: http://prometheus-operated.observability.svc.cluster.local:9090
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: loki
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasource:
+    access: proxy
+    isDefault: true
+    name: loki
+    type: Loki
+    url: http://loki-headless.observability.svc.cluster.local:3100
