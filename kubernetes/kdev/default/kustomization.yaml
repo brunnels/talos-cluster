@@ -3,10 +3,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: default
-metadata:
-  annotations:
-    fluxcd.io/namespace: enabled
 components:
+  - ../../clusters/kdev
   - ../../components/common
 replacements:
   - path: ../../components/replacements/ks.yaml
