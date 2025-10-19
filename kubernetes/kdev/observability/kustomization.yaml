@@ -9,14 +9,12 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-#  - ./alloy.yaml
-  - ./gatus.yaml
-  - ./grafana-instance.yaml
-  - ./grafana-operator.yaml
-#  - ./kromgo.yaml
-  - ./kube-prometheus-stack.yaml
-  - ./kube-state-metrics.yaml
-  - ./loki.yaml
-  - ./node-exporter.yaml
-  - ./silence-operator.yaml
-  - ./smartctl-exporter.yaml
+  - ../../common/observability/gatus.yaml
+  - ../../common/observability/grafana-instance.yaml
+  - ../../common/observability/grafana-operator.yaml
+  - ../../common/observability/kube-prometheus-stack.yaml
+  - ../../common/observability/kube-state-metrics.yaml
+  - ../../common/observability/loki.yaml
+  - ../../common/observability/node-exporter.yaml
+  - ../../common/observability/silence-operator.yaml
+  - ../../common/observability/smartctl-exporter.yaml

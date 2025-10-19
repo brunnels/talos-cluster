@@ -12,36 +12,34 @@ spec:
   values:
     controllers:
       gatus:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
-          init-config:
+          gatus-sidecar:
             image:
-              repository: ghcr.io/home-operations/k8s-sidecar
-              tag: 1.30.10@sha256:dd3b1f0c4e6b4512b2deb50c58acf65fd0f0927120a59a95eec854d32a6c9ce3
-            env:
-              FOLDER: /config
-              LABEL: gatus.io/enabled
-              NAMESPACE: ALL
-              RESOURCE: both
-              UNIQUE_FILENAMES: true
-              METHOD: WATCH
-            restartPolicy: Always
+              repository: ghcr.io/home-operations/gatus-sidecar
+              tag: 0.0.9@sha256:31a52dd0e579c1f865b2580a4bb715d2a893deb1351fedeaba73598e9a578cbe
+            args:
+              - --auto-httproute
+              - --enable-httproute
+              - --enable-service
             resources:
               requests:
                 cpu: 10m
               limits:
-                memory: 128Mi
+                memory: 64Mi
+            restartPolicy: Always
         containers:
           app:
             image:
               repository: ghcr.io/twin/gatus
-              tag: v5.23.2@sha256:041514059279f102d8e549a7c7c9f813ae9a0bf505c6d7c37aea9201af0bec3a
+              tag: v5.27.0@sha256:5091320d752756d7ac0a094d26ac38eb8216d7ed5857642b305522d1c6641f72
             env:
-              TZ: "${TIMEZONE}"
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
               GATUS_WEB_PORT: &port 80
+              TZ: "${TIMEZONE}"
             envFrom:
               - secretRef:
                   name: *app
@@ -61,17 +59,19 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {add: ["NET_RAW"], drop: ["ALL"]}
             resources:
               requests:
                 cpu: 100m
               limits:
                 memory: 256Mi
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 5Gi
     defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 100
+      hostUsers: false
     service:
       app:
         ports:
@@ -84,6 +84,7 @@ spec:
     route:
       app:
         annotations:
+          gatus.home-operations.com/enabled: "false"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Observability
           gethomepage.dev/name: Gatus
@@ -95,23 +96,20 @@ spec:
           - "{{ .Release.Name }}.${SECRET_DOMAIN}"
           - "status.${SECRET_DOMAIN}"
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
     rbac:
       roles:
         gatus:
           type: ClusterRole
           rules:
-            - apiGroups:
-                - ""
-              resources:
-                - configmaps
-                - secrets
-              verbs:
-                - get
-                - watch
-                - list
+            - apiGroups: [""]
+              resources: ["services"]
+              verbs: ["get", "watch", "list"]
+            - apiGroups: ["gateway.networking.k8s.io"]
+              resources: ["gateways", "httproutes"]
+              verbs: ["get", "watch", "list"]
       bindings:
         gatus:
           type: ClusterRoleBinding
@@ -122,12 +120,9 @@ spec:
     serviceAccount:
       gatus: {}
     persistence:
-      config:
-        type: emptyDir
       config-file:
         type: configMap
         name: *app
         globalMounts:
           - path: /config/config.yaml
             subPath: config.yaml
-            readOnly: true
