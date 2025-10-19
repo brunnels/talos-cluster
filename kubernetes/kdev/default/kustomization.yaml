@@ -9,4 +9,4 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-  - ./echo.yaml
+  - ../../common/default/echo.yaml
