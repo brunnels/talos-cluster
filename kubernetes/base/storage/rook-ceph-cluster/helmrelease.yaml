@@ -103,7 +103,7 @@ spec:
       storage:
         useAllNodes: true
         useAllDevices: false
-        devicePathFilter: ${DEVICE_PATH_FILTER}
+        devicePathFilter: ${CEPH_DEVICE_PATH_FILTER}
     cephBlockPools:
       - name: ceph-blockpool
         spec:

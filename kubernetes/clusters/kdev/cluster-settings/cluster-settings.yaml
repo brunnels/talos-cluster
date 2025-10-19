@@ -19,7 +19,12 @@ data:
   CLOUDFLARE_GATEWAY_ADDR: "10.0.150.130"
   CLUSTER_GATEWAY_ADDR: "10.0.150.131"
   CLUSTER_DNS_GATEWAY_ADDR: "10.0.150.132"
+
+  CEPH_DEVICE_PATH_FILTER: /dev/disk/by-path/pci-0000:02:00.0-nvme-*
   CEPH_CLUSTER_CIDR: "169.254.255.0/24"
+
+  # should be a valid JSON array representing spec.nodePathMap[0].paths
+  LOCAL_PATH_PROVISIONER_NODE_PATHS: '["/var/mnt/lpp-0", "/var/mnt/lpp-1"]'
 
   SB_CLUSTER_UUID: "1af0cf2e-2292-4db5-9b67-ab6fe5b8920f"
 
