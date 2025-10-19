@@ -11,7 +11,7 @@ replacements:
 resources:
 #  - ./alloy.yaml
   - ./gatus.yaml
-  - ./grafana-instance.yaml
+#  - ./grafana-instance.yaml
   - ./grafana-operator.yaml
 #  - ./kromgo.yaml
   - ./kube-prometheus-stack.yaml
