@@ -12,6 +12,11 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
     - name: grafana-operator
+  healthChecks:
+    - apiVersion: grafana.integreatly.org/v1beta1
+      kind: Grafana
+      name: grafana
+      namespace: observability
   healthCheckExprs:
     - apiVersion: grafana.integreatly.org/v1beta1
       kind: Grafana
@@ -28,4 +33,3 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: true
