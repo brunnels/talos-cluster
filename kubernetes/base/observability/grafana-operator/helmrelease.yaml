@@ -3,11 +3,11 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: grafana-operator
+  name: &app grafana-operator
 spec:
   chartRef:
     kind: OCIRepository
-    name: grafana-operator
+    name: *app
   interval: 1h
   values:
     dashboard:
