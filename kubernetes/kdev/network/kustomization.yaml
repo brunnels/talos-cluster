@@ -11,4 +11,5 @@ replacements:
 resources:
   - ../../common/network/cloudflare-dns.yaml
   - ../../common/network/cloudflare-tunnel.yaml
+  - ../../common/network/envoy-gateway.yaml
   - ../../common/network/k8s-gateway.yaml
