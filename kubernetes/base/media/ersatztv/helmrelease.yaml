@@ -57,7 +57,7 @@ spec:
             port: 8409
     route:
       app:
-        hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.${SECRET_DOMAIN}"]
+        hostnames: ["${APP}.${SECRET_DOMAIN}"]
         parentRefs:
           - name: internal
             namespace: kube-system

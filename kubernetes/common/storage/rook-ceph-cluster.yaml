@@ -8,8 +8,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-#  components:
-#    - ../../../components/gatus/guarded
   dependsOn:
     - name: rook-ceph-operator
   healthChecks:
@@ -28,8 +26,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_NAME: rook-admin
-      GATUS_SUBDOMAIN: rook
   prune: true
   sourceRef:
     kind: GitRepository

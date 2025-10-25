@@ -8,8 +8,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-#  components:
-#    - ../../../components/gatus/external
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
@@ -20,7 +18,6 @@ spec:
   postBuild:
     substitute:
       APP: flux-webhook
-      GATUS_STATUS: "404"
   prune: true
   sourceRef:
     kind: GitRepository

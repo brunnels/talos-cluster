@@ -11,7 +11,7 @@ metadata:
     gethomepage.dev/icon: flux-cd
     gethomepage.dev/description: Flux Dashboard
 spec:
-  hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.${SECRET_DOMAIN}"]
+  hostnames: ["${APP}.${SECRET_DOMAIN}"]
   parentRefs:
     - name: internal
       namespace: kube-system

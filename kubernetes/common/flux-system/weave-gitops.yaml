@@ -8,8 +8,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-#  components:
-#    - ../../../components/gatus/guarded
+
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
@@ -18,7 +17,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: gitops
   prune: true
   sourceRef:
     kind: GitRepository

@@ -8,14 +8,11 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-#  components:
-#    - ../../../components/gatus/external
   interval: 1h
   path: ./kubernetes/base/observability/gatus
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: status
   prune: true
   sourceRef:
     kind: GitRepository

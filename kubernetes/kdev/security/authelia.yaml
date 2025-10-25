@@ -10,7 +10,6 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../components/dragonfly-cluster
-#    - ../../../components/gatus/external
     - ../../../components/pgo-db-init
   dependsOn:
     - name: external-secrets-stores
@@ -32,7 +31,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: auth
   prune: true
   sourceRef:
     kind: GitRepository

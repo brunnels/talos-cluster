@@ -101,7 +101,7 @@ spec:
     route:
       app:
         hostnames:
-          - "${GATUS_SUBDOMAIN:=${APP}}.${SECRET_DOMAIN}"
+          - "${APP}.${SECRET_DOMAIN}"
         parentRefs:
           - name: external
             namespace: kube-system
