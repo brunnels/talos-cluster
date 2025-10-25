@@ -50,7 +50,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: {{ cert_name }}-production
-  namespace: kube-system
+  namespace: network
   annotations:
     cert-manager.io/common-name: "{{ secret_domain }}"
     cert-manager.io/alt-names: '*.{{ secret_domain }},{{ secret_domain }}'
