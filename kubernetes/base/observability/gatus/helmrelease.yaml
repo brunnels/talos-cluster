@@ -96,8 +96,8 @@ spec:
           - "{{ .Release.Name }}.${SECRET_DOMAIN}"
           - "status.${SECRET_DOMAIN}"
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
     rbac:
       roles:

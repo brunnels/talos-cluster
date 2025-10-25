@@ -19,13 +19,12 @@ spec:
           app:
             image:
               repository: docker.io/cloudflare/cloudflared
-              tag: 2025.6.1
+              tag: 2025.10.0
             env:
               NO_AUTOUPDATE: true
               TUNNEL_METRICS: 0.0.0.0:8080
-              TUNNEL_ORIGIN_ENABLE_HTTP2: true
-              TUNNEL_POST_QUANTUM: true
-              TUNNEL_TRANSPORT_PROTOCOL: quic
+              TUNNEL_POST_QUANTUM: true # disable when using http2
+              TUNNEL_TRANSPORT_PROTOCOL: quic # or http2
             envFrom:
               - secretRef:
                   name: *app
@@ -66,11 +65,21 @@ spec:
       app:
         endpoints:
           - port: http
+    configMaps:
+      config:
+        data:
+          config.yaml: |-
+            ingress:
+              - hostname: "*.${SECRET_DOMAIN}"
+                originRequest:
+                  http2Origin: true
+                  originServerName: external.${SECRET_DOMAIN}
+                service: https://envoy-external.{{ .Release.Namespace }}.svc.cluster.local:443
+              - service: http_status:404
     persistence:
       config-file:
         type: configMap
-        name: *app
+        identifier: config
         globalMounts:
           - path: /etc/cloudflared/config.yaml
             subPath: config.yaml
-            readOnly: true

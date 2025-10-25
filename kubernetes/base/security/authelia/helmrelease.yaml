@@ -103,8 +103,8 @@ spec:
         hostnames:
           - "auth.${SECRET_DOMAIN}"
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

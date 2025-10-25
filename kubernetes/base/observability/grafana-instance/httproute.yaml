@@ -11,7 +11,7 @@ spec:
   hostnames:
     - "grafana.${SECRET_DOMAIN}"
   parentRefs:
-    - name: internal
+    - name: envoy-internal
       namespace: network
       sectionName: https
   rules:

@@ -11,8 +11,7 @@ spec:
   interval: 1h
   values:
     fullnameOverride: *app
-    provider:
-      name: cloudflare
+    provider: cloudflare
     env:
       - name: &name CF_API_TOKEN
         valueFrom:
