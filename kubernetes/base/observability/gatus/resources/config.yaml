@@ -1,78 +1,70 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.32.1/configmap-v1.json
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: gatus
-data:
-  config.yaml: |
-    ---
-    alerting:
-      pushover:
-        application-token: $${GATUS_PUSHOVER_TOKEN}
-        default-alert:
-          description: health-check failed
-          failure-threshold: 5
-          send-on-resolved: true
-          success-threshold: 3
-        priority: 1
-        resolved-priority: 0
-        sound: gamelan
-        title: "Gatus (${VAULT_PREFIX})"
-        user-key: ${PUSHOVER_USER_KEY}
-    connectivity:
-      checker:
-        target: 1.1.1.1:53
-        interval: 1m
-    endpoints:
-      - name: nas-cert-expiration
-        group: domain
-        url: "https://${QNAP_HOSTNAME}"
-        interval: 1h
-        conditions:
-          - "[CERTIFICATE_EXPIRATION] > 240h"
+alerting:
+  pushover:
+    application-token: ${GATUS_PUSHOVER_TOKEN}
+    default-alert:
+      description: health-check failed
+      failure-threshold: 5
+      send-on-resolved: true
+      success-threshold: 3
+    priority: 1
+    resolved-priority: 0
+    sound: gamelan
+    title: "Gatus (${VAULT_PREFIX})"
+    user-key: ${PUSHOVER_USER_KEY}
+connectivity:
+  checker:
+    target: 1.1.1.1:53
+    interval: 1m
+endpoints:
+  - name: nas-cert-expiration
+    group: domain
+    url: "https://${QNAP_HOSTNAME}"
+    interval: 1h
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 240h"
 
-      - name: cert-expiration
-        group: domain
-        url: "https://status.${SECRET_DOMAIN}"
-        interval: 1h
-        conditions:
-          - "[CERTIFICATE_EXPIRATION] > 240h"
+  - name: cert-expiration
+    group: domain
+    url: "https://status.${SECRET_DOMAIN}"
+    interval: 1h
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 240h"
 
-      - name: Cloudflare
-        group: connectivity
-        url: icmp://1.1.1.1
-        interval: 1m
-        conditions:
-          - "[CONNECTED] == true"
+  - name: Cloudflare
+    group: connectivity
+    url: icmp://1.1.1.1
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
 
-      - name: Google
-        group: connectivity
-        url: icmp://8.8.8.8
-        interval: 1m
-        conditions:
-          - "[CONNECTED] == true"
+  - name: Google
+    group: connectivity
+    url: icmp://8.8.8.8
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
 
-      - name: Quad9
-        group: connectivity
-        url: icmp://9.9.9.9
-        interval: 1m
-        conditions:
-          - "[CONNECTED] == true"
-    metrics: true
-    storage:
-      type: sqlite
-      caching: true
-      path: /config/gatus.db
-    ui:
-      title: Status | Gatus
-      header: Status
+  - name: Quad9
+    group: connectivity
+    url: icmp://9.9.9.9
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
+metrics: true
+storage:
+  type: sqlite
+  caching: true
+  path: ${GATUS_CONFIG_PATH}/gatus.db
+ui:
+  title: Status | Gatus
+  header: Status
+  link: https://github.com/brunnels
+  default_sort_by: Group
+  buttons:
+    - name: Github
       link: https://github.com/brunnels
-      default_sort_by: Group
-      buttons:
-        - name: Github
-          link: https://github.com/brunnels
-        - name: Homelab
-          link: https://github.com/brunnels/talos-cluster
-    web:
-      port: 80
+    - name: Homelab
+      link: https://github.com/brunnels/talos-cluster
+web:
+  port: ${GATUS_WEB_PORT}
