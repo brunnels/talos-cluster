@@ -6,9 +6,9 @@ metadata:
   name: grafana
 spec:
   hostnames:
-    - grafana.${SECRET_DOMAIN}
+    - "grafana.${SECRET_DOMAIN}"
   parentRefs:
-    - name: envoy-external
+    - name: internal
       namespace: network
       sectionName: https
   rules:
