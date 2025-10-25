@@ -77,7 +77,7 @@ spec:
     route:
       app:
         hostnames:
-          - "${APP}.${SECRET_DOMAIN}"
+          - "prowlarr.${SECRET_DOMAIN}"
         parentRefs:
           - name: internal
             namespace: kube-system

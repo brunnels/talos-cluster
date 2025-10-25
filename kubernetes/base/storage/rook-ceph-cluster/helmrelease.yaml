@@ -26,7 +26,7 @@ spec:
           gethomepage.dev/icon: rook
           gethomepage.dev/pod-selector: app.kubernetes.io/name=rook-ceph-mgr
         host:
-          name: "${APP}.${SECRET_DOMAIN}"
+          name: "rook.${SECRET_DOMAIN}"
           path: /
           pathType: PathPrefix
         parentRefs:
