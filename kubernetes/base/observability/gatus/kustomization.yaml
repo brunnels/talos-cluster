@@ -6,9 +6,9 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
-configMapGenerator:
-  - name: gatus
-    files:
-      - ./resources/config.yaml
-generatorOptions:
-  disableNameSuffixHash: true
+#configMapGenerator:
+#  - name: gatus
+#    files:
+#      - ./resources/config.yaml
+#generatorOptions:
+#  disableNameSuffixHash: true

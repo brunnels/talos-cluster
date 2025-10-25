@@ -119,8 +119,8 @@ spec:
             - identifier: gatus
     serviceAccount:
       gatus: {}
-#    configMapsFromFolder:
-#      basePath: resources
+    configMapsFromFolder:
+      basePath: resources
     persistence:
       config-file:
         type: configMap
