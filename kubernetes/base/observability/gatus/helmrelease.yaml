@@ -128,3 +128,14 @@ spec:
         globalMounts:
           - path: /config/config.yaml
             subPath: config.yaml
+      transient:
+        forceRename: gatus-transient
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: local-path
+        type: persistentVolumeClaim
+        advancedMounts:
+          gatus:
+            app:
+              - path: /config/gatus.db
+                subPath: gatus.db
