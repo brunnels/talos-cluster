@@ -5,6 +5,12 @@ kind: HTTPRoute
 metadata:
   name: ${NAMESPACE}-pgadmin
   annotations:
+    gatus.home-operations.com/endpoint: |-
+      group: infrastructure
+      guarded: true
+      ui:
+        hide-hostname: true
+        hide-url: true
     gethomepage.dev/description: Postgres Database Manager
     gethomepage.dev/enabled: "true"
     gethomepage.dev/group: Management

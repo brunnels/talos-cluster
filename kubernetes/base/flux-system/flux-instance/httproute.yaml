@@ -6,6 +6,8 @@ metadata:
   name: github-webhook
   annotations:
     gatus.home-operations.com/endpoint: |-
+      group: infrastructure
+      guarded: true
       conditions: ["[STATUS] == 404"]
 spec:
   hostnames:

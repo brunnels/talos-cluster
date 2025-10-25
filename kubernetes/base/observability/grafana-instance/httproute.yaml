@@ -5,6 +5,9 @@ kind: HTTPRoute
 metadata:
   name: grafana
 spec:
+  annotations:
+    gatus.home-operations.com/endpoint: |-
+      guarded: true
   hostnames:
     - "grafana.${SECRET_DOMAIN}"
   parentRefs:

@@ -20,6 +20,8 @@ spec:
     route:
       dashboard:
         annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 404"]
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Management
           gethomepage.dev/name: Rook Dashboard
