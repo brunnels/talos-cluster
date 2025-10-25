@@ -10,7 +10,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../components/dragonfly-cluster
-    - ../../../components/gatus/external
+#    - ../../../components/gatus/external
     - ../../../components/pgo-db-init
   dependsOn:
     - name: external-secrets-stores

@@ -9,7 +9,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../components/gatus/guarded
+#    - ../../../components/gatus/guarded
     - ../../../components/pgo-db-init
   dependsOn:
     - name: downloads-pgo-cluster
