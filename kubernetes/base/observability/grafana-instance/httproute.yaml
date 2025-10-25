@@ -5,15 +5,11 @@ kind: HTTPRoute
 metadata:
   name: grafana
 spec:
-  annotations:
-    gatus.home-operations.com/endpoint: |-
-      guarded: true
   hostnames:
     - "grafana.${SECRET_DOMAIN}"
   parentRefs:
     - name: envoy-internal
       namespace: network
-      sectionName: https
   rules:
     - backendRefs:
         - name: grafana-service
