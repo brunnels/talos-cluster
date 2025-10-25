@@ -124,7 +124,7 @@ spec:
     persistence:
       config:
         type: configMap
-        identifier: config
+        name: *app
         globalMounts:
           - path: /config/config.yaml
             subPath: config.yaml
