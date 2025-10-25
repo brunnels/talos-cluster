@@ -119,10 +119,12 @@ spec:
             - identifier: gatus
     serviceAccount:
       gatus: {}
+    configMapsFromFolder:
+      basePath: resources
     persistence:
-      config-file:
+      config:
         type: configMap
-        name: *app
+        identifier: config
         globalMounts:
           - path: /config/config.yaml
             subPath: config.yaml
