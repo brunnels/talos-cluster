@@ -25,7 +25,6 @@ data:
         target: 1.1.1.1:53
         interval: 1m
     endpoints:
-
       - name: nas-cert-expiration
         group: domain
         url: "https://${QNAP_HOSTNAME}"
@@ -64,7 +63,7 @@ data:
     storage:
       type: sqlite
       caching: true
-      path: $${GATUS_CONFIG_PATH}/gatus.db
+      path: /config/gatus.db
     ui:
       title: Status | Gatus
       header: Status
@@ -76,4 +75,4 @@ data:
         - name: Homelab
           link: https://github.com/brunnels/talos-cluster
     web:
-      port: $${GATUS_WEB_PORT}
+      port: 80
