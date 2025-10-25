@@ -52,6 +52,15 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
+      annotations:
+        gatus.home-operations.com/endpoint: |
+          group: internal
+          interval: 1m
+          conditions:
+            - "[STATUS] == 200"
+            - "[RESPONSE_TIME] < 500"
+          alerts:
+            - type: pushover
         ports:
           http:
             port: 8409
