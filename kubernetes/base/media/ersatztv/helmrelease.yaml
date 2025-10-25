@@ -57,6 +57,7 @@ spec:
           gatus.home-operations.com/endpoint: |
             group: internal
             interval: 1m
+            url: https://tv.${SECRET_DOMAIN}
             conditions:
               - "[STATUS] == 200"
               - "[RESPONSE_TIME] < 500"
