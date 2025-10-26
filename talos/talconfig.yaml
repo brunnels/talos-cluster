@@ -9,7 +9,7 @@ endpoint: https://10.0.150.200:6443
 additionalApiServerCertSans: &sans
   - "127.0.0.1"
   - "10.0.150.200"
-  - "kdev.lan.kraven.org"
+  - "k8s.kraven.dev"
   - "kdev-n1.lan.kraven.org"
   - "kdev-n2.lan.kraven.org"
   - "kdev-n3.lan.kraven.org"
