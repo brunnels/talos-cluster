@@ -7,11 +7,11 @@ metadata:
   annotations:
     external-dns.alpha.kubernetes.io/target: &hostname external.${SECRET_DOMAIN}
     gatus.home-operations.com/endpoint: |-
+      alerts:
+        - type: pushover
       client:
         dns-resolver: tcp://1.1.1.1:53
       group: external
-      alerts:
-        - type: pushover
 spec:
   gatewayClassName: envoy
   infrastructure:
@@ -43,9 +43,10 @@ metadata:
   annotations:
     external-dns.alpha.kubernetes.io/target: &hostname internal.${SECRET_DOMAIN}
     gatus.home-operations.com/endpoint: |
-      guarded: true
       alerts:
         - type: pushover
+      group: guarded
+      guarded: true
 spec:
   gatewayClassName: envoy
   infrastructure:
