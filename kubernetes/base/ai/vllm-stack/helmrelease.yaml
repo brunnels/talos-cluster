@@ -25,9 +25,9 @@ spec:
           pvcStorage: 50Gi
           pvcAccessMode:
             - ReadWriteOnce
-#          storageClass: local-path
-          pvcMatchLabels:
-            model: "opt-125m-pv"
+          storageClass: local-path
+#          pvcMatchLabels:
+#            model: "opt-125m-pv"
 
           replicaCount: 2
 
