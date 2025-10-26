@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization.json
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: downloads
+components:
+  - ../../clusters/kdev
+  - ../../components/common
+replacements:
+  - path: ../../components/replacements/ks.yaml
+resources:
+  - ./downloads-cifs-pvcs.yaml
+  - ./downloads-pgo-cluster.yaml
+  - ./prowlarr.yaml
