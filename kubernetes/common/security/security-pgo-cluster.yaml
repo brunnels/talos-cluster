@@ -17,15 +17,20 @@ spec:
       namespace: database
     - name: rook-ceph-cluster
       namespace: storage
-  healthCheckExprs:
-    - apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
-      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
-      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
+  healthChecks:
     - apiVersion: postgres-operator.crunchydata.com/v1beta1
       kind: PostgresCluster
-      inProgress: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < e.replicas)
-      current: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas == e.replicas)
+      name: downloads
+      namespace: downloads
+#  healthCheckExprs:
+#    - apiVersion: external-secrets.io/v1
+#      kind: ExternalSecret
+#      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
+#      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
+#    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+#      kind: PostgresCluster
+#      inProgress: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas < e.replicas)
+#      current: status.instances.filter(e, e.name == 'pgo-cluster').all(e, e.readyReplicas == e.replicas)
   interval: 1h
   path: ./kubernetes/base/database/pgo-cluster
 #
@@ -58,4 +63,4 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: true
+#  wait: true
