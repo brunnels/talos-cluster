@@ -40,7 +40,14 @@ metadata:
   name: envoy-internal
   annotations:
     external-dns.alpha.kubernetes.io/target: &hostname internal.${SECRET_DOMAIN}
-    gatus.home-operations.com/guarded: "true"
+    gatus.home-operations.com/endpoint: |
+      guarded: true
+      group: internal
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 500"
+      alerts:
+        - type: pushover
 
 spec:
   gatewayClassName: envoy
