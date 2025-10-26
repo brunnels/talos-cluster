@@ -35,8 +35,8 @@ nodes:
         provisioning:
           diskSelector:
             match: system_disk
-          minSize: 64GiB
-          maxSize: 64GiB
+          minSize: 120GiB
+          maxSize: 120GiB
           grow: false
     userVolumes: &userVolumes
       # non-ceph
