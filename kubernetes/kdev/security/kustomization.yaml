@@ -8,6 +8,6 @@ components:
   - ../../components/common
 replacements:
   - path: ../../components/replacements/ks.yaml
-resources: []
-#  - ../../common/security/security-pgo-cluster.yaml
-#  - ./authelia.yaml
+resources:
+  - ../../common/security/security-pgo-cluster.yaml
+  - ./authelia.yaml
