@@ -62,8 +62,8 @@ spec:
             enabled: true
             cpuOffloadingBufferSize: 20
           hf_token:
-            secret_name: *app
-            secret_key: HF_TOKEN
+            secretName: *app
+            secretKey: HF_TOKEN
 
     cacheserverSpec:
       replicaCount: 1
