@@ -4,6 +4,8 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app vllm-stack
+  annotations:
+    fluxcd.io/helm-release-defaults: disabled
 spec:
   commonMetadata:
     labels:

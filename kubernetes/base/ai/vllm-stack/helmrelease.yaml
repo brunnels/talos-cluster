@@ -13,13 +13,30 @@ spec:
         kind: HelmRepository
         name: *app
   interval: 1h
+  install:
+    timeout: 1h
+    crds: CreateReplace
+    strategy:
+      name: RetryOnFailure
+  rollback:
+    cleanupOnFail: true
+    recreate: true
+  upgrade:
+    timeout: 1h
+    cleanupOnFail: true
+    crds: CreateReplace
+    strategy:
+      name: RemediateOnFailure
+    remediation:
+      remediateLastFailure: true
+      retries: 2
   values:
     servingEngineSpec:
       runtimeClassName: nvidia
       modelSpec:
         - name: llama3
           repository: lmcache/vllm-openai
-          tag: latest-nightly
+          tag: v0.3.8
           modelURL: meta-llama/Llama-3.1-8B-Instruct
           replicaCount: 2
 
@@ -54,7 +71,7 @@ spec:
       servicePort: 81
       serde: naive
       repository: lmcache/vllm-openai
-      tag: latest-nightly
+      tag: v0.3.8
       resources:
         requests:
           cpu: 2
