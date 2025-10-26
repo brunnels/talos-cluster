@@ -26,7 +26,7 @@ releases:
         args:
           - -c
           - |
-            cat ../../kubernetes/base/kube-system/cilium/networks.yaml | envsubst | kubectl --context={{ requiredEnv "CLUSTER" }} apply \
+            cat ../../kubernetes/base/kube-system/cilium/networking.yaml | envsubst | kubectl --context={{ requiredEnv "CLUSTER" }} apply \
             --namespace=kube-system --server-side --field-manager=kustomize-controller --filename -
         events:
           - postsync
