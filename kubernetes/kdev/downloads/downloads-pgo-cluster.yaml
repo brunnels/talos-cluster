@@ -37,8 +37,20 @@ spec:
 # If this happens, delete the pvc and then the statefulset associated with stuck replica pod
 # The replica statefulset and pvc will be recreated automatically
 #
+  patches:
+    - patch: |-
+        apiVersion: v1
+        kind: Service
+        metadata:
+          annotations:
+            gatus.home-operations.com/endpoint: |
+              group: internal
+              alerts:
+                - type: pushover
+      target:
+        kind: Service
+        name: downloads-pgadmin
 # Remove this patch after the cluster has been created successfully.
-#  patches:
 #    - patch: |-
 #        - op: remove
 #          path: /spec/dataSource
