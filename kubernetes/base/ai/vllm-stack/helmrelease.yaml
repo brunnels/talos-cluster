@@ -36,12 +36,12 @@ spec:
       modelSpec:
         - name: llama3
           repository: lmcache/vllm-openai
-          tag: v0.3.8
+          tag: latest-nightly
           modelURL: meta-llama/Llama-3.1-8B-Instruct
           replicaCount: 2
 
           requestCPU: 6
-          requestMemory: 16Gi
+          requestMemory: 8Gi
           requestGPU: 1
 
           pvcStorage: 50Gi
@@ -71,7 +71,7 @@ spec:
       servicePort: 81
       serde: naive
       repository: lmcache/vllm-openai
-      tag: v0.3.8
+      tag: latest-nightly
       resources:
         requests:
           cpu: 2
