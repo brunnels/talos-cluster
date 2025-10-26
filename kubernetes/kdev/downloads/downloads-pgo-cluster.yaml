@@ -17,6 +17,11 @@ spec:
       namespace: database
     - name: rook-ceph-cluster
       namespace: storage
+  healthChecks:
+    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+      kind: PostgresCluster
+      name: downloads
+      namespace: downloads
 #  healthCheckExprs:
 #    - apiVersion: external-secrets.io/v1
 #      kind: ExternalSecret
