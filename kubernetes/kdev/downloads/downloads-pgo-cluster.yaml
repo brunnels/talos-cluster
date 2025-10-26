@@ -43,10 +43,7 @@ spec:
         kind: Service
         metadata:
           annotations:
-            gatus.home-operations.com/endpoint: |
-              group: internal
-              alerts:
-                - type: pushover
+            gatus.home-operations.com/endpoint: "group: internal\nalerts:\n- type: pushover"
       target:
         kind: Service
         name: downloads-pgadmin
