@@ -47,6 +47,9 @@ metadata:
         - type: pushover
       group: guarded
       guarded: true
+      ui:
+        hide-hostname: true
+        hide-url: true
 spec:
   gatewayClassName: envoy
   infrastructure:
