@@ -17,25 +17,51 @@ spec:
     servingEngineSpec:
       runtimeClassName: nvidia
       modelSpec:
-        - name: opt125m
-          repository: vllm/vllm-openai
-          tag: latest
-          modelURL: facebook/opt-125m
-
-          pvcStorage: 50Gi
-          pvcAccessMode:
-            - ReadWriteOnce
-          storageClass: local-path
-#          pvcMatchLabels:
-#            model: "opt-125m-pv"
-
+        - name: llama3
+          repository: lmcache/vllm-openai
+          tag: latest-nightly
+          modelURL: meta-llama/Llama-3.1-8B-Instruct
           replicaCount: 2
 
           requestCPU: 6
           requestMemory: 16Gi
           requestGPU: 1
+
+          pvcStorage: 50Gi
+          pvcAccessMode:
+            - ReadWriteOnce
+          storageClass: local-path
+
           vllmConfig:
-            maxModelLen: 1024
-            gpuMemoryUtilization: 0.4
+            enablePrefixCaching: true
+            maxModelLen: 4096
+            dtype: bfloat16
             extraArgs:
               - --disable-log-requests
+              - --gpu-memory-utilization
+              - 0.8
+
+          lmcacheConfig:
+            enabled: true
+            cpuOffloadingBufferSize: 20
+          hf_token:
+            secret_name: *app
+            secret_key: HF_TOKEN
+
+    cacheserverSpec:
+      replicaCount: 1
+      containerPort: 8080
+      servicePort: 81
+      serde: naive
+      repository: lmcache/vllm-openai
+      tag: latest-nightly
+      resources:
+        requests:
+          cpu: 2
+          memory: 2G
+        limits:
+          cpu: 2
+          memory: 10G
+      labels:
+        environment: cacheserver
+        release: cacheserver
