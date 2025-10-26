@@ -42,11 +42,10 @@ metadata:
   name: envoy-internal
   annotations:
     external-dns.alpha.kubernetes.io/target: &hostname internal.${SECRET_DOMAIN}
-#    gatus.home-operations.com/endpoint: |
-#      guarded: true
-#      alerts:
-#        - type: pushover
-
+    gatus.home-operations.com/endpoint: |
+      guarded: true
+      alerts:
+        - type: pushover
 spec:
   gatewayClassName: envoy
   infrastructure:

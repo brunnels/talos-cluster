@@ -53,18 +53,10 @@ spec:
     service:
       app:
         annotations:
-#          gatus.home-operations.com/enabled: "true"
           gatus.home-operations.com/endpoint: |
-            group: guarded
-            guarded: true
-#            group: internal
-#            interval: 1m
-#            url: https://tv.${SECRET_DOMAIN}
-#            conditions:
-#              - "[STATUS] == 200"
-#              - "[RESPONSE_TIME] < 500"
-#            alerts:
-#              - type: pushover
+            group: internal
+            alerts:
+              - type: pushover
         ports:
           http:
             port: 8409
