@@ -10,5 +10,5 @@ replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
   - ./downloads-cifs-pvcs.yaml
-  - ./downloads-pgo-cluster.yaml
-  - ./prowlarr.yaml
+#  - ./downloads-pgo-cluster.yaml
+#  - ./prowlarr.yaml
