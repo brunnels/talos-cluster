@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app vllm-stack
+spec:
+  chart:
+    spec:
+      chart: *app
+      version: 0.1.7
+      sourceRef:
+        kind: HelmRepository
+        name: *app
+  interval: 1h
+  values:
+    servingEngineSpec:
+      strategy:
+        type: Recreate
+      runtimeClassName: nvidia
+      modelSpec:
+        - name: opt125m
+          repository: vllm/vllm-openai
+          tag: latest
+          modelURL: facebook/opt-125m
+          replicaCount: 3
+          requestCPU: 6
+          requestMemory: 16Gi
+          requestGPU: 0.5
+          vllmConfig:
+            maxModelLen: 1024
+            gpuMemoryUtilization: 0.4
+            extraArgs:
+              - --disable-log-requests
