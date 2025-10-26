@@ -8,5 +8,5 @@ components:
   - ../../components/common
 replacements:
   - path: ../../components/replacements/ks.yaml
-resources:
-  - ./vllm-stack.yaml
+resources: []
+#  - ./vllm-stack.yaml
