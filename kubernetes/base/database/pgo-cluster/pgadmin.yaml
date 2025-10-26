@@ -4,11 +4,6 @@ apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PGAdmin
 metadata:
   name: ${NAMESPACE}-pgadmin
-  annotations:
-    gatus.home-operations.com/endpoint: |
-      group: internal
-      alerts:
-        - type: pushover
 spec:
   dataVolumeClaimSpec:
     storageClassName: ceph-block
