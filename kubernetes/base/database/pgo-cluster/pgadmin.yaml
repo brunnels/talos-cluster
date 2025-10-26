@@ -4,6 +4,14 @@ apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PGAdmin
 metadata:
   name: ${NAMESPACE}-pgadmin
+  annotations:
+    gatus.home-operations.com/endpoint: |
+      alerts:
+        - type: pushover
+      conditions:
+        - '[CONNECTED] == true'
+      group: internal
+      url: tcp://${NAMESPACE}-pgadmin.${NAMESPACE}.svc:5050
 spec:
   dataVolumeClaimSpec:
     storageClassName: ceph-block
