@@ -42,9 +42,12 @@ spec:
         apiVersion: v1
         kind: Service
         metadata:
-          name: _
+          name: downloads-pgadmin
           annotations:
-            gatus.home-operations.com/endpoint: "group: internal\nalerts:\n- type: pushover"
+            gatus.home-operations.com/endpoint: |
+              group: internal
+              alerts:
+                - type: pushover
       target:
         kind: Service
         name: downloads-pgadmin
