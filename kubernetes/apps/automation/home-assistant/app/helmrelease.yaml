@@ -31,7 +31,7 @@ spec:
           add-default-configuration:
             image:
               repository: docker.io/library/busybox
-              tag: 1.37.0@sha256:498a000f370d8c37927118ed80afe8adc38d1edcbfc071627d17b25c88efcab0
+              tag: 1.37.0@sha256:e3652a00a2fabd16ce889f0aa32c38eec347b997e73bd09e69c962ec7f8732ee
             command:
               - "/bin/sh"
             args:
