@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/brunnels/lidarr-develop
-              tag: 2.13.1.4681@sha256:3ac848be757f6e396bc34fc788e3bfaad765fa3b6c86cbac2d1902f9914e3c28
+              tag: 3.0.1.4866@sha256:679a7f07135729b102a5f4bccc973abea430b19029f3fc0a814ef018dc932e23
             env:
               TZ: "${TIMEZONE}"
               LIDARR__APP__INSTANCENAME: Lidarr
