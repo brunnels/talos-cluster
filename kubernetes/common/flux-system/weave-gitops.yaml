@@ -8,10 +8,11 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
+    - name: authelia
+      namespace: security
   interval: 1h
   path: ./kubernetes/base/flux-system/weave-gitops
   postBuild:
