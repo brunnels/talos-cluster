@@ -38,10 +38,10 @@ spec:
           repository: lmcache/vllm-openai
           tag: latest-nightly
           modelURL: meta-llama/Llama-3.1-8B-Instruct
-          replicaCount: 2
+          replicaCount: 3
 
           requestCPU: 6
-          requestMemory: 8Gi
+          requestMemory: 16Gi
           requestGPU: 1
 
           pvcStorage: 50Gi
