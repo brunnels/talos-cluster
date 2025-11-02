@@ -29,15 +29,13 @@ nodes:
     nodeLabels: &nodeLabels
       intel.feature.node.kubernetes.io/gpu: "true"
       nvidia.com/gpu.present: "true"
-#    volumes: &volumes
-      # don't let talos use whole disk
-#      - name: EPHEMERAL
-#        provisioning:
-#          diskSelector:
-#            match: system_disk
-#          minSize: 120GiB
-#          maxSize: 120GiB
-#          grow: false
+    volumes: &volumes
+      - name: EPHEMERAL
+        provisioning:
+          diskSelector:
+            match: system_disk
+          minSize: 120GiB
+          grow: true
     userVolumes: &userVolumes
       # non-ceph
       - name: lpp-0
@@ -170,7 +168,7 @@ nodes:
     installDisk: /dev/disk/by-id/nvme-BPX_8B71077C060891075911
     controlPlane: true
     nodeLabels: *nodeLabels
-#    volumes: *volumes
+    volumes: *volumes
     userVolumes: *userVolumes
     schematic: *schematic
     networkInterfaces: *networkInterfaces
@@ -205,7 +203,7 @@ nodes:
     installDisk: /dev/disk/by-id/nvme-Samsung_SSD_950_PRO_256GB_S2GLNCAGB26901M
     controlPlane: true
     nodeLabels: *nodeLabels
-#    volumes: *volumes
+    volumes: *volumes
     userVolumes: *userVolumes
     schematic: *schematic
     networkInterfaces: *networkInterfaces
