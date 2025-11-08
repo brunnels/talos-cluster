@@ -45,6 +45,7 @@ spec:
           HTTP_CONTROL_SERVER_ADDRESS: ":80"
           HTTP_CONTROL_SERVER_LOG: off
           WIREGUARD_PERSISTENT_KEEPALIVE_INTERVAL: 15s
+          FIREWALL_VPN_INPUT_PORTS: "${INBOUND_PORTS}"
         envFrom:
           - secretRef:
               name: *app

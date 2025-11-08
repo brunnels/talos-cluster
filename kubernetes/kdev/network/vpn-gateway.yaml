@@ -15,17 +15,18 @@ spec:
   path: ./kubernetes/base/network/vpn-gateway
   postBuild:
     substitute:
-      # USERS should be a valid JSON array of strings representing the namespaces that will have vpn access
+      INBOUND_PORTS: "14738"
+      # ROUTED_NAMESPACES should be a valid JSON array of strings representing the namespaces that will have vpn access
       ROUTED_NAMESPACES: '["downloads"]'
-      # PUBLIC_PORTS should be a valid JSON array of objects representing the nat port config for each service
+      # PUBLIC_PORTS should be a valid JSON array of objects representing the nat inbound port config for each service
       PUBLIC_PORTS: |
         [
           {
             "hostname": "flood",
             "IP": 10,
             "ports": [
-              { "type": "udp", "port": 60112 },
-              { "type": "tcp", "port": 60112 }
+              { "type": "udp", "port": 14738 },
+              { "type": "tcp", "port": 14738 }
             ]
           }
         ]
