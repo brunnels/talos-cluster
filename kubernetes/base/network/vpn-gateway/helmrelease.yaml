@@ -40,8 +40,6 @@ spec:
             tag: v3.40.0@sha256:2b42bfa046757145a5155acece417b65b4443c8033fb88661a8e9dcf7fda5a00
         env:
           TZ: "${TIMEZONE}"
-#          SERVER_REGIONS: Europe
-#          SERVER_COUNTRIES: Netherlands
           FIREWALL_ENABLED_DISABLING_IT_SHOOTS_YOU_IN_YOUR_FOOT: off
           DOT: off
           HTTP_CONTROL_SERVER_ADDRESS: ":80"
