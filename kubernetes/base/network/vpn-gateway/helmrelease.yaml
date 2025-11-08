@@ -93,16 +93,27 @@ spec:
       #   must match the gatewayLabelValue or setGatewayAnnotationValue instead of the default 'true'.
       gatewayLabelValue: ""
       gatewayAnnotationValue:
-
-      # this adds gluetun http control server port and vxlan port to the service
-      service:
-        main:
-          type: ClusterIP
-          clusterIP: None
-          ports:
-            http:
-              port: 4789
-              protocol: UDP
-            gluetun:
-              port: 80
-              protocol: TCP
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Service
+              name: *app
+            patch: |
+              - op: add
+                path: /spec/ports/-
+                value:
+                  name: gluetun
+                  port: 80
+                  protocol: TCP
+                  targetPort: gluetun
+          - target:
+              kind: Deployment
+              name: *app
+            patch: |
+              - op: add
+                path: /spec/template/spec/containers/1/ports/-
+                value:
+                  containerPort: 80
+                  name: gluetun
+                  protocol: TCP
