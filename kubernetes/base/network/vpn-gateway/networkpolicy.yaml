@@ -1,0 +1,71 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
+# This policy allows the vpn-gateway to go out to the internet on port 1637 and also to talk to any cluster entities
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: vpn-gateway
+  labels:
+    app.kubernetes.io/instance: &instance vpn-gateway
+    app.kubernetes.io/name: &name pod-gateway
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: *instance
+      app.kubernetes.io/name: *name
+  egress:
+    - toCIDR:
+        - 0.0.0.0/0
+      toPorts:
+        - ports:
+            - port: "1637"
+              protocol: UDP
+    - toEntities:
+        - cluster
+---
+# This policy allows the vpn-gateway to communicate over the default VXLAN port 8472
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: vpn-gateway-vxlan
+  labels:
+    app.kubernetes.io/instance: &instance vpn-gateway
+    app.kubernetes.io/name: &name pod-gateway
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: *instance
+      app.kubernetes.io/name: *name
+  egress:
+    - toPorts:
+        - ports:
+            - port: "8472"
+              protocol: UDP
+  ingress:
+    - toPorts:
+        - ports:
+            - port: "8472"
+              protocol: UDP
+    - icmps:
+        - fields:
+            - type: 8
+              family: IPv4
+---
+# This policy allows inbound connections to the vpn-gateway on port 80 to gluetun http_control_server
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: vpn-gateway-http-control
+  labels:
+    app.kubernetes.io/instance: &instance vpn-gateway
+    app.kubernetes.io/name: &name pod-gateway
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: *instance
+      app.kubernetes.io/name: *name
+  ingress:
+    - toPorts:
+        - ports:
+            - port: "80"
+              protocol: TCP

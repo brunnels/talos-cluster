@@ -1,0 +1,37 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app vpn-gateway
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
+      namespace: external-secrets
+  interval: 1h
+  path: ./kubernetes/base/network/vpn-gateway
+  postBuild:
+    substitute:
+      # USERS should be a valid JSON array of strings representing the namespaces that will have vpn access
+      ROUTED_NAMESPACES: '["downloads"]'
+      # PUBLIC_PORTS should be a valid JSON array of objects representing the nat port config for each service
+      PUBLIC_PORTS: |
+        [
+          {
+            "hostname": "flood",
+            "IP": 10,
+            "ports": [
+              { "type": "udp", "port": 60112 },
+              { "type": "tcp", "port": 60112 }
+            ]
+          }
+        ]
+
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
