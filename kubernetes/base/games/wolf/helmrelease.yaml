@@ -10,7 +10,7 @@ spec:
       chart: *app
       version: 0.0.1
       sourceRef:
-        kind: HelmRepository
+        kind: GitRepository
         name: *app
   interval: 1h
   values: []

@@ -1,0 +1,16 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/source.toolkit.fluxcd.io/gitrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: wolf
+spec:
+  interval: 5m
+  url: https://github.com/brunnels/fenrir
+  ref:
+    branch: helm-chart
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/charts/wolf/
