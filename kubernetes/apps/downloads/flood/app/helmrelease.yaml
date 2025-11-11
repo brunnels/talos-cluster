@@ -75,7 +75,7 @@ spec:
             dependsOn: app
             image:
               repository: ghcr.io/frantathefranta/transmission-exporter
-              tag: 0.3.2@sha256:1e8cd7f04f014cdfc8673f95779b637f5887c3f4ae7b6263a20ebf1bdfc2f9a1
+              tag: 0.3.2@sha256:ef8e7b06836dcac322c25a027ec96c6cb91790ac2a8c20585464f932a5e044dd
             env:
               TRANSMISSION_ADDR: http://flood:9091
             resources:
