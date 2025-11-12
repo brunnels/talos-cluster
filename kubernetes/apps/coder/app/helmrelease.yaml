@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: *app
-      version: 2.20.1
+      version: 2.28.3
       sourceRef:
         kind: HelmRepository
         name: *app
