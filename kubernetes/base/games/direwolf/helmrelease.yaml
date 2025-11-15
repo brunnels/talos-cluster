@@ -3,15 +3,11 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app wolf
+  name: &app direwolf-operator
 spec:
-  chart:
-    spec:
-      chart: ./charts/wolf
-      version: 0.0.1
-      sourceRef:
-        kind: GitRepository
-        name: *app
+  chartRef:
+    kind: OCIRepository
+    name: *app
   interval: 1h
   values:
     controllers:
@@ -19,9 +15,9 @@ spec:
         containers:
           operator:
             image:
-              repository: ghcr.io/axolotlite/operator
+              repository: ghcr.io/brunnels/operator
       moonlight-proxy:
         containers:
           proxy:
             image:
-              repository: ghcr.io/axolotlite/moonlight-proxy
+              repository: ghcr.io/brunnels/moonlight-proxy
