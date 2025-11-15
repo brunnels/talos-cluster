@@ -13,4 +13,15 @@ spec:
         kind: GitRepository
         name: *app
   interval: 1h
-  values: []
+  values:
+    controllers:
+      direwolf-operator:
+        containers:
+          operator:
+            image:
+              repository: ghcr.io/axolotlite/operator
+      moonlight-proxy:
+        containers:
+          proxy:
+            image:
+              repository: ghcr.io/axolotlite/moonlight-proxy
