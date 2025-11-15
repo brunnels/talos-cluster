@@ -5,7 +5,7 @@ kind: GitRepository
 metadata:
   name: wolf
 spec:
-  interval: 5m
+  interval: 1m
   url: https://github.com/brunnels/fenrir
   ref:
     branch: helm-chart

@@ -9,5 +9,5 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-  - ./ersatztv.yaml
+#  - ./ersatztv.yaml
   - ./media-cifs-pvcs.yaml

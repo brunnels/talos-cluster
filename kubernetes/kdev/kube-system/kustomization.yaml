@@ -12,8 +12,8 @@ resources:
   - ../../common/kube-system/cilium.yaml
   - ../../common/kube-system/coredns.yaml
   - ../../common/kube-system/descheduler.yaml
-  - ../../common/kube-system/intel-device-plugin-gpu.yaml
-  - ../../common/kube-system/intel-device-plugin-operator.yaml
+#  - ../../common/kube-system/intel-device-plugin-gpu.yaml
+#  - ../../common/kube-system/intel-device-plugin-operator.yaml
   - ../../common/kube-system/metrics-server.yaml
   - ../../common/kube-system/reloader.yaml
   - ../../common/kube-system/spegel.yaml
