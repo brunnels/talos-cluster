@@ -16,7 +16,7 @@ spec:
           operator:
             image:
               repository: ghcr.io/axolotlite/operator
-              tag: main@sha256:63977c94b23ae9af00fc26c7ea4d01dd6f2908485f43edeec710c96274572c97
+              tag: main@sha256:3b909fabf1c173e278b6e263e43ee084a774f7b9170ca7447dc215af612dccf6
       moonlight-proxy:
         containers:
           proxy:
