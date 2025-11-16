@@ -16,7 +16,7 @@ spec:
           operator:
             image:
               repository: ghcr.io/brunnels/operator
-              tag: main@sha256:5af2d0316c04c6eee48df544e6749ae4d47b4e3106dbd426c06a52b7d0d3fd33
+              tag: main@sha256:8a7eabd9ce8c9671d79e73c876b87381048c45701cc75269349e565e3006625f
       moonlight-proxy:
         containers:
           proxy:
