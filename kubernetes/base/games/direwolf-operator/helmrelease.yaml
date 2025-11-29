@@ -12,17 +12,10 @@ spec:
   upgrade:
     crds: CreateReplace
     force: true
-#  values:
-#    controllers:
-#      direwolf-operator:
-#        containers:
-#          operator:
-#            image:
-#              repository: ghcr.io/brunnels/operator
-#              tag: main@sha256:bde47ba139ca30f1e605ea7dc1a2534f1ad034f25577f60107dd51081b380b0f
-#      moonlight-proxy:
-#        containers:
-#          proxy:
-#            image:
-#              repository: ghcr.io/brunnels/moonlight-proxy
-#              tag: main@sha256:dc841f67443827c05af37ce352d884d5c5958add997a41255e19e44d87976116
+  values:
+    controllers:
+      direwolf_operator:
+        containers:
+          operator:
+            env:
+              WOLF_IMAGE: ghcr.io/games-on-whales/wolf:dev-moonlight-fixes
