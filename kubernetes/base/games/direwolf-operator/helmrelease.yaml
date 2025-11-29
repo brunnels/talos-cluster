@@ -8,7 +8,7 @@ spec:
   chartRef:
     kind: OCIRepository
     name: *app
-  interval: 2m
+  interval: 1h
   upgrade:
     crds: CreateReplace
     force: true
