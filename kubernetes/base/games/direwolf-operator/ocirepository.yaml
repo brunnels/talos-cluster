@@ -5,10 +5,10 @@ kind: OCIRepository
 metadata:
   name: direwolf-operator
 spec:
-  interval: 5m
+  interval: 2m
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 0.0.1-34451-SNAPSHOT
+    tag: 0.0.1-SNAPSHOT
   url: oci://ghcr.io/brunnels/charts/direwolf-operator
