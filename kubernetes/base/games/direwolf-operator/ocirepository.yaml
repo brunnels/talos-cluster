@@ -10,5 +10,5 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 0.0.1-75836-SNAPSHOT
+    tag: 0.0.1-34451-SNAPSHOT
   url: oci://ghcr.io/brunnels/charts/direwolf-operator
