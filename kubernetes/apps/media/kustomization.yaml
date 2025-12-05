@@ -7,8 +7,8 @@ components:
   - ../../components/common
 resources:
   - ./cifs-pvcs/ks.yaml
-  - ./overseerr/ks.yaml
+  #- ./overseerr/ks.yaml
   - ./pingvin/ks.yaml
   - ./plex/ks.yaml
-  - ./romm/ks.yaml
+  #- ./romm/ks.yaml
   - ./tautulli/ks.yaml
