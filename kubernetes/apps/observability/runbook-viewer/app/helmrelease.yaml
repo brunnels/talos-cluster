@@ -47,7 +47,7 @@ spec:
           app:
             image:
               repository: docker.io/dannyben/madness
-              tag: 1.2.2@sha256:f79313694cebc0b5f86969aa444b0d98bc9064962dc115f5b35b7b355202f2ce
+              tag: 1.2.5@sha256:07eace1b20e13db7ca5555c58007ad7a076a971119d22c49069115ad12cf2ac3
             args:
               - server
             env:
