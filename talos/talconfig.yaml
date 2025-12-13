@@ -233,19 +233,19 @@ nodes:
           op: add
           path: /machine/network/interfaces/2/routes/0/network
 
-  - hostname: kdev-n4
-    ipAddress: 10.0.150.251
-    installDisk: /dev/sda
-    controlPlane: false
-    networkInterfaces:
-      - interface: eth0
-        dhcp: false
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 10.0.150.1
-        mtu: 9000
-        addresses:
-          - 10.0.150.251
+#  - hostname: kdev-n4
+#    ipAddress: 10.0.150.251
+#    installDisk: /dev/sda
+#    controlPlane: false
+#    networkInterfaces:
+#      - interface: eth0
+#        dhcp: false
+#        routes:
+#          - network: 0.0.0.0/0
+#            gateway: 10.0.150.1
+#        mtu: 9000
+#        addresses:
+#          - 10.0.150.251
 # Global patches
 patches:
   - "@./patches/global/machine-files.yaml"
