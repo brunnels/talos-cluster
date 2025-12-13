@@ -11,6 +11,7 @@ replacements:
 resources:
   - ../../common/storage/cifs-storage-classes.yaml
   - ../../common/storage/csi-driver-smb.yaml
+  - ../../common/storage/csi-driver-nfs.yaml
   - ../../common/storage/local-path-provisioner.yaml
   - ../../common/storage/rook-ceph-cluster.yaml
   - ../../common/storage/rook-ceph-operator.yaml
