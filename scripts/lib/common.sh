@@ -142,4 +142,7 @@ add_cluster_settings_to_env() {
         value=$(yq e ".data.\"${key}\"" "${settings_file}")
         export "${key}"="${value}"
     done
+    AK="$(dirname "${0}")/lib/akeyless.sh"
+    export SECRET_DOMAIN="$(echo "ak://${VAULT_PREFIX}-cluster/SECRET_DOMAIN" | "${AK}")"
+    export CERT_NAME="${SECRET_DOMAIN/\./-}"
 }

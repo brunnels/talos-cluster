@@ -1,5 +1,7 @@
 machine:
   features:
+    hostDNS:
+      resolveMemberNames: true
     kubernetesTalosAPIAccess:
       allowedKubernetesNamespaces:
         - system-upgrade

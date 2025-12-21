@@ -28,7 +28,9 @@ spec:
             envFrom:
               - secretRef:
                   name: *app
-            args: ["tunnel", "run"]
+            args:
+              - tunnel
+              - run
             probes:
               liveness: &probes
                 enabled: true

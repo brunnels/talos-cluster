@@ -42,7 +42,7 @@ releases:
   - name: spegel
     namespace: kube-system
     chart: oci://ghcr.io/spegel-org/helm-charts/spegel
-    version: 0.4.0
+    version: 0.5.1
     values: ['./templates/values.yaml.gotmpl']
     needs: ['kube-system/coredns']
 
@@ -52,8 +52,15 @@ releases:
     version: 0.20.1
     values: ['./templates/values-collapsed.yaml.gotmpl']
     hooks:
+      - # Wait for ExternalSecrets CRDs to be available
+        command: bash
+        args:
+          - -c
+          - until kubectl get crd clustersecretstores.external-secrets.io &>/dev/null; do sleep 5; done
+        events:
+          - postsync
+        showlogs: true
       - # Apply cluster secret store
-        events: ['postsync']
         command: bash
         args:
           - -c
@@ -61,6 +68,37 @@ releases:
             cat ../../kubernetes/base/external-secrets-stores/akeyless/clustersecretstore.yaml | envsubst \
             | kubectl --context={{ requiredEnv "CLUSTER" }}  apply \
             --namespace=kube-system --server-side --field-manager=kustomize-controller --filename -
+        events:
+          - postsync
+        showlogs: true
+      - # Wait for ClusterSecretStore akeyless-secret-store to be ready
+        command: bash
+        args:
+          - -c
+          - until [ "$(kubectl -n external-secrets get clustersecretstores akeyless-secret-store --no-headers | awk '{print $NF}')" == "True" ]; do sleep 5; done
+        events:
+          - postsync
+        showlogs: true
+      - # Create the ExternalSecret for envoy gateway TLS
+        command: bash
+        args:
+          - -c
+          - |
+            cat ../../kubernetes/base/network/envoy-gateway/externalsecret.yaml \
+            | sed 's|\${SECRET_DOMAIN/\./-}|\${CERT_NAME}|g' \
+            | envsubst \
+            | kubectl --context={{ requiredEnv "CLUSTER" }}  apply \
+            --namespace=network --server-side --field-manager=kustomize-controller --filename -
+        events:
+          - postsync
+        showlogs: true
+      - # Wait for Secret for envoy gateway TLS to be created
+        command: bash
+        args:
+          - -c
+          - until kubectl -n network get secrets | grep "production-tls" &>/dev/null; do sleep 5; done
+        events:
+          - postsync
         showlogs: true
     needs: ['kube-system/spegel']
 

@@ -22,7 +22,7 @@
 # Example:
 # Given a secret at path 'app-prod/db' with content '{"password":"secret_pass"}',
 # the following command...
-#   echo "db_password: ak://app-prod/db/password" | ./inject.sh
+#   echo "db_password: ak://app-prod/db/password" | ./akeyless.sh
 # ...will output:
 #   db_password: secret_pass
 

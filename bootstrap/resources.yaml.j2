@@ -1,6 +1,5 @@
 {% set secret_domain = "ak://${VAULT_PREFIX}-cluster/SECRET_DOMAIN" -%}
 {% set tunnel_id = "ak://${VAULT_PREFIX}-cluster/CLOUDFLARE_TUNNEL_ID" -%}
-{% set cert_name = secret_domain|replace('.', '-') -%}
 {% for namespace in [${NAMESPACES}] -%}
 ---
 apiVersion: v1
@@ -46,24 +45,3 @@ stringData:
   accessId: "ak://akeyless/ACCESS_ID"
   accessType: api_key
   accessTypeParam: "ak://akeyless/ACCESS_TYPE_PARAM"
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: {{ cert_name }}-production
-  namespace: network
-  annotations:
-    cert-manager.io/common-name: "{{ secret_domain }}"
-    cert-manager.io/alt-names: '*.{{ secret_domain }},{{ secret_domain }}'
-    cert-manager.io/certificate-name: "{{ secret_domain }}"
-    cert-manager.io/ip-sans: ""
-    cert-manager.io/issuer-group: ""
-    cert-manager.io/issuer-kind: ClusterIssuer
-    cert-manager.io/issuer-name: letsencrypt-production
-    cert-manager.io/uri-sans: ""
-  labels:
-    controller.cert-manager.io/fao: "true"
-type: kubernetes.io/tls
-data:
-  tls.key: "ak://${VAULT_PREFIX}/production-tls/tls.key"
-  tls.crt: "ak://${VAULT_PREFIX}/production-tls/tls.crt"
