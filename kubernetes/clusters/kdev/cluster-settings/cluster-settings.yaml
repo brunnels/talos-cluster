@@ -28,7 +28,7 @@ data:
   LOCAL_PATH_PROVISIONER_NODE_PATHS: '["/var/mnt/lpp-0"]'
 
   GIT_REPO: "github.com/brunnels/talos-cluster"
-  GIT_REPO_REF: "refs/heads/known-working"
+  GIT_REPO_REF: "refs/heads/know-working"
 
   VOLSYNC_PVC_STORAGECLASS: "ceph-block"
   VOLSYNC_SNAPSHOTCLASS: "csi-ceph-blockpool"
