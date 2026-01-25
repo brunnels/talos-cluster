@@ -5,14 +5,14 @@ kind: Kustomization
 namespace: automation
 components:
   - ../../components/common
-resources:
-  - ./esphome/ks.yaml
-  - ./home-assistant/ks.yaml
-patches:
-  - # Add volsync annotation
-    patch: |
-      - op: add
-        path: "/metadata/annotations/volsync.backube~1privileged-movers"
-        value: "true"
-    target:
-      kind: Namespace
+resources: []
+#  - ./esphome/ks.yaml
+#  - ./home-assistant/ks.yaml
+#patches:
+#  - # Add volsync annotation
+#    patch: |
+#      - op: add
+#        path: "/metadata/annotations/volsync.backube~1privileged-movers"
+#        value: "true"
+#    target:
+#      kind: Namespace
